@@ -37,8 +37,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Blackroot Bow",
     "weaponId": "WEAPON_BOW",
     "image": "/assets/weapon_parts/bow a2 - blackroot.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 200,
+    "sellPrice": 100
   },
   {
     "id": "WEAPON_PART_A_BOW_3",
@@ -49,8 +49,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Witch Hazel Bow",
     "weaponId": "WEAPON_BOW",
     "image": "/assets/weapon_parts/bow a3 - witchhazel.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 200,
+    "sellPrice": 100
   },
   {
     "id": "WEAPON_PART_A_BOW_4",
@@ -97,8 +97,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Nightlace String",
     "weaponId": "WEAPON_BOW",
     "image": "/assets/weapon_parts/bow b1 - nightlace string.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_B_BOW_2",
@@ -109,8 +109,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Silken String",
     "weaponId": "WEAPON_BOW",
     "image": "/assets/weapon_parts/bow b2 - silken string.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_B_BOW_3",
@@ -121,8 +121,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Wildborn String",
     "weaponId": "WEAPON_BOW",
     "image": "/assets/weapon_parts/bow b3 - wildborn string.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_B_BOW_4",
@@ -169,8 +169,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Marksman's Arrow",
     "weaponId": "WEAPON_BOW",
     "image": "/assets/weapon_parts/bow c1 - marksman's arrow.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_C_BOW_2",
@@ -181,8 +181,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Direvine Arrow",
     "weaponId": "WEAPON_BOW",
     "image": "/assets/weapon_parts/bow c2 - direvine arrow.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_C_BOW_3",
@@ -193,8 +193,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Twilight Arrow",
     "weaponId": "WEAPON_BOW",
     "image": "/assets/weapon_parts/bow c3 - twilight arrow.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_C_BOW_4",
@@ -241,8 +241,8 @@ export const WEAPON_PARTS = [
     "nameEn": "True Aim Crossbow",
     "weaponId": "WEAPON_CROSSBOW",
     "image": "/assets/weapon_parts/crossbow a1 - dualpower.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 200,
+    "sellPrice": 100
   },
   {
     "id": "WEAPON_PART_A_CROSSBOW_2",
@@ -253,8 +253,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Dualpower Crossbow",
     "weaponId": "WEAPON_CROSSBOW",
     "image": "/assets/weapon_parts/crossbow a2 - crisscross.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 200,
+    "sellPrice": 100
   },
   {
     "id": "WEAPON_PART_A_CROSSBOW_3",
@@ -265,8 +265,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Elfweave Crossbow",
     "weaponId": "WEAPON_CROSSBOW",
     "image": "/assets/weapon_parts/crossbow a3 - woven.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 200,
+    "sellPrice": 100
   },
   {
     "id": "WEAPON_PART_A_CROSSBOW_4",
@@ -313,8 +313,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Gnomewood Stock",
     "weaponId": "WEAPON_CROSSBOW",
     "image": "/assets/weapon_parts/crossbow b1 - gnomewood stock.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_B_CROSSBOW_2",
@@ -325,8 +325,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Mammoth Stock",
     "weaponId": "WEAPON_CROSSBOW",
     "image": "/assets/weapon_parts/crossbow b2 - mammoth stock.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_B_CROSSBOW_3",
@@ -337,8 +337,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Northwood Stock",
     "weaponId": "WEAPON_CROSSBOW",
     "image": "/assets/weapon_parts/crossbow b3 - northwood stock.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_B_CROSSBOW_4",
@@ -385,8 +385,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Barbed Bolts",
     "weaponId": "WEAPON_CROSSBOW",
     "image": "/assets/weapon_parts/crossbow c1 - barbed bolts.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_C_CROSSBOW_2",
@@ -397,8 +397,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Spiral Bolts",
     "weaponId": "WEAPON_CROSSBOW",
     "image": "/assets/weapon_parts/crossbow c2 - spiral bolts.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_C_CROSSBOW_3",
@@ -409,8 +409,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Screamer Bolts",
     "weaponId": "WEAPON_CROSSBOW",
     "image": "/assets/weapon_parts/crossbow c3 - screamer bolts.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_C_CROSSBOW_4",
@@ -469,8 +469,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Seer's Blades",
     "weaponId": "WEAPON_DUAL_BLADES",
     "image": "/assets/weapon_parts/dual blades a2 - seer.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 200,
+    "sellPrice": 100
   },
   {
     "id": "WEAPON_PART_A_DUAL_BLADES_3",
@@ -481,8 +481,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Whispering Blades",
     "weaponId": "WEAPON_DUAL_BLADES",
     "image": "/assets/weapon_parts/dual blades a3 - whispering.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 200,
+    "sellPrice": 100
   },
   {
     "id": "WEAPON_PART_A_DUAL_BLADES_4",
@@ -493,8 +493,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Dancing Blades",
     "weaponId": "WEAPON_DUAL_BLADES",
     "image": "/assets/weapon_parts/dual blades a4 - dancing.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 200,
+    "sellPrice": 100
   },
   {
     "id": "WEAPON_PART_A_DUAL_BLADES_5",
@@ -505,8 +505,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Hungry Blades",
     "weaponId": "WEAPON_DUAL_BLADES",
     "image": "/assets/weapon_parts/dual blades a5 - hungry.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 300,
+    "sellPrice": 150
   },
   {
     "id": "WEAPON_PART_B_DUAL_BLADES_0",
@@ -529,8 +529,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Glass Offhand",
     "weaponId": "WEAPON_DUAL_BLADES",
     "image": "/assets/weapon_parts/dual blades b1 - glass offhand.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_B_DUAL_BLADES_2",
@@ -541,8 +541,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Hooked Offhand",
     "weaponId": "WEAPON_DUAL_BLADES",
     "image": "/assets/weapon_parts/dual blades b2 - hooked offhand.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_B_DUAL_BLADES_3",
@@ -553,8 +553,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Forgotten Offhand",
     "weaponId": "WEAPON_DUAL_BLADES",
     "image": "/assets/weapon_parts/dual blades b3 - forgotten offhand.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_B_DUAL_BLADES_4",
@@ -601,8 +601,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Redstone Pommel",
     "weaponId": "WEAPON_DUAL_BLADES",
     "image": "/assets/weapon_parts/dual blades c1 - redstone pommel.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_C_DUAL_BLADES_2",
@@ -613,8 +613,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Bloodscript Pommel",
     "weaponId": "WEAPON_DUAL_BLADES",
     "image": "/assets/weapon_parts/dual blades c2 - bloodscript pommel.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_C_DUAL_BLADES_3",
@@ -625,8 +625,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Braided Pommel",
     "weaponId": "WEAPON_DUAL_BLADES",
     "image": "/assets/weapon_parts/dual blades c3 - braided pommel.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_C_DUAL_BLADES_4",
@@ -685,8 +685,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Fanged Gauntlet",
     "weaponId": "WEAPON_WAR_HAMMER",
     "image": "/assets/weapon_parts/gauntlet a2 - fanged.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 200,
+    "sellPrice": 100
   },
   {
     "id": "WEAPON_PART_A_GAUNTLET_3",
@@ -697,8 +697,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Disrupter Gauntlet",
     "weaponId": "WEAPON_WAR_HAMMER",
     "image": "/assets/weapon_parts/gauntlet a3 - disrupter.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 200,
+    "sellPrice": 100
   },
   {
     "id": "WEAPON_PART_A_GAUNTLET_4",
@@ -721,8 +721,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Life-Drinking Gauntlet",
     "weaponId": "WEAPON_WAR_HAMMER",
     "image": "/assets/weapon_parts/gauntlet a5 - life drinking.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 200,
+    "sellPrice": 100
   },
   {
     "id": "WEAPON_PART_B_GAUNTLET_0",
@@ -745,8 +745,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Shadow-Weave Gloves",
     "weaponId": "WEAPON_WAR_HAMMER",
     "image": "/assets/weapon_parts/gauntlet b1 - shadow-weave gloves.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_B_GAUNTLET_2",
@@ -757,8 +757,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Clawed Gloves",
     "weaponId": "WEAPON_WAR_HAMMER",
     "image": "/assets/weapon_parts/gauntlet b2 - clawed gloves.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_B_GAUNTLET_3",
@@ -769,8 +769,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Bloodthirsty Gloves",
     "weaponId": "WEAPON_WAR_HAMMER",
     "image": "/assets/weapon_parts/gauntlet b3 - bloodthirsty gloves.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_B_GAUNTLET_4",
@@ -817,8 +817,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Shadowstone Bracers",
     "weaponId": "WEAPON_WAR_HAMMER",
     "image": "/assets/weapon_parts/gauntlet c1 - shadowstone bracers.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_C_GAUNTLET_2",
@@ -829,8 +829,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Heavy Bracers",
     "weaponId": "WEAPON_WAR_HAMMER",
     "image": "/assets/weapon_parts/gauntlet c2 - heavy bracers.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_C_GAUNTLET_3",
@@ -841,8 +841,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Cruel Bracers",
     "weaponId": "WEAPON_WAR_HAMMER",
     "image": "/assets/weapon_parts/gauntlet c3 - cruel bracers.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_C_GAUNTLET_4",
@@ -901,8 +901,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Hooked Hammer",
     "weaponId": "WEAPON_HAMMER",
     "image": "/assets/weapon_parts/hammer a2 - hooked.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 200,
+    "sellPrice": 100
   },
   {
     "id": "WEAPON_PART_A_HAMMER_3",
@@ -913,8 +913,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Spiked Hammer",
     "weaponId": "WEAPON_HAMMER",
     "image": "/assets/weapon_parts/hammer a3 - spiked.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 200,
+    "sellPrice": 100
   },
   {
     "id": "WEAPON_PART_A_HAMMER_4",
@@ -961,8 +961,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Dunwarrik Haft",
     "weaponId": "WEAPON_HAMMER",
     "image": "/assets/weapon_parts/hammer b1 - dunwarik haft.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_B_HAMMER_2",
@@ -973,8 +973,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Forgik Haft",
     "weaponId": "WEAPON_HAMMER",
     "image": "/assets/weapon_parts/hammer b2 - forgik haft.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_B_HAMMER_3",
@@ -985,8 +985,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Kehlik Haft",
     "weaponId": "WEAPON_HAMMER",
     "image": "/assets/weapon_parts/hammer b3 - kehlik haft.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_B_HAMMER_4",
@@ -1033,8 +1033,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Smith's Grip",
     "weaponId": "WEAPON_HAMMER",
     "image": "/assets/weapon_parts/hammer c1 - workman's grip.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_C_HAMMER_2",
@@ -1045,8 +1045,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Guardsman's Grip",
     "weaponId": "WEAPON_HAMMER",
     "image": "/assets/weapon_parts/hammer c2 - guardsman's grip.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_C_HAMMER_3",
@@ -1057,8 +1057,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Devastator's Grip",
     "weaponId": "WEAPON_HAMMER",
     "image": "/assets/weapon_parts/hammer c3 - devastation's grip.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_C_HAMMER_4",
@@ -1117,8 +1117,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Barbed Knives",
     "weaponId": "WEAPON_THROWING_KNIVES",
     "image": "/assets/weapon_parts/knives a2 - barbed.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 200,
+    "sellPrice": 100
   },
   {
     "id": "WEAPON_PART_A_KNIVES_3",
@@ -1129,8 +1129,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Shattercut Knives",
     "weaponId": "WEAPON_THROWING_KNIVES",
     "image": "/assets/weapon_parts/knives a3 - shattercut.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 200,
+    "sellPrice": 100
   },
   {
     "id": "WEAPON_PART_A_KNIVES_4",
@@ -1177,8 +1177,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Balanced Grip",
     "weaponId": "WEAPON_THROWING_KNIVES",
     "image": "/assets/weapon_parts/knives b1 - balanced grip.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_B_KNIVES_2",
@@ -1189,8 +1189,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Spiked Grip",
     "weaponId": "WEAPON_THROWING_KNIVES",
     "image": "/assets/weapon_parts/knives b2 - spiked grip.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_B_KNIVES_3",
@@ -1201,8 +1201,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Hooked Grip",
     "weaponId": "WEAPON_THROWING_KNIVES",
     "image": "/assets/weapon_parts/knives b3 - hooked grip.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_B_KNIVES_4",
@@ -1249,8 +1249,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Nightwalker Belt",
     "weaponId": "WEAPON_THROWING_KNIVES",
     "image": "/assets/weapon_parts/knives c1 - nightwalker belt.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_C_KNIVES_2",
@@ -1261,8 +1261,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Cobrastrike Belt",
     "weaponId": "WEAPON_THROWING_KNIVES",
     "image": "/assets/weapon_parts/knives c2 - cobrastrike bracers.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_C_KNIVES_3",
@@ -1273,8 +1273,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Threewishes Sash",
     "weaponId": "WEAPON_THROWING_KNIVES",
     "image": "/assets/weapon_parts/knives c3 - threewishes sash.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_C_KNIVES_4",
@@ -1333,8 +1333,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Lunar Spear",
     "weaponId": "WEAPON_SPEAR",
     "image": "/assets/weapon_parts/spear a2 - lunar.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 200,
+    "sellPrice": 100
   },
   {
     "id": "WEAPON_PART_A_SPEAR_3",
@@ -1345,8 +1345,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Sunforged Spear",
     "weaponId": "WEAPON_SPEAR",
     "image": "/assets/weapon_parts/spear a3 - sunforged.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 200,
+    "sellPrice": 100
   },
   {
     "id": "WEAPON_PART_A_SPEAR_4",
@@ -1393,8 +1393,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Twisting Haft",
     "weaponId": "WEAPON_SPEAR",
     "image": "/assets/weapon_parts/spear b1 - twisting haft.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_B_SPEAR_2",
@@ -1405,8 +1405,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Engraved Haft",
     "weaponId": "WEAPON_SPEAR",
     "image": "/assets/weapon_parts/spear b2 - engraved haft.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_B_SPEAR_3",
@@ -1417,8 +1417,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Superior Haft",
     "weaponId": "WEAPON_SPEAR",
     "image": "/assets/weapon_parts/spear b3 - superior haft.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_B_SPEAR_4",
@@ -1465,8 +1465,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Radiant Tail",
     "weaponId": "WEAPON_SPEAR",
     "image": "/assets/weapon_parts/spear c1 - radiant tail.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_C_SPEAR_2",
@@ -1477,8 +1477,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Nightfall Tail",
     "weaponId": "WEAPON_SPEAR",
     "image": "/assets/weapon_parts/spear c2 - nightfall tail.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_C_SPEAR_3",
@@ -1489,8 +1489,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Serpent's Tail",
     "weaponId": "WEAPON_SPEAR",
     "image": "/assets/weapon_parts/spear c3 - serpent's tail.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_C_SPEAR_4",
@@ -1549,8 +1549,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Crystalline Staff",
     "weaponId": "WEAPON_STAFF",
     "image": "/assets/weapon_parts/staff a2 - crystal.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 200,
+    "sellPrice": 100
   },
   {
     "id": "WEAPON_PART_A_STAFF_3",
@@ -1561,8 +1561,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Evergreen Staff",
     "weaponId": "WEAPON_STAFF",
     "image": "/assets/weapon_parts/staff a3 - evergreen.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 200,
+    "sellPrice": 100
   },
   {
     "id": "WEAPON_PART_A_STAFF_4",
@@ -1573,8 +1573,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Ashen Staff",
     "weaponId": "WEAPON_STAFF",
     "image": "/assets/weapon_parts/staff a4 - ashen.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 200,
+    "sellPrice": 100
   },
   {
     "id": "WEAPON_PART_A_STAFF_5",
@@ -1585,8 +1585,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Guardian Staff",
     "weaponId": "WEAPON_STAFF",
     "image": "/assets/weapon_parts/staff a5 - guardian.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 300,
+    "sellPrice": 150
   },
   {
     "id": "WEAPON_PART_B_STAFF_0",
@@ -1609,8 +1609,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Greyhaven Wrap",
     "weaponId": "WEAPON_STAFF",
     "image": "/assets/weapon_parts/staff b1 - greyhaven wrap.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_B_STAFF_2",
@@ -1621,8 +1621,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Scarlet Wrap",
     "weaponId": "WEAPON_STAFF",
     "image": "/assets/weapon_parts/staff b2 - scarlet wrap.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_B_STAFF_3",
@@ -1633,8 +1633,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Rider's Wrap",
     "weaponId": "WEAPON_STAFF",
     "image": "/assets/weapon_parts/staff b3 - rider's wrap.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_B_STAFF_4",
@@ -1681,8 +1681,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Blood Vein Lacing",
     "weaponId": "WEAPON_STAFF",
     "image": "/assets/weapon_parts/staff c1 - blood vein lacing.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_C_STAFF_2",
@@ -1693,8 +1693,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Stormwind Lacing",
     "weaponId": "WEAPON_STAFF",
     "image": "/assets/weapon_parts/staff c2 - stormfront lacing.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_C_STAFF_3",
@@ -1705,8 +1705,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Goldbloom Lacing",
     "weaponId": "WEAPON_STAFF",
     "image": "/assets/weapon_parts/staff c3 - goldbloom lacing.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_C_STAFF_4",
@@ -1765,8 +1765,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Wing Blade",
     "weaponId": "WEAPON_SWORD",
     "image": "/assets/weapon_parts/sword a2 - wing blade.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 200,
+    "sellPrice": 100
   },
   {
     "id": "WEAPON_PART_A_SWORD_3",
@@ -1777,8 +1777,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Diamond Blade",
     "weaponId": "WEAPON_SWORD",
     "image": "/assets/weapon_parts/sword a3 - diamond blade.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 200,
+    "sellPrice": 100
   },
   {
     "id": "WEAPON_PART_A_SWORD_4",
@@ -1789,8 +1789,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Lunging Blade",
     "weaponId": "WEAPON_SWORD",
     "image": "/assets/weapon_parts/sword a4 - lunging blade.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 300,
+    "sellPrice": 150
   },
   {
     "id": "WEAPON_PART_A_SWORD_5",
@@ -1801,8 +1801,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Citadel Blade",
     "weaponId": "WEAPON_SWORD",
     "image": "/assets/weapon_parts/sword a5 - citadel blade.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 200,
+    "sellPrice": 100
   },
   {
     "id": "WEAPON_PART_B_SWORD_0",
@@ -1825,8 +1825,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Northrider Guard",
     "weaponId": "WEAPON_SWORD",
     "image": "/assets/weapon_parts/sword b1 - reverberating guard.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_B_SWORD_2",
@@ -1837,8 +1837,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Westrider Guard",
     "weaponId": "WEAPON_SWORD",
     "image": "/assets/weapon_parts/sword b2 - winged guard.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_B_SWORD_3",
@@ -1849,8 +1849,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Eastrider Guard",
     "weaponId": "WEAPON_SWORD",
     "image": "/assets/weapon_parts/sword b3 - clawed guard.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_B_SWORD_4",
@@ -1897,8 +1897,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Resolute Hilt",
     "weaponId": "WEAPON_SWORD",
     "image": "/assets/weapon_parts/sword c1 - resolute hilt.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_C_SWORD_2",
@@ -1909,8 +1909,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Triumphant Hilt",
     "weaponId": "WEAPON_SWORD",
     "image": "/assets/weapon_parts/sword c2 - triumphant hilt.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_C_SWORD_3",
@@ -1921,8 +1921,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Remembrance Hilt",
     "weaponId": "WEAPON_SWORD",
     "image": "/assets/weapon_parts/sword c3 - remembrance hilt.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_C_SWORD_4",
@@ -1981,8 +1981,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Oakroot Wand",
     "weaponId": "WEAPON_WAND_OF_WINDS",
     "image": "/assets/weapon_parts/wand a2 - oakroot.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 200,
+    "sellPrice": 100
   },
   {
     "id": "WEAPON_PART_A_WAND_3",
@@ -1993,8 +1993,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Star-Touched Wand",
     "weaponId": "WEAPON_WAND_OF_WINDS",
     "image": "/assets/weapon_parts/wand a3 - star touched.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 200,
+    "sellPrice": 100
   },
   {
     "id": "WEAPON_PART_A_WAND_4",
@@ -2041,8 +2041,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Silver Vein Wrap",
     "weaponId": "WEAPON_WAND_OF_WINDS",
     "image": "/assets/weapon_parts/wand b1 - silver vein wrap.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_B_WAND_2",
@@ -2053,8 +2053,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Nature Wrap",
     "weaponId": "WEAPON_WAND_OF_WINDS",
     "image": "/assets/weapon_parts/wand b2 - nature wrap.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_B_WAND_3",
@@ -2065,8 +2065,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Magister's Wrap",
     "weaponId": "WEAPON_WAND_OF_WINDS",
     "image": "/assets/weapon_parts/wand b3 - magister's wrap.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_B_WAND_4",
@@ -2113,8 +2113,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Feather Ornament",
     "weaponId": "WEAPON_WAND_OF_WINDS",
     "image": "/assets/weapon_parts/wand c1 - feather ornament.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_C_WAND_2",
@@ -2125,8 +2125,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Claw Ornament",
     "weaponId": "WEAPON_WAND_OF_WINDS",
     "image": "/assets/weapon_parts/wand c2 - claw ornament.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_C_WAND_3",
@@ -2137,8 +2137,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Eye Ornament",
     "weaponId": "WEAPON_WAND_OF_WINDS",
     "image": "/assets/weapon_parts/wand c3 - eye ornament.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_C_WAND_4",
@@ -2185,8 +2185,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Ironthorn Warbell",
     "weaponId": "WEAPON_WARBELL",
     "image": "/assets/weapon_parts/warbell a1 - ironthorn.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 200,
+    "sellPrice": 100
   },
   {
     "id": "WEAPON_PART_A_WARBELL_2",
@@ -2197,8 +2197,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Gilded Warbell",
     "weaponId": "WEAPON_WARBELL",
     "image": "/assets/weapon_parts/warbell a2 - gilded.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 200,
+    "sellPrice": 100
   },
   {
     "id": "WEAPON_PART_A_WARBELL_3",
@@ -2209,8 +2209,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Shrieking Warbell",
     "weaponId": "WEAPON_WARBELL",
     "image": "/assets/weapon_parts/warbell a3 - shrieking.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 200,
+    "sellPrice": 100
   },
   {
     "id": "WEAPON_PART_A_WARBELL_4",
@@ -2257,8 +2257,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Talon Grip",
     "weaponId": "WEAPON_WARBELL",
     "image": "/assets/weapon_parts/warbell b1 - talon grip.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_B_WARBELL_2",
@@ -2269,8 +2269,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Jeweled Grip",
     "weaponId": "WEAPON_WARBELL",
     "image": "/assets/weapon_parts/warbell b2 - jeweled grip.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_B_WARBELL_3",
@@ -2281,8 +2281,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Spiked Grip",
     "weaponId": "WEAPON_WARBELL",
     "image": "/assets/weapon_parts/warbell b3 - spiked grip.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_B_WARBELL_4",
@@ -2329,8 +2329,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Reinforced Haft",
     "weaponId": "WEAPON_WARBELL",
     "image": "/assets/weapon_parts/warbell c1 - reinforced haft.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_C_WARBELL_2",
@@ -2341,8 +2341,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Inscribed Haft",
     "weaponId": "WEAPON_WARBELL",
     "image": "/assets/weapon_parts/warbell c2 - inscribed haft.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_C_WARBELL_3",
@@ -2353,8 +2353,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Ringing Haft",
     "weaponId": "WEAPON_WARBELL",
     "image": "/assets/weapon_parts/warbell c3 - ringing haft.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_C_WARBELL_4",
@@ -2413,8 +2413,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Avenging Warhammer",
     "weaponId": "WEAPON_WAR_HAMMER",
     "image": "/assets/weapon_parts/warhammer a2 - avenging.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 200,
+    "sellPrice": 100
   },
   {
     "id": "WEAPON_PART_A_WARHAMMER_3",
@@ -2425,8 +2425,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Marshal's Warhammer",
     "weaponId": "WEAPON_WAR_HAMMER",
     "image": "/assets/weapon_parts/warhammer a3 - marshal's.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 200,
+    "sellPrice": 100
   },
   {
     "id": "WEAPON_PART_A_WARHAMMER_4",
@@ -2437,8 +2437,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Sundering Warhammer",
     "weaponId": "WEAPON_WAR_HAMMER",
     "image": "/assets/weapon_parts/warhammer a4 - sundering.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 200,
+    "sellPrice": 100
   },
   {
     "id": "WEAPON_PART_A_WARHAMMER_5",
@@ -2449,8 +2449,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Quaking Warhammer",
     "weaponId": "WEAPON_WAR_HAMMER",
     "image": "/assets/weapon_parts/warhammer a5 - quaking.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 300,
+    "sellPrice": 150
   },
   {
     "id": "WEAPON_PART_B_WARHAMMER_0",
@@ -2473,8 +2473,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Fortified Haft",
     "weaponId": "WEAPON_WAR_HAMMER",
     "image": "/assets/weapon_parts/warhammer b1 - fortified haft.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_B_WARHAMMER_2",
@@ -2485,8 +2485,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Deadman's Haft",
     "weaponId": "WEAPON_WAR_HAMMER",
     "image": "/assets/weapon_parts/warhammer b2 - deadman's haft.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_B_WARHAMMER_3",
@@ -2497,8 +2497,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Dragonscale Haft",
     "weaponId": "WEAPON_WAR_HAMMER",
     "image": "/assets/weapon_parts/warhammer b3 - dragonscale haft.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_B_WARHAMMER_4",
@@ -2545,8 +2545,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Tenderizer Pommel",
     "weaponId": "WEAPON_WAR_HAMMER",
     "image": "/assets/weapon_parts/warhammer c1 - tenderizer pommel.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_C_WARHAMMER_2",
@@ -2557,8 +2557,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Talon Pommel",
     "weaponId": "WEAPON_WAR_HAMMER",
     "image": "/assets/weapon_parts/warhammer c2 - talon pommel.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_C_WARHAMMER_3",
@@ -2569,8 +2569,8 @@ export const WEAPON_PARTS = [
     "nameEn": "Sahe Pommel",
     "weaponId": "WEAPON_WAR_HAMMER",
     "image": "/assets/weapon_parts/warhammer c3 - sahe pommel.png",
-    "buyPrice": null,
-    "sellPrice": null
+    "buyPrice": 120,
+    "sellPrice": 60
   },
   {
     "id": "WEAPON_PART_C_WARHAMMER_4",
