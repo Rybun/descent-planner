@@ -3,6 +3,8 @@ import { useStore } from '../store';
 import { MATERIALS, MATERIALS_BY_ID } from '../gamedata/materials';
 import { WEAPON_PARTS_BY_ID } from '../gamedata/weaponParts';
 import { ALL_ITEMS_BY_ID } from '../gamedata/items';
+import { DESCRIPTIONS } from '../gamedata/descriptions';
+import Tooltip from './Tooltip';
 import './ShopPanel.css';
 
 export default function ShopPanel() {
@@ -41,8 +43,17 @@ export default function ShopPanel() {
     return gameState.gold >= price * qty;
   }
 
+  function isSellable(price) {
+    // Solo vendible si tiene precio de venta real (no null, no undefined)
+    return price !== null && price !== undefined;
+  }
+
   function getCustomQty(key, def = 1) {
     return customQty[key] || def;
+  }
+
+  function getDesc(id) {
+    return DESCRIPTIONS[id] || '';
   }
 
   // Inventario agrupado
@@ -52,8 +63,11 @@ export default function ShopPanel() {
     inventoryGroups[item.id]++;
   }
 
-  // Ítems disponibles en tienda (que podemos comprar)
+  // Ítems disponibles en tienda — SOLO los del save actual
   const shopAvailableItems = gameState.availableItemIds;
+
+  // Materiales: mostrar todos (siempre disponibles en el mercader)
+  // pero solo con acciones según precio disponible
 
   return (
     <div className="shop-panel">
@@ -92,12 +106,14 @@ export default function ShopPanel() {
             return (
               <div key={mat.id} className="material-card">
                 <div className="material-header">
-                  <img
-                    src={mat.image}
-                    alt={mat.name}
-                    className="material-img"
-                    onError={e => e.target.style.display = 'none'}
-                  />
+                  <Tooltip text={getDesc(mat.id)}>
+                    <img
+                      src={mat.image}
+                      alt={mat.name}
+                      className="material-img"
+                      onError={e => e.target.style.display = 'none'}
+                    />
+                  </Tooltip>
                   <div className="material-info">
                     <span className="material-name">{mat.name}</span>
                     <span className="material-qty">×{qty}</span>
@@ -113,55 +129,55 @@ export default function ShopPanel() {
                   <span className="price-value">{formatPrice(sellPrice)}</span>
                 </div>
 
-                <div className="action-row">
-                  <div className="qty-input-group">
-                    <button
-                      className="btn btn-sm"
-                      onClick={() => buyMaterial(mat.id, 1)}
-                      disabled={!canAfford(buyPrice, 1)}
-                      title="Comprar ×1"
-                    >
-                      +1
-                    </button>
-                    <button
-                      className="btn btn-sm"
-                      onClick={() => buyMaterial(mat.id, 5)}
-                      disabled={!canAfford(buyPrice, 5)}
-                      title="Comprar ×5"
-                    >
-                      +5
-                    </button>
-                    <input
-                      type="number"
-                      min="1"
-                      max="99"
-                      value={cq}
-                      onChange={e => setCustomQty(prev => ({ ...prev, [customQtyKey]: Number(e.target.value) }))}
-                      className="qty-input"
-                    />
-                    <button
-                      className="btn btn-sm btn-primary"
-                      onClick={() => buyMaterial(mat.id, cq)}
-                      disabled={!canAfford(buyPrice, cq)}
-                    >
-                      Comprar
-                    </button>
+                {buyPrice !== null && (
+                  <div className="action-row">
+                    <div className="qty-input-group">
+                      <button
+                        className="btn btn-sm"
+                        onClick={() => buyMaterial(mat.id, 1)}
+                        disabled={!canAfford(buyPrice, 1)}
+                        title="Comprar ×1"
+                      >
+                        +1
+                      </button>
+                      <button
+                        className="btn btn-sm"
+                        onClick={() => buyMaterial(mat.id, 5)}
+                        disabled={!canAfford(buyPrice, 5)}
+                        title="Comprar ×5"
+                      >
+                        +5
+                      </button>
+                      <input
+                        type="number"
+                        min="1"
+                        max="99"
+                        value={cq}
+                        onChange={e => setCustomQty(prev => ({ ...prev, [customQtyKey]: Number(e.target.value) }))}
+                        className="qty-input"
+                      />
+                      <button
+                        className="btn btn-sm btn-primary"
+                        onClick={() => buyMaterial(mat.id, cq)}
+                        disabled={!canAfford(buyPrice, cq)}
+                      >
+                        Comprar
+                      </button>
+                    </div>
                   </div>
-                </div>
+                )}
 
-                {qty > 0 && (
+                {qty > 0 && isSellable(sellPrice) && (
                   <div className="sell-row">
                     <button
                       className="btn btn-sm btn-danger"
                       onClick={() => sellMaterial(mat.id, 1)}
-                      disabled={qty < 1}
                     >
                       Vender ×1
                     </button>
                     <button
                       className="btn btn-sm btn-danger"
                       onClick={() => sellMaterial(mat.id, qty)}
-                      disabled={qty < 1}
                     >
                       Vender todo ({qty})
                     </button>
@@ -194,18 +210,20 @@ export default function ShopPanel() {
                   <div key={itemId} className="shop-item-card">
                     <div className="item-header">
                       {data?.image && (
-                        <img
-                          src={data.image}
-                          alt={data.name}
-                          className="item-img-sm"
-                          onError={e => e.target.style.display = 'none'}
-                        />
+                        <Tooltip text={getDesc(itemId)}>
+                          <img
+                            src={data.image}
+                            alt={data.name}
+                            className="item-img-sm"
+                            onError={e => e.target.style.display = 'none'}
+                          />
+                        </Tooltip>
                       )}
                       <div className="item-info">
                         <span className="item-name">{data?.name || itemId}</span>
                         {part && (
                           <span className="item-tag">
-                            Parte {part.slot} · Nv.{part.level}
+                            Parte {part.slot} · Nv.{part.level} · {part.weaponType}
                           </span>
                         )}
                       </div>
@@ -243,42 +261,54 @@ export default function ShopPanel() {
                 const data = part || item;
                 const sellPrice = getPrice(itemId, 'sell');
 
+                const canSell = isSellable(sellPrice);
+
                 return (
                   <div key={itemId} className="shop-item-card">
                     <div className="item-header">
                       {data?.image && (
-                        <img
-                          src={data.image}
-                          alt={data?.name || itemId}
-                          className="item-img-sm"
-                          onError={e => e.target.style.display = 'none'}
-                        />
+                        <Tooltip text={getDesc(itemId)}>
+                          <img
+                            src={data.image}
+                            alt={data?.name || itemId}
+                            className="item-img-sm"
+                            onError={e => e.target.style.display = 'none'}
+                          />
+                        </Tooltip>
                       )}
                       <div className="item-info">
                         <span className="item-name">{data?.name || itemId}</span>
                         {part && (
                           <span className="item-tag">
-                            Parte {part.slot} · Nv.{part.level}
+                            Parte {part.slot} · Nv.{part.level} · {part.weaponType}
                           </span>
                         )}
                         {qty > 1 && <span className="item-qty-badge">×{qty}</span>}
                       </div>
                     </div>
                     <div className="item-actions">
-                      <span className="price-value sell">{formatPrice(sellPrice)}</span>
-                      <button
-                        className="btn btn-sm btn-danger"
-                        onClick={() => sellItem(itemId, 1)}
-                      >
-                        Vender ×1
-                      </button>
-                      {qty > 1 && (
-                        <button
-                          className="btn btn-sm btn-danger"
-                          onClick={() => sellItem(itemId, qty)}
-                        >
-                          Todo ({qty})
-                        </button>
+                      {canSell ? (
+                        <>
+                          <span className="price-value sell">{formatPrice(sellPrice)}</span>
+                          <button
+                            className="btn btn-sm btn-danger"
+                            onClick={() => sellItem(itemId, 1)}
+                          >
+                            Vender ×1
+                          </button>
+                          {qty > 1 && (
+                            <button
+                              className="btn btn-sm btn-danger"
+                              onClick={() => sellItem(itemId, qty)}
+                            >
+                              Todo ({qty})
+                            </button>
+                          )}
+                        </>
+                      ) : (
+                        <span className="price-value not-sellable" title="Este ítem no se puede vender al mercader">
+                          No vendible
+                        </span>
                       )}
                     </div>
                   </div>

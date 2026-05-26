@@ -1,8 +1,10 @@
 import { useStore } from '../store';
 import { WEAPON_PARTS_BY_ID } from '../gamedata/weaponParts';
-import { CONSUMABLES_BY_ID } from '../gamedata/items';
+import { CONSUMABLES_BY_ID, ALL_ITEMS_BY_ID } from '../gamedata/items';
 import { ALL_RECIPES, RECIPES_BY_ID } from '../gamedata/recipes';
 import { MATERIALS, MATERIALS_BY_ID } from '../gamedata/materials';
+import { DESCRIPTIONS } from '../gamedata/descriptions';
+import Tooltip from './Tooltip';
 import './CraftPanel.css';
 
 export default function CraftPanel() {
@@ -51,7 +53,23 @@ export default function CraftPanel() {
     const recipe = RECIPES_BY_ID[recipeId];
     if (!recipe) return null;
     const itemId = recipe.itemId;
-    return WEAPON_PARTS_BY_ID[itemId] || CONSUMABLES_BY_ID[itemId] || null;
+    // Intentar con el itemId exacto; si no, con el ID base (sin _UPGRADED / _PLUS)
+    const baseId = itemId.replace(/_UPGRADED$/, '').replace(/_PLUS$/, '');
+    return (
+      WEAPON_PARTS_BY_ID[itemId] ||
+      WEAPON_PARTS_BY_ID[baseId] ||
+      CONSUMABLES_BY_ID[itemId] ||
+      CONSUMABLES_BY_ID[baseId] ||
+      ALL_ITEMS_BY_ID[itemId] ||
+      ALL_ITEMS_BY_ID[baseId] ||
+      null
+    );
+  }
+
+  function getDesc(id) {
+    if (!id) return '';
+    const base = id.replace(/_UPGRADED$/, '').replace(/_PLUS$/, '');
+    return DESCRIPTIONS[base] || DESCRIPTIONS[id] || '';
   }
 
   function isAlreadyCrafted(recipeId) {
@@ -95,19 +113,28 @@ export default function CraftPanel() {
               >
                 <div className="recipe-header">
                   {item?.image && (
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="recipe-img"
-                      onError={e => e.target.style.display = 'none'}
-                    />
+                    <Tooltip text={getDesc(recipe?.itemId)}>
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="recipe-img"
+                        onError={e => e.target.style.display = 'none'}
+                      />
+                    </Tooltip>
                   )}
                   <div className="recipe-info">
-                    <span className="recipe-name">{item?.name || recipeId}</span>
+                    <span className="recipe-name">
+                      {item?.name
+                        ? `${item.name} +`
+                        : recipeId}
+                    </span>
                     {item && 'slot' in item && (
                       <span className="recipe-tag">
-                        Parte {item.slot} · Nv.{item.level} · {item.weaponType}
+                        Mejora · Slot {item.slot} · Nv.{item.level} → {item.level + 1} · {item.weaponType}
                       </span>
+                    )}
+                    {item && !('slot' in item) && (
+                      <span className="recipe-tag">Versión mejorada</span>
                     )}
                     {crafted && <span className="crafted-badge">✓ Crafteado</span>}
                   </div>
@@ -121,21 +148,21 @@ export default function CraftPanel() {
                       const ok = have >= qty;
                       const mat = MATERIALS_BY_ID[matId];
                       return (
-                        <span
-                          key={matId}
-                          className={`ingredient-badge ${ok ? 'ok' : 'missing'}`}
-                          title={`${mat?.name || matId}: ${have}/${qty}`}
-                        >
-                          {mat?.image && (
-                            <img
-                              src={mat.image}
-                              alt=""
-                              className="ingredient-icon"
-                              onError={e => e.target.style.display = 'none'}
-                            />
-                          )}
-                          {mat?.name || matId} {have}/{qty}
-                        </span>
+                        <Tooltip key={matId} text={DESCRIPTIONS[matId]}>
+                          <span
+                            className={`ingredient-badge ${ok ? 'ok' : 'missing'}`}
+                          >
+                            {mat?.image && (
+                              <img
+                                src={mat.image}
+                                alt=""
+                                className="ingredient-icon"
+                                onError={e => e.target.style.display = 'none'}
+                              />
+                            )}
+                            {mat?.name || matId} {have}/{qty}
+                          </span>
+                        </Tooltip>
                       );
                     })}
                   </div>
@@ -196,12 +223,14 @@ export default function CraftPanel() {
             if (qty === 0) return null;
             return (
               <span key={m.id} className="mat-chip">
-                <img
-                  src={m.image}
-                  alt={m.name}
-                  className="mat-chip-img"
-                  onError={e => e.target.style.display = 'none'}
-                />
+                <Tooltip text={DESCRIPTIONS[m.id]}>
+                  <img
+                    src={m.image}
+                    alt={m.name}
+                    className="mat-chip-img"
+                    onError={e => e.target.style.display = 'none'}
+                  />
+                </Tooltip>
                 {m.name} ×{qty}
               </span>
             );
