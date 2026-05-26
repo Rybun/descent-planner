@@ -1,0 +1,236 @@
+.shop-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.shop-tabs {
+  display: flex;
+  gap: var(--spacing-xs);
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: var(--spacing-xs);
+}
+
+.tab-btn {
+  background: none;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  padding: var(--spacing-xs) var(--spacing-md);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.15s;
+}
+
+.tab-btn:hover {
+  color: var(--color-text);
+  background: var(--color-surface);
+}
+
+.tab-btn.active {
+  color: var(--color-gold);
+  border-color: var(--color-border);
+  border-bottom-color: var(--color-bg-main);
+  background: var(--color-bg-main);
+  font-weight: 600;
+  margin-bottom: -1px;
+}
+
+.materials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.material-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  transition: border-color 0.15s;
+}
+
+.material-card:hover {
+  border-color: var(--color-border-hover);
+}
+
+.material-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.material-img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-raised);
+}
+
+.material-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.material-name {
+  font-weight: 600;
+  color: var(--color-text);
+  font-size: 0.95rem;
+}
+
+.material-qty {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-gold);
+}
+
+.price-row {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-size: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.price-label {
+  color: var(--color-text-muted);
+}
+
+.price-value {
+  font-weight: 600;
+  color: var(--color-text);
+  min-width: 32px;
+}
+
+.price-value.price-cant-afford {
+  color: var(--color-danger-light);
+}
+
+.action-row {
+  display: flex;
+  gap: var(--spacing-xs);
+  flex-wrap: wrap;
+}
+
+.qty-input-group {
+  display: flex;
+  gap: var(--spacing-xs);
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.qty-input {
+  width: 48px;
+  padding: 4px 6px;
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+.sell-row {
+  display: flex;
+  gap: var(--spacing-xs);
+  flex-wrap: wrap;
+}
+
+.shop-items,
+.inventory-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.items-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.shop-item-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-sm) var(--spacing-md);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-md);
+  transition: border-color 0.15s;
+}
+
+.shop-item-card:hover {
+  border-color: var(--color-border-hover);
+}
+
+.item-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  flex: 1;
+  min-width: 0;
+}
+
+.item-img-sm {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-raised);
+  flex-shrink: 0;
+}
+
+.item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.item-name {
+  font-weight: 600;
+  color: var(--color-text);
+  font-size: 0.9rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.item-tag {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.item-qty-badge {
+  font-size: 0.75rem;
+  background: var(--color-gold);
+  color: var(--color-bg);
+  padding: 1px 6px;
+  border-radius: 99px;
+  font-weight: 700;
+  align-self: flex-start;
+}
+
+.item-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  flex-shrink: 0;
+}
+
+.price-value.sell {
+  color: var(--color-success);
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--color-text-muted);
+  padding: var(--spacing-xl);
+  font-size: 0.9rem;
+}

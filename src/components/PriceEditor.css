@@ -1,0 +1,186 @@
+.price-editor {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+/* ======= HEADER ======= */
+
+.pe-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.pe-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.pe-custom-count {
+  font-size: 0.75rem;
+  color: var(--color-gold);
+  font-weight: 600;
+}
+
+/* ======= TABS ======= */
+
+.pe-tabs {
+  display: flex;
+  gap: var(--spacing-xs);
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: var(--spacing-xs);
+}
+
+/* Reutiliza .tab-btn de ShopPanel.css a través del scope global */
+
+/* ======= SEARCH ======= */
+
+.pe-search {
+  width: 100%;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  font-size: 0.875rem;
+  outline: none;
+  transition: border-color 0.15s;
+  box-sizing: border-box;
+}
+
+.pe-search:focus {
+  border-color: var(--color-gold);
+}
+
+.pe-search::placeholder {
+  color: var(--color-text-disabled);
+}
+
+/* ======= TABLE ======= */
+
+.pe-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.pe-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.pe-table thead {
+  background: var(--color-surface-raised);
+}
+
+.pe-table th {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  text-align: left;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.pe-table td {
+  padding: 4px var(--spacing-sm);
+  border-bottom: 1px solid var(--color-border);
+  vertical-align: middle;
+}
+
+.pe-table tr:last-child td {
+  border-bottom: none;
+}
+
+.pe-table tbody tr {
+  background: var(--color-surface);
+  transition: background 0.1s;
+}
+
+.pe-table tbody tr:hover {
+  background: var(--color-surface-raised);
+}
+
+.pe-table tbody tr.row-custom {
+  background: rgba(var(--color-gold-rgb), 0.04);
+}
+
+.col-name {
+  min-width: 180px;
+}
+
+.col-price {
+  width: 90px;
+}
+
+.col-reset {
+  width: 36px;
+  text-align: center;
+}
+
+.pe-item-name {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.pe-item-tag {
+  font-size: 0.7rem;
+  color: var(--color-text-disabled);
+}
+
+.pe-price-input {
+  width: 70px;
+  padding: 3px 6px;
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  font-size: 0.85rem;
+  text-align: right;
+  transition: border-color 0.15s;
+  outline: none;
+}
+
+.pe-price-input:focus {
+  border-color: var(--color-gold);
+}
+
+.pe-price-input::placeholder {
+  color: var(--color-text-disabled);
+}
+
+.pe-reset-btn {
+  background: none;
+  border: 1px solid transparent;
+  color: var(--color-text-disabled);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  padding: 1px 5px;
+  font-size: 0.75rem;
+  transition: all 0.1s;
+}
+
+.pe-reset-btn:hover {
+  color: var(--color-danger-light);
+  border-color: var(--color-danger);
+}
+
+.pe-empty {
+  text-align: center;
+  color: var(--color-text-disabled);
+  padding: var(--spacing-lg);
+}

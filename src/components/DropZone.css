@@ -1,0 +1,120 @@
+.dropzone-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: var(--spacing-xl);
+  gap: var(--spacing-lg);
+  background: var(--color-bg);
+}
+
+.dropzone-brand {
+  display: flex;
+  gap: var(--spacing-sm);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.brand-hero {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid var(--color-gold);
+  background: var(--color-surface);
+}
+
+.dropzone-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-gold);
+  text-align: center;
+  margin: 0;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+}
+
+.dropzone-subtitle {
+  color: var(--color-text-muted);
+  text-align: center;
+  margin: 0;
+  font-size: 1rem;
+}
+
+.drop-area {
+  border: 2px dashed var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl) var(--spacing-2xl);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: var(--color-surface);
+  min-width: 340px;
+}
+
+.drop-area:hover,
+.drop-area.drag-over {
+  border-color: var(--color-gold);
+  background: var(--color-surface-raised);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+
+.drop-area.drag-over {
+  border-style: solid;
+  background: rgba(var(--color-gold-rgb), 0.08);
+}
+
+.drop-icon {
+  font-size: 2.5rem;
+}
+
+.drop-label {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.drop-hint {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.error-banner {
+  background: rgba(var(--color-danger-rgb), 0.15);
+  border: 1px solid var(--color-danger);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md) var(--spacing-lg);
+  color: var(--color-danger-light);
+  max-width: 480px;
+  text-align: center;
+}
+
+.dropzone-help {
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+  max-width: 480px;
+}
+
+.dropzone-help h3 {
+  color: var(--color-text);
+  font-size: 0.875rem;
+  margin-bottom: var(--spacing-xs);
+}
+
+.dropzone-help p {
+  margin: var(--spacing-xs) 0;
+}
+
+.dropzone-help code {
+  background: var(--color-surface);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+}
