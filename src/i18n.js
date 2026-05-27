@@ -925,6 +925,11 @@ export function useLang() {
  */
 export function getName(item, lang) {
   if (!item) return '';
+  // Formato nuevo: names: { es, en, fr, it, pt }
+  if (item.names) {
+    return item.names[lang] || item.names.en || item.names.es || item.id || '';
+  }
+  // Retrocompatibilidad con formato antiguo name/nameEn
   if (lang === 'es') return item.name || item.nameEn || item.id || '';
   return item.nameEn || item.name || item.id || '';
 }

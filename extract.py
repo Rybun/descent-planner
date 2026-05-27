@@ -85,6 +85,9 @@ LANG_MARKERS = {
     "it": b"Arco di Legnosangue",
 }
 
+# Idiomas soportados (en el mismo orden que el selector del planner)
+LANGS = ["es", "en", "fr", "it", "pt"]
+
 # ──────────────────────────────────────────────────────────────────────────────
 # Detección de ruta del juego
 # ──────────────────────────────────────────────────────────────────────────────
@@ -228,6 +231,11 @@ def scan_items(env):
                             qty = int(getattr(ing, "Qty", 0) or 0)
                             ingredients[mat_map[mat_pid]] = qty
 
+            # Stats de partes de arma (sólo en versiones UPGRADE con daño real)
+            damage   = int(getattr(d, "Damage",   0) or 0)
+            traits   = [int(t) for t in (getattr(d, "Traits", None) or [])]
+            is_promo = int(getattr(d, "IsPromo",  0) or 0)
+
             entry = {
                 "baseItemId":  bid,
                 "craftedId":   crafted_id,
@@ -237,6 +245,9 @@ def scan_items(env):
                 "value":       value,
                 "isUpgrade":   is_upgrade,
                 "ingredients": ingredients,
+                "damage":      damage,
+                "traits":      traits,
+                "isPromo":     is_promo,
             }
 
             if is_upgrade:
@@ -396,7 +407,25 @@ def _find_weapon_part_image(wtype, slot, level, planner_dir):
 # Generación de weaponParts.js
 # ──────────────────────────────────────────────────────────────────────────────
 
-def generate_weapon_parts_js(items, recipes, loc_es, loc_en, planner_dir):
+def _make_names(locs, *keys, es_fallback=""):
+    """Construye el dict names para todos los idiomas probando las claves en orden."""
+    result = {}
+    for lang in LANGS:
+        loc = locs.get(lang, {})
+        val = ""
+        for key in keys:
+            if key:
+                v = loc.get(key, "")
+                if v:
+                    val = v
+                    break
+        if not val and lang == "es" and es_fallback:
+            val = es_fallback
+        result[lang] = val
+    return result
+
+
+def generate_weapon_parts_js(items, recipes, locs, planner_dir):
     """Genera src/gamedata/weaponParts.js"""
     parts = {}  # id → part dict
 
@@ -420,12 +449,13 @@ def generate_weapon_parts_js(items, recipes, loc_es, loc_en, planner_dir):
                 "slot":       slot,
                 "weaponType": wtype,
                 "level":      0,
-                "name":       loc_es.get(pid, f"{wtype.replace('_',' ').title()} {slot}0"),
-                "nameEn":     loc_en.get(pid, ""),
+                "names":      _make_names(locs, pid, es_fallback=f"{wtype.replace('_',' ').title()} {slot}0"),
                 "weaponId":   WEAPON_TYPE_TO_ID.get(wtype, f"WEAPON_{wtype}"),
                 "image":      None,
                 "buyPrice":   None,
                 "sellPrice":  None,
+                "damage":     0,
+                "traits":     [],
             }
 
     # Crear ítems de nivel 1-5 a partir de las recetas.
@@ -456,34 +486,48 @@ def generate_weapon_parts_js(items, recipes, loc_es, loc_en, planner_dir):
         sell_price = None
         buy_price  = None
 
+        # Stats de daño: la versión UPGRADED tiene upgraded_damage; la base tiene upgraded_damage - 1
+        # (la mejora de una pieza siempre añade exactamente 1 dado de ataque extra)
+        upgraded_damage = rec.get("damage", 0)
+        traits          = rec.get("traits", [])
+        is_promo        = rec.get("isPromo", 0)
+        base_damage     = max(0, upgraded_damage - 1) if upgraded_damage > 0 else 0
+
         parts[pid] = {
             "id":         pid,
             "slot":       slot,
             "weaponType": wtype,
             "level":      level,
-            "name":       loc_es.get(name_key, loc_es.get(pid, pid)),
-            "nameEn":     loc_en.get(name_key, loc_en.get(pid, "")),
+            "names":      _make_names(locs, name_key, pid, es_fallback=pid),
             "weaponId":   WEAPON_TYPE_TO_ID.get(wtype, f"WEAPON_{wtype}"),
             "image":      image,
             "buyPrice":   buy_price,
             "sellPrice":  sell_price,
+            "damage":     base_damage,
+            "traits":     traits,
         }
 
-        # También crear la versión UPGRADED
+        # También crear la versión UPGRADED (con el daño completo de los assets)
         uid = f"{pid}_UPGRADED"
         crafted_id = rec.get("craftedId", uid)
-        parts[uid] = {
+        base_names = parts[pid]["names"]
+        upg_key = rec["keyName"] if rec["keyName"] else None
+        upg_entry = {
             "id":         uid,
             "slot":       slot,
             "weaponType": wtype,
             "level":      level,
-            "name":       loc_es.get(rec["keyName"], loc_es.get(pid, pid)) + " ✦" if rec["keyName"] else parts[pid]["name"] + " ✦",
-            "nameEn":     loc_en.get(rec["keyName"], loc_en.get(pid, "")) + " ✦" if rec["keyName"] else parts[pid]["nameEn"] + " ✦",
+            "names":      {lang: (_make_names(locs, upg_key, pid, es_fallback=pid)[lang] if upg_key else base_names[lang]) + " ✦" for lang in LANGS},
             "weaponId":   WEAPON_TYPE_TO_ID.get(wtype, f"WEAPON_{wtype}"),
             "image":      image,  # misma imagen que la base
             "buyPrice":   None,
             "sellPrice":  None,
+            "damage":     upgraded_damage,
+            "traits":     traits,
         }
+        if is_promo:
+            upg_entry["isPromo"] = 1
+        parts[uid] = upg_entry
 
     # Ordenar: por weaponType, slot, level
     sort_key = lambda p: (p["weaponType"], p["slot"], p["level"], p["id"].endswith("_UPGRADED"))
@@ -508,7 +552,7 @@ def generate_weapon_parts_js(items, recipes, loc_es, loc_en, planner_dir):
 # Generación de materials.js
 # ──────────────────────────────────────────────────────────────────────────────
 
-def generate_materials_js(env, loc_es, loc_en, planner_dir):
+def generate_materials_js(env, locs, planner_dir):
     """Genera src/gamedata/materials.js"""
     mats = {}
 
@@ -529,8 +573,7 @@ def generate_materials_js(env, loc_es, loc_en, planner_dir):
 
             mats[key] = {
                 "id":        key,
-                "name":      loc_es.get(key, key),
-                "nameEn":    loc_en.get(key, ""),
+                "names":     _make_names(locs, key, es_fallback=key),
                 "image":     image,
                 "sellPrice": None,
                 "buyPrice":  None,
@@ -558,23 +601,23 @@ def generate_materials_js(env, loc_es, loc_en, planner_dir):
 # Generación de items.js (armaduras, consumibles, amuletos)
 # ──────────────────────────────────────────────────────────────────────────────
 
-def generate_items_js(env, loc_es, loc_en, planner_dir):
+def generate_items_js(env, locs, planner_dir):
     """Genera src/gamedata/items.js"""
     armors      = {}
     consumables = {}
     trinkets    = {}
 
     ITEM_CATEGORIES = [
-        ("assets/d3/armor/",       armors,      "armor"),
-        ("assets/d3/consumables/", consumables, "consumables"),
-        ("assets/d3/trinkets/",    trinkets,    "trinkets"),
+        ("assets/d3/armor/",       armors,      "armor",      "armor"),
+        ("assets/d3/consumables/", consumables, "consumables","consumable"),
+        ("assets/d3/trinkets/",    trinkets,    "trinkets",   "trinket"),
     ]
 
     for container_path, obj in env.container.items():
         if not (container_path.endswith(".asset") and obj.type.name == "MonoBehaviour"):
             continue
 
-        for prefix, target_dict, folder in ITEM_CATEGORIES:
+        for prefix, target_dict, folder, item_type in ITEM_CATEGORIES:
             if not container_path.startswith(prefix):
                 continue
             try:
@@ -596,8 +639,8 @@ def generate_items_js(env, loc_es, loc_en, planner_dir):
 
                 target_dict[bid] = {
                     "id":        bid,
-                    "name":      loc_es.get(name_key, loc_es.get(bid, bid)),
-                    "nameEn":    loc_en.get(name_key, loc_en.get(bid, "")),
+                    "type":      item_type,
+                    "names":     _make_names(locs, name_key, bid, es_fallback=bid),
                     "image":     image,
                     "buyPrice":  buy_price,
                     "sellPrice": sell_price,
@@ -851,8 +894,9 @@ def generate_recipes_js(recipes, planner_dir):
 # Generación de descriptions.js
 # ──────────────────────────────────────────────────────────────────────────────
 
-def generate_descriptions_js(loc_es, planner_dir):
+def generate_descriptions_js(locs, planner_dir):
     """Genera src/gamedata/descriptions.js con todas las descripciones en ES."""
+    loc_es = locs.get("es", {})
     # Filtrar sólo claves de descripción (_DESC suffix)
     descs = {}
     for key, val in loc_es.items():
@@ -880,7 +924,6 @@ def generate_descriptions_js(loc_es, planner_dir):
 def main():
     parser = argparse.ArgumentParser(description="Extractor de recursos — Descent: Legends of the Dark")
     parser.add_argument("--game-path",  help="Ruta a la instalación del juego")
-    parser.add_argument("--lang",       default="es", choices=["es", "en", "fr", "it", "pt"], help="Idioma de localización (defecto: es)")
     parser.add_argument("--no-images",  action="store_true", help="No extraer imágenes (sólo regenerar JS)")
     parser.add_argument("--overwrite",  action="store_true", help="Sobreescribir imágenes existentes")
     args = parser.parse_args()
@@ -901,31 +944,25 @@ def main():
     print(f"{'='*60}")
     print(f"  Juego:    {game_path}")
     print(f"  Planner:  {planner_dir}")
-    print(f"  Idioma:   {args.lang}")
+    print(f"  Idiomas:  {', '.join(LANGS)}")
     print(f"{'='*60}\n")
 
-    # ── 1. Localización ──────────────────────────────────────────────────────
+    # ── 1. Localización (todos los idiomas) ──────────────────────────────────
     print("[1/5] Cargando localización...")
 
-    loc_bundle_es = find_localization_bundle(bundle_dir, "es")
-    loc_bundle_en = find_localization_bundle(bundle_dir, "en")
+    locs = {}
+    for lang in LANGS:
+        bundle = find_localization_bundle(bundle_dir, lang)
+        if bundle:
+            locs[lang] = parse_localization(bundle)
+            print(f"  ✓ {lang.upper()}: {len(locs[lang])} entradas")
+        else:
+            locs[lang] = {}
+            print(f"  ✗ {lang.upper()}: bundle no encontrado")
 
-    if not loc_bundle_es and not loc_bundle_en:
-        print("  ✗ No se encontró bundle de localización")
+    if not any(locs.values()):
+        print("  ✗ No se encontró ningún bundle de localización")
         sys.exit(1)
-
-    loc_bundle = loc_bundle_es or loc_bundle_en
-    loc_primary = parse_localization(loc_bundle)
-
-    if args.lang == "en" and loc_bundle_en:
-        loc_primary = parse_localization(loc_bundle_en)
-        loc_en_data = loc_primary
-    else:
-        loc_en_data = parse_localization(loc_bundle_en) if loc_bundle_en else {}
-
-    loc_es_data = loc_primary if args.lang == "es" else (parse_localization(loc_bundle_es) if loc_bundle_es else {})
-
-    print(f"  ✓ ES: {len(loc_es_data)} entradas | EN: {len(loc_en_data)} entradas")
 
     # ── 2. Cargar bundles ────────────────────────────────────────────────────
     print("\n[2/5] Cargando bundles de Unity...")
@@ -944,11 +981,11 @@ def main():
 
     # ── 5. Generar JS ────────────────────────────────────────────────────────
     print("\n[5/5] Generando archivos JS...")
-    generate_weapon_parts_js(items, recipes, loc_es_data, loc_en_data, planner_dir)
-    generate_materials_js(env, loc_es_data, loc_en_data, planner_dir)
-    generate_items_js(env, loc_es_data, loc_en_data, planner_dir)
+    generate_weapon_parts_js(items, recipes, locs, planner_dir)
+    generate_materials_js(env, locs, planner_dir)
+    generate_items_js(env, locs, planner_dir)
     generate_recipes_js(recipes, planner_dir)
-    generate_descriptions_js(loc_es_data, planner_dir)
+    generate_descriptions_js(locs, planner_dir)
 
     print(f"\n{'='*60}")
     print("  ¡Extracción completada!")

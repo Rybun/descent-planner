@@ -167,11 +167,11 @@
 
 .weapon-img-badges {
   position: absolute;
-  bottom: 6px;
-  right: 6px;
+  top: 6px;
+  left: 6px;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: flex-start;
   gap: 3px;
 }
 
@@ -345,6 +345,150 @@
   object-fit: contain;
   flex-shrink: 0;
   filter: drop-shadow(0 1px 3px rgba(0,0,0,0.4));
+}
+
+/* ======= OVERLAY DE STATS EN IMAGEN DEL ARMA ======= */
+
+.weapon-stats-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 5px 6px;
+  gap: 4px;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.weapon-stats-left,
+.weapon-stats-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.weapon-stats-right {
+  align-items: flex-end;
+}
+
+/* ── Badge base ── */
+/*
+  Las esquinas se inyectan como <img> con position:absolute + width/height
+  explícitos → siempre exactamente 24×25 px, sin escalar.
+*/
+.stat-badge {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  /* padding mínimo para que el contenido no tape las esquinas (12×13 px) */
+  padding: 14px 13px;
+}
+
+/* Fondo interior: retranqueado por el alto de bordes (13px) y ancho (12px) */
+.stat-badge::before {
+  content: '';
+  position: absolute;
+  top: 13px;
+  bottom: 13px;
+  left: 12px;
+  right: 12px;
+  background: #000;
+  z-index: 0;
+}
+
+/* <img> esquinas absolutas */
+.stat-badge .sc {
+  position: absolute;
+  width: 12px;
+  height: 13px;
+  display: block;
+  pointer-events: none;
+}
+.stat-badge .sc-tl { top: 0; left: 0; }
+.stat-badge .sc-tr { top: 0; right: 0; }
+.stat-badge .sc-bl { bottom: 0; left: 0; }
+.stat-badge .sc-br { bottom: 0; right: 0; }
+
+/* <div> bordes absolutos — background-size:100% 100% estira el píxel entre esquinas */
+.stat-badge .se {
+  position: absolute;
+  pointer-events: none;
+}
+/* Borde superior: entre esquina TL y TR, 13px de alto */
+.stat-badge .se-t { top: 0; left: 12px; right: 12px; height: 13px; }
+/* Borde inferior: igual en la parte baja */
+.stat-badge .se-b { bottom: 0; left: 12px; right: 12px; height: 13px; }
+/* Borde izquierdo: entre TL y BL, 12px de ancho */
+.stat-badge .se-l { left: 0; top: 13px; bottom: 13px; width: 12px; }
+/* Borde derecho: igual en la parte derecha */
+.stat-badge .se-r { right: 0; top: 13px; bottom: 13px; width: 12px; }
+
+/* Contenido del badge — delante de las esquinas */
+.stat-badge .sbc {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+}
+
+/* Tipo de daño: icono arriba, texto abajo (columna) */
+.stat-badge-type .sbc {
+  flex-direction: column;
+}
+
+/* Daño / Rango: número + icono en línea (fila) */
+.stat-badge-inline .sbc {
+  flex-direction: row;
+}
+
+/* Icono base (rango y daño) */
+.stat-badge-icon {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+/* Icono de tipo de daño — más grande aún */
+.stat-badge-type .stat-badge-icon {
+  width: 44px;
+  height: 44px;
+}
+
+.stat-badge-num {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1;
+}
+
+.stat-badge-text {
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+  letter-spacing: 0.05em;
+  line-height: 1.25;
+  white-space: pre-line;
+}
+
+/* ── Badge de promo (en .weapon-img-badges) ── */
+.badge-promo {
+  font-size: 0.65rem;
+  font-weight: 700;
+  background: rgba(var(--color-gold-rgb), 0.2);
+  color: var(--color-gold);
+  padding: 1px 5px;
+  border-radius: 99px;
+  border: 1px solid var(--color-gold);
 }
 
 /* ======= RESPONSIVE ======= */

@@ -11,6 +11,12 @@ import './App.css';
 
 const TAB_KEYS = ['partida', 'armeria', 'tienda', 'crafteo', 'historial'];
 
+const TAB_ICONS = {
+  armeria:  '/assets/icons/tab_armeria.png',
+  tienda:   '/assets/icons/tab_tienda.png',
+  crafteo:  '/assets/icons/tab_creacion.png',
+};
+
 function GoldDiff() {
   const gameState = useStore(s => s.gameState);
   const originalState = useStore(s => s.originalState);
@@ -143,7 +149,13 @@ function App() {
 
         <div className="header-center">
           <div className="gold-display">
-            <span className="gold-icon">🪙</span>
+            <img
+              src="/assets/icons/currency.png"
+              className="gold-icon-img"
+              alt="gold"
+              onError={e => { e.target.style.display='none'; e.target.nextSibling.style.display='inline'; }}
+            />
+            <span className="gold-icon gold-icon-fallback" style={{display:'none'}}>🪙</span>
             <span className="gold-value">{gameState?.gold ?? 0}</span>
             <GoldDiff />
           </div>
@@ -170,6 +182,14 @@ function App() {
             className={`app-tab-btn ${activeTab === tab.id ? 'active' : ''}`}
             onClick={() => setActiveTab(tab.id)}
           >
+            {TAB_ICONS[tab.id] && (
+              <img
+                src={TAB_ICONS[tab.id]}
+                className="tab-icon"
+                alt=""
+                onError={e => e.target.style.display = 'none'}
+              />
+            )}
             {tab.label}
             {tab.id === 'historial' && actionHistory.length > 0 && (
               <span className="tab-badge">{actionHistory.length}</span>

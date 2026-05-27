@@ -6,6 +6,7 @@ import { WEAPONS_BY_ID } from '../gamedata/weapons';
 import { WEAPON_PARTS_BY_ID } from '../gamedata/weaponParts';
 import { DESCRIPTIONS } from '../gamedata/descriptions';
 import { WEAPON_ASSEMBLY, ASSEMBLY_CANVAS, ASSEMBLY_SCALE, ASSEMBLY_DISPLAY_W, ASSEMBLY_DISPLAY_H } from '../gamedata/weaponAssembly';
+import { DAMAGE_TYPE_BY_ID } from '../gamedata/damageTypes';
 import Tooltip from './Tooltip';
 import './ArmeriaPanel.css';
 
@@ -211,11 +212,20 @@ export default function ArmeriaPanel() {
                       partB={selectedPartB}
                       partC={selectedPartC}
                     />
-                    {isEquipped && (
-                      <div className="weapon-img-badges">
-                        <span className="badge-equipped">{t('armeria.equipped')}</span>
-                      </div>
+
+                    {/* Stats overlay en la parte inferior */}
+                    {selectedPartA && selectedPartA.damage > 0 && (
+                      <DamageStats part={selectedPartA} lang={lang} />
                     )}
+
+                    <div className="weapon-img-badges">
+                      {selectedPartA?.isPromo === 1 && (
+                        <span className="badge-promo">✦ Promo</span>
+                      )}
+                      {isEquipped && (
+                        <span className="badge-equipped">{t('armeria.equipped')}</span>
+                      )}
+                    </div>
                   </div>
 
                   {/* Selector pieza A */}
@@ -326,6 +336,106 @@ function SlotRow({ label, options, selectedPart, selectedIdx, onNav, getDesc, no
               </span>
             </Tooltip>
       )}
+    </div>
+  );
+}
+
+// ─── Badge con esquinas fijas (24×25 px, nunca escalan) ──────────────────────
+
+const CORNERS = [
+  { cls: 'sc-tl', src: '/assets/icons/label_corner_tl.png' },
+  { cls: 'sc-tr', src: '/assets/icons/label_corner_tr.png' },
+  { cls: 'sc-bl', src: '/assets/icons/label_corner_bl.png' },
+  { cls: 'sc-br', src: '/assets/icons/label_corner_br.png' },
+];
+
+const EDGES = [
+  { cls: 'se-t', src: '/assets/icons/label_edge_t.png' },
+  { cls: 'se-b', src: '/assets/icons/label_edge_b.png' },
+  { cls: 'se-l', src: '/assets/icons/label_edge_l.png' },
+  { cls: 'se-r', src: '/assets/icons/label_edge_r.png' },
+];
+
+function StatBadge({ children, className = '' }) {
+  return (
+    <div className={`stat-badge ${className}`}>
+      {CORNERS.map(c => (
+        <img key={c.cls} className={`sc ${c.cls}`} src={c.src}
+          alt="" aria-hidden="true" onError={e => e.target.style.display = 'none'} />
+      ))}
+      {EDGES.map(e => (
+        <div key={e.cls} className={`se ${e.cls}`}
+          style={{ backgroundImage: `url(${e.src})`, backgroundSize: '100% 100%' }} />
+      ))}
+      <div className="sbc">{children}</div>
+    </div>
+  );
+}
+
+// ─── Overlay de stats en la imagen del arma ──────────────────────────────────
+
+function DamageStats({ part, lang }) {
+  const dmg    = part.damage || 0;
+  const traits = part.traits || [];
+  const weapon = WEAPONS_BY_ID[part.weaponId];
+  const range  = weapon?.range ?? 0;
+
+  return (
+    <div className="weapon-stats-overlay">
+
+      {/* Esquina inferior izquierda: tipos de daño */}
+      <div className="weapon-stats-left">
+        {traits.map(traitId => {
+          const dt = DAMAGE_TYPE_BY_ID[traitId];
+          if (!dt) return null;
+          const label = (dt.names?.[lang] || dt.names?.en || '').toUpperCase();
+          return (
+            <StatBadge key={traitId} className="stat-badge-type">
+              <img
+                src={dt.icon}
+                className="stat-badge-icon"
+                alt={label}
+                onError={e => e.target.style.display = 'none'}
+              />
+              <span className="stat-badge-text">{label}</span>
+            </StatBadge>
+          );
+        })}
+      </div>
+
+      {/* Esquina inferior derecha: rango (si existe) y daño siempre último */}
+      <div className="weapon-stats-right">
+
+        {/* Rango: 2 = "GRAN ALCANCE" texto; ≥3 = número + icono */}
+        {range === 2 && (
+          <StatBadge className="stat-badge-type">
+            <span className="stat-badge-text">{'GRAN\nALCANCE'}</span>
+          </StatBadge>
+        )}
+        {range >= 3 && (
+          <StatBadge className="stat-badge-inline">
+            <span className="stat-badge-num">{range}</span>
+            <img
+              src="/assets/icons/weapon_range.png"
+              className="stat-badge-icon"
+              alt="range"
+              onError={e => e.target.style.display = 'none'}
+            />
+          </StatBadge>
+        )}
+
+        {/* Daño: siempre la última etiqueta */}
+        <StatBadge className="stat-badge-inline">
+          <span className="stat-badge-num">{dmg}</span>
+          <img
+            src="/assets/icons/dmg_value.png"
+            className="stat-badge-icon"
+            alt="damage"
+            onError={e => e.target.style.display = 'none'}
+          />
+        </StatBadge>
+
+      </div>
     </div>
   );
 }

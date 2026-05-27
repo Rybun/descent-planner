@@ -2,6 +2,7 @@
 // Cada héroe tiene 2 armas, cada arma tiene 3 slots de mejora (A, B, C)
 
 // attackType: 'MELEE' | 'RANGED' | 'MAGIC'
+// range: alcance del arma en casillas (0 = cuerpo a cuerpo, sin icono de rango)
 export const WEAPONS = [
   {
     id: 'WEAPON_SWORD',
@@ -10,6 +11,7 @@ export const WEAPONS = [
     heroId: 'HERO_BRYNN',
     weaponType: 'SWORD',
     attackType: 'MELEE',
+    range: 0,
     image: null,
   },
   {
@@ -19,6 +21,7 @@ export const WEAPONS = [
     heroId: 'HERO_BRYNN',
     weaponType: 'WARHAMMER',
     attackType: 'MELEE',
+    range: 0,
     image: null,
   },
   {
@@ -28,6 +31,7 @@ export const WEAPONS = [
     heroId: 'HERO_SYRUS',
     weaponType: 'STAFF',
     attackType: 'MAGIC',
+    range: 2,
     image: null,
   },
   {
@@ -37,6 +41,7 @@ export const WEAPONS = [
     heroId: 'HERO_SYRUS',
     weaponType: 'WAND',
     attackType: 'MAGIC',
+    range: 3,
     image: null,
   },
   {
@@ -46,6 +51,7 @@ export const WEAPONS = [
     heroId: 'HERO_GALADEN',
     weaponType: 'DUAL_BLADES',
     attackType: 'MELEE',
+    range: 0,
     image: null,
   },
   {
@@ -55,6 +61,7 @@ export const WEAPONS = [
     heroId: 'HERO_GALADEN',
     weaponType: 'BOW',
     attackType: 'RANGED',
+    range: 4,
     image: null,
   },
   {
@@ -64,6 +71,7 @@ export const WEAPONS = [
     heroId: 'HERO_VAERIX',
     weaponType: 'WARBELL',
     attackType: 'MAGIC',
+    range: 0,
     image: null,
   },
   {
@@ -73,6 +81,7 @@ export const WEAPONS = [
     heroId: 'HERO_VAERIX',
     weaponType: 'SPEAR',
     attackType: 'MELEE',
+    range: 2,
     image: null,
   },
   {
@@ -82,6 +91,7 @@ export const WEAPONS = [
     heroId: 'HERO_KEHLI',
     weaponType: 'HAMMER',
     attackType: 'MELEE',
+    range: 0,
     image: null,
   },
   {
@@ -91,6 +101,7 @@ export const WEAPONS = [
     heroId: 'HERO_KEHLI',
     weaponType: 'CROSSBOW',
     attackType: 'RANGED',
+    range: 3,
     image: null,
   },
   {
@@ -100,6 +111,7 @@ export const WEAPONS = [
     heroId: 'HERO_CHANCE',
     weaponType: 'KNIVES',
     attackType: 'MELEE',
+    range: 0,
     image: null,
   },
   {
@@ -109,6 +121,7 @@ export const WEAPONS = [
     heroId: 'HERO_CHANCE',
     weaponType: 'KNIVES',
     attackType: 'RANGED',
+    range: 4,
     image: null,
   },
 ];

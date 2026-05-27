@@ -102,6 +102,12 @@
   padding: var(--spacing-xs) var(--spacing-md);
 }
 
+.gold-icon-img {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+
 .gold-icon {
   font-size: 1rem;
 }
@@ -177,6 +183,20 @@
   color: var(--color-gold);
   border-bottom-color: var(--color-gold);
   font-weight: 600;
+}
+
+.tab-icon {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  flex-shrink: 0;
+  opacity: 0.6;
+  transition: opacity 0.15s;
+}
+
+.app-tab-btn:hover .tab-icon,
+.app-tab-btn.active .tab-icon {
+  opacity: 1;
 }
 
 .tab-badge {
