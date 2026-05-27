@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useStore } from '../store';
+import { useT, useLang, getName } from '../i18n';
 import { WEAPON_PARTS_BY_ID } from '../gamedata/weaponParts';
 import { CONSUMABLES_BY_ID, ALL_ITEMS_BY_ID } from '../gamedata/items';
 import { RECIPES_BY_ID } from '../gamedata/recipes';
@@ -8,30 +9,33 @@ import { DESCRIPTIONS } from '../gamedata/descriptions';
 import Tooltip from './Tooltip';
 import './CraftPanel.css';
 
-// Categorías de la Sala de creación (mutuamente excluyentes: mejoras van aparte)
 const isUpgradeRecipe = id => id.endsWith('_UPGRADED') || id.endsWith('_PLUS');
 
-const CATEGORIES = [
-  { id: 'consumibles', label: 'Consumibles',    icon: '🧪', filter: id => id.startsWith('RECIPE_CSM_')          && !isUpgradeRecipe(id) },
-  { id: 'armadura',    label: 'Armadura',        icon: '🛡',  filter: id => id.startsWith('RECIPE_ARMOR_')        && !isUpgradeRecipe(id) },
-  { id: 'accesorios',  label: 'Accesorios',      icon: '💍',  filter: id => id.startsWith('RECIPE_TRINKET')       && !isUpgradeRecipe(id) },
-  { id: 'partes',      label: 'Partes de armas', icon: '⚔️', filter: id => id.startsWith('RECIPE_WEAPON_PART_')  && !isUpgradeRecipe(id) },
-  { id: 'mejoras',     label: 'Mejoras (★)',     icon: '✨', filter: id => isUpgradeRecipe(id) },
+// IDs de categorías — las etiquetas se traducen en el componente
+const CATEGORY_DEFS = [
+  { id: 'consumibles', tKey: 'craft.cat.consumibles', icon: '🧪', filter: id => id.startsWith('RECIPE_CSM_')          && !isUpgradeRecipe(id) },
+  { id: 'armadura',    tKey: 'craft.cat.armadura',    icon: '🛡',  filter: id => id.startsWith('RECIPE_ARMOR_')        && !isUpgradeRecipe(id) },
+  { id: 'accesorios',  tKey: 'craft.cat.accesorios',  icon: '💍',  filter: id => id.startsWith('RECIPE_TRINKET')       && !isUpgradeRecipe(id) },
+  { id: 'partes',      tKey: 'craft.cat.partes',      icon: '⚔️', filter: id => id.startsWith('RECIPE_WEAPON_PART_')  && !isUpgradeRecipe(id) },
+  { id: 'mejoras',     tKey: 'craft.cat.mejoras',     icon: '✨', filter: id => isUpgradeRecipe(id) },
 ];
 
 export default function CraftPanel() {
-  const gameState = useStore(s => s.gameState);
-  const craftItem = useStore(s => s.craftItem);
+  const t    = useT();
+  const lang = useLang();
+
+  const gameState  = useStore(s => s.gameState);
+  const craftItem  = useStore(s => s.craftItem);
   const [selectedCategory, setSelectedCategory] = useState('partes');
   const [showCrafted, setShowCrafted] = useState(false);
 
   if (!gameState) return null;
 
-  // Solo recetas DESCUBIERTAS (que el jugador ha desbloqueado)
+  const CATEGORIES = CATEGORY_DEFS.map(c => ({ ...c, label: t(c.tKey) }));
+
   const discoveredRecipeMap = Object.fromEntries(
     (gameState.discoveredRecipes || []).map(r => [r.id, r])
   );
-
   const allDiscoveredIds = Object.keys(discoveredRecipeMap);
 
   function canCraft(recipe) {
@@ -79,20 +83,17 @@ export default function CraftPanel() {
     return discoveredRecipeMap[recipeId]?.crafted === true;
   }
 
-  // Filtrar para la categoría activa
-  const activeCat = CATEGORIES.find(c => c.id === selectedCategory) || CATEGORIES[0];
+  const activeCat   = CATEGORIES.find(c => c.id === selectedCategory) || CATEGORIES[0];
   const filteredIds = allDiscoveredIds
     .filter(id => activeCat.filter(id))
     .filter(id => showCrafted || !isAlreadyCrafted(id))
     .sort((a, b) => {
-      // Crafteables primero, luego por nombre
       const ac = isAlreadyCrafted(a) ? 1 : 0;
       const bc = isAlreadyCrafted(b) ? 1 : 0;
       if (ac !== bc) return ac - bc;
       return a.localeCompare(b);
     });
 
-  // Conteo por categoría (sin filtro de crafteados)
   const categoryCounts = Object.fromEntries(
     CATEGORIES.map(cat => [
       cat.id,
@@ -100,19 +101,18 @@ export default function CraftPanel() {
     ])
   );
 
-  // Resumen de materiales
   const totalMats = MATERIALS.filter(m => (gameState.craftingMaterials[m.id] || 0) > 0);
 
   return (
     <div className="craft-panel-v2">
-      {/* Barra de materiales disponibles */}
+      {/* Barra de materiales */}
       <div className="craft-mats-bar">
-        <span className="craft-mats-label">Materiales:</span>
+        <span className="craft-mats-label">{t('craft.materialsLabel')}</span>
         <div className="craft-mats-row">
           {totalMats.length === 0
-            ? <span className="craft-mats-empty">Sin materiales</span>
+            ? <span className="craft-mats-empty">{t('craft.noMaterials')}</span>
             : totalMats.map(mat => (
-              <Tooltip key={mat.id} text={DESCRIPTIONS[mat.id] || mat.name}>
+              <Tooltip key={mat.id} text={DESCRIPTIONS[mat.id] || getName(mat, lang)}>
                 <span className="mat-chip">
                   <img src={mat.image} alt="" className="mat-chip-img"
                     onError={e => e.target.style.display = 'none'} />
@@ -156,27 +156,28 @@ export default function CraftPanel() {
                 checked={showCrafted}
                 onChange={e => setShowCrafted(e.target.checked)}
               />
-              <span>Mostrar crafteadas</span>
+              <span>{t('craft.showCrafted')}</span>
             </label>
           </div>
 
           {filteredIds.length === 0 ? (
             <div className="empty-state">
               {allDiscoveredIds.filter(id => activeCat.filter(id)).length === 0
-                ? <p>No hay recetas de esta categoría descubiertas.</p>
-                : <p>Todas las recetas de esta categoría ya han sido crafteadas. ✓</p>
+                ? <p>{t('craft.noRecipesDisc')}</p>
+                : <p>{t('craft.allCrafted')}</p>
               }
             </div>
           ) : (
             <div className="craft-recipes-grid">
               {filteredIds.map(recipeId => {
-                const recipe = RECIPES_BY_ID[recipeId];
-                const item = getItemForRecipe(recipeId);
-                const crafted = isAlreadyCrafted(recipeId);
+                const recipe      = RECIPES_BY_ID[recipeId];
+                const item        = getItemForRecipe(recipeId);
+                const crafted     = isAlreadyCrafted(recipeId);
                 const canCraftNow = recipe ? canCraft(recipe) : null;
-                const missing = recipe ? getMissingIngredients(recipe) : [];
+                const missing     = recipe ? getMissingIngredients(recipe) : [];
                 const hasIngredients = recipe?.ingredients != null;
-                const isUpgrade = isUpgradeRecipe(recipeId);
+                const isUpgrade   = isUpgradeRecipe(recipeId);
+                const itemName    = item ? getName(item, lang) : null;
 
                 return (
                   <div
@@ -187,7 +188,7 @@ export default function CraftPanel() {
                     <div className="craft-recipe-img-area">
                       {item?.image ? (
                         <Tooltip text={getDesc(recipe?.itemId)}>
-                          <img src={item.image} alt={item.name}
+                          <img src={item.image} alt={itemName || ''}
                             className="craft-recipe-img"
                             onError={e => e.target.style.display = 'none'} />
                         </Tooltip>
@@ -201,13 +202,13 @@ export default function CraftPanel() {
                     {/* Info */}
                     <div className="craft-recipe-info">
                       <div className="craft-recipe-name">
-                        {item?.name
-                          ? isUpgrade ? `${item.name} ★` : item.name
+                        {itemName
+                          ? isUpgrade ? `${itemName} ★` : itemName
                           : recipeId}
                       </div>
                       {item && 'slot' in item && (
                         <div className="craft-recipe-tag">
-                          Slot {item.slot} · Nv.{item.level} → {item.level + 1} · {item.weaponType}
+                          {t('craft.slotInfo', { slot: item.slot, from: item.level, to: item.level + 1, type: item.weaponType })}
                         </div>
                       )}
                       {recipe?.goldCost != null && (
@@ -220,10 +221,11 @@ export default function CraftPanel() {
                       <div className="craft-ingredients">
                         {Object.entries(recipe.ingredients).map(([matId, qty]) => {
                           const have = gameState.craftingMaterials[matId] || 0;
-                          const ok = have >= qty;
-                          const mat = MATERIALS_BY_ID[matId];
+                          const ok   = have >= qty;
+                          const mat  = MATERIALS_BY_ID[matId];
+                          const matName = mat ? getName(mat, lang) : matId;
                           return (
-                            <Tooltip key={matId} text={mat?.name || matId}>
+                            <Tooltip key={matId} text={matName}>
                               <span className={`craft-ing-badge ${ok ? 'ok' : 'missing'}`}>
                                 {mat?.image && (
                                   <img src={mat.image} alt=""
@@ -239,7 +241,7 @@ export default function CraftPanel() {
                     ) : (
                       !crafted && (
                         <div className="craft-ing-unknown">
-                          ⚠️ Ingredientes desconocidos
+                          {t('craft.unknownIngredients')}
                         </div>
                       )
                     )}
@@ -250,9 +252,17 @@ export default function CraftPanel() {
                         className={`btn btn-sm ${canCraftNow ? 'btn-primary' : ''} craft-action-btn`}
                         disabled={canCraftNow === false}
                         onClick={() => craftItem(recipeId)}
-                        title={canCraftNow === false ? `Faltan: ${missing.map(m => `${MATERIALS_BY_ID[m.matId]?.name || m.matId} (${m.have}/${m.need})`).join(', ')}` : 'Craftear'}
+                        title={
+                          canCraftNow === false
+                            ? `${t('craft.missingPrefix')} ${missing.map(m => `${getName(MATERIALS_BY_ID[m.matId], lang) || m.matId} (${m.have}/${m.need})`).join(', ')}`
+                            : t('craft.btn.ready')
+                        }
                       >
-                        {canCraftNow === null ? '? Craftear' : canCraftNow ? '⚒ Craftear' : '✗ Faltan materiales'}
+                        {canCraftNow === null
+                          ? t('craft.btn.unknown')
+                          : canCraftNow
+                            ? t('craft.btn.ready')
+                            : t('craft.btn.missing')}
                       </button>
                     )}
                   </div>

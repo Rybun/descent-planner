@@ -62,6 +62,9 @@ export const useStore = create((set, get) => ({
   showSettings: false,
   priceEditorOpen: false,
 
+  // === IDIOMA ===
+  lang: getInitialLang(),
+
   // === PRECIOS EDITADOS (localStorage) ===
   customPrices: JSON.parse(localStorage.getItem('descent_prices') || '{}'),
 
@@ -301,6 +304,10 @@ export const useStore = create((set, get) => ({
   // === UI ===
   setActiveTab: (tab) => set({ activeTab: tab }),
   setShowSettings: (v) => set({ showSettings: v }),
+  setLang: (lang) => {
+    localStorage.setItem('descent_lang', lang);
+    set({ lang });
+  },
 
   // === EXPORTAR LOG ===
   exportLog: () => {
@@ -327,6 +334,14 @@ export const useStore = create((set, get) => ({
 }));
 
 // ===================== HELPERS =====================
+
+function getInitialLang() {
+  const LANGS = ['es', 'en', 'fr', 'it', 'pt'];
+  const saved = localStorage.getItem('descent_lang');
+  if (saved && LANGS.includes(saved)) return saved;
+  const nav = (navigator.language || '').slice(0, 2).toLowerCase();
+  return LANGS.includes(nav) ? nav : 'es';
+}
 
 function getItemName(itemId) {
   const part = WEAPON_PARTS_BY_ID[itemId];

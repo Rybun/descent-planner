@@ -166,3 +166,13 @@
   border-radius: var(--radius-sm);
   font-size: 0.8rem;
 }
+
+/* ── Lang selector en DropZone ── */
+.dz-lang-selector {
+  position: absolute;
+  top: var(--spacing-md);
+  right: var(--spacing-md);
+  display: flex;
+  gap: 2px;
+  z-index: 10;
+}

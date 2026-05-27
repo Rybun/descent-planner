@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useStore } from '../store';
+import { useT, useLang, getName } from '../i18n';
 import { MATERIALS, MATERIALS_BY_ID } from '../gamedata/materials';
 import { WEAPON_PARTS_BY_ID } from '../gamedata/weaponParts';
 import { ALL_ITEMS_BY_ID } from '../gamedata/items';
@@ -9,14 +10,17 @@ import Tooltip from './Tooltip';
 import './ShopPanel.css';
 
 export default function ShopPanel() {
-  const gameState = useStore(s => s.gameState);
-  const customPrices = useStore(s => s.customPrices);
-  const buyMaterial = useStore(s => s.buyMaterial);
-  const sellMaterial = useStore(s => s.sellMaterial);
-  const buyItem = useStore(s => s.buyItem);
-  const sellItem = useStore(s => s.sellItem);
+  const t    = useT();
+  const lang = useLang();
 
-  const [shopView, setShopView] = useState('comprar'); // 'comprar' | 'vender'
+  const gameState    = useStore(s => s.gameState);
+  const customPrices = useStore(s => s.customPrices);
+  const buyMaterial  = useStore(s => s.buyMaterial);
+  const sellMaterial = useStore(s => s.sellMaterial);
+  const buyItem      = useStore(s => s.buyItem);
+  const sellItem     = useStore(s => s.sellItem);
+
+  const [shopView, setShopView] = useState('comprar');
   const [customQty, setCustomQty] = useState({});
 
   if (!gameState) return null;
@@ -75,11 +79,11 @@ export default function ShopPanel() {
   function getItemLabel(itemId, data) {
     if (!data) return itemId;
     if ('slot' in data) {
-      return `Slot ${data.slot} · Nv.${data.level} · ${data.weaponType}`;
+      return t('shop.label.slot', { slot: data.slot, level: data.level, type: data.weaponType });
     }
-    if (data.type === 'armor') return 'Armadura';
-    if (data.type === 'trinket') return 'Accesorio';
-    if (data.type === 'consumable') return 'Consumible';
+    if (data.type === 'armor')     return t('shop.label.armor');
+    if (data.type === 'trinket')   return t('shop.label.trinket');
+    if (data.type === 'consumable') return t('shop.label.consumable');
     return '';
   }
 
@@ -88,16 +92,12 @@ export default function ShopPanel() {
     return DESCRIPTIONS[base] || DESCRIPTIONS[id] || '';
   }
 
-  // Datos del ShopData del save
-  const shopMaterials = (gameState.shopData || []).filter(s =>
+  const shopMaterials  = (gameState.shopData || []).filter(s =>
     s.id.startsWith('MAT_') && MATERIALS_BY_ID[s.id]
   );
-  // Las recetas a la venta vienen del ShopData (RECIPE_*)
-  const shopRecipes = (gameState.shopRecipeIds || []);
-  // Los ítems de equipamiento (armas, armaduras, accesorios) vienen de availableItemIds
-  const shopEquipment = (gameState.availableItemIds || []);
+  const shopRecipes    = (gameState.shopRecipeIds || []);
+  const shopEquipment  = (gameState.availableItemIds || []);
 
-  // Inventario del jugador
   const inventoryGroups = {};
   for (const item of (gameState.itemInventory || [])) {
     inventoryGroups[item.id] = (inventoryGroups[item.id] || 0) + 1;
@@ -112,18 +112,17 @@ export default function ShopPanel() {
     if (!hasRecipes && !hasEquipment && !hasMaterials) {
       return (
         <div className="empty-state">
-          <p>No hay artículos disponibles en la tienda.</p>
-          <p>Los artículos se muestran según el estado del save cargado.</p>
+          <p>{t('shop.emptyStore')}</p>
+          <p>{t('shop.emptyHint')}</p>
         </div>
       );
     }
 
     return (
       <>
-        {/* Sección Recetas */}
         {hasRecipes && (
           <section className="shop-section">
-            <h2 className="shop-section-title">📜 Recetas</h2>
+            <h2 className="shop-section-title">{t('shop.sectionRecipes')}</h2>
             <div className="shop-items-grid">
               {shopRecipes.map(recipeId => {
                 const recipe = RECIPES_BY_ID[recipeId];
@@ -131,11 +130,12 @@ export default function ShopPanel() {
                 const baseId = recipeId.replace('RECIPE_', '')
                   .replace(/_UPGRADED$/, '').replace(/_PLUS$/, '');
                 const itemData = getItemData(baseId);
+                const itemName = itemData ? getName(itemData, lang) : baseId;
                 return (
                   <div key={recipeId} className="shop-item-tile">
                     <div className="shop-item-img-area">
                       {itemData?.image
-                        ? <img src={itemData.image} alt={itemData.name || recipeId}
+                        ? <img src={itemData.image} alt={itemName}
                             className="shop-item-img"
                             onError={e => e.target.style.display = 'none'} />
                         : <div className="shop-item-no-img">📜</div>
@@ -143,7 +143,7 @@ export default function ShopPanel() {
                       <div className="shop-item-badge recipe-badge">+</div>
                     </div>
                     <div className="shop-item-name">
-                      {itemData?.name ? `${itemData.name} +` : baseId}
+                      {itemName ? `${itemName} +` : baseId}
                     </div>
                     <div className={`shop-item-price ${!canAfford(buyPrice) ? 'cant-afford' : ''}`}>
                       <span className="coin-icon">🪙</span>
@@ -156,27 +156,27 @@ export default function ShopPanel() {
           </section>
         )}
 
-        {/* Sección Equipamiento (de availableItemIds) */}
         {hasEquipment && (
           <section className="shop-section">
-            <h2 className="shop-section-title">Objetos</h2>
+            <h2 className="shop-section-title">{t('shop.sectionObjects')}</h2>
             <div className="shop-items-grid">
               {shopEquipment.map(itemId => {
                 const data = getItemData(itemId);
                 const buyPrice = getItemBuyPrice(itemId);
+                const itemName = data ? getName(data, lang) : itemId;
                 return (
                   <div key={itemId} className="shop-item-tile">
                     <div className="shop-item-img-area">
                       {data?.image
                         ? <Tooltip text={getDesc(itemId)}>
-                            <img src={data.image} alt={data?.name || itemId}
+                            <img src={data.image} alt={itemName}
                               className="shop-item-img"
                               onError={e => e.target.style.display = 'none'} />
                           </Tooltip>
                         : <div className="shop-item-no-img">🛡</div>
                       }
                     </div>
-                    <div className="shop-item-name">{data?.name || itemId}</div>
+                    <div className="shop-item-name">{itemName}</div>
                     <div className="shop-item-sublabel">{getItemLabel(itemId, data)}</div>
                     <div className={`shop-item-price ${!canAfford(buyPrice) ? 'cant-afford' : ''}`}>
                       <span className="coin-icon">🪙</span>
@@ -187,7 +187,7 @@ export default function ShopPanel() {
                       onClick={() => buyItem(itemId)}
                       disabled={!canAfford(buyPrice)}
                     >
-                      Comprar
+                      {t('shop.buy')}
                     </button>
                   </div>
                 );
@@ -196,31 +196,31 @@ export default function ShopPanel() {
           </section>
         )}
 
-        {/* Sección Materiales */}
         {hasMaterials && (
           <section className="shop-section">
-            <h2 className="shop-section-title">Materiales</h2>
+            <h2 className="shop-section-title">{t('shop.sectionMaterials')}</h2>
             <div className="shop-mat-grid">
               {shopMaterials.map(shopItem => {
                 const mat = MATERIALS_BY_ID[shopItem.id];
                 if (!mat) return null;
                 const buyPrice = getMaterialBuyPrice(shopItem.id);
-                const cqKey = `mat_${shopItem.id}`;
-                const cq = getCustomQty(cqKey);
+                const cqKey    = `mat_${shopItem.id}`;
+                const cq       = getCustomQty(cqKey);
                 const playerQty = gameState.craftingMaterials[shopItem.id] || 0;
+                const matName = getName(mat, lang);
 
                 return (
                   <div key={shopItem.id} className="shop-mat-tile">
                     <div className="shop-mat-img-area">
-                      <Tooltip text={DESCRIPTIONS[shopItem.id] || mat.name}>
-                        <img src={mat.image} alt={mat.name}
+                      <Tooltip text={DESCRIPTIONS[shopItem.id] || matName}>
+                        <img src={mat.image} alt={matName}
                           className="shop-mat-img"
                           onError={e => e.target.style.display = 'none'} />
                       </Tooltip>
                       <div className="shop-mat-qty-badge">{shopItem.qty}</div>
                     </div>
-                    <div className="shop-mat-name">{mat.name}</div>
-                    <div className="shop-mat-player-qty">Tengo: {playerQty}</div>
+                    <div className="shop-mat-name">{matName}</div>
+                    <div className="shop-mat-player-qty">{t('shop.iHave')} {playerQty}</div>
                     <div className={`shop-mat-price ${!canAfford(buyPrice) ? 'cant-afford' : ''}`}>
                       <span className="coin-icon">🪙</span>
                       <span>{formatPrice(buyPrice)}</span>
@@ -263,7 +263,7 @@ export default function ShopPanel() {
   // ─── Vista VENDER ─────────────────────────────────────
   function renderVender() {
     const playerMats = MATERIALS.filter(m => {
-      const qty = gameState.craftingMaterials[m.id] || 0;
+      const qty   = gameState.craftingMaterials[m.id] || 0;
       const price = getMaterialSellPrice(m.id);
       return qty > 0 && price !== null && price !== undefined;
     });
@@ -271,40 +271,40 @@ export default function ShopPanel() {
       const price = getItemSellPrice(itemId);
       return price !== null && price !== undefined;
     });
-    const hasItems = sellableItems.length > 0;
+    const hasItems     = sellableItems.length > 0;
     const hasMaterials = playerMats.length > 0;
 
     if (!hasItems && !hasMaterials) {
       return (
         <div className="empty-state">
-          <p>No hay materiales ni ítems en el inventario para vender.</p>
+          <p>{t('shop.emptySell')}</p>
         </div>
       );
     }
 
     return (
       <>
-        {/* Materiales del jugador */}
         {hasMaterials && (
           <section className="shop-section">
-            <h2 className="shop-section-title">Materiales</h2>
+            <h2 className="shop-section-title">{t('shop.sectionMaterials')}</h2>
             <div className="shop-mat-grid">
               {playerMats.map(mat => {
-                const playerQty = gameState.craftingMaterials[mat.id] || 0;
-                const sellPrice = getMaterialSellPrice(mat.id);
-                const canSell = sellPrice !== null && sellPrice !== undefined;
+                const playerQty  = gameState.craftingMaterials[mat.id] || 0;
+                const sellPrice  = getMaterialSellPrice(mat.id);
+                const canSell    = sellPrice !== null && sellPrice !== undefined;
+                const matName    = getName(mat, lang);
 
                 return (
                   <div key={mat.id} className="shop-mat-tile">
                     <div className="shop-mat-img-area">
-                      <Tooltip text={DESCRIPTIONS[mat.id] || mat.name}>
-                        <img src={mat.image} alt={mat.name}
+                      <Tooltip text={DESCRIPTIONS[mat.id] || matName}>
+                        <img src={mat.image} alt={matName}
                           className="shop-mat-img"
                           onError={e => e.target.style.display = 'none'} />
                       </Tooltip>
                       <div className="shop-mat-qty-badge">{playerQty}</div>
                     </div>
-                    <div className="shop-mat-name">{mat.name}</div>
+                    <div className="shop-mat-name">{matName}</div>
                     {canSell ? (
                       <>
                         <div className="shop-mat-price sell-price">
@@ -315,15 +315,15 @@ export default function ShopPanel() {
                           <button
                             className="btn btn-xs btn-danger"
                             onClick={() => sellMaterial(mat.id, 1)}
-                          >Vender ×1</button>
+                          >{t('shop.sellOne')}</button>
                           <button
                             className="btn btn-xs btn-danger"
                             onClick={() => sellMaterial(mat.id, playerQty)}
-                          >Todo ({playerQty})</button>
+                          >{t('shop.sellAll', { qty: playerQty })}</button>
                         </div>
                       </>
                     ) : (
-                      <div className="shop-mat-no-sell">No vendible</div>
+                      <div className="shop-mat-no-sell">{t('shop.notSellable')}</div>
                     )}
                   </div>
                 );
@@ -332,10 +332,9 @@ export default function ShopPanel() {
           </section>
         )}
 
-        {/* Inventario de ítems (solo los vendibles) */}
         {hasItems && (
           <section className="shop-section">
-            <h2 className="shop-section-title">Objetos</h2>
+            <h2 className="shop-section-title">{t('shop.sectionObjects')}</h2>
             <div className="sell-items-list">
               {Object.entries(inventoryGroups)
                 .filter(([itemId]) => {
@@ -343,20 +342,21 @@ export default function ShopPanel() {
                   return price !== null && price !== undefined;
                 })
                 .map(([itemId, qty]) => {
-                  const data = getItemData(itemId);
+                  const data      = getItemData(itemId);
                   const sellPrice = getItemSellPrice(itemId);
+                  const itemName  = data ? getName(data, lang) : itemId;
                   return (
                     <div key={itemId} className="sell-item-row">
                       <div className="sell-item-left">
                         {data?.image && (
                           <Tooltip text={getDesc(itemId)}>
-                            <img src={data.image} alt={data?.name || itemId}
+                            <img src={data.image} alt={itemName}
                               className="sell-item-img"
                               onError={e => e.target.style.display = 'none'} />
                           </Tooltip>
                         )}
                         <div className="sell-item-info">
-                          <span className="sell-item-name">{data?.name || itemId}</span>
+                          <span className="sell-item-name">{itemName}</span>
                           <span className="sell-item-label">{getItemLabel(itemId, data)}</span>
                           {qty > 1 && <span className="sell-item-qty">×{qty}</span>}
                         </div>
@@ -369,12 +369,12 @@ export default function ShopPanel() {
                         <button
                           className="btn btn-sm btn-danger"
                           onClick={() => sellItem(itemId, 1)}
-                        >Vender ×1</button>
+                        >{t('shop.sellOne')}</button>
                         {qty > 1 && (
                           <button
                             className="btn btn-sm btn-danger"
                             onClick={() => sellItem(itemId, qty)}
-                          >Todo ({qty})</button>
+                          >{t('shop.sellAll', { qty })}</button>
                         )}
                       </div>
                     </div>
@@ -389,23 +389,21 @@ export default function ShopPanel() {
 
   return (
     <div className="shop-panel-v2">
-      {/* Toggle Comprar / Vender */}
       <div className="shop-toggle-row">
         <button
           className={`shop-toggle-btn ${shopView === 'comprar' ? 'active' : ''}`}
           onClick={() => setShopView('comprar')}
         >
-          ⇒ Comprar
+          {t('shop.buyTab')}
         </button>
         <button
           className={`shop-toggle-btn ${shopView === 'vender' ? 'active' : ''}`}
           onClick={() => setShopView('vender')}
         >
-          ⇐ Vender
+          {t('shop.sellTab')}
         </button>
       </div>
 
-      {/* Contenido */}
       <div className="shop-content">
         {shopView === 'comprar' ? renderComprar() : renderVender()}
       </div>

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useStore } from '../store';
+import { useT, useLang, getName } from '../i18n';
 import { HEROES, HEROES_BY_ID } from '../gamedata/heroes';
 import { WEAPONS_BY_ID } from '../gamedata/weapons';
 import { WEAPON_PARTS_BY_ID } from '../gamedata/weaponParts';
@@ -8,23 +9,10 @@ import { WEAPON_ASSEMBLY, ASSEMBLY_CANVAS, ASSEMBLY_SCALE, ASSEMBLY_DISPLAY_W, A
 import Tooltip from './Tooltip';
 import './ArmeriaPanel.css';
 
-// Etiquetas de los slots B y C por tipo de arma
-const SLOT_LABELS = {
-  BOW:         { B: 'Cuerda',          C: 'Flecha' },
-  CROSSBOW:    { B: 'Culata',          C: 'Virotes' },
-  DUAL_BLADES: { B: 'Arma secundaria', C: 'Puños' },
-  GAUNTLET:    { B: 'Guante',          C: 'Brazalete' },
-  HAMMER:      { B: 'Mango',           C: 'Agarre' },
-  KNIVES:      { B: 'Agarre',          C: 'Cinturón' },
-  SPEAR:       { B: 'Mango',           C: 'Cola' },
-  STAFF:       { B: 'Envoltura',       C: 'Infusión' },
-  SWORD:       { B: 'Guardia',         C: 'Empuñadura' },
-  WAND:        { B: 'Envoltura',       C: 'Adorno' },
-  WARBELL:     { B: 'Agarre',          C: 'Mango' },
-  WARHAMMER:   { B: 'Mango',           C: 'Puño' },
-};
-
 export default function ArmeriaPanel() {
+  const t    = useT();
+  const lang = useLang();
+
   const gameState   = useStore(s => s.gameState);
   const saveMeta    = useStore(s => s.saveMeta);
   const equipPartA  = useStore(s => s.equipPartA);
@@ -39,14 +27,19 @@ export default function ArmeriaPanel() {
 
   if (!gameState) return null;
 
-  // Mapa heroId → datos del save
   const heroesFromSave = {};
   for (const h of (gameState.heroes || [])) {
     heroesFromSave[h.heroId] = h;
   }
 
-  const selectedHero    = HEROES_BY_ID[selectedHeroId];
-  const heroSaveData    = heroesFromSave[selectedHeroId];
+  const selectedHero  = HEROES_BY_ID[selectedHeroId];
+  const heroSaveData  = heroesFromSave[selectedHeroId];
+
+  // Nombre del héroe localizado
+  const heroName = (() => {
+    const tKey = t(`hero.${selectedHeroId}`);
+    return tKey.startsWith('hero.') ? (selectedHero?.name || selectedHeroId) : tKey;
+  })();
 
   // Inventario de piezas A/B/C por tipo de arma
   const inventoryBySlotType = { A: {}, B: {}, C: {} };
@@ -62,7 +55,7 @@ export default function ArmeriaPanel() {
 
   function getWeaponConfig(weaponSaveData) {
     if (!weaponSaveData) return null;
-    const weapon       = WEAPONS_BY_ID[weaponSaveData.id];
+    const weapon        = WEAPONS_BY_ID[weaponSaveData.id];
     const equippedPartA = WEAPON_PARTS_BY_ID[weaponSaveData.partA];
     const equippedPartB = WEAPON_PARTS_BY_ID[weaponSaveData.partB];
     const equippedPartC = WEAPON_PARTS_BY_ID[weaponSaveData.partC];
@@ -72,7 +65,6 @@ export default function ArmeriaPanel() {
       || weapon?.weaponType
       || '';
 
-    // ── Slot A ──
     const ownedAs = (inventoryBySlotType.A[weaponType] || []).sort((a, b) => a.level - b.level);
     const allPartAOptions = [...ownedAs];
     if (equippedPartA && !allPartAOptions.find(p => p.id === equippedPartA.id)) {
@@ -83,7 +75,6 @@ export default function ArmeriaPanel() {
     let selectedAIdx = allPartAOptions.findIndex(p => p?.id === selectedPartAId);
     if (selectedAIdx < 0) selectedAIdx = 0;
 
-    // ── Slot B ──
     const ownedBs = (inventoryBySlotType.B[weaponType] || []).sort((a, b) => a.level - b.level);
     const allPartBOptions = [...ownedBs];
     if (equippedPartB && !allPartBOptions.find(p => p.id === equippedPartB.id)) {
@@ -94,7 +85,6 @@ export default function ArmeriaPanel() {
     let selectedBIdx = allPartBOptions.findIndex(p => p?.id === selectedPartBId);
     if (selectedBIdx < 0) selectedBIdx = 0;
 
-    // ── Slot C ──
     const ownedCs = (inventoryBySlotType.C[weaponType] || []).sort((a, b) => a.level - b.level);
     const allPartCOptions = [...ownedCs];
     if (equippedPartC && !allPartCOptions.find(p => p.id === equippedPartC.id)) {
@@ -140,22 +130,36 @@ export default function ArmeriaPanel() {
     return DESCRIPTIONS[base] || DESCRIPTIONS[id] || '';
   }
 
+  // Nombres de slots B/C por tipo de arma (traducciones)
+  function getSlotLabels(weaponType) {
+    const B = t(`slot.${weaponType}.B`);
+    const C = t(`slot.${weaponType}.C`);
+    return {
+      B: B.startsWith('slot.') ? 'Slot B' : B,
+      C: C.startsWith('slot.') ? 'Slot C' : C,
+    };
+  }
+
   return (
     <div className="armeria-panel">
       {/* Sidebar de héroes */}
       <aside className="hero-sidebar">
         {HEROES.map(hero => {
           const portraitSrc = isAct2 ? (hero.imageAct2 || hero.image) : hero.image;
+          const hName = (() => {
+            const tk = t(`hero.${hero.id}`);
+            return tk.startsWith('hero.') ? hero.name : tk;
+          })();
           return (
             <button
               key={hero.id}
               className={`hero-portrait-btn ${hero.id === selectedHeroId ? 'active' : ''}`}
               onClick={() => setSelectedHeroId(hero.id)}
-              title={hero.name}
+              title={hName}
             >
               <img
                 src={portraitSrc}
-                alt={hero.name}
+                alt={hName}
                 className="hero-portrait-img"
                 onError={e => e.target.style.display = 'none'}
               />
@@ -168,7 +172,7 @@ export default function ArmeriaPanel() {
       {/* Área principal */}
       <main className="armeria-main">
         {selectedHero && (
-          <div className="armeria-hero-name">{selectedHero.name}</div>
+          <div className="armeria-hero-name">{heroName}</div>
         )}
 
         {heroSaveData?.equippedWeapons?.length > 0 ? (
@@ -188,18 +192,18 @@ export default function ArmeriaPanel() {
                 allPartCOptions, selectedPartC, selectedCIdx,
               } = config;
 
-              const slotLabels = SLOT_LABELS[weaponType] || { B: 'Slot B', C: 'Slot C' };
+              const slotLabels = getSlotLabels(weaponType);
               const isEquipped = selectedPartA?.id === weaponData.partA;
+
+              const weaponName = weapon ? getName(weapon, lang) : weaponData.id;
 
               return (
                 <div key={weaponData.id} className="weapon-card">
 
-                  {/* Nombre del arma */}
                   <div className="weapon-card-title">
-                    {weapon?.name || weaponData.id}
+                    {weaponName}
                   </div>
 
-                  {/* Ensamblaje visual */}
                   <div className="weapon-card-image-area">
                     <WeaponAssembly
                       weaponType={weaponType}
@@ -209,7 +213,7 @@ export default function ArmeriaPanel() {
                     />
                     {isEquipped && (
                       <div className="weapon-img-badges">
-                        <span className="badge-equipped">Equipado</span>
+                        <span className="badge-equipped">{t('armeria.equipped')}</span>
                       </div>
                     )}
                   </div>
@@ -220,18 +224,18 @@ export default function ArmeriaPanel() {
                       className="part-nav-btn"
                       onClick={() => handlePartANav(weaponData.id, -1, config)}
                       disabled={allPartAOptions.length <= 1}
-                      title="Pieza anterior"
+                      title={t('armeria.prev')}
                     >◄</button>
                     <Tooltip text={getDesc(selectedPartA?.id)}>
                       <span className="part-a-name">
-                        {selectedPartA?.name || '—'}
+                        {selectedPartA ? getName(selectedPartA, lang) : '—'}
                       </span>
                     </Tooltip>
                     <button
                       className="part-nav-btn"
                       onClick={() => handlePartANav(weaponData.id, 1, config)}
                       disabled={allPartAOptions.length <= 1}
-                      title="Pieza siguiente"
+                      title={t('armeria.next')}
                     >►</button>
                   </div>
 
@@ -250,6 +254,10 @@ export default function ArmeriaPanel() {
                     equippedId={weaponData.partB}
                     onNav={(dir) => handlePartBNav(weaponData.id, dir, config)}
                     getDesc={getDesc}
+                    noUpgradeLabel={t('armeria.noUpgrade')}
+                    prevLabel={t('armeria.prev')}
+                    nextLabel={t('armeria.next')}
+                    lang={lang}
                   />
 
                   {/* Slot C */}
@@ -261,6 +269,10 @@ export default function ArmeriaPanel() {
                     equippedId={weaponData.partC}
                     onNav={(dir) => handlePartCNav(weaponData.id, dir, config)}
                     getDesc={getDesc}
+                    noUpgradeLabel={t('armeria.noUpgrade')}
+                    prevLabel={t('armeria.prev')}
+                    nextLabel={t('armeria.next')}
+                    lang={lang}
                   />
                 </div>
               );
@@ -268,7 +280,7 @@ export default function ArmeriaPanel() {
           </div>
         ) : (
           <div className="empty-state">
-            <p>No hay datos de armas para este héroe en el save cargado.</p>
+            <p>{t('armeria.noWeaponData')}</p>
           </div>
         )}
       </main>
@@ -278,10 +290,9 @@ export default function ArmeriaPanel() {
 
 // ─── Fila de slot B o C con navegación ────────────────────────────────────────
 
-function SlotRow({ label, options, selectedPart, selectedIdx, equippedId, onNav, getDesc }) {
-  const hasNav  = options.length > 1;
-  const noUpgrade = selectedPart?.level === 0;
-  const isEquipped = selectedPart?.id === equippedId;
+function SlotRow({ label, options, selectedPart, selectedIdx, onNav, getDesc, noUpgradeLabel, prevLabel, nextLabel, lang }) {
+  const hasNav     = options.length > 1;
+  const noUpgrade  = selectedPart?.level === 0;
 
   return (
     <div className="slot-row">
@@ -294,33 +305,32 @@ function SlotRow({ label, options, selectedPart, selectedIdx, equippedId, onNav,
 
       {hasNav ? (
         <div className="slot-nav-row">
-          <button className="part-nav-btn slot-nav-btn" onClick={() => onNav(-1)} title="Anterior">◄</button>
+          <button className="part-nav-btn slot-nav-btn" onClick={() => onNav(-1)} title={prevLabel}>◄</button>
           <Tooltip text={getDesc(selectedPart?.id)}>
             <span className={`slot-part-name ${noUpgrade ? 'slot-default' : ''}`}>
-              {noUpgrade ? 'Sin mejora' : (selectedPart?.name || '—')}
+              {noUpgrade ? noUpgradeLabel : (selectedPart ? getName(selectedPart, lang) : '—')}
             </span>
           </Tooltip>
-          <button className="part-nav-btn slot-nav-btn" onClick={() => onNav(1)} title="Siguiente">►</button>
+          <button className="part-nav-btn slot-nav-btn" onClick={() => onNav(1)} title={nextLabel}>►</button>
         </div>
       ) : (
         noUpgrade
-          ? <span className="slot-default">Sin mejora</span>
+          ? <span className="slot-default">{noUpgradeLabel}</span>
           : <Tooltip text={getDesc(selectedPart?.id)}>
               <span className="slot-part">
                 {selectedPart?.image && (
                   <img src={selectedPart.image} alt="" className="slot-part-icon"
                     onError={e => e.target.style.display = 'none'} />
                 )}
-                {selectedPart?.name || '—'}
+                {selectedPart ? getName(selectedPart, lang) : '—'}
               </span>
             </Tooltip>
       )}
-
     </div>
   );
 }
 
-// ─── Componente de ensamblaje de arma ─────────────────────────────────────────
+// ─── Componente de ensamblaje visual ──────────────────────────────────────────
 
 function WeaponAssembly({ weaponType, partA, partB, partC }) {
   const layout = WEAPON_ASSEMBLY[weaponType];
@@ -341,51 +351,34 @@ function WeaponAssembly({ weaponType, partA, partB, partC }) {
   const parts = { a: partA, b: partB, c: partC };
 
   return (
-    // Sin overflow:hidden → piezas como el puño del Warhammer (que quedan fuera
-    // del rect 420×512 tras la rotación) son visibles; el recorte lo hace la imagen-area.
     <div style={{
-      width:    ASSEMBLY_DISPLAY_W,
-      height:   ASSEMBLY_DISPLAY_H,
-      position: 'relative',
-      flexShrink: 0,
+      width: ASSEMBLY_DISPLAY_W, height: ASSEMBLY_DISPLAY_H,
+      position: 'relative', flexShrink: 0,
     }}>
-      {/* Canvas virtual 420×512 escalado */}
       <div style={{
-        position:        'absolute',
-        top:             0,
-        left:            0,
-        width:           ASSEMBLY_CANVAS.w,
-        height:          ASSEMBLY_CANVAS.h,
+        position: 'absolute', top: 0, left: 0,
+        width: ASSEMBLY_CANVAS.w, height: ASSEMBLY_CANVAS.h,
         transformOrigin: 'top left',
-        transform:       `scale(${ASSEMBLY_SCALE})`,
+        transform: `scale(${ASSEMBLY_SCALE})`,
       }}>
-        {/* Piezas posicionadas directamente — cada una puede tener su propia rotación (rot)
-            y máscara alfa (maskSlot) para recortar con el alpha de otro slot */}
         {['a', 'b', 'c'].map(slot => {
           const l    = layout[slot];
           const part = parts[slot];
           if (!l || !part?.image) return null;
 
-          // Máscara CSS: usa el alpha del png del slot indicado en maskSlot.
-          // Las comillas dentro de url("...") son obligatorias cuando la ruta tiene espacios.
           let maskStyle = {};
           if (l.maskSlot && parts[l.maskSlot]?.image) {
             const ml = layout[l.maskSlot];
-            // Comillas para soportar espacios en el nombre del fichero
             const maskUrl = `url("${parts[l.maskSlot].image}")`;
-            const maskW   = ml ? `${ml.w}px`           : '100%';
-            const maskH   = ml ? `${ml.h}px`           : '100%';
+            const maskW   = ml ? `${ml.w}px`             : '100%';
+            const maskH   = ml ? `${ml.h}px`             : '100%';
             const maskX   = ml ? `${ml.left - l.left}px` : '0px';
             const maskY   = ml ? `${ml.top  - l.top}px`  : '0px';
             maskStyle = {
-              WebkitMaskImage:    maskUrl,
-              WebkitMaskSize:     `${maskW} ${maskH}`,
-              WebkitMaskPosition: `${maskX} ${maskY}`,
-              WebkitMaskRepeat:   'no-repeat',
-              maskImage:          maskUrl,
-              maskSize:           `${maskW} ${maskH}`,
-              maskPosition:       `${maskX} ${maskY}`,
-              maskRepeat:         'no-repeat',
+              WebkitMaskImage: maskUrl, WebkitMaskSize: `${maskW} ${maskH}`,
+              WebkitMaskPosition: `${maskX} ${maskY}`, WebkitMaskRepeat: 'no-repeat',
+              maskImage: maskUrl, maskSize: `${maskW} ${maskH}`,
+              maskPosition: `${maskX} ${maskY}`, maskRepeat: 'no-repeat',
             };
           }
 
@@ -395,13 +388,10 @@ function WeaponAssembly({ weaponType, partA, partB, partC }) {
               src={part.image}
               alt={part.name || slot}
               style={{
-                position:        'absolute',
-                left:            l.left,
-                top:             l.top,
-                width:           l.w,
-                height:          l.h,
-                zIndex:          l.z,
-                transform:       l.rot ? `rotate(${l.rot}deg)` : undefined,
+                position: 'absolute',
+                left: l.left, top: l.top, width: l.w, height: l.h,
+                zIndex: l.z,
+                transform: l.rot ? `rotate(${l.rot}deg)` : undefined,
                 transformOrigin: 'center center',
                 ...maskStyle,
               }}
@@ -411,14 +401,9 @@ function WeaponAssembly({ weaponType, partA, partB, partC }) {
         })}
         {!partA?.image && (
           <div style={{
-            position: 'absolute',
-            inset: 0,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '5rem',
-            color: 'var(--color-text-disabled)',
-            opacity: 0.4,
+            position: 'absolute', inset: 0,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            fontSize: '5rem', color: 'var(--color-text-disabled)', opacity: 0.4,
           }}>⚔</div>
         )}
       </div>
