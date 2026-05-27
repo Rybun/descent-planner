@@ -324,6 +324,41 @@
   margin-top: 1px;
 }
 
+/* ── Descripción de ability del accesorio ── */
+
+.ability-desc {
+  margin: 4px 0 0;
+  font-size: 0.75rem;
+  line-height: 1.45;
+  color: var(--color-text-muted);
+}
+
+.ability-desc--empty {
+  font-style: italic;
+  color: var(--color-text-disabled);
+}
+
+/* Término del juego con texto linkado */
+.ability-term {
+  font-style: normal;
+  color: var(--color-gold-light);
+}
+
+/* Icono inline de término (corazón, daño, etc.) */
+.ability-term-icon {
+  width: 14px;
+  height: 14px;
+  vertical-align: middle;
+  object-fit: contain;
+  display: inline-block;
+}
+
+/* Símbolo Unicode de término (éxito, fatiga, etc.) */
+.ability-term-sym {
+  font-size: 0.8em;
+  color: var(--color-gold);
+}
+
 .slot-default {
   font-size: 0.75rem;
   color: var(--color-text-disabled);

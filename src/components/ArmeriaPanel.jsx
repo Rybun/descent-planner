@@ -7,6 +7,7 @@ import { WEAPON_PARTS_BY_ID } from '../gamedata/weaponParts';
 import { DESCRIPTIONS } from '../gamedata/descriptions';
 import { WEAPON_ASSEMBLY, ASSEMBLY_CANVAS, ASSEMBLY_SCALE, ASSEMBLY_DISPLAY_W, ASSEMBLY_DISPLAY_H } from '../gamedata/weaponAssembly';
 import { DAMAGE_TYPE_BY_ID } from '../gamedata/damageTypes';
+import { PART_ABILITY_KEY, WEAPON_ABILITIES } from '../gamedata/weaponAbilities';
 import Tooltip from './Tooltip';
 import './ArmeriaPanel.css';
 
@@ -298,43 +299,114 @@ export default function ArmeriaPanel() {
   );
 }
 
+// ─── Parser de rich text del juego → React nodes ─────────────────────────────
+
+// Términos con icono inline disponible
+const TERM_ICONS = {
+  TERM_HEALTH_DIAL: '/assets/icons/Icon_Health.png',
+  TERM_DAMAGE:      '/assets/icons/Icon_Damage.png',
+  TERM_ACTIONS:     '/assets/icons/Icon_Action_Combat.png',
+};
+
+// Términos que en el juego son iconos de dado — mostramos abreviatura Unicode
+const TERM_SYMBOLS = {
+  TERM_FATIGUE: '⚡',
+  TERM_SUCCESS: '✦',
+  TERM_SURGE:   '⬡',
+  TERM_ADVANTAGE: '◆',
+};
+
+function parseGameText(text) {
+  if (!text) return [];
+  const pattern = /<style=[^>]+><link=([^>]+)>(.*?)<\/link><\/style>|<[^>]+>/g;
+  const parts = [];
+  let last = 0, match;
+  while ((match = pattern.exec(text)) !== null) {
+    if (match.index > last) parts.push({ t: 'text', s: text.slice(last, match.index) });
+    if (match[1]) {
+      // es un término con link
+      parts.push({ t: 'term', key: match[1], content: match[2] });
+    }
+    // si no tiene match[1] es una etiqueta suelta (ej. <style=...>) → ignorar
+    last = pattern.lastIndex;
+  }
+  if (last < text.length) parts.push({ t: 'text', s: text.slice(last) });
+  return parts;
+}
+
+function AbilityDesc({ partId, lang }) {
+  const abilityKey = PART_ABILITY_KEY[partId];
+  const isNoAbility = !abilityKey;
+
+  const rawText = isNoAbility
+    ? (WEAPON_ABILITIES['UI_NO_ABILITY']?.[lang] || WEAPON_ABILITIES['UI_NO_ABILITY']?.es || '')
+    : (WEAPON_ABILITIES[abilityKey]?.[lang] || WEAPON_ABILITIES[abilityKey]?.es || '');
+
+  if (!rawText) return null;
+
+  const nodes = parseGameText(rawText);
+
+  return (
+    <p className={`ability-desc ${isNoAbility ? 'ability-desc--empty' : ''}`}>
+      {nodes.map((node, i) => {
+        if (node.t === 'text') return <span key={i}>{node.s}</span>;
+        // término con contenido de texto → mostrar el texto resaltado
+        if (node.content) return <em key={i} className="ability-term">{node.content}</em>;
+        // término vacío (icono) → icono o símbolo
+        const iconSrc = TERM_ICONS[node.key];
+        const symbol  = TERM_SYMBOLS[node.key];
+        if (iconSrc) return (
+          <img key={i} src={iconSrc} alt={node.key}
+            className="ability-term-icon"
+            onError={e => e.target.style.display = 'none'} />
+        );
+        if (symbol) return <span key={i} className="ability-term-sym">{symbol}</span>;
+        // fallback: nada (el texto del término ya estará en el contenido surrounding)
+        return null;
+      })}
+    </p>
+  );
+}
+
 // ─── Fila de slot B o C con navegación ────────────────────────────────────────
 
 function SlotRow({ label, options, selectedPart, selectedIdx, onNav, getDesc, noUpgradeLabel, prevLabel, nextLabel, lang }) {
-  const hasNav     = options.length > 1;
-  const noUpgrade  = selectedPart?.level === 0;
+  const hasNav    = options.length > 1;
+  const noUpgrade = selectedPart?.level === 0;
 
   return (
     <div className="slot-row">
       <div className="slot-row-header">
         <span className="slot-label-name">{label}</span>
-        {hasNav && (
-          <span className="slot-counter">{selectedIdx + 1}/{options.length}</span>
-        )}
+        <span className="slot-counter">
+          {hasNav ? `${selectedIdx + 1}/${options.length}` : ''}
+        </span>
       </div>
 
-      {hasNav ? (
-        <div className="slot-nav-row">
-          <button className="part-nav-btn slot-nav-btn" onClick={() => onNav(-1)} title={prevLabel}>◄</button>
-          <Tooltip text={getDesc(selectedPart?.id)}>
-            <span className={`slot-part-name ${noUpgrade ? 'slot-default' : ''}`}>
-              {noUpgrade ? noUpgradeLabel : (selectedPart ? getName(selectedPart, lang) : '—')}
-            </span>
-          </Tooltip>
-          <button className="part-nav-btn slot-nav-btn" onClick={() => onNav(1)} title={nextLabel}>►</button>
-        </div>
-      ) : (
-        noUpgrade
-          ? <span className="slot-default">{noUpgradeLabel}</span>
-          : <Tooltip text={getDesc(selectedPart?.id)}>
-              <span className="slot-part">
-                {selectedPart?.image && (
-                  <img src={selectedPart.image} alt="" className="slot-part-icon"
-                    onError={e => e.target.style.display = 'none'} />
-                )}
-                {selectedPart ? getName(selectedPart, lang) : '—'}
-              </span>
-            </Tooltip>
+      {/* Siempre se muestra la fila con flechas; deshabilitadas si no hay opciones */}
+      <div className="slot-nav-row">
+        <button
+          className="part-nav-btn slot-nav-btn"
+          onClick={() => onNav(-1)}
+          disabled={!hasNav}
+          title={prevLabel}
+        >◄</button>
+        <Tooltip text={getDesc(selectedPart?.id)}>
+          <span className="slot-part-name">
+            {selectedPart ? getName(selectedPart, lang) : '—'}
+          </span>
+        </Tooltip>
+        <button
+          className="part-nav-btn slot-nav-btn"
+          onClick={() => onNav(1)}
+          disabled={!hasNav}
+          title={nextLabel}
+        >►</button>
+      </div>
+
+      {/* Descripción de la ability */}
+      {selectedPart && (
+        <AbilityDesc partId={selectedPart.id} lang={lang} />
       )}
     </div>
   );
