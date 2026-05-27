@@ -22,3 +22,12 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Recursos del juego (imágenes extraídas de los assets de Descent)
+public/assets/
+
+# Archivos de candidatos de extracción
+public/candidates/
+
+# Backups generados por extract.py
+src/gamedata/*.bak

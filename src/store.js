@@ -18,11 +18,16 @@ function cloneGameState(gs) {
     shopData: gs.shopData.map(s => ({ ...s })),
     availableItemIds: [...gs.availableItemIds],
     availableRecipeIds: [...gs.availableRecipeIds],
+    shopRecipeIds: [...(gs.shopRecipeIds || [])],
     discoveredRecipes: gs.discoveredRecipes.map(r => ({ ...r })),
     heroes: gs.heroes.map(h => ({
       ...h,
       equippedWeapons: h.equippedWeapons.map(w => ({ ...w })),
     })),
+    // Selecciones de pieza A/B/C por arma (UI state con historial)
+    partASelections: { ...(gs.partASelections || {}) },
+    partBSelections: { ...(gs.partBSelections || {}) },
+    partCSelections: { ...(gs.partCSelections || {}) },
   };
 }
 
@@ -53,7 +58,7 @@ export const useStore = create((set, get) => ({
   actionHistory: [],
 
   // === UI ===
-  activeTab: 'tienda',
+  activeTab: 'armeria',
   showSettings: false,
   priceEditorOpen: false,
 
@@ -77,6 +82,12 @@ export const useStore = create((set, get) => ({
           timestamp: parsed.timestamp,
           questId: parsed.questId,
           gameDifficulty: parsed.gameDifficulty,
+          currentGamePhase: parsed.currentGamePhase,
+          currentObjectiveKey: parsed.currentObjectiveKey,
+          lastKnownLocation: parsed.lastKnownLocation,
+          totalPlayTimeSeconds: parsed.totalPlayTimeSeconds,
+          completedDestinations: parsed.completedDestinations,
+          activeDestinations: parsed.activeDestinations,
           slotGUID: parsed.slotGUID,
           roundNumber: parsed.roundNumber,
         },
@@ -213,6 +224,57 @@ export const useStore = create((set, get) => ({
     const newHistory = [...actionHistory, action].slice(-MAX_HISTORY);
     set({ gameState: newGs, actionHistory: newHistory });
     return true;
+  },
+
+  // === ARMERÍA: EQUIPAR PIEZA A ===
+  equipPartA: (weaponSaveId, partAId) => {
+    const { gameState, actionHistory } = get();
+    if (!gameState) return;
+
+    const currentPartAId = (gameState.partASelections || {})[weaponSaveId];
+    if (currentPartAId === partAId) return;
+
+    const action = createAction('EQUIP_PART_A', `Equipar pieza A: ${getItemName(partAId)}`, {
+      weaponSaveId, partAId,
+    });
+
+    const newGs = applyAction(cloneGameState(gameState), action);
+    const newHistory = [...actionHistory, action].slice(-MAX_HISTORY);
+    set({ gameState: newGs, actionHistory: newHistory });
+  },
+
+  // === ARMERÍA: EQUIPAR PIEZA B ===
+  equipPartB: (weaponSaveId, partBId) => {
+    const { gameState, actionHistory } = get();
+    if (!gameState) return;
+
+    const current = (gameState.partBSelections || {})[weaponSaveId];
+    if (current === partBId) return;
+
+    const action = createAction('EQUIP_PART_B', `Equipar pieza B: ${getItemName(partBId)}`, {
+      weaponSaveId, partBId,
+    });
+
+    const newGs = applyAction(cloneGameState(gameState), action);
+    const newHistory = [...actionHistory, action].slice(-MAX_HISTORY);
+    set({ gameState: newGs, actionHistory: newHistory });
+  },
+
+  // === ARMERÍA: EQUIPAR PIEZA C ===
+  equipPartC: (weaponSaveId, partCId) => {
+    const { gameState, actionHistory } = get();
+    if (!gameState) return;
+
+    const current = (gameState.partCSelections || {})[weaponSaveId];
+    if (current === partCId) return;
+
+    const action = createAction('EQUIP_PART_C', `Equipar pieza C: ${getItemName(partCId)}`, {
+      weaponSaveId, partCId,
+    });
+
+    const newGs = applyAction(cloneGameState(gameState), action);
+    const newHistory = [...actionHistory, action].slice(-MAX_HISTORY);
+    set({ gameState: newGs, actionHistory: newHistory });
   },
 
   // === CRAFTEO: CRAFTEAR PARTE ===
@@ -367,6 +429,39 @@ function applyAction(gs, action) {
         r.id === recipeId ? { ...r, crafted: true } : r
       );
       return { ...gs, discoveredRecipes: newRecipes };
+    }
+
+    case 'EQUIP_PART_A': {
+      const { weaponSaveId, partAId } = data;
+      return {
+        ...gs,
+        partASelections: {
+          ...(gs.partASelections || {}),
+          [weaponSaveId]: partAId,
+        },
+      };
+    }
+
+    case 'EQUIP_PART_B': {
+      const { weaponSaveId, partBId } = data;
+      return {
+        ...gs,
+        partBSelections: {
+          ...(gs.partBSelections || {}),
+          [weaponSaveId]: partBId,
+        },
+      };
+    }
+
+    case 'EQUIP_PART_C': {
+      const { weaponSaveId, partCId } = data;
+      return {
+        ...gs,
+        partCSelections: {
+          ...(gs.partCSelections || {}),
+          [weaponSaveId]: partCId,
+        },
+      };
     }
 
     default:

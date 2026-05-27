@@ -1,0 +1,208 @@
+/* =====================================================
+   GAME INFO PANEL — Pestaña de estado de partida
+   ===================================================== */
+
+.gameinfo-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+/* ─── Fila de tarjetas ───────────────────────────────── */
+
+.gi-cards-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-md);
+}
+
+@media (max-width: 720px) {
+  .gi-cards-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ─── Tarjeta ────────────────────────────────────────── */
+
+.gi-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.gi-card-title {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+  padding: 8px 14px 6px;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface-raised);
+}
+
+/* ─── Filas de dato ──────────────────────────────────── */
+
+.gi-rows {
+  display: flex;
+  flex-direction: column;
+}
+
+.gi-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+  padding: 6px 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.gi-row:last-child {
+  border-bottom: none;
+}
+
+.gi-label {
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.gi-value {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text);
+  text-align: right;
+}
+
+.gi-value.gi-highlight {
+  color: var(--color-gold);
+}
+
+.gi-value.gi-gold {
+  color: var(--color-gold);
+  font-weight: 700;
+}
+
+.gi-value.gi-small {
+  font-size: 0.74rem;
+  font-weight: 400;
+  color: var(--color-text-muted);
+}
+
+/* Dificultad con color */
+.gi-difficulty {
+  font-weight: 700;
+}
+.gi-diff-0 { color: var(--color-success); }
+.gi-diff-1 { color: var(--color-text); }
+.gi-diff-2 { color: #e8a020; }
+.gi-diff-3 { color: var(--color-danger); }
+
+/* ─── Sección de héroes ──────────────────────────────── */
+
+.gi-heroes-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.gi-section-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.gi-heroes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: var(--spacing-sm);
+}
+
+/* ─── Tarjeta de héroe ───────────────────────────────── */
+
+.gi-hero-card {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-sm) var(--spacing-md);
+  overflow: hidden;
+}
+
+.gi-hero-portrait {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--color-border);
+  flex-shrink: 0;
+}
+
+.gi-hero-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.gi-hero-name {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-gold);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 3px;
+}
+
+.gi-hero-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  align-items: center;
+}
+
+/* Estado de salud */
+.gi-health-badge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 99px;
+  border: 1px solid transparent;
+}
+
+/* 0 = Sano */
+.gi-health-0 {
+  background: rgba(var(--color-success-rgb), 0.15);
+  color: var(--color-success);
+  border-color: var(--color-success);
+}
+
+/* 1 = Herido */
+.gi-health-1 {
+  background: rgba(232, 160, 32, 0.15);
+  color: #e8a020;
+  border-color: #e8a020;
+}
+
+/* 2 = K.O. */
+.gi-health-2 {
+  background: rgba(var(--color-danger-rgb), 0.15);
+  color: var(--color-danger);
+  border-color: var(--color-danger);
+}
+
+.gi-virtue {
+  font-size: 0.65rem;
+  color: var(--color-text-muted);
+  background: var(--color-surface-raised);
+  padding: 1px 5px;
+  border-radius: 99px;
+  border: 1px solid var(--color-border);
+}

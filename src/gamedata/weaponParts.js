@@ -1,7 +1,6 @@
-// Partes de armas del juego Descent: Legends of the Dark
-// Datos extraídos de los bundles de Unity del juego
-// buyPrice / sellPrice: null = precio no encontrado; editable desde Ajustes
-// Slot A = Hoja/Cabeza, Slot B = Empuñadura/Mango, Slot C = Accesorio/Punta
+// Partes de armas de Descent: Legends of the Dark
+// Generado automáticamente por extract.py — no editar manualmente
+// buyPrice / sellPrice: null = precio no disponible en assets del juego
 
 export const WEAPON_PARTS = [
   {
@@ -29,6 +28,18 @@ export const WEAPON_PARTS = [
     "sellPrice": null
   },
   {
+    "id": "WEAPON_PART_A_BOW_1_UPGRADED",
+    "slot": "A",
+    "weaponType": "BOW",
+    "level": 1,
+    "name": "Arco de madera sangrienta + ✦",
+    "nameEn": "Bloodwood Bow + ✦",
+    "weaponId": "WEAPON_BOW",
+    "image": "/assets/weapon_parts/bow a1 - bloodwood.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
     "id": "WEAPON_PART_A_BOW_2",
     "slot": "A",
     "weaponType": "BOW",
@@ -37,8 +48,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Blackroot Bow",
     "weaponId": "WEAPON_BOW",
     "image": "/assets/weapon_parts/bow a2 - blackroot.png",
-    "buyPrice": 200,
-    "sellPrice": 100
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_A_BOW_2_UPGRADED",
+    "slot": "A",
+    "weaponType": "BOW",
+    "level": 2,
+    "name": "Arco de raíz negra + ✦",
+    "nameEn": "Blackroot Bow + ✦",
+    "weaponId": "WEAPON_BOW",
+    "image": "/assets/weapon_parts/bow a2 - blackroot.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_A_BOW_3",
@@ -49,8 +72,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Witch Hazel Bow",
     "weaponId": "WEAPON_BOW",
     "image": "/assets/weapon_parts/bow a3 - witchhazel.png",
-    "buyPrice": 200,
-    "sellPrice": 100
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_A_BOW_3_UPGRADED",
+    "slot": "A",
+    "weaponType": "BOW",
+    "level": 3,
+    "name": "Arco de avellano de bruja + ✦",
+    "nameEn": "Witch Hazel Bow + ✦",
+    "weaponId": "WEAPON_BOW",
+    "image": "/assets/weapon_parts/bow a3 - witchhazel.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_A_BOW_4",
@@ -65,12 +100,36 @@ export const WEAPON_PARTS = [
     "sellPrice": null
   },
   {
+    "id": "WEAPON_PART_A_BOW_4_UPGRADED",
+    "slot": "A",
+    "weaponType": "BOW",
+    "level": 4,
+    "name": "Arco aullante + ✦",
+    "nameEn": "Howling Bow + ✦",
+    "weaponId": "WEAPON_BOW",
+    "image": "/assets/weapon_parts/bow a4 - howling.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
     "id": "WEAPON_PART_A_BOW_5",
     "slot": "A",
     "weaponType": "BOW",
     "level": 5,
     "name": "Arco centinela",
     "nameEn": "Sentinel Bow",
+    "weaponId": "WEAPON_BOW",
+    "image": "/assets/weapon_parts/bow a5 - sentinel.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_A_BOW_5_UPGRADED",
+    "slot": "A",
+    "weaponType": "BOW",
+    "level": 5,
+    "name": "Arco centinela + ✦",
+    "nameEn": "Sentinel Bow + ✦",
     "weaponId": "WEAPON_BOW",
     "image": "/assets/weapon_parts/bow a5 - sentinel.png",
     "buyPrice": null,
@@ -97,8 +156,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Nightlace String",
     "weaponId": "WEAPON_BOW",
     "image": "/assets/weapon_parts/bow b1 - nightlace string.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_B_BOW_1_UPGRADED",
+    "slot": "B",
+    "weaponType": "BOW",
+    "level": 1,
+    "name": "Cuerda de encaje nocturno + ✦",
+    "nameEn": "Nightlace String + ✦",
+    "weaponId": "WEAPON_BOW",
+    "image": "/assets/weapon_parts/bow b1 - nightlace string.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_B_BOW_2",
@@ -109,8 +180,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Silken String",
     "weaponId": "WEAPON_BOW",
     "image": "/assets/weapon_parts/bow b2 - silken string.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_B_BOW_2_UPGRADED",
+    "slot": "B",
+    "weaponType": "BOW",
+    "level": 2,
+    "name": "Cuerda de seda + ✦",
+    "nameEn": "Silken String + ✦",
+    "weaponId": "WEAPON_BOW",
+    "image": "/assets/weapon_parts/bow b2 - silken string.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_B_BOW_3",
@@ -121,8 +204,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Wildborn String",
     "weaponId": "WEAPON_BOW",
     "image": "/assets/weapon_parts/bow b3 - wildborn string.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_B_BOW_3_UPGRADED",
+    "slot": "B",
+    "weaponType": "BOW",
+    "level": 3,
+    "name": "Cuerda de origen salvaje + ✦",
+    "nameEn": "Wildborn String + ✦",
+    "weaponId": "WEAPON_BOW",
+    "image": "/assets/weapon_parts/bow b3 - wildborn string.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_B_BOW_4",
@@ -137,12 +232,36 @@ export const WEAPON_PARTS = [
     "sellPrice": null
   },
   {
+    "id": "WEAPON_PART_B_BOW_4_UPGRADED",
+    "slot": "B",
+    "weaponType": "BOW",
+    "level": 4,
+    "name": "Cuerda de luna llena + ✦",
+    "nameEn": "Full Moon String + ✦",
+    "weaponId": "WEAPON_BOW",
+    "image": "/assets/weapon_parts/bow b4 - full moon string.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
     "id": "WEAPON_PART_B_BOW_5",
     "slot": "B",
     "weaponType": "BOW",
     "level": 5,
     "name": "Cuerda vibrante",
     "nameEn": "Thrumming String",
+    "weaponId": "WEAPON_BOW",
+    "image": "/assets/weapon_parts/bow b5 - thrumming string.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_B_BOW_5_UPGRADED",
+    "slot": "B",
+    "weaponType": "BOW",
+    "level": 5,
+    "name": "Cuerda vibrante + ✦",
+    "nameEn": "Thrumming String + ✦",
     "weaponId": "WEAPON_BOW",
     "image": "/assets/weapon_parts/bow b5 - thrumming string.png",
     "buyPrice": null,
@@ -169,8 +288,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Marksman's Arrow",
     "weaponId": "WEAPON_BOW",
     "image": "/assets/weapon_parts/bow c1 - marksman's arrow.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_C_BOW_1_UPGRADED",
+    "slot": "C",
+    "weaponType": "BOW",
+    "level": 1,
+    "name": "Flecha de tirador + ✦",
+    "nameEn": "Marksman's Arrow + ✦",
+    "weaponId": "WEAPON_BOW",
+    "image": "/assets/weapon_parts/bow c1 - marksman's arrow.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_C_BOW_2",
@@ -181,8 +312,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Direvine Arrow",
     "weaponId": "WEAPON_BOW",
     "image": "/assets/weapon_parts/bow c2 - direvine arrow.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_C_BOW_2_UPGRADED",
+    "slot": "C",
+    "weaponType": "BOW",
+    "level": 2,
+    "name": "Flecha de liana siniestra + ✦",
+    "nameEn": "Direvine Arrow + ✦",
+    "weaponId": "WEAPON_BOW",
+    "image": "/assets/weapon_parts/bow c2 - direvine arrow.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_C_BOW_3",
@@ -193,8 +336,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Twilight Arrow",
     "weaponId": "WEAPON_BOW",
     "image": "/assets/weapon_parts/bow c3 - twilight arrow.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_C_BOW_3_UPGRADED",
+    "slot": "C",
+    "weaponType": "BOW",
+    "level": 3,
+    "name": "Flecha crepuscular + ✦",
+    "nameEn": "Twilight Arrow + ✦",
+    "weaponId": "WEAPON_BOW",
+    "image": "/assets/weapon_parts/bow c3 - twilight arrow.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_C_BOW_4",
@@ -209,12 +364,36 @@ export const WEAPON_PARTS = [
     "sellPrice": null
   },
   {
+    "id": "WEAPON_PART_C_BOW_4_UPGRADED",
+    "slot": "C",
+    "weaponType": "BOW",
+    "level": 4,
+    "name": "Flecha de grito de halcón + ✦",
+    "nameEn": "Hawk-Cry Arrow + ✦",
+    "weaponId": "WEAPON_BOW",
+    "image": "/assets/weapon_parts/bow c4 - hawk-cry arrow.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
     "id": "WEAPON_PART_C_BOW_5",
     "slot": "C",
     "weaponType": "BOW",
     "level": 5,
     "name": "Flecha precisa",
     "nameEn": "Pinpoint Arrow",
+    "weaponId": "WEAPON_BOW",
+    "image": "/assets/weapon_parts/bow c5 - pinpoint arrow.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_C_BOW_5_UPGRADED",
+    "slot": "C",
+    "weaponType": "BOW",
+    "level": 5,
+    "name": "Flecha precisa + ✦",
+    "nameEn": "Pinpoint Arrow + ✦",
     "weaponId": "WEAPON_BOW",
     "image": "/assets/weapon_parts/bow c5 - pinpoint arrow.png",
     "buyPrice": null,
@@ -237,24 +416,48 @@ export const WEAPON_PARTS = [
     "slot": "A",
     "weaponType": "CROSSBOW",
     "level": 1,
-    "name": "Ballesta de puntería certera",
-    "nameEn": "True Aim Crossbow",
+    "name": "Ballesta de potencia doble",
+    "nameEn": "Dualpower Crossbow",
     "weaponId": "WEAPON_CROSSBOW",
     "image": "/assets/weapon_parts/crossbow a1 - dualpower.png",
-    "buyPrice": 200,
-    "sellPrice": 100
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_A_CROSSBOW_1_UPGRADED",
+    "slot": "A",
+    "weaponType": "CROSSBOW",
+    "level": 1,
+    "name": "Ballesta de potencia doble + ✦",
+    "nameEn": "Dualpower Crossbow + ✦",
+    "weaponId": "WEAPON_CROSSBOW",
+    "image": "/assets/weapon_parts/crossbow a1 - dualpower.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_A_CROSSBOW_2",
     "slot": "A",
     "weaponType": "CROSSBOW",
     "level": 2,
-    "name": "Ballesta de potencia doble",
-    "nameEn": "Dualpower Crossbow",
+    "name": "Ballesta de puntería certera",
+    "nameEn": "True Aim Crossbow",
     "weaponId": "WEAPON_CROSSBOW",
     "image": "/assets/weapon_parts/crossbow a2 - crisscross.png",
-    "buyPrice": 200,
-    "sellPrice": 100
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_A_CROSSBOW_2_UPGRADED",
+    "slot": "A",
+    "weaponType": "CROSSBOW",
+    "level": 2,
+    "name": "Ballesta de puntería certera + ✦",
+    "nameEn": "True Aim Crossbow + ✦",
+    "weaponId": "WEAPON_CROSSBOW",
+    "image": "/assets/weapon_parts/crossbow a2 - crisscross.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_A_CROSSBOW_3",
@@ -265,8 +468,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Elfweave Crossbow",
     "weaponId": "WEAPON_CROSSBOW",
     "image": "/assets/weapon_parts/crossbow a3 - woven.png",
-    "buyPrice": 200,
-    "sellPrice": 100
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_A_CROSSBOW_3_UPGRADED",
+    "slot": "A",
+    "weaponType": "CROSSBOW",
+    "level": 3,
+    "name": "Ballesta de tejido élfico + ✦",
+    "nameEn": "Elfweave Crossbow + ✦",
+    "weaponId": "WEAPON_CROSSBOW",
+    "image": "/assets/weapon_parts/crossbow a3 - woven.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_A_CROSSBOW_4",
@@ -281,12 +496,36 @@ export const WEAPON_PARTS = [
     "sellPrice": null
   },
   {
+    "id": "WEAPON_PART_A_CROSSBOW_4_UPGRADED",
+    "slot": "A",
+    "weaponType": "CROSSBOW",
+    "level": 4,
+    "name": "Ballesta de retroceso ✦",
+    "nameEn": "Kickback Crossbow ✦",
+    "weaponId": "WEAPON_CROSSBOW",
+    "image": "/assets/weapon_parts/crossbow a4 - kickback.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
     "id": "WEAPON_PART_A_CROSSBOW_5",
     "slot": "A",
     "weaponType": "CROSSBOW",
     "level": 5,
     "name": "Ballesta de tiro lejano",
     "nameEn": "Longsight Crossbow",
+    "weaponId": "WEAPON_CROSSBOW",
+    "image": "/assets/weapon_parts/crossbow a5 - longsight.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_A_CROSSBOW_5_UPGRADED",
+    "slot": "A",
+    "weaponType": "CROSSBOW",
+    "level": 5,
+    "name": "Ballesta de tiro lejano ✦",
+    "nameEn": "Longsight Crossbow ✦",
     "weaponId": "WEAPON_CROSSBOW",
     "image": "/assets/weapon_parts/crossbow a5 - longsight.png",
     "buyPrice": null,
@@ -313,8 +552,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Gnomewood Stock",
     "weaponId": "WEAPON_CROSSBOW",
     "image": "/assets/weapon_parts/crossbow b1 - gnomewood stock.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_B_CROSSBOW_1_UPGRADED",
+    "slot": "B",
+    "weaponType": "CROSSBOW",
+    "level": 1,
+    "name": "Culata de madera gnómica + ✦",
+    "nameEn": "Gnomewood Stock + ✦",
+    "weaponId": "WEAPON_CROSSBOW",
+    "image": "/assets/weapon_parts/crossbow b1 - gnomewood stock.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_B_CROSSBOW_2",
@@ -325,8 +576,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Mammoth Stock",
     "weaponId": "WEAPON_CROSSBOW",
     "image": "/assets/weapon_parts/crossbow b2 - mammoth stock.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_B_CROSSBOW_2_UPGRADED",
+    "slot": "B",
+    "weaponType": "CROSSBOW",
+    "level": 2,
+    "name": "Culata descomunal + ✦",
+    "nameEn": "Mammoth Stock + ✦",
+    "weaponId": "WEAPON_CROSSBOW",
+    "image": "/assets/weapon_parts/crossbow b2 - mammoth stock.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_B_CROSSBOW_3",
@@ -337,8 +600,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Northwood Stock",
     "weaponId": "WEAPON_CROSSBOW",
     "image": "/assets/weapon_parts/crossbow b3 - northwood stock.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_B_CROSSBOW_3_UPGRADED",
+    "slot": "B",
+    "weaponType": "CROSSBOW",
+    "level": 3,
+    "name": "Culata de madera norteña + ✦",
+    "nameEn": "Northwood Stock + ✦",
+    "weaponId": "WEAPON_CROSSBOW",
+    "image": "/assets/weapon_parts/crossbow b3 - northwood stock.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_B_CROSSBOW_4",
@@ -353,12 +628,36 @@ export const WEAPON_PARTS = [
     "sellPrice": null
   },
   {
+    "id": "WEAPON_PART_B_CROSSBOW_4_UPGRADED",
+    "slot": "B",
+    "weaponType": "CROSSBOW",
+    "level": 4,
+    "name": "Culata fortalecedora ✦",
+    "nameEn": "Bracing Stock ✦",
+    "weaponId": "WEAPON_CROSSBOW",
+    "image": "/assets/weapon_parts/crossbow b4 - bracing stock.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
     "id": "WEAPON_PART_B_CROSSBOW_5",
     "slot": "B",
     "weaponType": "CROSSBOW",
     "level": 5,
     "name": "Culata de recarga",
     "nameEn": "Reloading Stock",
+    "weaponId": "WEAPON_CROSSBOW",
+    "image": "/assets/weapon_parts/crossbow b5 - reloading stock.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_B_CROSSBOW_5_UPGRADED",
+    "slot": "B",
+    "weaponType": "CROSSBOW",
+    "level": 5,
+    "name": "Culata de recarga ✦",
+    "nameEn": "Reloading Stock ✦",
     "weaponId": "WEAPON_CROSSBOW",
     "image": "/assets/weapon_parts/crossbow b5 - reloading stock.png",
     "buyPrice": null,
@@ -385,8 +684,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Barbed Bolts",
     "weaponId": "WEAPON_CROSSBOW",
     "image": "/assets/weapon_parts/crossbow c1 - barbed bolts.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_C_CROSSBOW_1_UPGRADED",
+    "slot": "C",
+    "weaponType": "CROSSBOW",
+    "level": 1,
+    "name": "Virotes dentados + ✦",
+    "nameEn": "Barbed Bolts + ✦",
+    "weaponId": "WEAPON_CROSSBOW",
+    "image": "/assets/weapon_parts/crossbow c1 - barbed bolts.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_C_CROSSBOW_2",
@@ -397,8 +708,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Spiral Bolts",
     "weaponId": "WEAPON_CROSSBOW",
     "image": "/assets/weapon_parts/crossbow c2 - spiral bolts.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_C_CROSSBOW_2_UPGRADED",
+    "slot": "C",
+    "weaponType": "CROSSBOW",
+    "level": 2,
+    "name": "Virotes de espiral + ✦",
+    "nameEn": "Spiral Bolts + ✦",
+    "weaponId": "WEAPON_CROSSBOW",
+    "image": "/assets/weapon_parts/crossbow c2 - spiral bolts.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_C_CROSSBOW_3",
@@ -409,8 +732,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Screamer Bolts",
     "weaponId": "WEAPON_CROSSBOW",
     "image": "/assets/weapon_parts/crossbow c3 - screamer bolts.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_C_CROSSBOW_3_UPGRADED",
+    "slot": "C",
+    "weaponType": "CROSSBOW",
+    "level": 3,
+    "name": "Virotes aullantes + ✦",
+    "nameEn": "Screamer Bolts + ✦",
+    "weaponId": "WEAPON_CROSSBOW",
+    "image": "/assets/weapon_parts/crossbow c3 - screamer bolts.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_C_CROSSBOW_4",
@@ -425,12 +760,36 @@ export const WEAPON_PARTS = [
     "sellPrice": null
   },
   {
+    "id": "WEAPON_PART_C_CROSSBOW_4_UPGRADED",
+    "slot": "C",
+    "weaponType": "CROSSBOW",
+    "level": 4,
+    "name": "Virotes marcadores ✦",
+    "nameEn": "Marking Bolts ✦",
+    "weaponId": "WEAPON_CROSSBOW",
+    "image": "/assets/weapon_parts/crossbow c4 - guiding bolts.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
     "id": "WEAPON_PART_C_CROSSBOW_5",
     "slot": "C",
     "weaponType": "CROSSBOW",
     "level": 5,
     "name": "Virotes de astillamiento",
     "nameEn": "Splintering Bolts",
+    "weaponId": "WEAPON_CROSSBOW",
+    "image": "/assets/weapon_parts/crossbow c5 - splintering bolts.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_C_CROSSBOW_5_UPGRADED",
+    "slot": "C",
+    "weaponType": "CROSSBOW",
+    "level": 5,
+    "name": "Virotes de astillamiento ✦",
+    "nameEn": "Splintering Bolts ✦",
     "weaponId": "WEAPON_CROSSBOW",
     "image": "/assets/weapon_parts/crossbow c5 - splintering bolts.png",
     "buyPrice": null,
@@ -461,6 +820,18 @@ export const WEAPON_PARTS = [
     "sellPrice": null
   },
   {
+    "id": "WEAPON_PART_A_DUAL_BLADES_1_UPGRADED",
+    "slot": "A",
+    "weaponType": "DUAL_BLADES",
+    "level": 1,
+    "name": "Hojas gemelas + ✦",
+    "nameEn": "Mirror Blades + ✦",
+    "weaponId": "WEAPON_DUAL_BLADES",
+    "image": "/assets/weapon_parts/dual blades a1 - mirror.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
     "id": "WEAPON_PART_A_DUAL_BLADES_2",
     "slot": "A",
     "weaponType": "DUAL_BLADES",
@@ -469,8 +840,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Seer's Blades",
     "weaponId": "WEAPON_DUAL_BLADES",
     "image": "/assets/weapon_parts/dual blades a2 - seer.png",
-    "buyPrice": 200,
-    "sellPrice": 100
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_A_DUAL_BLADES_2_UPGRADED",
+    "slot": "A",
+    "weaponType": "DUAL_BLADES",
+    "level": 2,
+    "name": "Hojas del vidente + ✦",
+    "nameEn": "Seer's Blades + ✦",
+    "weaponId": "WEAPON_DUAL_BLADES",
+    "image": "/assets/weapon_parts/dual blades a2 - seer.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_A_DUAL_BLADES_3",
@@ -481,8 +864,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Whispering Blades",
     "weaponId": "WEAPON_DUAL_BLADES",
     "image": "/assets/weapon_parts/dual blades a3 - whispering.png",
-    "buyPrice": 200,
-    "sellPrice": 100
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_A_DUAL_BLADES_3_UPGRADED",
+    "slot": "A",
+    "weaponType": "DUAL_BLADES",
+    "level": 3,
+    "name": "Hojas susurrantes + ✦",
+    "nameEn": "Whispering Blades + ✦",
+    "weaponId": "WEAPON_DUAL_BLADES",
+    "image": "/assets/weapon_parts/dual blades a3 - whispering.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_A_DUAL_BLADES_4",
@@ -493,8 +888,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Dancing Blades",
     "weaponId": "WEAPON_DUAL_BLADES",
     "image": "/assets/weapon_parts/dual blades a4 - dancing.png",
-    "buyPrice": 200,
-    "sellPrice": 100
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_A_DUAL_BLADES_4_UPGRADED",
+    "slot": "A",
+    "weaponType": "DUAL_BLADES",
+    "level": 4,
+    "name": "Hojas danzantes ✦",
+    "nameEn": "Dancing Blades ✦",
+    "weaponId": "WEAPON_DUAL_BLADES",
+    "image": "/assets/weapon_parts/dual blades a4 - dancing.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_A_DUAL_BLADES_5",
@@ -505,8 +912,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Hungry Blades",
     "weaponId": "WEAPON_DUAL_BLADES",
     "image": "/assets/weapon_parts/dual blades a5 - hungry.png",
-    "buyPrice": 300,
-    "sellPrice": 150
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_A_DUAL_BLADES_5_UPGRADED",
+    "slot": "A",
+    "weaponType": "DUAL_BLADES",
+    "level": 5,
+    "name": "Hojas hambrientas ✦",
+    "nameEn": "Hungry Blades ✦",
+    "weaponId": "WEAPON_DUAL_BLADES",
+    "image": "/assets/weapon_parts/dual blades a5 - hungry.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_B_DUAL_BLADES_0",
@@ -529,8 +948,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Glass Offhand",
     "weaponId": "WEAPON_DUAL_BLADES",
     "image": "/assets/weapon_parts/dual blades b1 - glass offhand.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_B_DUAL_BLADES_1_UPGRADED",
+    "slot": "B",
+    "weaponType": "DUAL_BLADES",
+    "level": 1,
+    "name": "Arma secundaria de cristal + ✦",
+    "nameEn": "Glass Offhand + ✦",
+    "weaponId": "WEAPON_DUAL_BLADES",
+    "image": "/assets/weapon_parts/dual blades b1 - glass offhand.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_B_DUAL_BLADES_2",
@@ -541,8 +972,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Hooked Offhand",
     "weaponId": "WEAPON_DUAL_BLADES",
     "image": "/assets/weapon_parts/dual blades b2 - hooked offhand.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_B_DUAL_BLADES_2_UPGRADED",
+    "slot": "B",
+    "weaponType": "DUAL_BLADES",
+    "level": 2,
+    "name": "Arma secundaria con gancho + ✦",
+    "nameEn": "Hooked Offhand + ✦",
+    "weaponId": "WEAPON_DUAL_BLADES",
+    "image": "/assets/weapon_parts/dual blades b2 - hooked offhand.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_B_DUAL_BLADES_3",
@@ -553,8 +996,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Forgotten Offhand",
     "weaponId": "WEAPON_DUAL_BLADES",
     "image": "/assets/weapon_parts/dual blades b3 - forgotten offhand.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_B_DUAL_BLADES_3_UPGRADED",
+    "slot": "B",
+    "weaponType": "DUAL_BLADES",
+    "level": 3,
+    "name": "Arma secundaria olvidada + ✦",
+    "nameEn": "Forgotten Offhand + ✦",
+    "weaponId": "WEAPON_DUAL_BLADES",
+    "image": "/assets/weapon_parts/dual blades b3 - forgotten offhand.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_B_DUAL_BLADES_4",
@@ -569,12 +1024,36 @@ export const WEAPON_PARTS = [
     "sellPrice": null
   },
   {
+    "id": "WEAPON_PART_B_DUAL_BLADES_4_UPGRADED",
+    "slot": "B",
+    "weaponType": "DUAL_BLADES",
+    "level": 4,
+    "name": "Arma secundaria de metal estelar ✦",
+    "nameEn": "Star Metal Offhand ✦",
+    "weaponId": "WEAPON_DUAL_BLADES",
+    "image": "/assets/weapon_parts/dual blades b4 - star metal offhand.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
     "id": "WEAPON_PART_B_DUAL_BLADES_5",
     "slot": "B",
     "weaponType": "DUAL_BLADES",
     "level": 5,
     "name": "Arma secundaria de leonx",
     "nameEn": "Leonx Offhand",
+    "weaponId": "WEAPON_DUAL_BLADES",
+    "image": "/assets/weapon_parts/dual blades b5 - leonx offhand.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_B_DUAL_BLADES_5_UPGRADED",
+    "slot": "B",
+    "weaponType": "DUAL_BLADES",
+    "level": 5,
+    "name": "Arma secundaria de leonx ✦",
+    "nameEn": "Leonx Offhand ✦",
     "weaponId": "WEAPON_DUAL_BLADES",
     "image": "/assets/weapon_parts/dual blades b5 - leonx offhand.png",
     "buyPrice": null,
@@ -601,8 +1080,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Redstone Pommel",
     "weaponId": "WEAPON_DUAL_BLADES",
     "image": "/assets/weapon_parts/dual blades c1 - redstone pommel.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_C_DUAL_BLADES_1_UPGRADED",
+    "slot": "C",
+    "weaponType": "DUAL_BLADES",
+    "level": 1,
+    "name": "Puño de piedra roja + ✦",
+    "nameEn": "Redstone Pommel + ✦",
+    "weaponId": "WEAPON_DUAL_BLADES",
+    "image": "/assets/weapon_parts/dual blades c1 - redstone pommel.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_C_DUAL_BLADES_2",
@@ -613,8 +1104,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Bloodscript Pommel",
     "weaponId": "WEAPON_DUAL_BLADES",
     "image": "/assets/weapon_parts/dual blades c2 - bloodscript pommel.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_C_DUAL_BLADES_2_UPGRADED",
+    "slot": "C",
+    "weaponType": "DUAL_BLADES",
+    "level": 2,
+    "name": "Puño de escritura sanguínea + ✦",
+    "nameEn": "Bloodscript Pommel + ✦",
+    "weaponId": "WEAPON_DUAL_BLADES",
+    "image": "/assets/weapon_parts/dual blades c2 - bloodscript pommel.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_C_DUAL_BLADES_3",
@@ -625,8 +1128,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Braided Pommel",
     "weaponId": "WEAPON_DUAL_BLADES",
     "image": "/assets/weapon_parts/dual blades c3 - braided pommel.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_C_DUAL_BLADES_3_UPGRADED",
+    "slot": "C",
+    "weaponType": "DUAL_BLADES",
+    "level": 3,
+    "name": "Puño trenzado + ✦",
+    "nameEn": "Braided Pommel + ✦",
+    "weaponId": "WEAPON_DUAL_BLADES",
+    "image": "/assets/weapon_parts/dual blades c3 - braided pommel.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_C_DUAL_BLADES_4",
@@ -635,6 +1150,18 @@ export const WEAPON_PARTS = [
     "level": 4,
     "name": "Puño dorado",
     "nameEn": "Gilded Pommel",
+    "weaponId": "WEAPON_DUAL_BLADES",
+    "image": "/assets/weapon_parts/dual blades c4 - gilded pommel.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_C_DUAL_BLADES_4_UPGRADED",
+    "slot": "C",
+    "weaponType": "DUAL_BLADES",
+    "level": 4,
+    "name": "Puño dorado ✦",
+    "nameEn": "Gilded Pommel ✦",
     "weaponId": "WEAPON_DUAL_BLADES",
     "image": "/assets/weapon_parts/dual blades c4 - gilded pommel.png",
     "buyPrice": null,
@@ -653,13 +1180,25 @@ export const WEAPON_PARTS = [
     "sellPrice": null
   },
   {
+    "id": "WEAPON_PART_C_DUAL_BLADES_5_UPGRADED",
+    "slot": "C",
+    "weaponType": "DUAL_BLADES",
+    "level": 5,
+    "name": "Puño de guardia de garra ✦",
+    "nameEn": "Clawguard Pommel ✦",
+    "weaponId": "WEAPON_DUAL_BLADES",
+    "image": "/assets/weapon_parts/dual blades c5 - clawguard pommel.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
     "id": "WEAPON_PART_A_GAUNTLET_0",
     "slot": "A",
     "weaponType": "GAUNTLET",
     "level": 0,
     "name": "Guantelete básico",
     "nameEn": "Basic Gauntlet",
-    "weaponId": "WEAPON_WAR_HAMMER",
+    "weaponId": "WEAPON_GAUNTLET",
     "image": null,
     "buyPrice": null,
     "sellPrice": null
@@ -671,7 +1210,19 @@ export const WEAPON_PARTS = [
     "level": 1,
     "name": "Guantelete de garra sombría",
     "nameEn": "Shadowclaw Gauntlet",
-    "weaponId": "WEAPON_WAR_HAMMER",
+    "weaponId": "WEAPON_GAUNTLET",
+    "image": "/assets/weapon_parts/gauntlet a1 - shadowstone.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_A_GAUNTLET_1_UPGRADED",
+    "slot": "A",
+    "weaponType": "GAUNTLET",
+    "level": 1,
+    "name": "Guantelete de garra sombría + ✦",
+    "nameEn": "Shadowclaw Gauntlet + ✦",
+    "weaponId": "WEAPON_GAUNTLET",
     "image": "/assets/weapon_parts/gauntlet a1 - shadowstone.png",
     "buyPrice": null,
     "sellPrice": null
@@ -683,10 +1234,22 @@ export const WEAPON_PARTS = [
     "level": 2,
     "name": "Guantelete acolmillado",
     "nameEn": "Fanged Gauntlet",
-    "weaponId": "WEAPON_WAR_HAMMER",
+    "weaponId": "WEAPON_GAUNTLET",
     "image": "/assets/weapon_parts/gauntlet a2 - fanged.png",
-    "buyPrice": 200,
-    "sellPrice": 100
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_A_GAUNTLET_2_UPGRADED",
+    "slot": "A",
+    "weaponType": "GAUNTLET",
+    "level": 2,
+    "name": "Guantelete acolmillado + ✦",
+    "nameEn": "Fanged Gauntlet + ✦",
+    "weaponId": "WEAPON_GAUNTLET",
+    "image": "/assets/weapon_parts/gauntlet a2 - fanged.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_A_GAUNTLET_3",
@@ -695,10 +1258,22 @@ export const WEAPON_PARTS = [
     "level": 3,
     "name": "Guantelete disruptor",
     "nameEn": "Disrupter Gauntlet",
-    "weaponId": "WEAPON_WAR_HAMMER",
+    "weaponId": "WEAPON_GAUNTLET",
     "image": "/assets/weapon_parts/gauntlet a3 - disrupter.png",
-    "buyPrice": 200,
-    "sellPrice": 100
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_A_GAUNTLET_3_UPGRADED",
+    "slot": "A",
+    "weaponType": "GAUNTLET",
+    "level": 3,
+    "name": "Guantelete disruptor + ✦",
+    "nameEn": "Disrupter Gauntlet + ✦",
+    "weaponId": "WEAPON_GAUNTLET",
+    "image": "/assets/weapon_parts/gauntlet a3 - disrupter.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_A_GAUNTLET_4",
@@ -707,7 +1282,19 @@ export const WEAPON_PARTS = [
     "level": 4,
     "name": "Guantelete implacable",
     "nameEn": "Relentless Gauntlet",
-    "weaponId": "WEAPON_WAR_HAMMER",
+    "weaponId": "WEAPON_GAUNTLET",
+    "image": "/assets/weapon_parts/gauntlet a4 - relentless.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_A_GAUNTLET_4_UPGRADED",
+    "slot": "A",
+    "weaponType": "GAUNTLET",
+    "level": 4,
+    "name": "Guantelete implacable + ✦",
+    "nameEn": "Relentless Gauntlet + ✦",
+    "weaponId": "WEAPON_GAUNTLET",
     "image": "/assets/weapon_parts/gauntlet a4 - relentless.png",
     "buyPrice": null,
     "sellPrice": null
@@ -719,10 +1306,22 @@ export const WEAPON_PARTS = [
     "level": 5,
     "name": "Guantelete de libación vital",
     "nameEn": "Life-Drinking Gauntlet",
-    "weaponId": "WEAPON_WAR_HAMMER",
+    "weaponId": "WEAPON_GAUNTLET",
     "image": "/assets/weapon_parts/gauntlet a5 - life drinking.png",
-    "buyPrice": 200,
-    "sellPrice": 100
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_A_GAUNTLET_5_UPGRADED",
+    "slot": "A",
+    "weaponType": "GAUNTLET",
+    "level": 5,
+    "name": "Guantelete de libación vital + ✦",
+    "nameEn": "Life-Drinking Gauntlet + ✦",
+    "weaponId": "WEAPON_GAUNTLET",
+    "image": "/assets/weapon_parts/gauntlet a5 - life drinking.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_B_GAUNTLET_0",
@@ -731,7 +1330,7 @@ export const WEAPON_PARTS = [
     "level": 0,
     "name": "Guante",
     "nameEn": "Glove",
-    "weaponId": "WEAPON_WAR_HAMMER",
+    "weaponId": "WEAPON_GAUNTLET",
     "image": "/assets/weapon_parts/gauntlet b0 - starter.png",
     "buyPrice": null,
     "sellPrice": null
@@ -743,10 +1342,22 @@ export const WEAPON_PARTS = [
     "level": 1,
     "name": "Guantes de tejido sombrío",
     "nameEn": "Shadow-Weave Gloves",
-    "weaponId": "WEAPON_WAR_HAMMER",
+    "weaponId": "WEAPON_GAUNTLET",
     "image": "/assets/weapon_parts/gauntlet b1 - shadow-weave gloves.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_B_GAUNTLET_1_UPGRADED",
+    "slot": "B",
+    "weaponType": "GAUNTLET",
+    "level": 1,
+    "name": "Guantes de tejido sombrío + ✦",
+    "nameEn": "Shadow-Weave Gloves + ✦",
+    "weaponId": "WEAPON_GAUNTLET",
+    "image": "/assets/weapon_parts/gauntlet b1 - shadow-weave gloves.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_B_GAUNTLET_2",
@@ -755,10 +1366,22 @@ export const WEAPON_PARTS = [
     "level": 2,
     "name": "Guantes de garra",
     "nameEn": "Clawed Gloves",
-    "weaponId": "WEAPON_WAR_HAMMER",
+    "weaponId": "WEAPON_GAUNTLET",
     "image": "/assets/weapon_parts/gauntlet b2 - clawed gloves.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_B_GAUNTLET_2_UPGRADED",
+    "slot": "B",
+    "weaponType": "GAUNTLET",
+    "level": 2,
+    "name": "Guantes de garra + ✦",
+    "nameEn": "Clawed Gloves + ✦",
+    "weaponId": "WEAPON_GAUNTLET",
+    "image": "/assets/weapon_parts/gauntlet b2 - clawed gloves.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_B_GAUNTLET_3",
@@ -767,10 +1390,22 @@ export const WEAPON_PARTS = [
     "level": 3,
     "name": "Guantes sanguinarios",
     "nameEn": "Bloodthirsty Gloves",
-    "weaponId": "WEAPON_WAR_HAMMER",
+    "weaponId": "WEAPON_GAUNTLET",
     "image": "/assets/weapon_parts/gauntlet b3 - bloodthirsty gloves.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_B_GAUNTLET_3_UPGRADED",
+    "slot": "B",
+    "weaponType": "GAUNTLET",
+    "level": 3,
+    "name": "Guantes sanguinarios + ✦",
+    "nameEn": "Bloodthirsty Gloves + ✦",
+    "weaponId": "WEAPON_GAUNTLET",
+    "image": "/assets/weapon_parts/gauntlet b3 - bloodthirsty gloves.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_B_GAUNTLET_4",
@@ -779,7 +1414,19 @@ export const WEAPON_PARTS = [
     "level": 4,
     "name": "Guantes de susurro",
     "nameEn": "Whisper Gloves",
-    "weaponId": "WEAPON_WAR_HAMMER",
+    "weaponId": "WEAPON_GAUNTLET",
+    "image": "/assets/weapon_parts/gauntlet b4 - whisper gloves.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_B_GAUNTLET_4_UPGRADED",
+    "slot": "B",
+    "weaponType": "GAUNTLET",
+    "level": 4,
+    "name": "Guantes de susurro + ✦",
+    "nameEn": "Whisper Gloves + ✦",
+    "weaponId": "WEAPON_GAUNTLET",
     "image": "/assets/weapon_parts/gauntlet b4 - whisper gloves.png",
     "buyPrice": null,
     "sellPrice": null
@@ -791,7 +1438,19 @@ export const WEAPON_PARTS = [
     "level": 5,
     "name": "Guantes de ala de draco",
     "nameEn": "Drakewing Gloves",
-    "weaponId": "WEAPON_WAR_HAMMER",
+    "weaponId": "WEAPON_GAUNTLET",
+    "image": "/assets/weapon_parts/gauntlet b5 - drakewing gloves.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_B_GAUNTLET_5_UPGRADED",
+    "slot": "B",
+    "weaponType": "GAUNTLET",
+    "level": 5,
+    "name": "Guantes de ala de draco + ✦",
+    "nameEn": "Drakewing Gloves + ✦",
+    "weaponId": "WEAPON_GAUNTLET",
     "image": "/assets/weapon_parts/gauntlet b5 - drakewing gloves.png",
     "buyPrice": null,
     "sellPrice": null
@@ -803,7 +1462,7 @@ export const WEAPON_PARTS = [
     "level": 0,
     "name": "Brazalete",
     "nameEn": "Bracer",
-    "weaponId": "WEAPON_WAR_HAMMER",
+    "weaponId": "WEAPON_GAUNTLET",
     "image": "/assets/weapon_parts/gauntlet c0 - starter.png",
     "buyPrice": null,
     "sellPrice": null
@@ -815,10 +1474,22 @@ export const WEAPON_PARTS = [
     "level": 1,
     "name": "Brazaletes de piedrasombría",
     "nameEn": "Shadowstone Bracers",
-    "weaponId": "WEAPON_WAR_HAMMER",
+    "weaponId": "WEAPON_GAUNTLET",
     "image": "/assets/weapon_parts/gauntlet c1 - shadowstone bracers.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_C_GAUNTLET_1_UPGRADED",
+    "slot": "C",
+    "weaponType": "GAUNTLET",
+    "level": 1,
+    "name": "Brazaletes de piedrasombría + ✦",
+    "nameEn": "Shadowstone Bracers + ✦",
+    "weaponId": "WEAPON_GAUNTLET",
+    "image": "/assets/weapon_parts/gauntlet c1 - shadowstone bracers.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_C_GAUNTLET_2",
@@ -827,10 +1498,22 @@ export const WEAPON_PARTS = [
     "level": 2,
     "name": "Brazaletes pesados",
     "nameEn": "Heavy Bracers",
-    "weaponId": "WEAPON_WAR_HAMMER",
+    "weaponId": "WEAPON_GAUNTLET",
     "image": "/assets/weapon_parts/gauntlet c2 - heavy bracers.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_C_GAUNTLET_2_UPGRADED",
+    "slot": "C",
+    "weaponType": "GAUNTLET",
+    "level": 2,
+    "name": "Brazaletes pesados + ✦",
+    "nameEn": "Heavy Bracers + ✦",
+    "weaponId": "WEAPON_GAUNTLET",
+    "image": "/assets/weapon_parts/gauntlet c2 - heavy bracers.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_C_GAUNTLET_3",
@@ -839,10 +1522,22 @@ export const WEAPON_PARTS = [
     "level": 3,
     "name": "Brazaletes crueles",
     "nameEn": "Cruel Bracers",
-    "weaponId": "WEAPON_WAR_HAMMER",
+    "weaponId": "WEAPON_GAUNTLET",
     "image": "/assets/weapon_parts/gauntlet c3 - cruel bracers.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_C_GAUNTLET_3_UPGRADED",
+    "slot": "C",
+    "weaponType": "GAUNTLET",
+    "level": 3,
+    "name": "Brazaletes crueles + ✦",
+    "nameEn": "Cruel Bracers + ✦",
+    "weaponId": "WEAPON_GAUNTLET",
+    "image": "/assets/weapon_parts/gauntlet c3 - cruel bracers.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_C_GAUNTLET_4",
@@ -851,7 +1546,19 @@ export const WEAPON_PARTS = [
     "level": 4,
     "name": "Brazaletes mordedores",
     "nameEn": "Biting Bracers",
-    "weaponId": "WEAPON_WAR_HAMMER",
+    "weaponId": "WEAPON_GAUNTLET",
+    "image": "/assets/weapon_parts/gauntlet c4 - biting bracers.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_C_GAUNTLET_4_UPGRADED",
+    "slot": "C",
+    "weaponType": "GAUNTLET",
+    "level": 4,
+    "name": "Brazaletes mordedores + ✦",
+    "nameEn": "Biting Bracers + ✦",
+    "weaponId": "WEAPON_GAUNTLET",
     "image": "/assets/weapon_parts/gauntlet c4 - biting bracers.png",
     "buyPrice": null,
     "sellPrice": null
@@ -863,7 +1570,19 @@ export const WEAPON_PARTS = [
     "level": 5,
     "name": "Brazaletes aferradores",
     "nameEn": "Grasping Bracers",
-    "weaponId": "WEAPON_WAR_HAMMER",
+    "weaponId": "WEAPON_GAUNTLET",
+    "image": "/assets/weapon_parts/gauntlet c5 - grasping bracers.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_C_GAUNTLET_5_UPGRADED",
+    "slot": "C",
+    "weaponType": "GAUNTLET",
+    "level": 5,
+    "name": "Brazaletes aferradores + ✦",
+    "nameEn": "Grasping Bracers + ✦",
+    "weaponId": "WEAPON_GAUNTLET",
     "image": "/assets/weapon_parts/gauntlet c5 - grasping bracers.png",
     "buyPrice": null,
     "sellPrice": null
@@ -893,6 +1612,18 @@ export const WEAPON_PARTS = [
     "sellPrice": null
   },
   {
+    "id": "WEAPON_PART_A_HAMMER_1_UPGRADED",
+    "slot": "A",
+    "weaponType": "HAMMER",
+    "level": 1,
+    "name": "Martillo de dos cabezas + ✦",
+    "nameEn": "Double-Headed Hammer + ✦",
+    "weaponId": "WEAPON_HAMMER",
+    "image": "/assets/weapon_parts/hammer a1 - double headed.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
     "id": "WEAPON_PART_A_HAMMER_2",
     "slot": "A",
     "weaponType": "HAMMER",
@@ -901,8 +1632,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Hooked Hammer",
     "weaponId": "WEAPON_HAMMER",
     "image": "/assets/weapon_parts/hammer a2 - hooked.png",
-    "buyPrice": 200,
-    "sellPrice": 100
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_A_HAMMER_2_UPGRADED",
+    "slot": "A",
+    "weaponType": "HAMMER",
+    "level": 2,
+    "name": "Martillo con gancho + ✦",
+    "nameEn": "Hooked Hammer + ✦",
+    "weaponId": "WEAPON_HAMMER",
+    "image": "/assets/weapon_parts/hammer a2 - hooked.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_A_HAMMER_3",
@@ -913,8 +1656,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Spiked Hammer",
     "weaponId": "WEAPON_HAMMER",
     "image": "/assets/weapon_parts/hammer a3 - spiked.png",
-    "buyPrice": 200,
-    "sellPrice": 100
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_A_HAMMER_3_UPGRADED",
+    "slot": "A",
+    "weaponType": "HAMMER",
+    "level": 3,
+    "name": "Martillo con púas + ✦",
+    "nameEn": "Spiked Hammer + ✦",
+    "weaponId": "WEAPON_HAMMER",
+    "image": "/assets/weapon_parts/hammer a3 - spiked.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_A_HAMMER_4",
@@ -929,12 +1684,36 @@ export const WEAPON_PARTS = [
     "sellPrice": null
   },
   {
+    "id": "WEAPON_PART_A_HAMMER_4_UPGRADED",
+    "slot": "A",
+    "weaponType": "HAMMER",
+    "level": 4,
+    "name": "Martillo de pensar ✦",
+    "nameEn": "Thinking Hammer ✦",
+    "weaponId": "WEAPON_HAMMER",
+    "image": "/assets/weapon_parts/hammer a4 - thinking.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
     "id": "WEAPON_PART_A_HAMMER_5",
     "slot": "A",
     "weaponType": "HAMMER",
     "level": 5,
     "name": "Martillo de rebote",
     "nameEn": "Rebound Hammer",
+    "weaponId": "WEAPON_HAMMER",
+    "image": "/assets/weapon_parts/hammer a5 - rebound.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_A_HAMMER_5_UPGRADED",
+    "slot": "A",
+    "weaponType": "HAMMER",
+    "level": 5,
+    "name": "Martillo de rebote ✦",
+    "nameEn": "Rebound Hammer ✦",
     "weaponId": "WEAPON_HAMMER",
     "image": "/assets/weapon_parts/hammer a5 - rebound.png",
     "buyPrice": null,
@@ -961,8 +1740,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Dunwarrik Haft",
     "weaponId": "WEAPON_HAMMER",
     "image": "/assets/weapon_parts/hammer b1 - dunwarik haft.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_B_HAMMER_1_UPGRADED",
+    "slot": "B",
+    "weaponType": "HAMMER",
+    "level": 1,
+    "name": "Mango de Dunwarr + ✦",
+    "nameEn": "Dunwarrik Haft + ✦",
+    "weaponId": "WEAPON_HAMMER",
+    "image": "/assets/weapon_parts/hammer b1 - dunwarik haft.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_B_HAMMER_2",
@@ -973,8 +1764,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Forgik Haft",
     "weaponId": "WEAPON_HAMMER",
     "image": "/assets/weapon_parts/hammer b2 - forgik haft.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_B_HAMMER_2_UPGRADED",
+    "slot": "B",
+    "weaponType": "HAMMER",
+    "level": 2,
+    "name": "Mango de Forja + ✦",
+    "nameEn": "Forgik Haft + ✦",
+    "weaponId": "WEAPON_HAMMER",
+    "image": "/assets/weapon_parts/hammer b2 - forgik haft.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_B_HAMMER_3",
@@ -985,8 +1788,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Kehlik Haft",
     "weaponId": "WEAPON_HAMMER",
     "image": "/assets/weapon_parts/hammer b3 - kehlik haft.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_B_HAMMER_3_UPGRADED",
+    "slot": "B",
+    "weaponType": "HAMMER",
+    "level": 3,
+    "name": "Mango kehlik + ✦",
+    "nameEn": "Kehlik Haft + ✦",
+    "weaponId": "WEAPON_HAMMER",
+    "image": "/assets/weapon_parts/hammer b3 - kehlik haft.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_B_HAMMER_4",
@@ -1001,12 +1816,36 @@ export const WEAPON_PARTS = [
     "sellPrice": null
   },
   {
+    "id": "WEAPON_PART_B_HAMMER_4_UPGRADED",
+    "slot": "B",
+    "weaponType": "HAMMER",
+    "level": 4,
+    "name": "Mango del inventor ✦",
+    "nameEn": "Inventor's Haft ✦",
+    "weaponId": "WEAPON_HAMMER",
+    "image": "/assets/weapon_parts/hammer b4 - inventor's haft.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
     "id": "WEAPON_PART_B_HAMMER_5",
     "slot": "B",
     "weaponType": "HAMMER",
     "level": 5,
     "name": "Mango del reaprovechador",
     "nameEn": "Salvager Haft",
+    "weaponId": "WEAPON_HAMMER",
+    "image": "/assets/weapon_parts/hammer b5 - salvager haft.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_B_HAMMER_5_UPGRADED",
+    "slot": "B",
+    "weaponType": "HAMMER",
+    "level": 5,
+    "name": "Mango del reaprovechador ✦",
+    "nameEn": "Salvager Haft ✦",
     "weaponId": "WEAPON_HAMMER",
     "image": "/assets/weapon_parts/hammer b5 - salvager haft.png",
     "buyPrice": null,
@@ -1033,8 +1872,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Smith's Grip",
     "weaponId": "WEAPON_HAMMER",
     "image": "/assets/weapon_parts/hammer c1 - workman's grip.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_C_HAMMER_1_UPGRADED",
+    "slot": "C",
+    "weaponType": "HAMMER",
+    "level": 1,
+    "name": "Agarre del herrero + ✦",
+    "nameEn": "Smith's Grip + ✦",
+    "weaponId": "WEAPON_HAMMER",
+    "image": "/assets/weapon_parts/hammer c1 - workman's grip.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_C_HAMMER_2",
@@ -1045,8 +1896,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Guardsman's Grip",
     "weaponId": "WEAPON_HAMMER",
     "image": "/assets/weapon_parts/hammer c2 - guardsman's grip.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_C_HAMMER_2_UPGRADED",
+    "slot": "C",
+    "weaponType": "HAMMER",
+    "level": 2,
+    "name": "Agarre de guardia + ✦",
+    "nameEn": "Guardsman's Grip + ✦",
+    "weaponId": "WEAPON_HAMMER",
+    "image": "/assets/weapon_parts/hammer c2 - guardsman's grip.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_C_HAMMER_3",
@@ -1057,8 +1920,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Devastator's Grip",
     "weaponId": "WEAPON_HAMMER",
     "image": "/assets/weapon_parts/hammer c3 - devastation's grip.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_C_HAMMER_3_UPGRADED",
+    "slot": "C",
+    "weaponType": "HAMMER",
+    "level": 3,
+    "name": "Agarre del devastador + ✦",
+    "nameEn": "Devastator's Grip + ✦",
+    "weaponId": "WEAPON_HAMMER",
+    "image": "/assets/weapon_parts/hammer c3 - devastation's grip.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_C_HAMMER_4",
@@ -1073,12 +1948,36 @@ export const WEAPON_PARTS = [
     "sellPrice": null
   },
   {
+    "id": "WEAPON_PART_C_HAMMER_4_UPGRADED",
+    "slot": "C",
+    "weaponType": "HAMMER",
+    "level": 4,
+    "name": "Agarre del manipulador ✦",
+    "nameEn": "Tinker's Grip ✦",
+    "weaponId": "WEAPON_HAMMER",
+    "image": "/assets/weapon_parts/hammer c4 - tinker's grip.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
     "id": "WEAPON_PART_C_HAMMER_5",
     "slot": "C",
     "weaponType": "HAMMER",
     "level": 5,
     "name": "Agarre de la urraca",
     "nameEn": "Magpie's Grip",
+    "weaponId": "WEAPON_HAMMER",
+    "image": "/assets/weapon_parts/hammer c5 - magpie's grip.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_C_HAMMER_5_UPGRADED",
+    "slot": "C",
+    "weaponType": "HAMMER",
+    "level": 5,
+    "name": "Agarre de la urraca ✦",
+    "nameEn": "Magpie's Grip ✦",
     "weaponId": "WEAPON_HAMMER",
     "image": "/assets/weapon_parts/hammer c5 - magpie's grip.png",
     "buyPrice": null,
@@ -1109,6 +2008,18 @@ export const WEAPON_PARTS = [
     "sellPrice": null
   },
   {
+    "id": "WEAPON_PART_A_KNIVES_1_UPGRADED",
+    "slot": "A",
+    "weaponType": "KNIVES",
+    "level": 1,
+    "name": "Cuchillos de punta espinada + ✦",
+    "nameEn": "Thorntip Knives + ✦",
+    "weaponId": "WEAPON_THROWING_KNIVES",
+    "image": "/assets/weapon_parts/knives a1 - thorntip.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
     "id": "WEAPON_PART_A_KNIVES_2",
     "slot": "A",
     "weaponType": "KNIVES",
@@ -1117,8 +2028,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Barbed Knives",
     "weaponId": "WEAPON_THROWING_KNIVES",
     "image": "/assets/weapon_parts/knives a2 - barbed.png",
-    "buyPrice": 200,
-    "sellPrice": 100
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_A_KNIVES_2_UPGRADED",
+    "slot": "A",
+    "weaponType": "KNIVES",
+    "level": 2,
+    "name": "Cuchillos dentados + ✦",
+    "nameEn": "Barbed Knives + ✦",
+    "weaponId": "WEAPON_THROWING_KNIVES",
+    "image": "/assets/weapon_parts/knives a2 - barbed.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_A_KNIVES_3",
@@ -1129,8 +2052,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Shattercut Knives",
     "weaponId": "WEAPON_THROWING_KNIVES",
     "image": "/assets/weapon_parts/knives a3 - shattercut.png",
-    "buyPrice": 200,
-    "sellPrice": 100
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_A_KNIVES_3_UPGRADED",
+    "slot": "A",
+    "weaponType": "KNIVES",
+    "level": 3,
+    "name": "Cuchillos de corte fragmentado + ✦",
+    "nameEn": "Shattercut Knives + ✦",
+    "weaponId": "WEAPON_THROWING_KNIVES",
+    "image": "/assets/weapon_parts/knives a3 - shattercut.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_A_KNIVES_4",
@@ -1145,12 +2080,36 @@ export const WEAPON_PARTS = [
     "sellPrice": null
   },
   {
+    "id": "WEAPON_PART_A_KNIVES_4_UPGRADED",
+    "slot": "A",
+    "weaponType": "KNIVES",
+    "level": 4,
+    "name": "Cuchillos cristalinos + ✦",
+    "nameEn": "Crystal Knives + ✦",
+    "weaponId": "WEAPON_THROWING_KNIVES",
+    "image": "/assets/weapon_parts/knives a4 - crystal.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
     "id": "WEAPON_PART_A_KNIVES_5",
     "slot": "A",
     "weaponType": "KNIVES",
     "level": 5,
     "name": "Cuchillos de fragmento silbante",
     "nameEn": "Whistleshard Knives",
+    "weaponId": "WEAPON_THROWING_KNIVES",
+    "image": "/assets/weapon_parts/knives a5 - whistleshard.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_A_KNIVES_5_UPGRADED",
+    "slot": "A",
+    "weaponType": "KNIVES",
+    "level": 5,
+    "name": "Cuchillos de fragmento silbante + ✦",
+    "nameEn": "Whistleshard Knives + ✦",
     "weaponId": "WEAPON_THROWING_KNIVES",
     "image": "/assets/weapon_parts/knives a5 - whistleshard.png",
     "buyPrice": null,
@@ -1177,8 +2136,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Balanced Grip",
     "weaponId": "WEAPON_THROWING_KNIVES",
     "image": "/assets/weapon_parts/knives b1 - balanced grip.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_B_KNIVES_1_UPGRADED",
+    "slot": "B",
+    "weaponType": "KNIVES",
+    "level": 1,
+    "name": "Agarre equilibrado + ✦",
+    "nameEn": "Balanced Grip + ✦",
+    "weaponId": "WEAPON_THROWING_KNIVES",
+    "image": "/assets/weapon_parts/knives b1 - balanced grip.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_B_KNIVES_2",
@@ -1189,8 +2160,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Spiked Grip",
     "weaponId": "WEAPON_THROWING_KNIVES",
     "image": "/assets/weapon_parts/knives b2 - spiked grip.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_B_KNIVES_2_UPGRADED",
+    "slot": "B",
+    "weaponType": "KNIVES",
+    "level": 2,
+    "name": "Agarre de pinchos + ✦",
+    "nameEn": "Spiked Grip + ✦",
+    "weaponId": "WEAPON_THROWING_KNIVES",
+    "image": "/assets/weapon_parts/knives b2 - spiked grip.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_B_KNIVES_3",
@@ -1201,8 +2184,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Hooked Grip",
     "weaponId": "WEAPON_THROWING_KNIVES",
     "image": "/assets/weapon_parts/knives b3 - hooked grip.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_B_KNIVES_3_UPGRADED",
+    "slot": "B",
+    "weaponType": "KNIVES",
+    "level": 3,
+    "name": "Agarre torcido + ✦",
+    "nameEn": "Hooked Grip + ✦",
+    "weaponId": "WEAPON_THROWING_KNIVES",
+    "image": "/assets/weapon_parts/knives b3 - hooked grip.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_B_KNIVES_4",
@@ -1217,12 +2212,36 @@ export const WEAPON_PARTS = [
     "sellPrice": null
   },
   {
+    "id": "WEAPON_PART_B_KNIVES_4_UPGRADED",
+    "slot": "B",
+    "weaponType": "KNIVES",
+    "level": 4,
+    "name": "Agarre de madera viva + ✦",
+    "nameEn": "Livewood Grip + ✦",
+    "weaponId": "WEAPON_THROWING_KNIVES",
+    "image": "/assets/weapon_parts/knives b4 - livewood grip.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
     "id": "WEAPON_PART_B_KNIVES_5",
     "slot": "B",
     "weaponType": "KNIVES",
     "level": 5,
     "name": "Agarra colmilludo",
     "nameEn": "Fanged Grip",
+    "weaponId": "WEAPON_THROWING_KNIVES",
+    "image": "/assets/weapon_parts/knives b5 - fanged grip.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_B_KNIVES_5_UPGRADED",
+    "slot": "B",
+    "weaponType": "KNIVES",
+    "level": 5,
+    "name": "Agarra colmilludo + ✦",
+    "nameEn": "Fanged Grip + ✦",
     "weaponId": "WEAPON_THROWING_KNIVES",
     "image": "/assets/weapon_parts/knives b5 - fanged grip.png",
     "buyPrice": null,
@@ -1249,8 +2268,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Nightwalker Belt",
     "weaponId": "WEAPON_THROWING_KNIVES",
     "image": "/assets/weapon_parts/knives c1 - nightwalker belt.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_C_KNIVES_1_UPGRADED",
+    "slot": "C",
+    "weaponType": "KNIVES",
+    "level": 1,
+    "name": "Cinturón de caminante nocturno + ✦",
+    "nameEn": "Nightwalker Belt + ✦",
+    "weaponId": "WEAPON_THROWING_KNIVES",
+    "image": "/assets/weapon_parts/knives c1 - nightwalker belt.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_C_KNIVES_2",
@@ -1261,8 +2292,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Cobrastrike Belt",
     "weaponId": "WEAPON_THROWING_KNIVES",
     "image": "/assets/weapon_parts/knives c2 - cobrastrike bracers.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_C_KNIVES_2_UPGRADED",
+    "slot": "C",
+    "weaponType": "KNIVES",
+    "level": 2,
+    "name": "Cinturón de ataque de cobra + ✦",
+    "nameEn": "Cobrastrike Belt + ✦",
+    "weaponId": "WEAPON_THROWING_KNIVES",
+    "image": "/assets/weapon_parts/knives c2 - cobrastrike bracers.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_C_KNIVES_3",
@@ -1273,8 +2316,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Threewishes Sash",
     "weaponId": "WEAPON_THROWING_KNIVES",
     "image": "/assets/weapon_parts/knives c3 - threewishes sash.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_C_KNIVES_3_UPGRADED",
+    "slot": "C",
+    "weaponType": "KNIVES",
+    "level": 3,
+    "name": "Fajín de tres deseos + ✦",
+    "nameEn": "Threewishes Sash + ✦",
+    "weaponId": "WEAPON_THROWING_KNIVES",
+    "image": "/assets/weapon_parts/knives c3 - threewishes sash.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_C_KNIVES_4",
@@ -1289,12 +2344,36 @@ export const WEAPON_PARTS = [
     "sellPrice": null
   },
   {
+    "id": "WEAPON_PART_C_KNIVES_4_UPGRADED",
+    "slot": "C",
+    "weaponType": "KNIVES",
+    "level": 4,
+    "name": "Cinturón de brote silvestre + ✦",
+    "nameEn": "Wildbloom Belt + ✦",
+    "weaponId": "WEAPON_THROWING_KNIVES",
+    "image": "/assets/weapon_parts/knives c4 - wildbloom belt.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
     "id": "WEAPON_PART_C_KNIVES_5",
     "slot": "C",
     "weaponType": "KNIVES",
     "level": 5,
     "name": "Cinturón de golpe crepuscular",
     "nameEn": "Duskstrike Belt",
+    "weaponId": "WEAPON_THROWING_KNIVES",
+    "image": "/assets/weapon_parts/knives c5 - duskstrike belt.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_C_KNIVES_5_UPGRADED",
+    "slot": "C",
+    "weaponType": "KNIVES",
+    "level": 5,
+    "name": "Cinturón de golpe crepuscular + ✦",
+    "nameEn": "Duskstrike Belt + ✦",
     "weaponId": "WEAPON_THROWING_KNIVES",
     "image": "/assets/weapon_parts/knives c5 - duskstrike belt.png",
     "buyPrice": null,
@@ -1325,6 +2404,18 @@ export const WEAPON_PARTS = [
     "sellPrice": null
   },
   {
+    "id": "WEAPON_PART_A_SPEAR_1_UPGRADED",
+    "slot": "A",
+    "weaponType": "SPEAR",
+    "level": 1,
+    "name": "Lanza de Torrentera + ✦",
+    "nameEn": "Riverwatch Spear + ✦",
+    "weaponId": "WEAPON_SPEAR",
+    "image": "/assets/weapon_parts/spear a1 - lotus.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
     "id": "WEAPON_PART_A_SPEAR_2",
     "slot": "A",
     "weaponType": "SPEAR",
@@ -1333,8 +2424,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Lunar Spear",
     "weaponId": "WEAPON_SPEAR",
     "image": "/assets/weapon_parts/spear a2 - lunar.png",
-    "buyPrice": 200,
-    "sellPrice": 100
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_A_SPEAR_2_UPGRADED",
+    "slot": "A",
+    "weaponType": "SPEAR",
+    "level": 2,
+    "name": "Lanza lunar + ✦",
+    "nameEn": "Lunar Spear + ✦",
+    "weaponId": "WEAPON_SPEAR",
+    "image": "/assets/weapon_parts/spear a2 - lunar.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_A_SPEAR_3",
@@ -1345,8 +2448,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Sunforged Spear",
     "weaponId": "WEAPON_SPEAR",
     "image": "/assets/weapon_parts/spear a3 - sunforged.png",
-    "buyPrice": 200,
-    "sellPrice": 100
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_A_SPEAR_3_UPGRADED",
+    "slot": "A",
+    "weaponType": "SPEAR",
+    "level": 3,
+    "name": "Lanza de forjado solar + ✦",
+    "nameEn": "Sunforged Spear + ✦",
+    "weaponId": "WEAPON_SPEAR",
+    "image": "/assets/weapon_parts/spear a3 - sunforged.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_A_SPEAR_4",
@@ -1361,12 +2476,36 @@ export const WEAPON_PARTS = [
     "sellPrice": null
   },
   {
+    "id": "WEAPON_PART_A_SPEAR_4_UPGRADED",
+    "slot": "A",
+    "weaponType": "SPEAR",
+    "level": 4,
+    "name": "Lanza con banderines + ✦",
+    "nameEn": "Pennant Spear + ✦",
+    "weaponId": "WEAPON_SPEAR",
+    "image": "/assets/weapon_parts/spear a4 - pennant.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
     "id": "WEAPON_PART_A_SPEAR_5",
     "slot": "A",
     "weaponType": "SPEAR",
     "level": 5,
     "name": "Lanza de campeón",
     "nameEn": "Champion's Spear",
+    "weaponId": "WEAPON_SPEAR",
+    "image": "/assets/weapon_parts/spear a5 - champion's.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_A_SPEAR_5_UPGRADED",
+    "slot": "A",
+    "weaponType": "SPEAR",
+    "level": 5,
+    "name": "Lanza de campeón + ✦",
+    "nameEn": "Champion's Spear + ✦",
     "weaponId": "WEAPON_SPEAR",
     "image": "/assets/weapon_parts/spear a5 - champion's.png",
     "buyPrice": null,
@@ -1393,8 +2532,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Twisting Haft",
     "weaponId": "WEAPON_SPEAR",
     "image": "/assets/weapon_parts/spear b1 - twisting haft.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_B_SPEAR_1_UPGRADED",
+    "slot": "B",
+    "weaponType": "SPEAR",
+    "level": 1,
+    "name": "Asta retorcida + ✦",
+    "nameEn": "Twisting Haft + ✦",
+    "weaponId": "WEAPON_SPEAR",
+    "image": "/assets/weapon_parts/spear b1 - twisting haft.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_B_SPEAR_2",
@@ -1405,8 +2556,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Engraved Haft",
     "weaponId": "WEAPON_SPEAR",
     "image": "/assets/weapon_parts/spear b2 - engraved haft.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_B_SPEAR_2_UPGRADED",
+    "slot": "B",
+    "weaponType": "SPEAR",
+    "level": 2,
+    "name": "Asta grabada + ✦",
+    "nameEn": "Engraved Haft + ✦",
+    "weaponId": "WEAPON_SPEAR",
+    "image": "/assets/weapon_parts/spear b2 - engraved haft.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_B_SPEAR_3",
@@ -1417,8 +2580,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Superior Haft",
     "weaponId": "WEAPON_SPEAR",
     "image": "/assets/weapon_parts/spear b3 - superior haft.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_B_SPEAR_3_UPGRADED",
+    "slot": "B",
+    "weaponType": "SPEAR",
+    "level": 3,
+    "name": "Asta superior + ✦",
+    "nameEn": "Superior Haft + ✦",
+    "weaponId": "WEAPON_SPEAR",
+    "image": "/assets/weapon_parts/spear b3 - superior haft.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_B_SPEAR_4",
@@ -1433,12 +2608,36 @@ export const WEAPON_PARTS = [
     "sellPrice": null
   },
   {
+    "id": "WEAPON_PART_B_SPEAR_4_UPGRADED",
+    "slot": "B",
+    "weaponType": "SPEAR",
+    "level": 4,
+    "name": "Mango agitado + ✦",
+    "nameEn": "Roiling Haft + ✦",
+    "weaponId": "WEAPON_SPEAR",
+    "image": "/assets/weapon_parts/spear b4 - roiling haft.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
     "id": "WEAPON_PART_B_SPEAR_5",
     "slot": "B",
     "weaponType": "SPEAR",
     "level": 5,
     "name": "Mango inflexible",
     "nameEn": "Unyielding Haft",
+    "weaponId": "WEAPON_SPEAR",
+    "image": "/assets/weapon_parts/spear b5 - unyielding haft.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_B_SPEAR_5_UPGRADED",
+    "slot": "B",
+    "weaponType": "SPEAR",
+    "level": 5,
+    "name": "Mango inflexible + ✦",
+    "nameEn": "Unyielding Haft + ✦",
     "weaponId": "WEAPON_SPEAR",
     "image": "/assets/weapon_parts/spear b5 - unyielding haft.png",
     "buyPrice": null,
@@ -1465,8 +2664,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Radiant Tail",
     "weaponId": "WEAPON_SPEAR",
     "image": "/assets/weapon_parts/spear c1 - radiant tail.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_C_SPEAR_1_UPGRADED",
+    "slot": "C",
+    "weaponType": "SPEAR",
+    "level": 1,
+    "name": "Cola radiante + ✦",
+    "nameEn": "Radiant Tail + ✦",
+    "weaponId": "WEAPON_SPEAR",
+    "image": "/assets/weapon_parts/spear c1 - radiant tail.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_C_SPEAR_2",
@@ -1477,8 +2688,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Nightfall Tail",
     "weaponId": "WEAPON_SPEAR",
     "image": "/assets/weapon_parts/spear c2 - nightfall tail.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_C_SPEAR_2_UPGRADED",
+    "slot": "C",
+    "weaponType": "SPEAR",
+    "level": 2,
+    "name": "Cola del anochecer + ✦",
+    "nameEn": "Nightfall Tail + ✦",
+    "weaponId": "WEAPON_SPEAR",
+    "image": "/assets/weapon_parts/spear c2 - nightfall tail.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_C_SPEAR_3",
@@ -1489,8 +2712,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Serpent's Tail",
     "weaponId": "WEAPON_SPEAR",
     "image": "/assets/weapon_parts/spear c3 - serpent's tail.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_C_SPEAR_3_UPGRADED",
+    "slot": "C",
+    "weaponType": "SPEAR",
+    "level": 3,
+    "name": "Cola de la serpiente + ✦",
+    "nameEn": "Serpent's Tail + ✦",
+    "weaponId": "WEAPON_SPEAR",
+    "image": "/assets/weapon_parts/spear c3 - serpent's tail.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_C_SPEAR_4",
@@ -1505,12 +2740,36 @@ export const WEAPON_PARTS = [
     "sellPrice": null
   },
   {
+    "id": "WEAPON_PART_C_SPEAR_4_UPGRADED",
+    "slot": "C",
+    "weaponType": "SPEAR",
+    "level": 4,
+    "name": "Cola mordiente + ✦",
+    "nameEn": "Biting Tail + ✦",
+    "weaponId": "WEAPON_SPEAR",
+    "image": "/assets/weapon_parts/spear c4 - biting tail.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
     "id": "WEAPON_PART_C_SPEAR_5",
     "slot": "C",
     "weaponType": "SPEAR",
     "level": 5,
     "name": "Cola anclada",
     "nameEn": "Anchored Tail",
+    "weaponId": "WEAPON_SPEAR",
+    "image": "/assets/weapon_parts/spear c5 - anchored tail.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_C_SPEAR_5_UPGRADED",
+    "slot": "C",
+    "weaponType": "SPEAR",
+    "level": 5,
+    "name": "Cola anclada + ✦",
+    "nameEn": "Anchored Tail + ✦",
     "weaponId": "WEAPON_SPEAR",
     "image": "/assets/weapon_parts/spear c5 - anchored tail.png",
     "buyPrice": null,
@@ -1533,8 +2792,20 @@ export const WEAPON_PARTS = [
     "slot": "A",
     "weaponType": "STAFF",
     "level": 1,
-    "name": "Bastón retorcido",
-    "nameEn": "Crook'd Staff",
+    "name": "Envoltura de Puerto Cano",
+    "nameEn": "Greyhaven Wrap",
+    "weaponId": "WEAPON_STAFF",
+    "image": "/assets/weapon_parts/staff a1 - crookd.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_A_STAFF_1_UPGRADED",
+    "slot": "A",
+    "weaponType": "STAFF",
+    "level": 1,
+    "name": "Envoltura de Puerto Cano + ✦",
+    "nameEn": "Greyhaven Wrap + ✦",
     "weaponId": "WEAPON_STAFF",
     "image": "/assets/weapon_parts/staff a1 - crookd.png",
     "buyPrice": null,
@@ -1545,24 +2816,48 @@ export const WEAPON_PARTS = [
     "slot": "A",
     "weaponType": "STAFF",
     "level": 2,
-    "name": "Bastón cristalino",
-    "nameEn": "Crystalline Staff",
+    "name": "Envoltura escarlata",
+    "nameEn": "Scarlet Wrap",
     "weaponId": "WEAPON_STAFF",
     "image": "/assets/weapon_parts/staff a2 - crystal.png",
-    "buyPrice": 200,
-    "sellPrice": 100
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_A_STAFF_2_UPGRADED",
+    "slot": "A",
+    "weaponType": "STAFF",
+    "level": 2,
+    "name": "Envoltura escarlata + ✦",
+    "nameEn": "Scarlet Wrap + ✦",
+    "weaponId": "WEAPON_STAFF",
+    "image": "/assets/weapon_parts/staff a2 - crystal.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_A_STAFF_3",
     "slot": "A",
     "weaponType": "STAFF",
     "level": 3,
-    "name": "Bastón perenne",
-    "nameEn": "Evergreen Staff",
+    "name": "Envoltura del jinete",
+    "nameEn": "Rider's Wrap",
     "weaponId": "WEAPON_STAFF",
     "image": "/assets/weapon_parts/staff a3 - evergreen.png",
-    "buyPrice": 200,
-    "sellPrice": 100
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_A_STAFF_3_UPGRADED",
+    "slot": "A",
+    "weaponType": "STAFF",
+    "level": 3,
+    "name": "Envoltura del jinete + ✦",
+    "nameEn": "Rider's Wrap + ✦",
+    "weaponId": "WEAPON_STAFF",
+    "image": "/assets/weapon_parts/staff a3 - evergreen.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_A_STAFF_4",
@@ -1573,8 +2868,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Ashen Staff",
     "weaponId": "WEAPON_STAFF",
     "image": "/assets/weapon_parts/staff a4 - ashen.png",
-    "buyPrice": 200,
-    "sellPrice": 100
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_A_STAFF_4_UPGRADED",
+    "slot": "A",
+    "weaponType": "STAFF",
+    "level": 4,
+    "name": "Bastón ceniciento ✦",
+    "nameEn": "Ashen Staff ✦",
+    "weaponId": "WEAPON_STAFF",
+    "image": "/assets/weapon_parts/staff a4 - ashen.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_A_STAFF_5",
@@ -1585,8 +2892,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Guardian Staff",
     "weaponId": "WEAPON_STAFF",
     "image": "/assets/weapon_parts/staff a5 - guardian.png",
-    "buyPrice": 300,
-    "sellPrice": 150
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_A_STAFF_5_UPGRADED",
+    "slot": "A",
+    "weaponType": "STAFF",
+    "level": 5,
+    "name": "Bastón de guardián ✦",
+    "nameEn": "Guardian Staff ✦",
+    "weaponId": "WEAPON_STAFF",
+    "image": "/assets/weapon_parts/staff a5 - guardian.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_B_STAFF_0",
@@ -1609,8 +2928,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Greyhaven Wrap",
     "weaponId": "WEAPON_STAFF",
     "image": "/assets/weapon_parts/staff b1 - greyhaven wrap.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_B_STAFF_1_UPGRADED",
+    "slot": "B",
+    "weaponType": "STAFF",
+    "level": 1,
+    "name": "Envoltura de Puerto Cano + ✦",
+    "nameEn": "Greyhaven Wrap + ✦",
+    "weaponId": "WEAPON_STAFF",
+    "image": "/assets/weapon_parts/staff b1 - greyhaven wrap.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_B_STAFF_2",
@@ -1621,8 +2952,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Scarlet Wrap",
     "weaponId": "WEAPON_STAFF",
     "image": "/assets/weapon_parts/staff b2 - scarlet wrap.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_B_STAFF_2_UPGRADED",
+    "slot": "B",
+    "weaponType": "STAFF",
+    "level": 2,
+    "name": "Envoltura escarlata + ✦",
+    "nameEn": "Scarlet Wrap + ✦",
+    "weaponId": "WEAPON_STAFF",
+    "image": "/assets/weapon_parts/staff b2 - scarlet wrap.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_B_STAFF_3",
@@ -1633,8 +2976,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Rider's Wrap",
     "weaponId": "WEAPON_STAFF",
     "image": "/assets/weapon_parts/staff b3 - rider's wrap.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_B_STAFF_3_UPGRADED",
+    "slot": "B",
+    "weaponType": "STAFF",
+    "level": 3,
+    "name": "Envoltura del jinete + ✦",
+    "nameEn": "Rider's Wrap + ✦",
+    "weaponId": "WEAPON_STAFF",
+    "image": "/assets/weapon_parts/staff b3 - rider's wrap.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_B_STAFF_4",
@@ -1649,12 +3004,36 @@ export const WEAPON_PARTS = [
     "sellPrice": null
   },
   {
+    "id": "WEAPON_PART_B_STAFF_4_UPGRADED",
+    "slot": "B",
+    "weaponType": "STAFF",
+    "level": 4,
+    "name": "Envoltura de escama llameante ✦",
+    "nameEn": "Flamescale Wrap ✦",
+    "weaponId": "WEAPON_STAFF",
+    "image": "/assets/weapon_parts/staff b4 - flamescale wrap.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
     "id": "WEAPON_PART_B_STAFF_5",
     "slot": "B",
     "weaponType": "STAFF",
     "level": 5,
     "name": "Envoltura vendada",
     "nameEn": "Banded Wrap",
+    "weaponId": "WEAPON_STAFF",
+    "image": "/assets/weapon_parts/staff b5 - banded wrap.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_B_STAFF_5_UPGRADED",
+    "slot": "B",
+    "weaponType": "STAFF",
+    "level": 5,
+    "name": "Envoltura vendada ✦",
+    "nameEn": "Banded Wrap ✦",
     "weaponId": "WEAPON_STAFF",
     "image": "/assets/weapon_parts/staff b5 - banded wrap.png",
     "buyPrice": null,
@@ -1681,8 +3060,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Blood Vein Lacing",
     "weaponId": "WEAPON_STAFF",
     "image": "/assets/weapon_parts/staff c1 - blood vein lacing.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_C_STAFF_1_UPGRADED",
+    "slot": "C",
+    "weaponType": "STAFF",
+    "level": 1,
+    "name": "Infusión sanguina + ✦",
+    "nameEn": "Blood Vein Lacing + ✦",
+    "weaponId": "WEAPON_STAFF",
+    "image": "/assets/weapon_parts/staff c1 - blood vein lacing.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_C_STAFF_2",
@@ -1693,8 +3084,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Stormwind Lacing",
     "weaponId": "WEAPON_STAFF",
     "image": "/assets/weapon_parts/staff c2 - stormfront lacing.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_C_STAFF_2_UPGRADED",
+    "slot": "C",
+    "weaponType": "STAFF",
+    "level": 2,
+    "name": "Infusión de tormenta + ✦",
+    "nameEn": "Stormwind Lacing + ✦",
+    "weaponId": "WEAPON_STAFF",
+    "image": "/assets/weapon_parts/staff c2 - stormfront lacing.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_C_STAFF_3",
@@ -1705,8 +3108,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Goldbloom Lacing",
     "weaponId": "WEAPON_STAFF",
     "image": "/assets/weapon_parts/staff c3 - goldbloom lacing.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_C_STAFF_3_UPGRADED",
+    "slot": "C",
+    "weaponType": "STAFF",
+    "level": 3,
+    "name": "Infusión de abundancia + ✦",
+    "nameEn": "Goldbloom Lacing + ✦",
+    "weaponId": "WEAPON_STAFF",
+    "image": "/assets/weapon_parts/staff c3 - goldbloom lacing.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_C_STAFF_4",
@@ -1721,12 +3136,36 @@ export const WEAPON_PARTS = [
     "sellPrice": null
   },
   {
+    "id": "WEAPON_PART_C_STAFF_4_UPGRADED",
+    "slot": "C",
+    "weaponType": "STAFF",
+    "level": 4,
+    "name": "Infusión ambarina ✦",
+    "nameEn": "Ember Lacing ✦",
+    "weaponId": "WEAPON_STAFF",
+    "image": "/assets/weapon_parts/staff c4 - ember lacing.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
     "id": "WEAPON_PART_C_STAFF_5",
     "slot": "C",
     "weaponType": "STAFF",
     "level": 5,
     "name": "Infusión protegida",
     "nameEn": "Warded Lacing",
+    "weaponId": "WEAPON_STAFF",
+    "image": "/assets/weapon_parts/staff c5 - warded lacing.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_C_STAFF_5_UPGRADED",
+    "slot": "C",
+    "weaponType": "STAFF",
+    "level": 5,
+    "name": "Infusión protegida ✦",
+    "nameEn": "Warded Lacing ✦",
     "weaponId": "WEAPON_STAFF",
     "image": "/assets/weapon_parts/staff c5 - warded lacing.png",
     "buyPrice": null,
@@ -1757,6 +3196,18 @@ export const WEAPON_PARTS = [
     "sellPrice": null
   },
   {
+    "id": "WEAPON_PART_A_SWORD_1_UPGRADED",
+    "slot": "A",
+    "weaponType": "SWORD",
+    "level": 1,
+    "name": "Hoja de guardián + ✦",
+    "nameEn": "Warden's Blade + ✦",
+    "weaponId": "WEAPON_SWORD",
+    "image": "/assets/weapon_parts/sword a1 - gladius blade.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
     "id": "WEAPON_PART_A_SWORD_2",
     "slot": "A",
     "weaponType": "SWORD",
@@ -1765,8 +3216,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Wing Blade",
     "weaponId": "WEAPON_SWORD",
     "image": "/assets/weapon_parts/sword a2 - wing blade.png",
-    "buyPrice": 200,
-    "sellPrice": 100
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_A_SWORD_2_UPGRADED",
+    "slot": "A",
+    "weaponType": "SWORD",
+    "level": 2,
+    "name": "Hoja alada + ✦",
+    "nameEn": "Wing Blade + ✦",
+    "weaponId": "WEAPON_SWORD",
+    "image": "/assets/weapon_parts/sword a2 - wing blade.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_A_SWORD_3",
@@ -1777,8 +3240,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Diamond Blade",
     "weaponId": "WEAPON_SWORD",
     "image": "/assets/weapon_parts/sword a3 - diamond blade.png",
-    "buyPrice": 200,
-    "sellPrice": 100
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_A_SWORD_3_UPGRADED",
+    "slot": "A",
+    "weaponType": "SWORD",
+    "level": 3,
+    "name": "Hoja de diamante + ✦",
+    "nameEn": "Diamond Blade + ✦",
+    "weaponId": "WEAPON_SWORD",
+    "image": "/assets/weapon_parts/sword a3 - diamond blade.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_A_SWORD_4",
@@ -1789,8 +3264,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Lunging Blade",
     "weaponId": "WEAPON_SWORD",
     "image": "/assets/weapon_parts/sword a4 - lunging blade.png",
-    "buyPrice": 300,
-    "sellPrice": 150
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_A_SWORD_4_UPGRADED",
+    "slot": "A",
+    "weaponType": "SWORD",
+    "level": 4,
+    "name": "Hoja de embestida ✦",
+    "nameEn": "Lunging Blade ✦",
+    "weaponId": "WEAPON_SWORD",
+    "image": "/assets/weapon_parts/sword a4 - lunging blade.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_A_SWORD_5",
@@ -1801,8 +3288,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Citadel Blade",
     "weaponId": "WEAPON_SWORD",
     "image": "/assets/weapon_parts/sword a5 - citadel blade.png",
-    "buyPrice": 200,
-    "sellPrice": 100
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_A_SWORD_5_UPGRADED",
+    "slot": "A",
+    "weaponType": "SWORD",
+    "level": 5,
+    "name": "Hoja de la Ciudadela ✦",
+    "nameEn": "Citadel Blade ✦",
+    "weaponId": "WEAPON_SWORD",
+    "image": "/assets/weapon_parts/sword a5 - citadel blade.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_B_SWORD_0",
@@ -1825,8 +3324,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Northrider Guard",
     "weaponId": "WEAPON_SWORD",
     "image": "/assets/weapon_parts/sword b1 - reverberating guard.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_B_SWORD_1_UPGRADED",
+    "slot": "B",
+    "weaponType": "SWORD",
+    "level": 1,
+    "name": "Guardia de jinete norteño + ✦",
+    "nameEn": "Northrider Guard + ✦",
+    "weaponId": "WEAPON_SWORD",
+    "image": "/assets/weapon_parts/sword b1 - reverberating guard.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_B_SWORD_2",
@@ -1837,8 +3348,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Westrider Guard",
     "weaponId": "WEAPON_SWORD",
     "image": "/assets/weapon_parts/sword b2 - winged guard.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_B_SWORD_2_UPGRADED",
+    "slot": "B",
+    "weaponType": "SWORD",
+    "level": 2,
+    "name": "Guardia de jinete occidental + ✦",
+    "nameEn": "Westrider Guard + ✦",
+    "weaponId": "WEAPON_SWORD",
+    "image": "/assets/weapon_parts/sword b2 - winged guard.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_B_SWORD_3",
@@ -1849,8 +3372,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Eastrider Guard",
     "weaponId": "WEAPON_SWORD",
     "image": "/assets/weapon_parts/sword b3 - clawed guard.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_B_SWORD_3_UPGRADED",
+    "slot": "B",
+    "weaponType": "SWORD",
+    "level": 3,
+    "name": "Guardia de jinete oriental + ✦",
+    "nameEn": "Eastrider Guard + ✦",
+    "weaponId": "WEAPON_SWORD",
+    "image": "/assets/weapon_parts/sword b3 - clawed guard.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_B_SWORD_4",
@@ -1865,12 +3400,36 @@ export const WEAPON_PARTS = [
     "sellPrice": null
   },
   {
+    "id": "WEAPON_PART_B_SWORD_4_UPGRADED",
+    "slot": "B",
+    "weaponType": "SWORD",
+    "level": 4,
+    "name": "Guardia rompedora ✦",
+    "nameEn": "Breaker Guard ✦",
+    "weaponId": "WEAPON_SWORD",
+    "image": "/assets/weapon_parts/sword b4 - breaker guard.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
     "id": "WEAPON_PART_B_SWORD_5",
     "slot": "B",
     "weaponType": "SWORD",
     "level": 5,
     "name": "Guardia de parapeto",
     "nameEn": "Parapet Guard",
+    "weaponId": "WEAPON_SWORD",
+    "image": "/assets/weapon_parts/sword b5 - parapet guard.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_B_SWORD_5_UPGRADED",
+    "slot": "B",
+    "weaponType": "SWORD",
+    "level": 5,
+    "name": "Guardia de parapeto ✦",
+    "nameEn": "Parapet Guard ✦",
     "weaponId": "WEAPON_SWORD",
     "image": "/assets/weapon_parts/sword b5 - parapet guard.png",
     "buyPrice": null,
@@ -1897,8 +3456,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Resolute Hilt",
     "weaponId": "WEAPON_SWORD",
     "image": "/assets/weapon_parts/sword c1 - resolute hilt.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_C_SWORD_1_UPGRADED",
+    "slot": "C",
+    "weaponType": "SWORD",
+    "level": 1,
+    "name": "Empuñadura resolutiva + ✦",
+    "nameEn": "Resolute Hilt + ✦",
+    "weaponId": "WEAPON_SWORD",
+    "image": "/assets/weapon_parts/sword c1 - resolute hilt.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_C_SWORD_2",
@@ -1909,8 +3480,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Triumphant Hilt",
     "weaponId": "WEAPON_SWORD",
     "image": "/assets/weapon_parts/sword c2 - triumphant hilt.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_C_SWORD_2_UPGRADED",
+    "slot": "C",
+    "weaponType": "SWORD",
+    "level": 2,
+    "name": "Empuñadura triunfante + ✦",
+    "nameEn": "Triumphant Hilt + ✦",
+    "weaponId": "WEAPON_SWORD",
+    "image": "/assets/weapon_parts/sword c2 - triumphant hilt.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_C_SWORD_3",
@@ -1921,8 +3504,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Remembrance Hilt",
     "weaponId": "WEAPON_SWORD",
     "image": "/assets/weapon_parts/sword c3 - remembrance hilt.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_C_SWORD_3_UPGRADED",
+    "slot": "C",
+    "weaponType": "SWORD",
+    "level": 3,
+    "name": "Empuñadura de conmemoración + ✦",
+    "nameEn": "Remembrance Hilt + ✦",
+    "weaponId": "WEAPON_SWORD",
+    "image": "/assets/weapon_parts/sword c3 - remembrance hilt.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_C_SWORD_4",
@@ -1937,12 +3532,36 @@ export const WEAPON_PARTS = [
     "sellPrice": null
   },
   {
+    "id": "WEAPON_PART_C_SWORD_4_UPGRADED",
+    "slot": "C",
+    "weaponType": "SWORD",
+    "level": 4,
+    "name": "Empuñadura del comandante ✦",
+    "nameEn": "Commander's Hilt ✦",
+    "weaponId": "WEAPON_SWORD",
+    "image": "/assets/weapon_parts/sword c4 - commander's hilt.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
     "id": "WEAPON_PART_C_SWORD_5",
     "slot": "C",
     "weaponType": "SWORD",
     "level": 5,
     "name": "Empuñadura del guardián",
     "nameEn": "Guardian Hilt",
+    "weaponId": "WEAPON_SWORD",
+    "image": "/assets/weapon_parts/sword c5 - guardian hilt.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_C_SWORD_5_UPGRADED",
+    "slot": "C",
+    "weaponType": "SWORD",
+    "level": 5,
+    "name": "Empuñadura del guardián ✦",
+    "nameEn": "Guardian Hilt ✦",
     "weaponId": "WEAPON_SWORD",
     "image": "/assets/weapon_parts/sword c5 - guardian hilt.png",
     "buyPrice": null,
@@ -1973,6 +3592,18 @@ export const WEAPON_PARTS = [
     "sellPrice": null
   },
   {
+    "id": "WEAPON_PART_A_WAND_1_UPGRADED",
+    "slot": "A",
+    "weaponType": "WAND",
+    "level": 1,
+    "name": "Varita destellante + ✦",
+    "nameEn": "Glimmering Wand + ✦",
+    "weaponId": "WEAPON_WAND_OF_WINDS",
+    "image": "/assets/weapon_parts/wand a1 - glimmering.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
     "id": "WEAPON_PART_A_WAND_2",
     "slot": "A",
     "weaponType": "WAND",
@@ -1981,8 +3612,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Oakroot Wand",
     "weaponId": "WEAPON_WAND_OF_WINDS",
     "image": "/assets/weapon_parts/wand a2 - oakroot.png",
-    "buyPrice": 200,
-    "sellPrice": 100
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_A_WAND_2_UPGRADED",
+    "slot": "A",
+    "weaponType": "WAND",
+    "level": 2,
+    "name": "Varita de raíz de roble + ✦",
+    "nameEn": "Oakroot Wand + ✦",
+    "weaponId": "WEAPON_WAND_OF_WINDS",
+    "image": "/assets/weapon_parts/wand a2 - oakroot.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_A_WAND_3",
@@ -1993,8 +3636,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Star-Touched Wand",
     "weaponId": "WEAPON_WAND_OF_WINDS",
     "image": "/assets/weapon_parts/wand a3 - star touched.png",
-    "buyPrice": 200,
-    "sellPrice": 100
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_A_WAND_3_UPGRADED",
+    "slot": "A",
+    "weaponType": "WAND",
+    "level": 3,
+    "name": "Varita tocada por las estrellas + ✦",
+    "nameEn": "Star-Touched Wand + ✦",
+    "weaponId": "WEAPON_WAND_OF_WINDS",
+    "image": "/assets/weapon_parts/wand a3 - star touched.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_A_WAND_4",
@@ -2009,12 +3664,36 @@ export const WEAPON_PARTS = [
     "sellPrice": null
   },
   {
+    "id": "WEAPON_PART_A_WAND_4_UPGRADED",
+    "slot": "A",
+    "weaponType": "WAND",
+    "level": 4,
+    "name": "Varita deformante + ✦",
+    "nameEn": "Warping Wand + ✦",
+    "weaponId": "WEAPON_WAND_OF_WINDS",
+    "image": "/assets/weapon_parts/wand a4 - warping.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
     "id": "WEAPON_PART_A_WAND_5",
     "slot": "A",
     "weaponType": "WAND",
     "level": 5,
     "name": "Varita de arco",
     "nameEn": "Arcing Wand",
+    "weaponId": "WEAPON_WAND_OF_WINDS",
+    "image": "/assets/weapon_parts/wand a5 - arcing.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_A_WAND_5_UPGRADED",
+    "slot": "A",
+    "weaponType": "WAND",
+    "level": 5,
+    "name": "Varita de arco + ✦",
+    "nameEn": "Arcing Wand + ✦",
     "weaponId": "WEAPON_WAND_OF_WINDS",
     "image": "/assets/weapon_parts/wand a5 - arcing.png",
     "buyPrice": null,
@@ -2041,8 +3720,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Silver Vein Wrap",
     "weaponId": "WEAPON_WAND_OF_WINDS",
     "image": "/assets/weapon_parts/wand b1 - silver vein wrap.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_B_WAND_1_UPGRADED",
+    "slot": "B",
+    "weaponType": "WAND",
+    "level": 1,
+    "name": "Envoltura de veta plateada + ✦",
+    "nameEn": "Silver Vein Wrap + ✦",
+    "weaponId": "WEAPON_WAND_OF_WINDS",
+    "image": "/assets/weapon_parts/wand b1 - silver vein wrap.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_B_WAND_2",
@@ -2053,8 +3744,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Nature Wrap",
     "weaponId": "WEAPON_WAND_OF_WINDS",
     "image": "/assets/weapon_parts/wand b2 - nature wrap.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_B_WAND_2_UPGRADED",
+    "slot": "B",
+    "weaponType": "WAND",
+    "level": 2,
+    "name": "Envoltura de la naturaleza + ✦",
+    "nameEn": "Nature Wrap + ✦",
+    "weaponId": "WEAPON_WAND_OF_WINDS",
+    "image": "/assets/weapon_parts/wand b2 - nature wrap.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_B_WAND_3",
@@ -2065,8 +3768,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Magister's Wrap",
     "weaponId": "WEAPON_WAND_OF_WINDS",
     "image": "/assets/weapon_parts/wand b3 - magister's wrap.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_B_WAND_3_UPGRADED",
+    "slot": "B",
+    "weaponType": "WAND",
+    "level": 3,
+    "name": "Envoltura del magíster + ✦",
+    "nameEn": "Magister's Wrap + ✦",
+    "weaponId": "WEAPON_WAND_OF_WINDS",
+    "image": "/assets/weapon_parts/wand b3 - magister's wrap.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_B_WAND_4",
@@ -2081,12 +3796,36 @@ export const WEAPON_PARTS = [
     "sellPrice": null
   },
   {
+    "id": "WEAPON_PART_B_WAND_4_UPGRADED",
+    "slot": "B",
+    "weaponType": "WAND",
+    "level": 4,
+    "name": "Envoltura de cielo nocturno + ✦",
+    "nameEn": "Nightsky Wrap + ✦",
+    "weaponId": "WEAPON_WAND_OF_WINDS",
+    "image": "/assets/weapon_parts/wand b4 - nightsky wrap.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
     "id": "WEAPON_PART_B_WAND_5",
     "slot": "B",
     "weaponType": "WAND",
     "level": 5,
     "name": "Envoltura del erudito",
     "nameEn": "Scholar's Wrap",
+    "weaponId": "WEAPON_WAND_OF_WINDS",
+    "image": "/assets/weapon_parts/wand b5 - scholar's wrap.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_B_WAND_5_UPGRADED",
+    "slot": "B",
+    "weaponType": "WAND",
+    "level": 5,
+    "name": "Envoltura del erudito + ✦",
+    "nameEn": "Scholar's Wrap + ✦",
     "weaponId": "WEAPON_WAND_OF_WINDS",
     "image": "/assets/weapon_parts/wand b5 - scholar's wrap.png",
     "buyPrice": null,
@@ -2113,8 +3852,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Feather Ornament",
     "weaponId": "WEAPON_WAND_OF_WINDS",
     "image": "/assets/weapon_parts/wand c1 - feather ornament.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_C_WAND_1_UPGRADED",
+    "slot": "C",
+    "weaponType": "WAND",
+    "level": 1,
+    "name": "Adorno de pluma + ✦",
+    "nameEn": "Feather Ornament + ✦",
+    "weaponId": "WEAPON_WAND_OF_WINDS",
+    "image": "/assets/weapon_parts/wand c1 - feather ornament.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_C_WAND_2",
@@ -2125,8 +3876,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Claw Ornament",
     "weaponId": "WEAPON_WAND_OF_WINDS",
     "image": "/assets/weapon_parts/wand c2 - claw ornament.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_C_WAND_2_UPGRADED",
+    "slot": "C",
+    "weaponType": "WAND",
+    "level": 2,
+    "name": "Adorno de garra + ✦",
+    "nameEn": "Claw Ornament + ✦",
+    "weaponId": "WEAPON_WAND_OF_WINDS",
+    "image": "/assets/weapon_parts/wand c2 - claw ornament.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_C_WAND_3",
@@ -2137,8 +3900,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Eye Ornament",
     "weaponId": "WEAPON_WAND_OF_WINDS",
     "image": "/assets/weapon_parts/wand c3 - eye ornament.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_C_WAND_3_UPGRADED",
+    "slot": "C",
+    "weaponType": "WAND",
+    "level": 3,
+    "name": "Adorno de ojo + ✦",
+    "nameEn": "Eye Ornament + ✦",
+    "weaponId": "WEAPON_WAND_OF_WINDS",
+    "image": "/assets/weapon_parts/wand c3 - eye ornament.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_C_WAND_4",
@@ -2153,12 +3928,36 @@ export const WEAPON_PARTS = [
     "sellPrice": null
   },
   {
+    "id": "WEAPON_PART_C_WAND_4_UPGRADED",
+    "slot": "C",
+    "weaponType": "WAND",
+    "level": 4,
+    "name": "Adorno de ala de polilla + ✦",
+    "nameEn": "Mothwing Ornament + ✦",
+    "weaponId": "WEAPON_WAND_OF_WINDS",
+    "image": "/assets/weapon_parts/wand c4 - mothwing ornament.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
     "id": "WEAPON_PART_C_WAND_5",
     "slot": "C",
     "weaponType": "WAND",
     "level": 5,
     "name": "Adorno volcánico",
     "nameEn": "Volcanic Ornament",
+    "weaponId": "WEAPON_WAND_OF_WINDS",
+    "image": "/assets/weapon_parts/wand c5 - volcanic ornament.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_C_WAND_5_UPGRADED",
+    "slot": "C",
+    "weaponType": "WAND",
+    "level": 5,
+    "name": "Adorno volcánico + ✦",
+    "nameEn": "Volcanic Ornament + ✦",
     "weaponId": "WEAPON_WAND_OF_WINDS",
     "image": "/assets/weapon_parts/wand c5 - volcanic ornament.png",
     "buyPrice": null,
@@ -2185,8 +3984,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Ironthorn Warbell",
     "weaponId": "WEAPON_WARBELL",
     "image": "/assets/weapon_parts/warbell a1 - ironthorn.png",
-    "buyPrice": 200,
-    "sellPrice": 100
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_A_WARBELL_1_UPGRADED",
+    "slot": "A",
+    "weaponType": "WARBELL",
+    "level": 1,
+    "name": "Campana de guerra espinada + ✦",
+    "nameEn": "Ironthorn Warbell + ✦",
+    "weaponId": "WEAPON_WARBELL",
+    "image": "/assets/weapon_parts/warbell a1 - ironthorn.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_A_WARBELL_2",
@@ -2197,8 +4008,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Gilded Warbell",
     "weaponId": "WEAPON_WARBELL",
     "image": "/assets/weapon_parts/warbell a2 - gilded.png",
-    "buyPrice": 200,
-    "sellPrice": 100
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_A_WARBELL_2_UPGRADED",
+    "slot": "A",
+    "weaponType": "WARBELL",
+    "level": 2,
+    "name": "Campana de guerra dorada + ✦",
+    "nameEn": "Gilded Warbell + ✦",
+    "weaponId": "WEAPON_WARBELL",
+    "image": "/assets/weapon_parts/warbell a2 - gilded.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_A_WARBELL_3",
@@ -2209,8 +4032,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Shrieking Warbell",
     "weaponId": "WEAPON_WARBELL",
     "image": "/assets/weapon_parts/warbell a3 - shrieking.png",
-    "buyPrice": 200,
-    "sellPrice": 100
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_A_WARBELL_3_UPGRADED",
+    "slot": "A",
+    "weaponType": "WARBELL",
+    "level": 3,
+    "name": "Campana de guerra aullante + ✦",
+    "nameEn": "Shrieking Warbell + ✦",
+    "weaponId": "WEAPON_WARBELL",
+    "image": "/assets/weapon_parts/warbell a3 - shrieking.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_A_WARBELL_4",
@@ -2225,12 +4060,36 @@ export const WEAPON_PARTS = [
     "sellPrice": null
   },
   {
+    "id": "WEAPON_PART_A_WARBELL_4_UPGRADED",
+    "slot": "A",
+    "weaponType": "WARBELL",
+    "level": 4,
+    "name": "Campana de guerra de clarín + ✦",
+    "nameEn": "Clarion Warbell + ✦",
+    "weaponId": "WEAPON_WARBELL",
+    "image": "/assets/weapon_parts/warbell a4 - clarion.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
     "id": "WEAPON_PART_A_WARBELL_5",
     "slot": "A",
     "weaponType": "WARBELL",
     "level": 5,
     "name": "Campana de guerra humilde",
     "nameEn": "Humble Warbell",
+    "weaponId": "WEAPON_WARBELL",
+    "image": "/assets/weapon_parts/warbell a5 - humble.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_A_WARBELL_5_UPGRADED",
+    "slot": "A",
+    "weaponType": "WARBELL",
+    "level": 5,
+    "name": "Campana de guerra humilde + ✦",
+    "nameEn": "Humble Warbell + ✦",
     "weaponId": "WEAPON_WARBELL",
     "image": "/assets/weapon_parts/warbell a5 - humble.png",
     "buyPrice": null,
@@ -2257,8 +4116,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Talon Grip",
     "weaponId": "WEAPON_WARBELL",
     "image": "/assets/weapon_parts/warbell b1 - talon grip.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_B_WARBELL_1_UPGRADED",
+    "slot": "B",
+    "weaponType": "WARBELL",
+    "level": 1,
+    "name": "Agarre de espolón + ✦",
+    "nameEn": "Talon Grip + ✦",
+    "weaponId": "WEAPON_WARBELL",
+    "image": "/assets/weapon_parts/warbell b1 - talon grip.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_B_WARBELL_2",
@@ -2269,8 +4140,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Jeweled Grip",
     "weaponId": "WEAPON_WARBELL",
     "image": "/assets/weapon_parts/warbell b2 - jeweled grip.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_B_WARBELL_2_UPGRADED",
+    "slot": "B",
+    "weaponType": "WARBELL",
+    "level": 2,
+    "name": "Agarre enjoyado + ✦",
+    "nameEn": "Jeweled Grip + ✦",
+    "weaponId": "WEAPON_WARBELL",
+    "image": "/assets/weapon_parts/warbell b2 - jeweled grip.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_B_WARBELL_3",
@@ -2281,8 +4164,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Spiked Grip",
     "weaponId": "WEAPON_WARBELL",
     "image": "/assets/weapon_parts/warbell b3 - spiked grip.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_B_WARBELL_3_UPGRADED",
+    "slot": "B",
+    "weaponType": "WARBELL",
+    "level": 3,
+    "name": "Agarre de pinchos + ✦",
+    "nameEn": "Spiked Grip + ✦",
+    "weaponId": "WEAPON_WARBELL",
+    "image": "/assets/weapon_parts/warbell b3 - spiked grip.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_B_WARBELL_4",
@@ -2297,12 +4192,36 @@ export const WEAPON_PARTS = [
     "sellPrice": null
   },
   {
+    "id": "WEAPON_PART_B_WARBELL_4_UPGRADED",
+    "slot": "B",
+    "weaponType": "WARBELL",
+    "level": 4,
+    "name": "Agarre regio + ✦",
+    "nameEn": "Royal Grip + ✦",
+    "weaponId": "WEAPON_WARBELL",
+    "image": "/assets/weapon_parts/warbell b4 - royal grip.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
     "id": "WEAPON_PART_B_WARBELL_5",
     "slot": "B",
     "weaponType": "WARBELL",
     "level": 5,
     "name": "Agarre de alivio",
     "nameEn": "Respite Grip",
+    "weaponId": "WEAPON_WARBELL",
+    "image": "/assets/weapon_parts/warbell b5 - respite grip.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_B_WARBELL_5_UPGRADED",
+    "slot": "B",
+    "weaponType": "WARBELL",
+    "level": 5,
+    "name": "Agarre de alivio + ✦",
+    "nameEn": "Respite Grip + ✦",
     "weaponId": "WEAPON_WARBELL",
     "image": "/assets/weapon_parts/warbell b5 - respite grip.png",
     "buyPrice": null,
@@ -2329,8 +4248,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Reinforced Haft",
     "weaponId": "WEAPON_WARBELL",
     "image": "/assets/weapon_parts/warbell c1 - reinforced haft.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_C_WARBELL_1_UPGRADED",
+    "slot": "C",
+    "weaponType": "WARBELL",
+    "level": 1,
+    "name": "Mango reforzado + ✦",
+    "nameEn": "Reinforced Haft + ✦",
+    "weaponId": "WEAPON_WARBELL",
+    "image": "/assets/weapon_parts/warbell c1 - reinforced haft.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_C_WARBELL_2",
@@ -2341,8 +4272,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Inscribed Haft",
     "weaponId": "WEAPON_WARBELL",
     "image": "/assets/weapon_parts/warbell c2 - inscribed haft.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_C_WARBELL_2_UPGRADED",
+    "slot": "C",
+    "weaponType": "WARBELL",
+    "level": 2,
+    "name": "Mango inscrito + ✦",
+    "nameEn": "Inscribed Haft + ✦",
+    "weaponId": "WEAPON_WARBELL",
+    "image": "/assets/weapon_parts/warbell c2 - inscribed haft.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_C_WARBELL_3",
@@ -2353,8 +4296,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Ringing Haft",
     "weaponId": "WEAPON_WARBELL",
     "image": "/assets/weapon_parts/warbell c3 - ringing haft.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_C_WARBELL_3_UPGRADED",
+    "slot": "C",
+    "weaponType": "WARBELL",
+    "level": 3,
+    "name": "Mango resonante + ✦",
+    "nameEn": "Ringing Haft + ✦",
+    "weaponId": "WEAPON_WARBELL",
+    "image": "/assets/weapon_parts/warbell c3 - ringing haft.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_C_WARBELL_4",
@@ -2369,12 +4324,36 @@ export const WEAPON_PARTS = [
     "sellPrice": null
   },
   {
+    "id": "WEAPON_PART_C_WARBELL_4_UPGRADED",
+    "slot": "C",
+    "weaponType": "WARBELL",
+    "level": 4,
+    "name": "Mango majestuoso + ✦",
+    "nameEn": "Majestic Haft + ✦",
+    "weaponId": "WEAPON_WARBELL",
+    "image": "/assets/weapon_parts/warbell c4 - majestic haft.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
     "id": "WEAPON_PART_C_WARBELL_5",
     "slot": "C",
     "weaponType": "WARBELL",
     "level": 5,
     "name": "Mango bloqueador",
     "nameEn": "Locking Haft",
+    "weaponId": "WEAPON_WARBELL",
+    "image": "/assets/weapon_parts/warbell c5 - locking haft.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_C_WARBELL_5_UPGRADED",
+    "slot": "C",
+    "weaponType": "WARBELL",
+    "level": 5,
+    "name": "Mango bloqueador + ✦",
+    "nameEn": "Locking Haft + ✦",
     "weaponId": "WEAPON_WARBELL",
     "image": "/assets/weapon_parts/warbell c5 - locking haft.png",
     "buyPrice": null,
@@ -2405,6 +4384,18 @@ export const WEAPON_PARTS = [
     "sellPrice": null
   },
   {
+    "id": "WEAPON_PART_A_WARHAMMER_1_UPGRADED",
+    "slot": "A",
+    "weaponType": "WARHAMMER",
+    "level": 1,
+    "name": "Martillo de guerra lastrado + ✦",
+    "nameEn": "Weighted Warhammer + ✦",
+    "weaponId": "WEAPON_WAR_HAMMER",
+    "image": "/assets/weapon_parts/warhammer a1 - weighted.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
     "id": "WEAPON_PART_A_WARHAMMER_2",
     "slot": "A",
     "weaponType": "WARHAMMER",
@@ -2413,8 +4404,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Avenging Warhammer",
     "weaponId": "WEAPON_WAR_HAMMER",
     "image": "/assets/weapon_parts/warhammer a2 - avenging.png",
-    "buyPrice": 200,
-    "sellPrice": 100
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_A_WARHAMMER_2_UPGRADED",
+    "slot": "A",
+    "weaponType": "WARHAMMER",
+    "level": 2,
+    "name": "Martillo de guerra vengador + ✦",
+    "nameEn": "Avenging Warhammer + ✦",
+    "weaponId": "WEAPON_WAR_HAMMER",
+    "image": "/assets/weapon_parts/warhammer a2 - avenging.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_A_WARHAMMER_3",
@@ -2425,8 +4428,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Marshal's Warhammer",
     "weaponId": "WEAPON_WAR_HAMMER",
     "image": "/assets/weapon_parts/warhammer a3 - marshal's.png",
-    "buyPrice": 200,
-    "sellPrice": 100
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_A_WARHAMMER_3_UPGRADED",
+    "slot": "A",
+    "weaponType": "WARHAMMER",
+    "level": 3,
+    "name": "Martillo de guerra de Mariscal + ✦",
+    "nameEn": "Marshal's Warhammer + ✦",
+    "weaponId": "WEAPON_WAR_HAMMER",
+    "image": "/assets/weapon_parts/warhammer a3 - marshal's.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_A_WARHAMMER_4",
@@ -2437,8 +4452,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Sundering Warhammer",
     "weaponId": "WEAPON_WAR_HAMMER",
     "image": "/assets/weapon_parts/warhammer a4 - sundering.png",
-    "buyPrice": 200,
-    "sellPrice": 100
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_A_WARHAMMER_4_UPGRADED",
+    "slot": "A",
+    "weaponType": "WARHAMMER",
+    "level": 4,
+    "name": "Martillo de guerra demoledor ✦",
+    "nameEn": "Sundering Warhammer ✦",
+    "weaponId": "WEAPON_WAR_HAMMER",
+    "image": "/assets/weapon_parts/warhammer a4 - sundering.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_A_WARHAMMER_5",
@@ -2449,8 +4476,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Quaking Warhammer",
     "weaponId": "WEAPON_WAR_HAMMER",
     "image": "/assets/weapon_parts/warhammer a5 - quaking.png",
-    "buyPrice": 300,
-    "sellPrice": 150
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_A_WARHAMMER_5_UPGRADED",
+    "slot": "A",
+    "weaponType": "WARHAMMER",
+    "level": 5,
+    "name": "Martillo de guerra estremecedor ✦",
+    "nameEn": "Quaking Warhammer ✦",
+    "weaponId": "WEAPON_WAR_HAMMER",
+    "image": "/assets/weapon_parts/warhammer a5 - quaking.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_B_WARHAMMER_0",
@@ -2473,8 +4512,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Fortified Haft",
     "weaponId": "WEAPON_WAR_HAMMER",
     "image": "/assets/weapon_parts/warhammer b1 - fortified haft.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_B_WARHAMMER_1_UPGRADED",
+    "slot": "B",
+    "weaponType": "WARHAMMER",
+    "level": 1,
+    "name": "Mango fortificado + ✦",
+    "nameEn": "Fortified Haft + ✦",
+    "weaponId": "WEAPON_WAR_HAMMER",
+    "image": "/assets/weapon_parts/warhammer b1 - fortified haft.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_B_WARHAMMER_2",
@@ -2485,8 +4536,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Deadman's Haft",
     "weaponId": "WEAPON_WAR_HAMMER",
     "image": "/assets/weapon_parts/warhammer b2 - deadman's haft.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_B_WARHAMMER_2_UPGRADED",
+    "slot": "B",
+    "weaponType": "WARHAMMER",
+    "level": 2,
+    "name": "Mango del hombre muerto + ✦",
+    "nameEn": "Deadman's Haft + ✦",
+    "weaponId": "WEAPON_WAR_HAMMER",
+    "image": "/assets/weapon_parts/warhammer b2 - deadman's haft.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_B_WARHAMMER_3",
@@ -2497,8 +4560,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Dragonscale Haft",
     "weaponId": "WEAPON_WAR_HAMMER",
     "image": "/assets/weapon_parts/warhammer b3 - dragonscale haft.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_B_WARHAMMER_3_UPGRADED",
+    "slot": "B",
+    "weaponType": "WARHAMMER",
+    "level": 3,
+    "name": "Mango de escamas de dragón + ✦",
+    "nameEn": "Dragonscale Haft + ✦",
+    "weaponId": "WEAPON_WAR_HAMMER",
+    "image": "/assets/weapon_parts/warhammer b3 - dragonscale haft.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_B_WARHAMMER_4",
@@ -2513,12 +4588,36 @@ export const WEAPON_PARTS = [
     "sellPrice": null
   },
   {
+    "id": "WEAPON_PART_B_WARHAMMER_4_UPGRADED",
+    "slot": "B",
+    "weaponType": "WARHAMMER",
+    "level": 4,
+    "name": "Mango de madera de corazón ✦",
+    "nameEn": "Heartwood Haft ✦",
+    "weaponId": "WEAPON_WAR_HAMMER",
+    "image": "/assets/weapon_parts/warhammer b4 - heartwood haft.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
     "id": "WEAPON_PART_B_WARHAMMER_5",
     "slot": "B",
     "weaponType": "WARHAMMER",
     "level": 5,
     "name": "Mango de atalaya",
     "nameEn": "Watchtower Haft",
+    "weaponId": "WEAPON_WAR_HAMMER",
+    "image": "/assets/weapon_parts/warhammer b5 - watchtower haft.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_B_WARHAMMER_5_UPGRADED",
+    "slot": "B",
+    "weaponType": "WARHAMMER",
+    "level": 5,
+    "name": "Mango de atalaya ✦",
+    "nameEn": "Watchtower Haft ✦",
     "weaponId": "WEAPON_WAR_HAMMER",
     "image": "/assets/weapon_parts/warhammer b5 - watchtower haft.png",
     "buyPrice": null,
@@ -2545,8 +4644,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Tenderizer Pommel",
     "weaponId": "WEAPON_WAR_HAMMER",
     "image": "/assets/weapon_parts/warhammer c1 - tenderizer pommel.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_C_WARHAMMER_1_UPGRADED",
+    "slot": "C",
+    "weaponType": "WARHAMMER",
+    "level": 1,
+    "name": "Puño reblandecedor + ✦",
+    "nameEn": "Tenderizer Pommel + ✦",
+    "weaponId": "WEAPON_WAR_HAMMER",
+    "image": "/assets/weapon_parts/warhammer c1 - tenderizer pommel.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_C_WARHAMMER_2",
@@ -2557,8 +4668,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Talon Pommel",
     "weaponId": "WEAPON_WAR_HAMMER",
     "image": "/assets/weapon_parts/warhammer c2 - talon pommel.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_C_WARHAMMER_2_UPGRADED",
+    "slot": "C",
+    "weaponType": "WARHAMMER",
+    "level": 2,
+    "name": "Puño de espolón + ✦",
+    "nameEn": "Talon Pommel + ✦",
+    "weaponId": "WEAPON_WAR_HAMMER",
+    "image": "/assets/weapon_parts/warhammer c2 - talon pommel.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_C_WARHAMMER_3",
@@ -2569,8 +4692,20 @@ export const WEAPON_PARTS = [
     "nameEn": "Sahe Pommel",
     "weaponId": "WEAPON_WAR_HAMMER",
     "image": "/assets/weapon_parts/warhammer c3 - sahe pommel.png",
-    "buyPrice": 120,
-    "sellPrice": 60
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_C_WARHAMMER_3_UPGRADED",
+    "slot": "C",
+    "weaponType": "WARHAMMER",
+    "level": 3,
+    "name": "Puño de Sahe + ✦",
+    "nameEn": "Sahe Pommel + ✦",
+    "weaponId": "WEAPON_WAR_HAMMER",
+    "image": "/assets/weapon_parts/warhammer c3 - sahe pommel.png",
+    "buyPrice": null,
+    "sellPrice": null
   },
   {
     "id": "WEAPON_PART_C_WARHAMMER_4",
@@ -2579,6 +4714,18 @@ export const WEAPON_PARTS = [
     "level": 4,
     "name": "Puño de corona",
     "nameEn": "Crown Pommel",
+    "weaponId": "WEAPON_WAR_HAMMER",
+    "image": "/assets/weapon_parts/warhammer c4 - crown pommel.png",
+    "buyPrice": null,
+    "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_C_WARHAMMER_4_UPGRADED",
+    "slot": "C",
+    "weaponType": "WARHAMMER",
+    "level": 4,
+    "name": "Puño de corona ✦",
+    "nameEn": "Crown Pommel ✦",
     "weaponId": "WEAPON_WAR_HAMMER",
     "image": "/assets/weapon_parts/warhammer c4 - crown pommel.png",
     "buyPrice": null,
@@ -2595,15 +4742,19 @@ export const WEAPON_PARTS = [
     "image": "/assets/weapon_parts/warhammer c5 - bastion pommel.png",
     "buyPrice": null,
     "sellPrice": null
+  },
+  {
+    "id": "WEAPON_PART_C_WARHAMMER_5_UPGRADED",
+    "slot": "C",
+    "weaponType": "WARHAMMER",
+    "level": 5,
+    "name": "Puño de bastión ✦",
+    "nameEn": "Bastion Pommel ✦",
+    "weaponId": "WEAPON_WAR_HAMMER",
+    "image": "/assets/weapon_parts/warhammer c5 - bastion pommel.png",
+    "buyPrice": null,
+    "sellPrice": null
   }
 ];
 
 export const WEAPON_PARTS_BY_ID = Object.fromEntries(WEAPON_PARTS.map(p => [p.id, p]));
-
-// Partes agrupadas por arma y slot
-export const WEAPON_PARTS_BY_WEAPON = WEAPON_PARTS.reduce((acc, part) => {
-  if (!acc[part.weaponId]) acc[part.weaponId] = {};
-  if (!acc[part.weaponId][part.slot]) acc[part.weaponId][part.slot] = [];
-  acc[part.weaponId][part.slot].push(part);
-  return acc;
-}, {});

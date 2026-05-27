@@ -1,59 +1,62 @@
+import { useState } from 'react';
 import { useStore } from '../store';
 import { WEAPON_PARTS_BY_ID } from '../gamedata/weaponParts';
 import { CONSUMABLES_BY_ID, ALL_ITEMS_BY_ID } from '../gamedata/items';
-import { ALL_RECIPES, RECIPES_BY_ID } from '../gamedata/recipes';
+import { RECIPES_BY_ID } from '../gamedata/recipes';
 import { MATERIALS, MATERIALS_BY_ID } from '../gamedata/materials';
 import { DESCRIPTIONS } from '../gamedata/descriptions';
 import Tooltip from './Tooltip';
 import './CraftPanel.css';
 
+// Categorías de la Sala de creación (mutuamente excluyentes: mejoras van aparte)
+const isUpgradeRecipe = id => id.endsWith('_UPGRADED') || id.endsWith('_PLUS');
+
+const CATEGORIES = [
+  { id: 'consumibles', label: 'Consumibles',    icon: '🧪', filter: id => id.startsWith('RECIPE_CSM_')          && !isUpgradeRecipe(id) },
+  { id: 'armadura',    label: 'Armadura',        icon: '🛡',  filter: id => id.startsWith('RECIPE_ARMOR_')        && !isUpgradeRecipe(id) },
+  { id: 'accesorios',  label: 'Accesorios',      icon: '💍',  filter: id => id.startsWith('RECIPE_TRINKET')       && !isUpgradeRecipe(id) },
+  { id: 'partes',      label: 'Partes de armas', icon: '⚔️', filter: id => id.startsWith('RECIPE_WEAPON_PART_')  && !isUpgradeRecipe(id) },
+  { id: 'mejoras',     label: 'Mejoras (★)',     icon: '✨', filter: id => isUpgradeRecipe(id) },
+];
+
 export default function CraftPanel() {
   const gameState = useStore(s => s.gameState);
   const craftItem = useStore(s => s.craftItem);
+  const [selectedCategory, setSelectedCategory] = useState('partes');
+  const [showCrafted, setShowCrafted] = useState(false);
 
   if (!gameState) return null;
 
-  // Recetas disponibles en la ciudad (las que el juego ofrece)
-  const availableRecipeIds = gameState.availableRecipeIds || [];
-  // Recetas que el grupo ya ha descubierto y puede usar
+  // Solo recetas DESCUBIERTAS (que el jugador ha desbloqueado)
   const discoveredRecipeMap = Object.fromEntries(
     (gameState.discoveredRecipes || []).map(r => [r.id, r])
   );
 
-  // Unir recetas disponibles y descubiertas (todas las que el grupo puede craftear)
-  const craftableRecipeIds = [
-    ...new Set([
-      ...availableRecipeIds,
-      ...Object.keys(discoveredRecipeMap),
-    ])
-  ];
+  const allDiscoveredIds = Object.keys(discoveredRecipeMap);
 
   function canCraft(recipe) {
-    if (!recipe.ingredients) return null; // desconocido
+    if (!recipe?.ingredients) return null;
     for (const [matId, qty] of Object.entries(recipe.ingredients)) {
-      const have = gameState.craftingMaterials[matId] || 0;
-      if (have < qty) return false;
+      if ((gameState.craftingMaterials[matId] || 0) < qty) return false;
     }
     return true;
   }
 
   function getMissingIngredients(recipe) {
-    if (!recipe.ingredients) return [];
-    const missing = [];
-    for (const [matId, qty] of Object.entries(recipe.ingredients)) {
-      const have = gameState.craftingMaterials[matId] || 0;
-      if (have < qty) {
-        missing.push({ matId, need: qty, have });
-      }
-    }
-    return missing;
+    if (!recipe?.ingredients) return [];
+    return Object.entries(recipe.ingredients)
+      .filter(([matId, qty]) => (gameState.craftingMaterials[matId] || 0) < qty)
+      .map(([matId, qty]) => ({
+        matId,
+        need: qty,
+        have: gameState.craftingMaterials[matId] || 0,
+      }));
   }
 
   function getItemForRecipe(recipeId) {
     const recipe = RECIPES_BY_ID[recipeId];
     if (!recipe) return null;
     const itemId = recipe.itemId;
-    // Intentar con el itemId exacto; si no, con el ID base (sin _UPGRADED / _PLUS)
     const baseId = itemId.replace(/_UPGRADED$/, '').replace(/_PLUS$/, '');
     return (
       WEAPON_PARTS_BY_ID[itemId] ||
@@ -76,171 +79,189 @@ export default function CraftPanel() {
     return discoveredRecipeMap[recipeId]?.crafted === true;
   }
 
-  if (craftableRecipeIds.length === 0) {
-    return (
-      <div className="craft-panel">
-        <div className="empty-state">
-          <p>No hay recetas disponibles para craftear.</p>
-          <p>Las recetas aparecen cuando se descubren durante la campaña.</p>
-        </div>
-      </div>
-    );
-  }
+  // Filtrar para la categoría activa
+  const activeCat = CATEGORIES.find(c => c.id === selectedCategory) || CATEGORIES[0];
+  const filteredIds = allDiscoveredIds
+    .filter(id => activeCat.filter(id))
+    .filter(id => showCrafted || !isAlreadyCrafted(id))
+    .sort((a, b) => {
+      // Crafteables primero, luego por nombre
+      const ac = isAlreadyCrafted(a) ? 1 : 0;
+      const bc = isAlreadyCrafted(b) ? 1 : 0;
+      if (ac !== bc) return ac - bc;
+      return a.localeCompare(b);
+    });
 
-  // Agrupar por tipo
-  const weaponRecipes = craftableRecipeIds.filter(id => id.startsWith('RECIPE_WEAPON_PART_'));
-  const consumableRecipes = craftableRecipeIds.filter(id => id.startsWith('RECIPE_CSM_'));
-  const otherRecipes = craftableRecipeIds.filter(id => !id.startsWith('RECIPE_WEAPON_PART_') && !id.startsWith('RECIPE_CSM_'));
+  // Conteo por categoría (sin filtro de crafteados)
+  const categoryCounts = Object.fromEntries(
+    CATEGORIES.map(cat => [
+      cat.id,
+      allDiscoveredIds.filter(id => cat.filter(id) && !isAlreadyCrafted(id)).length,
+    ])
+  );
 
-  function RecipeGroup({ title, recipeIds }) {
-    if (recipeIds.length === 0) return null;
-    return (
-      <div className="recipe-group">
-        <h3 className="recipe-group-title">{title}</h3>
-        <div className="recipe-list">
-          {recipeIds.map(recipeId => {
-            const recipe = RECIPES_BY_ID[recipeId];
-            const item = getItemForRecipe(recipeId);
-            const crafted = isAlreadyCrafted(recipeId);
-            const canCraftNow = recipe ? canCraft(recipe) : null;
-            const missing = recipe ? getMissingIngredients(recipe) : [];
-            const hasIngredientData = recipe?.ingredients !== null;
-
-            return (
-              <div
-                key={recipeId}
-                className={`recipe-card ${crafted ? 'recipe-crafted' : ''} ${canCraftNow === false ? 'recipe-cant-craft' : ''}`}
-              >
-                <div className="recipe-header">
-                  {item?.image && (
-                    <Tooltip text={getDesc(recipe?.itemId)}>
-                      <img
-                        src={item.image}
-                        alt={item.name}
-                        className="recipe-img"
-                        onError={e => e.target.style.display = 'none'}
-                      />
-                    </Tooltip>
-                  )}
-                  <div className="recipe-info">
-                    <span className="recipe-name">
-                      {item?.name
-                        ? `${item.name} +`
-                        : recipeId}
-                    </span>
-                    {item && 'slot' in item && (
-                      <span className="recipe-tag">
-                        Mejora · Slot {item.slot} · Nv.{item.level} → {item.level + 1} · {item.weaponType}
-                      </span>
-                    )}
-                    {item && !('slot' in item) && (
-                      <span className="recipe-tag">Versión mejorada</span>
-                    )}
-                    {crafted && <span className="crafted-badge">✓ Crafteado</span>}
-                  </div>
-                </div>
-
-                {/* Ingredientes */}
-                {hasIngredientData && recipe?.ingredients ? (
-                  <div className="ingredients-row">
-                    {Object.entries(recipe.ingredients).map(([matId, qty]) => {
-                      const have = gameState.craftingMaterials[matId] || 0;
-                      const ok = have >= qty;
-                      const mat = MATERIALS_BY_ID[matId];
-                      return (
-                        <Tooltip key={matId} text={DESCRIPTIONS[matId]}>
-                          <span
-                            className={`ingredient-badge ${ok ? 'ok' : 'missing'}`}
-                          >
-                            {mat?.image && (
-                              <img
-                                src={mat.image}
-                                alt=""
-                                className="ingredient-icon"
-                                onError={e => e.target.style.display = 'none'}
-                              />
-                            )}
-                            {mat?.name || matId} {have}/{qty}
-                          </span>
-                        </Tooltip>
-                      );
-                    })}
-                  </div>
-                ) : (
-                  <div className="ingredients-unknown">
-                    <span>⚠️ Ingredientes no disponibles en los datos del juego</span>
-                    <span className="hint-text">Verifica los ingredientes en el juego físico</span>
-                  </div>
-                )}
-
-                {/* Coste en oro */}
-                {recipe?.goldCost !== null && recipe?.goldCost !== undefined && (
-                  <div className="recipe-gold">
-                    Coste: <strong>{recipe.goldCost}🪙</strong>
-                  </div>
-                )}
-
-                {/* Qué falta */}
-                {missing.length > 0 && (
-                  <div className="missing-list">
-                    <span>Faltan: </span>
-                    {missing.map(m => {
-                      const mat = MATERIALS_BY_ID[m.matId];
-                      return (
-                        <span key={m.matId} className="missing-item">
-                          {mat?.name || m.matId} ({m.have}/{m.need})
-                        </span>
-                      );
-                    })}
-                  </div>
-                )}
-
-                <div className="recipe-actions">
-                  <button
-                    className="btn btn-primary"
-                    disabled={crafted || canCraftNow === false}
-                    onClick={() => craftItem(recipeId)}
-                    title={crafted ? 'Ya crafteado' : canCraftNow === false ? 'Faltan materiales' : 'Craftear'}
-                  >
-                    {crafted ? '✓ Crafteado' : 'Craftear'}
-                  </button>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    );
-  }
+  // Resumen de materiales
+  const totalMats = MATERIALS.filter(m => (gameState.craftingMaterials[m.id] || 0) > 0);
 
   return (
-    <div className="craft-panel">
-      <div className="craft-summary">
-        <span>
-          Materiales disponibles:{' '}
-          {MATERIALS.map(m => {
-            const qty = gameState.craftingMaterials[m.id] || 0;
-            if (qty === 0) return null;
-            return (
-              <span key={m.id} className="mat-chip">
-                <Tooltip text={DESCRIPTIONS[m.id]}>
-                  <img
-                    src={m.image}
-                    alt={m.name}
-                    className="mat-chip-img"
-                    onError={e => e.target.style.display = 'none'}
-                  />
-                </Tooltip>
-                {m.name} ×{qty}
-              </span>
-            );
-          }).filter(Boolean)}
-        </span>
+    <div className="craft-panel-v2">
+      {/* Barra de materiales disponibles */}
+      <div className="craft-mats-bar">
+        <span className="craft-mats-label">Materiales:</span>
+        <div className="craft-mats-row">
+          {totalMats.length === 0
+            ? <span className="craft-mats-empty">Sin materiales</span>
+            : totalMats.map(mat => (
+              <Tooltip key={mat.id} text={DESCRIPTIONS[mat.id] || mat.name}>
+                <span className="mat-chip">
+                  <img src={mat.image} alt="" className="mat-chip-img"
+                    onError={e => e.target.style.display = 'none'} />
+                  <span className="mat-chip-qty">×{gameState.craftingMaterials[mat.id]}</span>
+                </span>
+              </Tooltip>
+            ))
+          }
+        </div>
       </div>
 
-      <RecipeGroup title="⚔️ Partes de Arma" recipeIds={weaponRecipes} />
-      <RecipeGroup title="🧪 Consumibles" recipeIds={consumableRecipes} />
-      <RecipeGroup title="📦 Otros" recipeIds={otherRecipes} />
+      <div className="craft-body">
+        {/* Sidebar de categorías */}
+        <aside className="craft-cat-sidebar">
+          {CATEGORIES.map(cat => {
+            const pending = categoryCounts[cat.id];
+            return (
+              <button
+                key={cat.id}
+                className={`craft-cat-btn ${cat.id === selectedCategory ? 'active' : ''}`}
+                onClick={() => setSelectedCategory(cat.id)}
+                title={cat.label}
+              >
+                <span className="craft-cat-icon">{cat.icon}</span>
+                <span className="craft-cat-label">{cat.label}</span>
+                {pending > 0 && (
+                  <span className="craft-cat-badge">{pending}</span>
+                )}
+              </button>
+            );
+          })}
+        </aside>
+
+        {/* Contenido principal */}
+        <div className="craft-main">
+          <div className="craft-main-header">
+            <h2 className="craft-main-title">{activeCat.icon} {activeCat.label}</h2>
+            <label className="craft-show-crafted">
+              <input
+                type="checkbox"
+                checked={showCrafted}
+                onChange={e => setShowCrafted(e.target.checked)}
+              />
+              <span>Mostrar crafteadas</span>
+            </label>
+          </div>
+
+          {filteredIds.length === 0 ? (
+            <div className="empty-state">
+              {allDiscoveredIds.filter(id => activeCat.filter(id)).length === 0
+                ? <p>No hay recetas de esta categoría descubiertas.</p>
+                : <p>Todas las recetas de esta categoría ya han sido crafteadas. ✓</p>
+              }
+            </div>
+          ) : (
+            <div className="craft-recipes-grid">
+              {filteredIds.map(recipeId => {
+                const recipe = RECIPES_BY_ID[recipeId];
+                const item = getItemForRecipe(recipeId);
+                const crafted = isAlreadyCrafted(recipeId);
+                const canCraftNow = recipe ? canCraft(recipe) : null;
+                const missing = recipe ? getMissingIngredients(recipe) : [];
+                const hasIngredients = recipe?.ingredients != null;
+                const isUpgrade = isUpgradeRecipe(recipeId);
+
+                return (
+                  <div
+                    key={recipeId}
+                    className={`craft-recipe-card ${crafted ? 'crafted' : ''} ${canCraftNow === false && !crafted ? 'cant-craft' : ''} ${canCraftNow === true && !crafted ? 'can-craft' : ''}`}
+                  >
+                    {/* Imagen */}
+                    <div className="craft-recipe-img-area">
+                      {item?.image ? (
+                        <Tooltip text={getDesc(recipe?.itemId)}>
+                          <img src={item.image} alt={item.name}
+                            className="craft-recipe-img"
+                            onError={e => e.target.style.display = 'none'} />
+                        </Tooltip>
+                      ) : (
+                        <div className="craft-recipe-no-img">{activeCat.icon}</div>
+                      )}
+                      {isUpgrade && <div className="craft-upgrade-badge">★</div>}
+                      {crafted && <div className="craft-done-badge">✓</div>}
+                    </div>
+
+                    {/* Info */}
+                    <div className="craft-recipe-info">
+                      <div className="craft-recipe-name">
+                        {item?.name
+                          ? isUpgrade ? `${item.name} ★` : item.name
+                          : recipeId}
+                      </div>
+                      {item && 'slot' in item && (
+                        <div className="craft-recipe-tag">
+                          Slot {item.slot} · Nv.{item.level} → {item.level + 1} · {item.weaponType}
+                        </div>
+                      )}
+                      {recipe?.goldCost != null && (
+                        <div className="craft-recipe-gold">🪙 {recipe.goldCost}</div>
+                      )}
+                    </div>
+
+                    {/* Ingredientes */}
+                    {hasIngredients && recipe?.ingredients ? (
+                      <div className="craft-ingredients">
+                        {Object.entries(recipe.ingredients).map(([matId, qty]) => {
+                          const have = gameState.craftingMaterials[matId] || 0;
+                          const ok = have >= qty;
+                          const mat = MATERIALS_BY_ID[matId];
+                          return (
+                            <Tooltip key={matId} text={mat?.name || matId}>
+                              <span className={`craft-ing-badge ${ok ? 'ok' : 'missing'}`}>
+                                {mat?.image && (
+                                  <img src={mat.image} alt=""
+                                    className="craft-ing-icon"
+                                    onError={e => e.target.style.display = 'none'} />
+                                )}
+                                <span className="craft-ing-qty">{have}/{qty}</span>
+                              </span>
+                            </Tooltip>
+                          );
+                        })}
+                      </div>
+                    ) : (
+                      !crafted && (
+                        <div className="craft-ing-unknown">
+                          ⚠️ Ingredientes desconocidos
+                        </div>
+                      )
+                    )}
+
+                    {/* Acción */}
+                    {!crafted && (
+                      <button
+                        className={`btn btn-sm ${canCraftNow ? 'btn-primary' : ''} craft-action-btn`}
+                        disabled={canCraftNow === false}
+                        onClick={() => craftItem(recipeId)}
+                        title={canCraftNow === false ? `Faltan: ${missing.map(m => `${MATERIALS_BY_ID[m.matId]?.name || m.matId} (${m.have}/${m.need})`).join(', ')}` : 'Craftear'}
+                      >
+                        {canCraftNow === null ? '? Craftear' : canCraftNow ? '⚒ Craftear' : '✗ Faltan materiales'}
+                      </button>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

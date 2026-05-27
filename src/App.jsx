@@ -1,18 +1,19 @@
 import { useStore } from './store';
+import { useCallback, useState } from 'react';
 import DropZone from './components/DropZone';
+import ArmeriaPanel from './components/ArmeriaPanel';
 import ShopPanel from './components/ShopPanel';
 import CraftPanel from './components/CraftPanel';
-import HeroPanel from './components/HeroPanel';
 import ActionLog from './components/ActionLog';
-import PriceEditor from './components/PriceEditor';
+import GameInfoPanel from './components/GameInfoPanel';
 import './App.css';
 
 const TABS = [
-  { id: 'tienda', label: '🏪 Tienda' },
-  { id: 'crafteo', label: '🔨 Crafteo' },
-  { id: 'heroes', label: '⚔️ Héroes' },
-  { id: 'historial', label: '📋 Historial' },
-  { id: 'ajustes', label: '⚙️ Ajustes' },
+  { id: 'partida',  label: '🗺️ Partida' },
+  { id: 'armeria',  label: '⚔️ Armería' },
+  { id: 'tienda',   label: '🏪 Tienda' },
+  { id: 'crafteo',  label: '🔨 Sala de creación' },
+  { id: 'historial',label: '📋 Historial' },
 ];
 
 function GoldDiff() {
@@ -37,6 +38,34 @@ function App() {
   const setActiveTab = useStore(s => s.setActiveTab);
   const resetToSave = useStore(s => s.resetToSave);
   const loadSave = useStore(s => s.loadSave);
+
+  const [isDragOver, setIsDragOver] = useState(false);
+
+  // Drag & drop para reemplazar el save mientras hay uno cargado
+  const handleDragOver = useCallback((e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.dataTransfer.types.includes('Files')) setIsDragOver(true);
+  }, []);
+
+  const handleDragLeave = useCallback((e) => {
+    e.preventDefault();
+    setIsDragOver(false);
+  }, []);
+
+  const handleDrop = useCallback((e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragOver(false);
+    const file = e.dataTransfer.files?.[0];
+    if (!file) return;
+    if (actionHistory.length > 0) {
+      if (!window.confirm('Hay cambios sin confirmar. ¿Cargar el nuevo save de todas formas?')) return;
+    }
+    const reader = new FileReader();
+    reader.onload = (ev) => loadSave(ev.target.result);
+    reader.readAsText(file, 'utf-8');
+  }, [actionHistory, loadSave]);
 
   if (!saveLoaded) {
     return <DropZone />;
@@ -67,7 +96,17 @@ function App() {
   }
 
   return (
-    <div className="app">
+    <div
+      className={`app ${isDragOver ? 'app-drag-over' : ''}`}
+      onDragOver={handleDragOver}
+      onDragLeave={handleDragLeave}
+      onDrop={handleDrop}
+    >
+      {isDragOver && (
+        <div className="app-drop-overlay">
+          <div className="app-drop-msg">📂 Suelta el .SAV para cargarlo</div>
+        </div>
+      )}
       {/* ======= TOPBAR ======= */}
       <header className="app-header">
         <div className="header-left">
@@ -78,7 +117,6 @@ function App() {
               <span className="save-detail">
                 {saveMeta.partyName || 'Grupo sin nombre'}
                 {' · '}Acto {(saveMeta.act ?? 0) + 1}
-                {saveMeta.gameDifficulty ? ` · ${saveMeta.gameDifficulty}` : ''}
               </span>
             )}
           </div>
@@ -123,17 +161,17 @@ function App() {
       {/* ======= CONTENIDO ======= */}
       <main className="app-main">
         <div className="tab-content">
-          {activeTab === 'tienda' && <ShopPanel />}
-          {activeTab === 'crafteo' && <CraftPanel />}
-          {activeTab === 'heroes' && <HeroPanel />}
+          {activeTab === 'partida'   && <GameInfoPanel />}
+          {activeTab === 'armeria'   && <ArmeriaPanel />}
+          {activeTab === 'tienda'    && <ShopPanel />}
+          {activeTab === 'crafteo'   && <CraftPanel />}
           {activeTab === 'historial' && <ActionLog />}
-          {activeTab === 'ajustes' && <PriceEditor />}
         </div>
       </main>
 
       {/* ======= FOOTER ======= */}
       <footer className="app-footer">
-        <span>Descent: Legends of the Dark — Planificador de Tienda</span>
+        <span>Descent: Legends of the Dark — Planificador</span>
         {saveMeta?.slotGUID && (
           <span className="footer-guid">
             Save: {saveMeta.slotGUID.slice(0, 8)}…

@@ -47,13 +47,18 @@ export function parseSave(jsonContent) {
   }
 
   // Extraer datos de la tienda
+  // El save puede usar distintos esquemas de campo según versión/plataforma:
+  //   PC:     { id, qty }  (minúsculas)
+  //   Móvil:  { ItemId, Quantity }
+  //   Antiguo:{ Id, Qty }
   const shopData = [];
   for (const shop of (gs.ShopData || [])) {
-    if (shop.Id) {
+    const itemId = shop.id || shop.Id || shop.ItemId;
+    if (itemId) {
       shopData.push({
-        id: shop.Id,
-        qty: shop.Qty ?? 1,
-        soldOut: shop.SoldOut || false,
+        id: itemId,
+        qty: shop.qty ?? shop.Qty ?? shop.Quantity ?? 1,
+        soldOut: shop.soldOut || shop.SoldOut || false,
       });
     }
   }
@@ -69,11 +74,16 @@ export function parseSave(jsonContent) {
     }
   }
 
-  // Extraer recetas disponibles en la ciudad
+  // Extraer recetas disponibles en la ciudad (para craftear)
   const availableRecipeIds = gs.AvailableRecipeIds || [];
 
   // Extraer ítems disponibles en la tienda
   const availableItemIds = gs.AvailableItemIds || [];
+
+  // Recetas actualmente a la venta en ShopData (subconjunto con stock ahora)
+  const shopRecipeIds = shopData
+    .filter(s => s.id.startsWith('RECIPE_'))
+    .map(s => s.id);
 
   // Extraer datos de héroes
   const heroes = [];
@@ -112,6 +122,12 @@ export function parseSave(jsonContent) {
     roundNumber: raw.RoundNumber ?? 0,
     questId: gs.QuestId,
     gameDifficulty: gs.GameDifficulty,
+    currentGamePhase: gs.CurrentGamePhase,
+    currentObjectiveKey: gs.CurrentObjectiveData?.Key || gs.CurrentObjective || null,
+    lastKnownLocation: raw.StorySlot?.LastKnownLocation || null,
+    totalPlayTimeSeconds: raw.StorySlot?.TotalSlotTime ?? null,
+    completedDestinations: gs.CompletedDestinationIds || [],
+    activeDestinations: gs.ActiveDestinationIds || [],
 
     // Recursos
     gold: gs.Gold || 0,
@@ -125,6 +141,7 @@ export function parseSave(jsonContent) {
     shopData,
     availableItemIds,
     availableRecipeIds,
+    shopRecipeIds,
 
     // Recetas
     discoveredRecipes,

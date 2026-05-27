@@ -1,28 +1,55 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useStore } from '../store';
+import { HEROES } from '../gamedata/heroes';
 import './DropZone.css';
+
+const HERO_DURATION = 2800;  // ms que cada héroe está destacado
+const FADE_DELAY    = 600;   // ms antes de hacer el cambio de acto
 
 export default function DropZone() {
   const loadSave = useStore(s => s.loadSave);
   const saveError = useStore(s => s.saveError);
   const [dragging, setDragging] = useState(false);
 
+  // heroIdx: héroe actualmente destacado
+  const [heroIdx, setHeroIdx] = useState(0);
+  // heroActs: qué acto muestra cada héroe en este momento (false=Act1, true=Act2)
+  const [heroActs, setHeroActs] = useState(() => HEROES.map(() => false));
+
+  useEffect(() => {
+    // Tras FADE_DELAY, el héroe activo cambia de acto y se queda así
+    const fadeTimer = setTimeout(() => {
+      setHeroActs(prev => {
+        const next = [...prev];
+        next[heroIdx] = !next[heroIdx];
+        return next;
+      });
+    }, FADE_DELAY);
+
+    // Tras HERO_DURATION, pasamos al siguiente héroe
+    const nextTimer = setTimeout(() => {
+      setHeroIdx(prev => (prev + 1) % HEROES.length);
+    }, HERO_DURATION);
+
+    return () => {
+      clearTimeout(fadeTimer);
+      clearTimeout(nextTimer);
+    };
+  }, [heroIdx]);
+
   const inputRef = useRef();
 
   function handleFile(file) {
     if (!file) return;
     const reader = new FileReader();
-    reader.onload = (e) => {
-      loadSave(e.target.result);
-    };
+    reader.onload = (e) => loadSave(e.target.result);
     reader.readAsText(file, 'utf-8');
   }
 
   function onDrop(e) {
     e.preventDefault();
     setDragging(false);
-    const file = e.dataTransfer.files[0];
-    handleFile(file);
+    handleFile(e.dataTransfer.files[0]);
   }
 
   function onDragOver(e) {
@@ -38,16 +65,42 @@ export default function DropZone() {
     handleFile(e.target.files[0]);
   }
 
+  const activeHero = HEROES[heroIdx];
+
   return (
     <div className="dropzone-page">
-      <div className="dropzone-brand">
-        <img src="/assets/heroes/brynn_crop.png" alt="" className="brand-hero" />
-        <img src="/assets/heroes/galaden_crop.png" alt="" className="brand-hero" />
-        <img src="/assets/heroes/kehli_crop.png" alt="" className="brand-hero" />
-        <img src="/assets/heroes/vaerix_crop.png" alt="" className="brand-hero" />
-        <img src="/assets/heroes/syrus_crop.png" alt="" className="brand-hero" />
-        <img src="/assets/heroes/chance_crop.png" alt="" className="brand-hero" />
+
+      {/* ── Galería de héroes con animación ── */}
+      <div className="dropzone-heroes">
+        {HEROES.map((hero, i) => {
+          const isActive = i === heroIdx;
+          const onAct2 = heroActs[i];
+          return (
+            <div
+              key={hero.id}
+              className={`dz-hero-portrait ${isActive ? 'dz-hero-active' : ''}`}
+              title={hero.name}
+            >
+              <img
+                src={hero.image}
+                alt={hero.name}
+                className="dz-hero-img dz-act1"
+                style={{ opacity: onAct2 ? 0 : 1 }}
+                onError={e => e.target.style.display = 'none'}
+              />
+              <img
+                src={hero.imageAct2}
+                alt={`${hero.name} Acto 2`}
+                className="dz-hero-img dz-act2"
+                style={{ opacity: onAct2 ? 1 : 0 }}
+                onError={e => e.target.style.display = 'none'}
+              />
+            </div>
+          );
+        })}
       </div>
+
+      <div className="dropzone-hero-name">{activeHero?.name}</div>
 
       <h1 className="dropzone-title">Descent: Planificador de Tienda</h1>
       <p className="dropzone-subtitle">
