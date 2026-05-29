@@ -7,7 +7,7 @@ import { WEAPON_PARTS_BY_ID } from '../gamedata/weaponParts';
 import { DESCRIPTIONS } from '../gamedata/descriptions';
 import { WEAPON_ASSEMBLY, ASSEMBLY_CANVAS, ASSEMBLY_SCALE, ASSEMBLY_DISPLAY_W, ASSEMBLY_DISPLAY_H } from '../gamedata/weaponAssembly';
 import { DAMAGE_TYPE_BY_ID } from '../gamedata/damageTypes';
-import { PART_ABILITY_KEY, WEAPON_ABILITIES } from '../gamedata/weaponAbilities';
+import { PART_ABILITY_KEY, WEAPON_ABILITIES, ABILITY_CHANCE } from '../gamedata/weaponAbilities';
 import Tooltip from './Tooltip';
 import './ArmeriaPanel.css';
 
@@ -301,19 +301,16 @@ export default function ArmeriaPanel() {
 
 // ─── Parser de rich text del juego → React nodes ─────────────────────────────
 
-// Términos con icono inline disponible
+// Términos con icono inline (iconos extraídos del atlas SDF del juego)
 const TERM_ICONS = {
-  TERM_HEALTH_DIAL: '/assets/icons/Icon_Health.png',
-  TERM_DAMAGE:      '/assets/icons/Icon_Damage.png',
-  TERM_ACTIONS:     '/assets/icons/Icon_Action_Combat.png',
-};
-
-// Términos que en el juego son iconos de dado — mostramos abreviatura Unicode
-const TERM_SYMBOLS = {
-  TERM_FATIGUE: '⚡',
-  TERM_SUCCESS: '✦',
-  TERM_SURGE:   '⬡',
-  TERM_ADVANTAGE: '◆',
+  TERM_HEALTH_DIAL: '/assets/icons/Icon_Health.png',   // U+F5D0
+  TERM_DAMAGE:      '/assets/icons/Icon_Damage.png',   // U+F5E5
+  TERM_ACTIONS:     '/assets/icons/Icon_Action.png',   // U+F5E4
+  TERM_FATIGUE:     '/assets/icons/Icon_Fatigue.png',  // U+F5E3
+  TERM_SUCCESS:     '/assets/icons/Icon_Success.png',  // U+F5E8
+  TERM_ADVANTAGE:   '/assets/icons/Icon_Advantage.png',// U+F5DE
+  TERM_SURGE:       '/assets/icons/Icon_Surge.png',    // U+F5E1
+  TERM_UPGRADE:     '/assets/icons/Icon_Upgrade.png',  // U+F5E2
 };
 
 function parseGameText(text) {
@@ -345,26 +342,28 @@ function AbilityDesc({ partId, lang }) {
   if (!rawText) return null;
 
   const nodes = parseGameText(rawText);
+  const chance = abilityKey ? (ABILITY_CHANCE[abilityKey] ?? null) : null;
 
   return (
-    <p className={`ability-desc ${isNoAbility ? 'ability-desc--empty' : ''}`}>
-      {nodes.map((node, i) => {
-        if (node.t === 'text') return <span key={i}>{node.s}</span>;
-        // término con contenido de texto → mostrar el texto resaltado
-        if (node.content) return <em key={i} className="ability-term">{node.content}</em>;
-        // término vacío (icono) → icono o símbolo
-        const iconSrc = TERM_ICONS[node.key];
-        const symbol  = TERM_SYMBOLS[node.key];
-        if (iconSrc) return (
-          <img key={i} src={iconSrc} alt={node.key}
-            className="ability-term-icon"
-            onError={e => e.target.style.display = 'none'} />
-        );
-        if (symbol) return <span key={i} className="ability-term-sym">{symbol}</span>;
-        // fallback: nada (el texto del término ya estará en el contenido surrounding)
-        return null;
-      })}
-    </p>
+    <div className="ability-desc-wrapper">
+      {chance !== null && chance > 0 && (
+        <span className="ability-chance-badge">{chance}%</span>
+      )}
+      <p className={`ability-desc ${isNoAbility ? 'ability-desc--empty' : ''}`}>
+        {nodes.map((node, i) => {
+          if (node.t === 'text') return <span key={i}>{node.s}</span>;
+          const iconSrc = TERM_ICONS[node.key];
+          if (iconSrc) return (
+            <img key={i} src={iconSrc} alt={node.key}
+              className="ability-term-icon"
+              onError={e => e.target.style.display = 'none'} />
+          );
+          if (node.content && !/^[\ue000-\uf8ff\s]+$/.test(node.content))
+            return <em key={i} className="ability-term">{node.content}</em>;
+          return null;
+        })}
+      </p>
+    </div>
   );
 }
 

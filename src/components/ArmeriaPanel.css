@@ -326,8 +326,28 @@
 
 /* ── Descripción de ability del accesorio ── */
 
+.ability-desc-wrapper {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.ability-chance-badge {
+  flex-shrink: 0;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--color-gold);
+  background: rgba(var(--color-gold-rgb), 0.12);
+  border: 1px solid rgba(var(--color-gold-rgb), 0.35);
+  border-radius: 99px;
+  padding: 1px 5px;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
 .ability-desc {
-  margin: 4px 0 0;
+  margin: 0;
   font-size: 0.75rem;
   line-height: 1.45;
   color: var(--color-text-muted);
@@ -346,8 +366,8 @@
 
 /* Icono inline de término (corazón, daño, etc.) */
 .ability-term-icon {
-  width: 14px;
-  height: 14px;
+  width: 18px;
+  height: 18px;
   vertical-align: middle;
   object-fit: contain;
   display: inline-block;

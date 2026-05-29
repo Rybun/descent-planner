@@ -55,9 +55,9 @@ export const WEAPON_ASSEMBLY = {
   SPEAR: {
     rotation: 0,
     // Cabeza frente (z3) para que se distinga del mango; mango al fondo (z1)
-    a: { left: 138.8, top:  -30.0, w: 142, h: 167, z: 3 }, // cabeza: frente
-    b: { left: 187.0, top:   95.3, w:  46, h: 377, z: 1 }, // mango: fondo
-    c: { left: 155.5, top:  430.0, w: 106, h: 101, z: 2 }, // cola: medio
+    a: { left: 138.8, top:  -10.0, w: 142, h: 167, z: 3 }, // cabeza: frente
+    b: { left: 187.0, top:  115.3, w:  46, h: 377, z: 1 }, // mango: fondo
+    c: { left: 155.5, top:  450.0, w: 106, h: 101, z: 2 }, // cola: medio
   },
   STAFF: {
     rotation: 0,

@@ -918,14 +918,140 @@ def generate_descriptions_js(locs, planner_dir):
     print(f"  ✓ descriptions.js → {len(descs)} descripciones")
 
 # ──────────────────────────────────────────────────────────────────────────────
+# Extracción de iconos desde atlas SDF de TextMeshPro
+# ──────────────────────────────────────────────────────────────────────────────
+
+# Coordenadas (left, top, right, bottom) de cada glifo en el atlas SDF de 1024×1024.
+# El atlas es: game-resources/raw/textures/misc/tex_-1595345317157056104.png
+# Para actualizar una caja: python extract.py --dump-atlas  → abre el atlas con las cajas dibujadas
+# Usa Pillow/ImageDraw para inspeccionar: imagen.show()
+SDF_ICON_BOXES = {
+    # Nombre fichero (sin .png) : (left, top, right, bottom) en el atlas 1024×1024
+    # Coordenadas extraídas del D3 Calibri SDF font asset (UnityPy m_GlyphTable)
+    # Todos los glifos son caracteres PUA del juego (U+F5D0..U+F5E8)
+    "Icon_Health":    (978, 627, 1011, 660),   # U+F5D0 — Vida
+    "Icon_Advantage": (750, 830,  785, 865),   # U+F5DE — Ventaja
+    "Icon_Surge":     (340, 675,  372, 712),   # U+F5E1 — Incremento
+    "Icon_Upgrade":   (905, 937,  942, 970),   # U+F5E2 — Mejora (objeto mejorado)
+    "Icon_Fatigue":   (823,  94,  846, 130),   # U+F5E3 — Fatiga
+    "Icon_Action":    (428, 590,  460, 625),   # U+F5E4 — Acción especial
+    "Icon_Damage":    (935, 878,  971, 913),   # U+F5E5 — Daño
+    "Icon_Success":   (567, 935,  604, 970),   # U+F5E8 — Éxito
+}
+
+# Color dorado en RGB — debe coincidir con --color-gold del CSS
+SDF_ICON_COLOR   = (200, 154, 60)
+# Umbral SDF: valor normalizado [0-1] por encima del cual el píxel está "dentro" del glifo
+SDF_THRESHOLD    = 0.55
+# Suavidad del borde (en unidades [0-1])
+SDF_SOFTNESS     = 0.12
+# Tamaño de salida en píxeles
+SDF_OUTPUT_SIZE  = 128
+
+# Ruta relativa al atlas SDF desde el directorio descent-planner/
+SDF_ATLAS_RELPATH = os.path.join(
+    "..", "game-resources", "raw", "textures", "misc",
+    "tex_-1595345317157056104.png"
+)
+
+
+def _sdf_to_icon(atlas_img, bbox, size=SDF_OUTPUT_SIZE,
+                 color=SDF_ICON_COLOR, threshold=SDF_THRESHOLD, softness=SDF_SOFTNESS):
+    """Extrae y renderiza un icono desde un atlas SDF de TextMeshPro.
+
+    Preserva el aspect ratio del glifo original (sin deformar) y lo centra
+    en un canvas cuadrado transparente de 'size' píxeles.
+    """
+    from PIL import Image
+
+    bw = bbox[2] - bbox[0]
+    bh = bbox[3] - bbox[1]
+
+    # Escalar manteniendo aspect ratio con margen del 5%
+    scale = min(size / bw, size / bh) * 0.90
+    new_w = max(1, int(bw * scale))
+    new_h = max(1, int(bh * scale))
+
+    crop = atlas_img.crop(bbox).resize((new_w, new_h), Image.LANCZOS)
+
+    _, _, _, a_ch = crop.split()
+    sdf_vals = list(a_ch.getdata())
+
+    lo   = threshold - softness
+    hi   = threshold + softness
+    span = hi - lo if hi > lo else 1e-6
+
+    out_alpha = []
+    for raw in sdf_vals:
+        v = raw / 255.0
+        t = max(0.0, min(1.0, (v - lo) / span))
+        out_alpha.append(int(t * t * (3.0 - 2.0 * t) * 255))
+
+    rendered = Image.new("RGBA", (new_w, new_h), (color[0], color[1], color[2], 0))
+    rendered.putalpha(Image.frombytes("L", (new_w, new_h), bytes(out_alpha)))
+
+    # Centrar en canvas cuadrado transparente
+    canvas = Image.new("RGBA", (size, size), (0, 0, 0, 0))
+    ox = (size - new_w) // 2
+    oy = (size - new_h) // 2
+    canvas.paste(rendered, (ox, oy))
+    return canvas
+
+
+def extract_sdf_icons(planner_dir, overwrite=False):
+    """Extrae los iconos de términos del juego del atlas SDF y los guarda en public/assets/icons/."""
+    try:
+        from PIL import Image
+    except ImportError:
+        print("  ✗ Pillow no disponible — saltando extracción de iconos SDF")
+        return
+
+    atlas_path = os.path.join(planner_dir, SDF_ATLAS_RELPATH)
+    if not os.path.isfile(atlas_path):
+        print(f"  ✗ Atlas SDF no encontrado: {atlas_path}")
+        print("     Ejecuta primero: python game-resources/extract_all.py")
+        return
+
+    icons_dir = os.path.join(planner_dir, "public", "assets", "icons")
+    os.makedirs(icons_dir, exist_ok=True)
+
+    atlas = Image.open(atlas_path).convert("RGBA")
+    extracted = 0
+    skipped   = 0
+
+    for name, bbox in SDF_ICON_BOXES.items():
+        out_path = os.path.join(icons_dir, f"{name}.png")
+        if not overwrite and os.path.isfile(out_path):
+            skipped += 1
+            continue
+        try:
+            icon = _sdf_to_icon(atlas, bbox)
+            icon.save(out_path)
+            extracted += 1
+        except Exception as e:
+            print(f"    ✗ Error extrayendo {name}: {e}")
+
+    print(f"  ✓ Iconos SDF: {extracted} extraídos, {skipped} ya existían")
+    # También copiar a game-resources/raw/icons/ para revisión
+    review_dir = os.path.join(planner_dir, "..", "game-resources", "raw", "icons")
+    if os.path.isdir(review_dir):
+        for name in SDF_ICON_BOXES:
+            src = os.path.join(icons_dir, f"{name}.png")
+            if os.path.isfile(src):
+                import shutil as _shutil
+                _shutil.copy2(src, os.path.join(review_dir, f"{name}.png"))
+
+
+# ──────────────────────────────────────────────────────────────────────────────
 # Main
 # ──────────────────────────────────────────────────────────────────────────────
 
 def main():
     parser = argparse.ArgumentParser(description="Extractor de recursos — Descent: Legends of the Dark")
-    parser.add_argument("--game-path",  help="Ruta a la instalación del juego")
-    parser.add_argument("--no-images",  action="store_true", help="No extraer imágenes (sólo regenerar JS)")
-    parser.add_argument("--overwrite",  action="store_true", help="Sobreescribir imágenes existentes")
+    parser.add_argument("--game-path",   help="Ruta a la instalación del juego")
+    parser.add_argument("--no-images",   action="store_true", help="No extraer imágenes (sólo regenerar JS)")
+    parser.add_argument("--overwrite",   action="store_true", help="Sobreescribir imágenes existentes")
+    parser.add_argument("--no-sdf-icons",action="store_true", help="No regenerar iconos SDF del atlas de fuentes")
     args = parser.parse_args()
 
     # Ruta del juego
@@ -980,12 +1106,19 @@ def main():
         print("\n[4/5] Extracción de imágenes omitida (--no-images)")
 
     # ── 5. Generar JS ────────────────────────────────────────────────────────
-    print("\n[5/5] Generando archivos JS...")
+    print("\n[5/6] Generando archivos JS...")
     generate_weapon_parts_js(items, recipes, locs, planner_dir)
     generate_materials_js(env, locs, planner_dir)
     generate_items_js(env, locs, planner_dir)
     generate_recipes_js(recipes, planner_dir)
     generate_descriptions_js(locs, planner_dir)
+
+    # ── 6. Iconos SDF ────────────────────────────────────────────────────────
+    if not args.no_sdf_icons:
+        print("\n[6/6] Extrayendo iconos SDF del atlas de fuentes...")
+        extract_sdf_icons(planner_dir, overwrite=args.overwrite)
+    else:
+        print("\n[6/6] Extracción de iconos SDF omitida (--no-sdf-icons)")
 
     print(f"\n{'='*60}")
     print("  ¡Extracción completada!")
