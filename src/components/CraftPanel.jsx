@@ -9,6 +9,20 @@ import { DESCRIPTIONS } from '../gamedata/descriptions';
 import Tooltip from './Tooltip';
 import './CraftPanel.css';
 
+const UPGRADE_ICON = '/assets/icons/Icon_Upgrade.png';
+
+function renderItemName(id, name) {
+  if (!id?.endsWith('_PLUS')) return name || id || '';
+  return (
+    <>
+      {name}
+      <img src={UPGRADE_ICON} alt="+" style={{ width: '1em', height: '1em', verticalAlign: 'middle', marginLeft: '3px', display: 'inline' }}
+        onError={e => e.target.style.display = 'none'} />
+    </>
+  );
+}
+
+// Para filtrar categorías (basado en el ID de receta)
 const isUpgradeRecipe = id => id.endsWith('_UPGRADED') || id.endsWith('_PLUS');
 
 // IDs de categorías — las etiquetas se traducen en el componente
@@ -176,7 +190,8 @@ export default function CraftPanel() {
                 const canCraftNow = recipe ? canCraft(recipe) : null;
                 const missing     = recipe ? getMissingIngredients(recipe) : [];
                 const hasIngredients = recipe?.ingredients != null;
-                const isUpgrade   = isUpgradeRecipe(recipeId);
+                const recipeItemId = recipe?.itemId || recipeId.replace(/^RECIPE_/, '');
+                const isUpgrade   = recipeItemId?.endsWith('_PLUS') || recipeItemId?.endsWith('_UPGRADED');
                 const itemName    = item ? getName(item, lang) : null;
 
                 return (
@@ -202,9 +217,7 @@ export default function CraftPanel() {
                     {/* Info */}
                     <div className="craft-recipe-info">
                       <div className="craft-recipe-name">
-                        {itemName
-                          ? isUpgrade ? `${itemName} ★` : itemName
-                          : recipeId}
+                        {itemName ? renderItemName(recipeItemId, itemName) : recipeId}
                       </div>
                       {item && 'slot' in item && (
                         <div className="craft-recipe-tag">

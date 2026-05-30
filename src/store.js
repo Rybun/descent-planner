@@ -6,6 +6,7 @@ import { parseSave } from './parser/savParser';
 import { MATERIALS_BY_ID } from './gamedata/materials';
 import { WEAPON_PARTS_BY_ID } from './gamedata/weaponParts';
 import { ALL_ITEMS_BY_ID } from './gamedata/items';
+import { RECIPES_BY_ID } from './gamedata/recipes';
 import { WEAPONS_BY_ID } from './gamedata/weapons';
 import { HEROES_BY_ID } from './gamedata/heroes';
 
@@ -61,6 +62,7 @@ export const useStore = create((set, get) => ({
 
   // === UI ===
   activeTab: 'armeria',
+  selectedArmeriaHeroId: 'HERO_BRYNN',
   showSettings: false,
   priceEditorOpen: false,
 
@@ -128,6 +130,17 @@ export const useStore = create((set, get) => ({
       gs = applyAction(gs, action);
     }
 
+    set({ gameState: gs, actionHistory: newHistory });
+  },
+
+  // Eliminar una acción concreta del historial y reconstruir el estado
+  removeAction: (actionId) => {
+    const { actionHistory, originalState } = get();
+    const newHistory = actionHistory.filter(a => a.id !== actionId);
+    let gs = cloneGameState(originalState);
+    for (const action of newHistory) {
+      gs = applyAction(gs, action);
+    }
     set({ gameState: gs, actionHistory: newHistory });
   },
 
@@ -282,6 +295,22 @@ export const useStore = create((set, get) => ({
     set({ gameState: newGs, actionHistory: newHistory });
   },
 
+  // === TIENDA: COMPRAR RECETA ===
+  buyRecipe: (recipeId) => {
+    const { gameState, actionHistory } = get();
+    if (!gameState) return false;
+
+    const recipe = RECIPES_BY_ID[recipeId];
+    const cost   = recipe?.goldCost ?? 0;
+    if (cost > 0 && gameState.gold < cost) return false;
+
+    const action = createAction('BUY_RECIPE', `Comprar receta: ${recipeId}`, { recipeId, cost });
+    const newGs = applyAction(cloneGameState(gameState), action);
+    const newHistory = [...actionHistory, action].slice(-MAX_HISTORY);
+    set({ gameState: newGs, actionHistory: newHistory });
+    return true;
+  },
+
   // === CRAFTEO: CRAFTEAR PARTE ===
   craftItem: (recipeId) => {
     const { gameState, actionHistory } = get();
@@ -305,6 +334,7 @@ export const useStore = create((set, get) => ({
 
   // === UI ===
   setActiveTab: (tab) => set({ activeTab: tab }),
+  setSelectedArmeriaHeroId: (id) => set({ selectedArmeriaHeroId: id }),
   setShowSettings: (v) => set({ showSettings: v }),
   setLang: (lang) => {
     localStorage.setItem('descent_lang', lang);
@@ -541,9 +571,22 @@ function applyAction(gs, action) {
       };
     }
 
+    case 'BUY_RECIPE': {
+      const { recipeId, cost } = data;
+      const alreadyHas  = gs.discoveredRecipes.some(r => r.id === recipeId);
+      const newRecipes  = alreadyHas
+        ? gs.discoveredRecipes
+        : [...gs.discoveredRecipes, { id: recipeId, crafted: false }];
+      return {
+        ...gs,
+        gold: gs.gold - cost,
+        discoveredRecipes: newRecipes,
+        shopRecipeIds: (gs.shopRecipeIds || []).filter(id => id !== recipeId),
+      };
+    }
+
     case 'CRAFT_ITEM': {
       const { recipeId } = data;
-      // Marcar receta como crafteada
       const newRecipes = gs.discoveredRecipes.map(r =>
         r.id === recipeId ? { ...r, crafted: true } : r
       );

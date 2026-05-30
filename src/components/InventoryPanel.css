@@ -41,43 +41,152 @@
   margin: 0;
 }
 
-.inv-list {
+/* ======= MATERIALES (chips) ======= */
+
+.inv-mats-chips {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding: var(--spacing-sm) var(--spacing-md);
 }
 
-.inv-row {
-  display: flex;
+.mat-chip {
+  display: inline-flex;
   align-items: center;
-  gap: var(--spacing-sm);
-  padding: 7px var(--spacing-md);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-  font-size: 0.85rem;
+  gap: 4px;
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  border-radius: 99px;
+  padding: 3px 9px 3px 4px;
+  cursor: default;
+  transition: border-color 0.15s;
 }
 
-.inv-row:last-child {
-  border-bottom: none;
+.mat-chip:hover {
+  border-color: var(--color-border-hover);
 }
 
-.inv-row-img {
-  width: 28px;
-  height: 28px;
+.mat-chip-img {
+  width: 20px;
+  height: 20px;
   object-fit: contain;
   flex-shrink: 0;
-  filter: drop-shadow(0 1px 3px rgba(0,0,0,0.4));
 }
 
-.inv-row-name {
-  flex: 1;
+.mat-chip-name {
+  font-size: 0.78rem;
+  font-weight: 500;
   color: var(--color-text);
-  white-space: nowrap;
+}
+
+.mat-chip-qty {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--color-gold);
+}
+
+/* ======= ÍTEMS (cuadrícula fija) ======= */
+
+.inv-items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 86px);
+  gap: var(--spacing-xs);
+  padding: var(--spacing-sm);
+  justify-content: start;
+}
+
+/* Hacer transparentes los wrappers de tooltip para que no rompan el grid */
+.inv-items-grid .tooltip-wrap,
+.inv-items-grid .rtt-wrap {
+  display: contents;
+}
+
+.inv-item-tile {
+  width: 86px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: var(--spacing-xs);
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  cursor: default;
+  transition: border-color 0.15s;
+  box-sizing: border-box;
+}
+
+.inv-item-tile:hover {
+  border-color: var(--color-border-hover);
+}
+
+.inv-tile-img-area {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.inv-tile-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 1px 4px rgba(0,0,0,0.5));
+}
+
+.inv-tile-no-img {
+  font-size: 1.4rem;
+  color: var(--color-text-disabled);
+}
+
+.inv-tile-qty {
+  position: absolute;
+  bottom: -4px;
+  right: -4px;
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: var(--color-bg);
+  background: var(--color-gold);
+  border-radius: 99px;
+  padding: 1px 5px;
+  line-height: 1.3;
+  pointer-events: none;
+}
+
+.inv-tile-name {
+  font-size: 0.63rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-align: center;
+  width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 1.3;
 }
 
-.inv-row-qty {
-  font-size: 0.78rem;
+/* ======= TOOLTIP RICO (trinckets) ======= */
+
+.inv-tooltip-rich {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.inv-tooltip-rich-name {
+  font-size: 0.82rem;
   font-weight: 700;
-  color: var(--color-gold);
-  flex-shrink: 0;
+  color: var(--color-text);
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 4px;
+  margin-bottom: 1px;
+}
+
+.inv-tooltip-rich-desc {
+  font-size: 0.78rem;
+  color: var(--color-text);
+  line-height: 1.5;
 }

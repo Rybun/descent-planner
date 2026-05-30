@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useStore } from '../store';
 import { useT, useLang, getName } from '../i18n';
 import { HEROES, HEROES_BY_ID } from '../gamedata/heroes';
@@ -18,10 +17,11 @@ export default function ArmeriaPanel() {
 
   const gameState   = useStore(s => s.gameState);
   const saveMeta    = useStore(s => s.saveMeta);
-  const equipPartA  = useStore(s => s.equipPartA);
-  const equipPartB  = useStore(s => s.equipPartB);
-  const equipPartC  = useStore(s => s.equipPartC);
-  const [selectedHeroId, setSelectedHeroId] = useState('HERO_BRYNN');
+  const equipPartA          = useStore(s => s.equipPartA);
+  const equipPartB          = useStore(s => s.equipPartB);
+  const equipPartC          = useStore(s => s.equipPartC);
+  const selectedHeroId      = useStore(s => s.selectedArmeriaHeroId);
+  const setSelectedHeroId   = useStore(s => s.setSelectedArmeriaHeroId);
 
   const partASelections = gameState?.partASelections || {};
   const partBSelections = gameState?.partBSelections || {};

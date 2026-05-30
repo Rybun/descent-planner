@@ -10,6 +10,19 @@ import Tooltip from './Tooltip';
 import RecipeTooltip from './RecipeTooltip';
 import './ShopPanel.css';
 
+const UPGRADE_ICON = '/assets/icons/Icon_Upgrade.png';
+
+function renderItemName(id, name) {
+  if (!id?.endsWith('_PLUS')) return name || id || '';
+  return (
+    <>
+      {name}
+      <img src={UPGRADE_ICON} alt="+" style={{ width: '1em', height: '1em', verticalAlign: 'middle', marginLeft: '3px', display: 'inline' }}
+        onError={e => e.target.style.display = 'none'} />
+    </>
+  );
+}
+
 export default function ShopPanel() {
   const t    = useT();
   const lang = useLang();
@@ -20,6 +33,9 @@ export default function ShopPanel() {
   const sellMaterial = useStore(s => s.sellMaterial);
   const buyItem      = useStore(s => s.buyItem);
   const sellItem     = useStore(s => s.sellItem);
+  const buyRecipe    = useStore(s => s.buyRecipe);
+  const actionHistory = useStore(s => s.actionHistory);
+  const removeAction  = useStore(s => s.removeAction);
 
   const [shopView, setShopView] = useState('comprar');
 
@@ -116,9 +132,65 @@ export default function ShopPanel() {
       );
     }
 
+    const sellActions = actionHistory.filter(a =>
+      a.type === 'SELL_MATERIAL' || a.type === 'SELL_ITEM'
+    );
+
     return (
       <>
-        {hasRecipes && (
+        {sellActions.length > 0 && (
+          <section className="shop-section shop-section--recover">
+            <h2 className="shop-section-title shop-section-title--recover">
+              {t('shop.sectionRecover')}
+            </h2>
+            <div className="recover-list">
+              {[...sellActions].reverse().map(action => {
+                const isMat = action.type === 'SELL_MATERIAL';
+                const id    = isMat ? action.data.materialId : action.data.itemId;
+                const qty   = action.data.qty;
+                const gain  = action.data.gain;
+
+                let img = null, name = id;
+                if (isMat) {
+                  const mat = MATERIALS_BY_ID[id];
+                  img  = mat?.image;
+                  name = mat ? getName(mat, lang) : id;
+                } else {
+                  const data = getItemData(id);
+                  img  = data?.image;
+                  name = data ? getName(data, lang) : id;
+                }
+
+                return (
+                  <div key={action.id} className="recover-row">
+                    <div className="sell-item-left">
+                      {img && (
+                        <img src={img} alt={name} className="sell-item-img"
+                          onError={e => e.target.style.display = 'none'} />
+                      )}
+                      <div className="sell-item-info">
+                        <span className="sell-item-name">{renderItemName(id, name)}</span>
+                        {qty > 1 && <span className="sell-item-qty">×{qty}</span>}
+                      </div>
+                    </div>
+                    <div className="sell-item-right">
+                      <span className="shop-mat-price sell-price">
+                        <span className="coin-icon">🪙</span>
+                        <span>{gain}</span>
+                      </span>
+                      <button
+                        className="btn btn-sm btn-primary"
+                        onClick={() => removeAction(action.id)}
+                      >{t('shop.recover')}</button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+        )}
+
+        {(hasRecipes || hasEquipment) && (
           <section className="shop-section">
             <h2 className="shop-section-title">
               <img src="/assets/icons/recipe_badge.png" alt="" className="section-recipe-icon" onError={e => e.target.style.display='none'} />
@@ -128,8 +200,8 @@ export default function ShopPanel() {
               {shopRecipes.map(recipeId => {
                 const recipe = RECIPES_BY_ID[recipeId];
                 const buyPrice = recipe?.goldCost ?? null;
-                const baseId = recipeId.replace('RECIPE_', '')
-                  .replace(/_UPGRADED$/, '').replace(/_PLUS$/, '');
+                const recipeItemId = recipe?.itemId || recipeId.replace(/^RECIPE_/, '');
+                const baseId = recipeItemId.replace(/_UPGRADED$/, '').replace(/_PLUS$/, '');
                 const itemData = getItemData(baseId);
                 const itemName = itemData ? getName(itemData, lang) : baseId;
                 return (
@@ -147,24 +219,24 @@ export default function ShopPanel() {
                         </div>
                       </div>
                       <div className="shop-item-name">
-                        {itemName || baseId}
+                        {renderItemName(recipeItemId, itemName || baseId)}
                       </div>
                       <div className={`shop-item-price ${!canAfford(buyPrice) ? 'cant-afford' : ''}`}>
                         <span className="coin-icon">🪙</span>
                         <span>{formatPrice(buyPrice)}</span>
                       </div>
+                      <button
+                        className="btn btn-sm btn-primary shop-buy-btn"
+                        onClick={() => buyRecipe(recipeId)}
+                        disabled={buyPrice === null || !canAfford(buyPrice)}
+                      >
+                        {t('shop.buy')}
+                      </button>
                     </div>
                   </RecipeTooltip>
                 );
               })}
-            </div>
-          </section>
-        )}
 
-        {hasEquipment && (
-          <section className="shop-section">
-            <h2 className="shop-section-title">{t('shop.sectionObjects')}</h2>
-            <div className="shop-items-grid">
               {shopEquipment.map(itemId => {
                 const data = getItemData(itemId);
                 const buyPrice = getItemBuyPrice(itemId);
@@ -181,7 +253,7 @@ export default function ShopPanel() {
                         : <div className="shop-item-no-img">🛡</div>
                       }
                     </div>
-                    <div className="shop-item-name">{itemName}</div>
+                    <div className="shop-item-name">{renderItemName(itemId, itemName)}</div>
                     <div className="shop-item-sublabel">{getItemLabel(itemId, data)}</div>
                     <div className={`shop-item-price ${!canAfford(buyPrice) ? 'cant-afford' : ''}`}>
                       <span className="coin-icon">🪙</span>
@@ -259,14 +331,9 @@ export default function ShopPanel() {
       const price = getMaterialSellPrice(m.id);
       return qty > 0 && price !== null && price !== undefined;
     });
-    const sellableItems = Object.keys(inventoryGroups).filter(itemId => {
-      const price = getItemSellPrice(itemId);
-      return price !== null && price !== undefined;
-    });
-    const hasItems     = sellableItems.length > 0;
     const hasMaterials = playerMats.length > 0;
 
-    if (!hasItems && !hasMaterials) {
+    if (!hasMaterials) {
       return (
         <div className="empty-state">
           <p>{t('shop.emptySell')}</p>
@@ -324,57 +391,6 @@ export default function ShopPanel() {
           </section>
         )}
 
-        {hasItems && (
-          <section className="shop-section">
-            <h2 className="shop-section-title">{t('shop.sectionObjects')}</h2>
-            <div className="sell-items-list">
-              {Object.entries(inventoryGroups)
-                .filter(([itemId]) => {
-                  const price = getItemSellPrice(itemId);
-                  return price !== null && price !== undefined;
-                })
-                .map(([itemId, qty]) => {
-                  const data      = getItemData(itemId);
-                  const sellPrice = getItemSellPrice(itemId);
-                  const itemName  = data ? getName(data, lang) : itemId;
-                  return (
-                    <div key={itemId} className="sell-item-row">
-                      <div className="sell-item-left">
-                        {data?.image && (
-                          <Tooltip text={getDesc(itemId)}>
-                            <img src={data.image} alt={itemName}
-                              className="sell-item-img"
-                              onError={e => e.target.style.display = 'none'} />
-                          </Tooltip>
-                        )}
-                        <div className="sell-item-info">
-                          <span className="sell-item-name">{itemName}</span>
-                          <span className="sell-item-label">{getItemLabel(itemId, data)}</span>
-                          {qty > 1 && <span className="sell-item-qty">×{qty}</span>}
-                        </div>
-                      </div>
-                      <div className="sell-item-right">
-                        <span className="shop-mat-price sell-price">
-                          <span className="coin-icon">🪙</span>
-                          <span>{formatPrice(sellPrice)}</span>
-                        </span>
-                        <button
-                          className="btn btn-sm btn-danger"
-                          onClick={() => sellItem(itemId, 1)}
-                        >{t('shop.sellOne')}</button>
-                        {qty > 1 && (
-                          <button
-                            className="btn btn-sm btn-danger"
-                            onClick={() => sellItem(itemId, qty)}
-                          >{t('shop.sellAll', { qty })}</button>
-                        )}
-                      </div>
-                    </div>
-                  );
-                })}
-            </div>
-          </section>
-        )}
       </>
     );
   }
