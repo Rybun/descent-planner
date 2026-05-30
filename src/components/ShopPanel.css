@@ -59,6 +59,9 @@
 }
 
 .shop-section-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   font-size: 0.82rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -67,6 +70,13 @@
   margin: 0;
   padding-bottom: var(--spacing-xs);
   border-bottom: 1px solid var(--color-border);
+}
+
+.section-recipe-icon {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  flex-shrink: 0;
 }
 
 /* ======= GRID DE OBJETOS (para comprar) ======= */
@@ -121,8 +131,8 @@
   position: absolute;
   top: 3px;
   right: 3px;
-  width: 18px;
-  height: 18px;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
   background: var(--color-gold);
   color: var(--color-bg);
@@ -135,7 +145,16 @@
 }
 
 .recipe-badge {
-  background: var(--color-gold);
+  background: var(--color-surface);
+  border: 1px solid var(--color-gold);
+  padding: 2px;
+}
+
+.recipe-badge-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 50%;
 }
 
 .shop-item-qty-badge {

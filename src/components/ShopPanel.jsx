@@ -7,6 +7,7 @@ import { ALL_ITEMS_BY_ID } from '../gamedata/items';
 import { RECIPES_BY_ID } from '../gamedata/recipes';
 import { DESCRIPTIONS } from '../gamedata/descriptions';
 import Tooltip from './Tooltip';
+import RecipeTooltip from './RecipeTooltip';
 import './ShopPanel.css';
 
 export default function ShopPanel() {
@@ -21,7 +22,6 @@ export default function ShopPanel() {
   const sellItem     = useStore(s => s.sellItem);
 
   const [shopView, setShopView] = useState('comprar');
-  const [customQty, setCustomQty] = useState({});
 
   if (!gameState) return null;
 
@@ -68,10 +68,6 @@ export default function ShopPanel() {
     return gameState.gold >= price * qty;
   }
 
-  function getCustomQty(key, def = 1) {
-    return customQty[key] ?? def;
-  }
-
   function getItemData(itemId) {
     return WEAPON_PARTS_BY_ID[itemId] || ALL_ITEMS_BY_ID[itemId] || null;
   }
@@ -96,7 +92,9 @@ export default function ShopPanel() {
     s.id.startsWith('MAT_') && MATERIALS_BY_ID[s.id]
   );
   const shopRecipes    = (gameState.shopRecipeIds || []);
-  const shopEquipment  = (gameState.availableItemIds || []);
+  const shopEquipment  = (gameState.shopData || [])
+    .filter(s => !s.id.startsWith('MAT_') && !s.id.startsWith('RECIPE_'))
+    .map(s => s.id);
 
   const inventoryGroups = {};
   for (const item of (gameState.itemInventory || [])) {
@@ -122,7 +120,10 @@ export default function ShopPanel() {
       <>
         {hasRecipes && (
           <section className="shop-section">
-            <h2 className="shop-section-title">{t('shop.sectionRecipes')}</h2>
+            <h2 className="shop-section-title">
+              <img src="/assets/icons/recipe_badge.png" alt="" className="section-recipe-icon" onError={e => e.target.style.display='none'} />
+              {t('shop.sectionRecipes')}
+            </h2>
             <div className="shop-items-grid">
               {shopRecipes.map(recipeId => {
                 const recipe = RECIPES_BY_ID[recipeId];
@@ -132,24 +133,28 @@ export default function ShopPanel() {
                 const itemData = getItemData(baseId);
                 const itemName = itemData ? getName(itemData, lang) : baseId;
                 return (
-                  <div key={recipeId} className="shop-item-tile">
-                    <div className="shop-item-img-area">
-                      {itemData?.image
-                        ? <img src={itemData.image} alt={itemName}
-                            className="shop-item-img"
-                            onError={e => e.target.style.display = 'none'} />
-                        : <div className="shop-item-no-img">📜</div>
-                      }
-                      <div className="shop-item-badge recipe-badge">+</div>
+                  <RecipeTooltip key={recipeId} recipeId={recipeId}>
+                    <div className="shop-item-tile">
+                      <div className="shop-item-img-area">
+                        {itemData?.image
+                          ? <img src={itemData.image} alt={itemName}
+                              className="shop-item-img"
+                              onError={e => e.target.style.display = 'none'} />
+                          : <div className="shop-item-no-img">📜</div>
+                        }
+                        <div className="shop-item-badge recipe-badge">
+                          <img src="/assets/icons/recipe_badge.png" alt="recipe" className="recipe-badge-img" onError={e => e.target.style.display='none'} />
+                        </div>
+                      </div>
+                      <div className="shop-item-name">
+                        {itemName || baseId}
+                      </div>
+                      <div className={`shop-item-price ${!canAfford(buyPrice) ? 'cant-afford' : ''}`}>
+                        <span className="coin-icon">🪙</span>
+                        <span>{formatPrice(buyPrice)}</span>
+                      </div>
                     </div>
-                    <div className="shop-item-name">
-                      {itemName ? `${itemName} +` : baseId}
-                    </div>
-                    <div className={`shop-item-price ${!canAfford(buyPrice) ? 'cant-afford' : ''}`}>
-                      <span className="coin-icon">🪙</span>
-                      <span>{formatPrice(buyPrice)}</span>
-                    </div>
-                  </div>
+                  </RecipeTooltip>
                 );
               })}
             </div>
@@ -203,10 +208,8 @@ export default function ShopPanel() {
               {shopMaterials.map(shopItem => {
                 const mat = MATERIALS_BY_ID[shopItem.id];
                 if (!mat) return null;
-                const buyPrice = getMaterialBuyPrice(shopItem.id);
-                const cqKey    = `mat_${shopItem.id}`;
-                const cq       = getCustomQty(cqKey);
-                const playerQty = gameState.craftingMaterials[shopItem.id] || 0;
+                const buyPrice   = getMaterialBuyPrice(shopItem.id);
+                const playerQty  = gameState.craftingMaterials[shopItem.id] || 0;
                 const matName = getName(mat, lang);
 
                 return (
@@ -231,23 +234,12 @@ export default function ShopPanel() {
                           className="btn btn-xs btn-primary"
                           onClick={() => buyMaterial(shopItem.id, 1)}
                           disabled={!canAfford(buyPrice, 1)}
-                        >+1</button>
+                        >{t('shop.buy')}</button>
                         <button
                           className="btn btn-xs btn-primary"
                           onClick={() => buyMaterial(shopItem.id, 5)}
                           disabled={!canAfford(buyPrice, 5)}
-                        >+5</button>
-                        <input
-                          type="number" min="1" max="99"
-                          value={cq}
-                          onChange={e => setCustomQty(p => ({ ...p, [cqKey]: Number(e.target.value) }))}
-                          className="qty-input"
-                        />
-                        <button
-                          className="btn btn-xs btn-primary"
-                          onClick={() => buyMaterial(shopItem.id, cq)}
-                          disabled={!canAfford(buyPrice, cq)}
-                        >×{cq}</button>
+                        >{t('shop.buy5')}</button>
                       </div>
                     )}
                   </div>

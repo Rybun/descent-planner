@@ -3,14 +3,25 @@ import { useLang, getName } from '../i18n';
 import { MATERIALS_BY_ID } from '../gamedata/materials';
 import { WEAPON_PARTS_BY_ID } from '../gamedata/weaponParts';
 import { ALL_ITEMS_BY_ID } from '../gamedata/items';
+import { DESCRIPTIONS } from '../gamedata/descriptions';
+import Tooltip from './Tooltip';
+import WeaponPartTooltip from './WeaponPartTooltip';
 import './InventoryPanel.css';
+
+function getDesc(id) {
+  const base = id?.replace(/_UPGRADED$/, '').replace(/_PLUS$/, '');
+  return DESCRIPTIONS[base] || DESCRIPTIONS[id] || '';
+}
 
 function MatRow({ id, qty, lang }) {
   const mat = MATERIALS_BY_ID[id];
+  const desc = DESCRIPTIONS[id] || (mat ? getName(mat, lang) : id);
   return (
     <div className="inv-row">
       {mat?.image && (
-        <img src={mat.image} className="inv-row-img" alt="" onError={e => e.target.style.display='none'} />
+        <Tooltip text={desc}>
+          <img src={mat.image} className="inv-row-img" alt="" onError={e => e.target.style.display='none'} />
+        </Tooltip>
       )}
       <span className="inv-row-name">{mat ? getName(mat, lang) : id}</span>
       <span className="inv-row-qty">×{qty}</span>
@@ -20,11 +31,18 @@ function MatRow({ id, qty, lang }) {
 
 function ItemRow({ id, qty, lang }) {
   const part = WEAPON_PARTS_BY_ID[id];
+  if (part?.level === 0) return null;
   const item = part || ALL_ITEMS_BY_ID[id];
+  const desc = getDesc(id);
+  const imgEl = item?.image ? (
+    <img src={item.image} className="inv-row-img" alt="" onError={e => e.target.style.display='none'} />
+  ) : null;
   return (
     <div className="inv-row">
-      {item?.image && (
-        <img src={item.image} className="inv-row-img" alt="" onError={e => e.target.style.display='none'} />
+      {imgEl && (
+        part
+          ? <WeaponPartTooltip partId={id}>{imgEl}</WeaponPartTooltip>
+          : <Tooltip text={desc || getName(item, lang)}>{imgEl}</Tooltip>
       )}
       <span className="inv-row-name">{item ? getName(item, lang) : id}</span>
       {qty > 1 && <span className="inv-row-qty">×{qty}</span>}

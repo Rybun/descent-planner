@@ -1,5 +1,14 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import './Tooltip.css';
+
+function renderText(raw) {
+  const clean = String(raw).replace(/^"+|"+$/g, '').trim();
+  const parts = clean.split(/(<i>.*?<\/i>)/g);
+  return parts.map((part, i) => {
+    const m = part.match(/^<i>(.*?)<\/i>$/s);
+    return m ? <em key={i}>{m[1]}</em> : part;
+  });
+}
 
 /**
  * Tooltip que aparece al hacer hover sobre los children.
@@ -50,7 +59,7 @@ export default function Tooltip({ children, text, position = 'top' }) {
             top: coords.y - 8,
           }}
         >
-          {text}
+          {renderText(text)}
         </span>
       )}
     </span>

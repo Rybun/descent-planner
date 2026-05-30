@@ -1,0 +1,208 @@
+.rtt-wrap {
+  display: contents;
+}
+
+.rtt-bubble {
+  position: fixed;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 280px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+  overflow: hidden;
+  padding: 10px 12px 0;
+}
+
+/* Cabecera */
+.rtt-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.rtt-title {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  line-height: 1.3;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.rtt-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-gold);
+  display: block;
+}
+
+.rtt-equipped-badge {
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: var(--color-gold);
+  background: rgba(var(--color-gold-rgb), 0.15);
+  border: 1px solid rgba(var(--color-gold-rgb), 0.4);
+  border-radius: var(--radius-sm);
+  padding: 2px 6px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  align-self: flex-start;
+}
+
+/* Subtítulo */
+.rtt-subtitle {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+}
+
+/* Efecto */
+.rtt-effect {
+  font-size: 0.78rem;
+  color: var(--color-text);
+  line-height: 1.5;
+  padding: 6px 8px;
+  background: var(--color-surface-raised);
+  border-radius: var(--radius-sm);
+  border-left: 2px solid var(--color-gold);
+}
+
+/* Materiales */
+.rtt-ingredients {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.rtt-mat-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  padding: 2px 4px;
+  border-radius: var(--radius-sm);
+}
+
+.rtt-mat-row.rtt-ok      { color: var(--color-success); }
+.rtt-mat-row.rtt-missing { color: var(--color-danger-light); }
+
+.rtt-mat-img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.rtt-mat-name {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rtt-mat-qty {
+  font-weight: 700;
+  font-size: 0.75rem;
+  flex-shrink: 0;
+}
+
+/* Conflicto de slot */
+.rtt-conflict-badge {
+  font-size: 0.75rem;
+  font-weight: 900;
+  color: #fff;
+  background: var(--color-danger);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  align-self: flex-start;
+  line-height: 1;
+}
+
+.rtt-conflict {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 6px 8px;
+  background: rgba(var(--color-danger-rgb), 0.08);
+  border-radius: var(--radius-sm);
+  border-left: 2px solid var(--color-danger);
+}
+
+.rtt-conflict-label {
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-danger-light);
+}
+
+.rtt-conflict-name {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.rtt-conflict-effect {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+}
+
+/* Stats de arma (WeaponPartTooltip) */
+.wpt-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 4px 0;
+}
+
+.wpt-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-text);
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 2px 6px;
+}
+
+.wpt-chip-icon {
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+}
+
+/* Avatar héroe */
+.rtt-hero-footer {
+  display: flex;
+  justify-content: center;
+  margin: 4px -12px 0;
+  background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.3));
+  border-top: 1px solid var(--color-border);
+  overflow: hidden;
+  height: 64px;
+}
+
+.rtt-hero-avatar {
+  height: 100%;
+  width: auto;
+  object-fit: cover;
+  object-position: center top;
+}

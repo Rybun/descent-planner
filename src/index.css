@@ -133,13 +133,16 @@ p {
 }
 
 .btn-primary {
-  background: rgba(var(--color-gold-rgb), 0.15);
+  background: rgba(var(--color-gold-rgb), 0.32);
   border-color: var(--color-gold);
-  color: var(--color-gold-light);
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 0 6px rgba(var(--color-gold-rgb), 0.25);
 }
 
 .btn-primary:hover:not(:disabled) {
-  background: rgba(var(--color-gold-rgb), 0.25);
+  background: rgba(var(--color-gold-rgb), 0.52);
+  box-shadow: 0 0 10px rgba(var(--color-gold-rgb), 0.4);
 }
 
 .btn-danger {
