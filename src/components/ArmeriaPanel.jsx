@@ -5,6 +5,7 @@ import { HEROES, HEROES_BY_ID } from '../gamedata/heroes';
 import { WEAPONS_BY_ID } from '../gamedata/weapons';
 import { WEAPON_PARTS_BY_ID } from '../gamedata/weaponParts';
 import { DESCRIPTIONS } from '../gamedata/descriptions';
+import { WEAPON_ABILITY_DESCS } from '../gamedata/weaponAbilityDescs';
 import { WEAPON_ASSEMBLY, ASSEMBLY_CANVAS, ASSEMBLY_SCALE, ASSEMBLY_DISPLAY_W, ASSEMBLY_DISPLAY_H } from '../gamedata/weaponAssembly';
 import { DAMAGE_TYPE_BY_ID } from '../gamedata/damageTypes';
 import { PART_ABILITY_KEY, WEAPON_ABILITIES, ABILITY_CHANCE } from '../gamedata/weaponAbilities';
@@ -256,6 +257,13 @@ export default function ArmeriaPanel() {
                     </div>
                   )}
 
+                  <WeaponAbilities
+                    weaponType={weaponType}
+                    level={selectedPartA?.level}
+                    isUpgraded={selectedPartA?.id?.endsWith('_UPGRADED') ?? false}
+                    lang={lang}
+                  />
+
                   {/* Slot B */}
                   <SlotRow
                     label={slotLabels.B}
@@ -359,6 +367,40 @@ function AbilityDesc({ partId, lang }) {
               onError={e => e.target.style.display = 'none'} />
           );
           if (node.content && !/^[\ue000-\uf8ff\s]+$/.test(node.content))
+            return <em key={i} className="ability-term">{node.content}</em>;
+          return null;
+        })}
+      </p>
+    </div>
+  );
+}
+
+// ─── Habilidades intrínsecas del arma (WEAPON_ABILITY_{TYPE}_{1|2|3}) ────────
+
+function WeaponAbilities({ weaponType, level, isUpgraded, lang }) {
+  if (!weaponType || !level) return null;
+
+  const base  = `WEAPON_ABILITY_${weaponType}_${level}`;
+  const key   = isUpgraded && WEAPON_ABILITY_DESCS[`${base}_UPGRADED`] ? `${base}_UPGRADED` : base;
+  const entry = WEAPON_ABILITY_DESCS[key];
+  if (!entry) return null;
+  const raw  = entry[lang] || entry.es || '';
+  if (!raw) return null;
+  const text = raw.replace(/^"|"$/g, '').trim();
+  if (!text) return null;
+
+  return (
+    <div className="weapon-abilities-section">
+      <p className="weapon-ability-row">
+        {parseGameText(text).map((node, i) => {
+          if (node.t === 'text') return <span key={i}>{node.s}</span>;
+          const iconSrc = TERM_ICONS[node.key];
+          if (iconSrc) return (
+            <img key={i} src={iconSrc} alt={node.key}
+              className="ability-term-icon"
+              onError={e => e.target.style.display = 'none'} />
+          );
+          if (node.content && node.content.trim())
             return <em key={i} className="ability-term">{node.content}</em>;
           return null;
         })}

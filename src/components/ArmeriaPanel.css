@@ -195,6 +195,24 @@
   border: 1px solid var(--color-success);
 }
 
+/* ======= HABILIDADES INTRÍNSECAS DEL ARMA ======= */
+
+.weapon-abilities-section {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background: rgba(var(--color-gold-rgb), 0.03);
+}
+
+.weapon-ability-row {
+  margin: 0;
+  font-size: 0.75rem;
+  line-height: 1.45;
+  color: var(--color-text-muted);
+}
+
 /* ======= SELECTOR PIEZA A ======= */
 
 .part-a-selector {

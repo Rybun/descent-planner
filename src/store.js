@@ -6,6 +6,8 @@ import { parseSave } from './parser/savParser';
 import { MATERIALS_BY_ID } from './gamedata/materials';
 import { WEAPON_PARTS_BY_ID } from './gamedata/weaponParts';
 import { ALL_ITEMS_BY_ID } from './gamedata/items';
+import { WEAPONS_BY_ID } from './gamedata/weapons';
+import { HEROES_BY_ID } from './gamedata/heroes';
 
 const MAX_HISTORY = 100;
 
@@ -311,7 +313,7 @@ export const useStore = create((set, get) => ({
 
   // === EXPORTAR LOG ===
   exportLog: () => {
-    const { actionHistory, saveMeta, originalState, gameState } = get();
+    const { saveMeta, originalState, gameState } = get();
     if (!originalState || !gameState) return '';
 
     const goldDiff = gameState.gold - originalState.gold;
@@ -324,10 +326,112 @@ export const useStore = create((set, get) => ({
       `Oro inicial: ${originalState.gold}`,
       `Oro final:   ${gameState.gold}`,
       `Diferencia:  ${goldDiff >= 0 ? '+' : ''}${goldDiff}`,
-      ``,
-      `=== ACCIONES REALIZADAS (${actionHistory.length}) ===`,
-      ...actionHistory.map((a, i) => `${i + 1}. [${a.timestamp.slice(11, 19)}] ${a.description}`),
     ];
+
+    // ── Cambios netos de materiales ──────────────────────────────────────────
+    const matChanges = [];
+    const allMatIds = new Set([
+      ...Object.keys(originalState.craftingMaterials || {}),
+      ...Object.keys(gameState.craftingMaterials || {}),
+    ]);
+    for (const id of allMatIds) {
+      const delta = (gameState.craftingMaterials[id] || 0) - (originalState.craftingMaterials[id] || 0);
+      if (delta !== 0) matChanges.push({ id, delta });
+    }
+
+    // ── Cambios netos de ítems ───────────────────────────────────────────────
+    const countItems = inv => { const c = {}; for (const e of (inv || [])) c[e.id] = (c[e.id] || 0) + 1; return c; };
+    const origItems = countItems(originalState.itemInventory);
+    const currItems = countItems(gameState.itemInventory);
+    const itemChanges = [];
+    for (const id of new Set([...Object.keys(origItems), ...Object.keys(currItems)])) {
+      const delta = (currItems[id] || 0) - (origItems[id] || 0);
+      if (delta !== 0) itemChanges.push({ id, delta });
+    }
+
+    // ── Recetas crafteadas ───────────────────────────────────────────────────
+    const origCrafted = new Set((originalState.discoveredRecipes || []).filter(r => r.crafted).map(r => r.id));
+    const currCrafted = new Set((gameState.discoveredRecipes || []).filter(r => r.crafted).map(r => r.id));
+    const newlyCrafted = [...currCrafted].filter(id => !origCrafted.has(id));
+
+    // ── Cambios de armería (con fallback al valor del save) ─────────────────
+    const effSel = (state) => {
+      const a = {}, b = {}, c = {};
+      for (const hero of (state.heroes || []))
+        for (const w of (hero.equippedWeapons || [])) {
+          a[w.id] = (state.partASelections || {})[w.id] ?? w.partA ?? null;
+          b[w.id] = (state.partBSelections || {})[w.id] ?? w.partB ?? null;
+          c[w.id] = (state.partCSelections || {})[w.id] ?? w.partC ?? null;
+        }
+      return { a, b, c };
+    };
+    const os = effSel(originalState), cs = effSel(gameState);
+    const allWeaponIds = new Set([...Object.keys(os.a), ...Object.keys(cs.a)]);
+    const armoriaChanges = [];
+    for (const wid of allWeaponIds) {
+      const slots = [
+        ['A', os.a[wid], cs.a[wid]],
+        ['B', os.b[wid], cs.b[wid]],
+        ['C', os.c[wid], cs.c[wid]],
+      ].filter(([, from, to]) => from !== to);
+      if (slots.length) armoriaChanges.push({ wid, slots });
+    }
+
+    const sign = d => (d > 0 ? '+' : '') + d;
+
+    if (matChanges.length || itemChanges.length) {
+      lines.push(``, `=== TIENDA ===`);
+      for (const { id, delta } of matChanges)  lines.push(`  ${sign(delta)}  ${getItemName(id)}`);
+      for (const { id, delta } of itemChanges) lines.push(`  ${sign(delta)}  ${getItemName(id)}`);
+    }
+
+    if (newlyCrafted.length) {
+      lines.push(``, `=== SALA DE CREACIÓN ===`);
+      for (const id of newlyCrafted) lines.push(`  +  ${getItemName(id)}`);
+    }
+
+    if (armoriaChanges.length) {
+      // Slot names en español
+      const SLOT_NAMES_ES = {
+        BOW:        { B: 'Cuerda',          C: 'Flecha' },
+        CROSSBOW:   { B: 'Culata',          C: 'Virotes' },
+        DUAL_BLADES:{ B: 'Arma secundaria', C: 'Puños' },
+        GAUNTLET:   { B: 'Guante',          C: 'Brazalete' },
+        HAMMER:     { B: 'Mango',           C: 'Agarre' },
+        KNIVES:     { B: 'Agarre',          C: 'Cinturón' },
+        SPEAR:      { B: 'Mango',           C: 'Cola' },
+        STAFF:      { B: 'Envoltura',       C: 'Infusión' },
+        SWORD:      { B: 'Guardia',         C: 'Empuñadura' },
+        WAND:       { B: 'Envoltura',       C: 'Adorno' },
+        WARBELL:    { B: 'Agarre',          C: 'Mango' },
+        WARHAMMER:  { B: 'Mango',           C: 'Puño' },
+      };
+
+      // Agrupar por héroe
+      const byHero = {};
+      for (const { wid, slots } of armoriaChanges) {
+        const weapon  = WEAPONS_BY_ID[wid];
+        const heroId  = weapon?.heroId || 'UNKNOWN';
+        const hero    = HEROES_BY_ID[heroId];
+        const heroName = hero?.name || heroId;
+        const wepName  = weapon?.name || wid;
+        const wType    = weapon?.weaponType || '';
+        if (!byHero[heroId]) byHero[heroId] = { heroName, weapons: [] };
+        byHero[heroId].weapons.push({ wepName, wType, slots });
+      }
+
+      lines.push(``, `=== ARMERÍA ===`);
+      for (const { heroName, weapons } of Object.values(byHero)) {
+        lines.push(`  ${heroName}`);
+        for (const { wepName, wType, slots } of weapons) {
+          lines.push(`    ${wepName}`);
+          for (const [slot, , to] of slots) {
+            const label = slot === 'A' ? 'Equipar' : (SLOT_NAMES_ES[wType]?.[slot] || `Pieza ${slot}`);
+            lines.push(`      ${label}: ${getItemName(to) || '—'}`);
+          }
+        }
+      }
+    }
 
     return lines.join('\n');
   },
@@ -345,9 +449,9 @@ function getInitialLang() {
 
 function getItemName(itemId) {
   const part = WEAPON_PARTS_BY_ID[itemId];
-  if (part) return part.name;
+  if (part) return part.names?.es || part.names?.en || part.id || itemId;
   const item = ALL_ITEMS_BY_ID[itemId];
-  if (item) return item.name;
+  if (item) return item.names?.es || item.names?.en || item.id || itemId;
   return itemId;
 }
 

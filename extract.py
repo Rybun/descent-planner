@@ -649,6 +649,25 @@ def generate_items_js(env, locs, planner_dir):
                 pass
             break
 
+    # ── Post-proceso: añadir campos adicionales desde localización ─────────────
+    loc_es = locs.get("es", {})
+    armor_type_map = {"Pesada": "heavy", "Mediana": "medium", "Ligera": "light"}
+    csm_type_map   = {"Común": "common", "Limitado": "limited", "Especial": "special"}
+
+    for armor in armors.values():
+        desc = loc_es.get(f"{armor['id']}_UPGRADED_DESC", "") or loc_es.get(f"{armor['id']}_DESC", "")
+        m = re.search(r'Armadura—(\w+)', desc)
+        armor["armorType"] = armor_type_map.get(m.group(1) if m else "", None)
+
+    for csm in consumables.values():
+        desc = loc_es.get(f"{csm['id']}_UPGRADED_DESC", "") or loc_es.get(f"{csm['id']}_DESC", "")
+        m = re.search(r'Consumible—(\w+)', desc)
+        csm["consumableType"] = csm_type_map.get(m.group(1) if m else "", None)
+
+    for trinket in trinkets.values():
+        base = trinket["id"].replace("_ID", "")  # TRINKET1_ID → TRINKET1
+        trinket["abilityDescs"] = _make_names(locs, f"{base}_ABILITY_UPGRADED")
+
     def sort_id(d):
         # Ordenar numéricamente si el ID acaba en número (ej: ARMOR_1 < ARMOR_2)
         m = re.match(r"^(.+?)_(\d+)$", d["id"])
@@ -895,15 +914,14 @@ def generate_recipes_js(recipes, planner_dir):
 # ──────────────────────────────────────────────────────────────────────────────
 
 def generate_descriptions_js(locs, planner_dir):
-    """Genera src/gamedata/descriptions.js con todas las descripciones en ES."""
+    """Genera descriptions.js (ES) y weaponAbilityDescs.js (multi-idioma)."""
     loc_es = locs.get("es", {})
-    # Filtrar sólo claves de descripción (_DESC suffix)
+
+    # ── descriptions.js (solo ES, todas las claves _DESC) ─────────────────────
     descs = {}
     for key, val in loc_es.items():
         if key.endswith("_DESC") and val:
-            # Quitar el sufijo _DESC para que coincida con el ID del ítem
-            item_key = key[:-5]
-            descs[item_key] = val
+            descs[key[:-5]] = val
 
     lines = [
         "// Descripciones en español de los ítems del juego",
@@ -911,11 +929,31 @@ def generate_descriptions_js(locs, planner_dir):
         "",
         "export const DESCRIPTIONS = " + json.dumps(descs, ensure_ascii=False, indent=2) + ";",
     ]
-
     out_path = os.path.join(planner_dir, "src", "gamedata", "descriptions.js")
     with open(out_path, "w", encoding="utf-8") as f:
         f.write("\n".join(lines) + "\n")
     print(f"  ✓ descriptions.js → {len(descs)} descripciones")
+
+    # ── weaponAbilityDescs.js (multi-idioma, solo claves WEAPON_ABILITY_*_DESC) ─
+    wa_descs = {}
+    for lang in ["es", "en", "fr", "it", "pt"]:
+        for key, val in locs.get(lang, {}).items():
+            if key.startswith("WEAPON_ABILITY_") and key.endswith("_DESC") and val:
+                item_key = key[:-5]
+                if item_key not in wa_descs:
+                    wa_descs[item_key] = {}
+                wa_descs[item_key][lang] = val
+
+    lines2 = [
+        "// Habilidades intrínsecas de arma por tipo y nivel — todos los idiomas",
+        "// Generado automáticamente por extract.py — no editar manualmente",
+        "",
+        "export const WEAPON_ABILITY_DESCS = " + json.dumps(wa_descs, ensure_ascii=False, indent=2) + ";",
+    ]
+    out_path2 = os.path.join(planner_dir, "src", "gamedata", "weaponAbilityDescs.js")
+    with open(out_path2, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines2) + "\n")
+    print(f"  ✓ weaponAbilityDescs.js → {len(wa_descs)} habilidades")
 
 # ──────────────────────────────────────────────────────────────────────────────
 # Extracción de iconos desde atlas SDF de TextMeshPro

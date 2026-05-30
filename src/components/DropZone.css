@@ -167,6 +167,12 @@
   font-size: 0.8rem;
 }
 
+@media (max-width: 640px) {
+  .dropzone-heroes {
+    margin-top: 3rem;
+  }
+}
+
 /* ── Lang selector en DropZone ── */
 .dz-lang-selector {
   position: absolute;
@@ -175,4 +181,65 @@
   display: flex;
   gap: 2px;
   z-index: 10;
+}
+
+/* ── Sección de licencia ── */
+.dz-license {
+  margin-top: var(--spacing-lg);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid var(--color-border);
+  max-width: 480px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  text-align: center;
+}
+
+.dz-license-fan {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+.dz-license-disclaimer {
+  margin: 0;
+  font-size: 0.72rem;
+  color: var(--color-text-disabled);
+  line-height: 1.5;
+}
+
+.dz-license-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  font-size: 0.72rem;
+  color: var(--color-text-disabled);
+  margin-top: 2px;
+}
+
+.dz-license-sep {
+  opacity: 0.4;
+}
+
+.dz-github-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--color-text-disabled);
+  text-decoration: none;
+  font-size: 0.72rem;
+  transition: color 0.15s;
+}
+
+.dz-github-link:hover {
+  color: var(--color-text-muted);
+}
+
+.dz-github-icon {
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
 }
