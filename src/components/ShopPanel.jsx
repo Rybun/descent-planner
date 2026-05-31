@@ -8,20 +8,8 @@ import { RECIPES_BY_ID } from '../gamedata/recipes';
 import { DESCRIPTIONS } from '../gamedata/descriptions';
 import Tooltip from './Tooltip';
 import RecipeTooltip from './RecipeTooltip';
+import ItemTooltip from './ItemTooltip';
 import './ShopPanel.css';
-
-const UPGRADE_ICON = '/assets/icons/Icon_Upgrade.png';
-
-function renderItemName(id, name) {
-  if (!id?.endsWith('_PLUS')) return name || id || '';
-  return (
-    <>
-      {name}
-      <img src={UPGRADE_ICON} alt="+" style={{ width: '1em', height: '1em', verticalAlign: 'middle', marginLeft: '3px', display: 'inline' }}
-        onError={e => e.target.style.display = 'none'} />
-    </>
-  );
-}
 
 export default function ShopPanel() {
   const t    = useT();
@@ -169,7 +157,13 @@ export default function ShopPanel() {
                           onError={e => e.target.style.display = 'none'} />
                       )}
                       <div className="sell-item-info">
-                        <span className="sell-item-name">{renderItemName(id, name)}</span>
+                        <span className="sell-item-name">
+                          <span className="sell-item-name-text">{name}</span>
+                          {id?.endsWith('_PLUS') && (
+                            <img src="/assets/icons/Icon_Upgrade.png" alt="+" className="shop-item-upgrade-icon"
+                              onError={e => e.target.style.display = 'none'} />
+                          )}
+                        </span>
                         {qty > 1 && <span className="sell-item-qty">×{qty}</span>}
                       </div>
                     </div>
@@ -219,7 +213,11 @@ export default function ShopPanel() {
                         </div>
                       </div>
                       <div className="shop-item-name">
-                        {renderItemName(recipeItemId, itemName || baseId)}
+                        <span className="shop-item-name-text">{itemName || baseId}</span>
+                        {recipeItemId?.endsWith('_PLUS') && (
+                          <img src="/assets/icons/Icon_Upgrade.png" alt="+" className="shop-item-upgrade-icon"
+                            onError={e => e.target.style.display = 'none'} />
+                        )}
                       </div>
                       <div className={`shop-item-price ${!canAfford(buyPrice) ? 'cant-afford' : ''}`}>
                         <span className="coin-icon">🪙</span>
@@ -242,31 +240,36 @@ export default function ShopPanel() {
                 const buyPrice = getItemBuyPrice(itemId);
                 const itemName = data ? getName(data, lang) : itemId;
                 return (
-                  <div key={itemId} className="shop-item-tile">
-                    <div className="shop-item-img-area">
-                      {data?.image
-                        ? <Tooltip text={getDesc(itemId)}>
-                            <img src={data.image} alt={itemName}
+                  <ItemTooltip key={itemId} id={itemId} item={data} lang={lang}>
+                    <div className="shop-item-tile">
+                      <div className="shop-item-img-area">
+                        {data?.image
+                          ? <img src={data.image} alt={itemName}
                               className="shop-item-img"
                               onError={e => e.target.style.display = 'none'} />
-                          </Tooltip>
-                        : <div className="shop-item-no-img">🛡</div>
-                      }
+                          : <div className="shop-item-no-img">🛡</div>
+                        }
+                      </div>
+                      <div className="shop-item-name">
+                        <span className="shop-item-name-text">{itemName}</span>
+                        {itemId?.endsWith('_PLUS') && (
+                          <img src="/assets/icons/Icon_Upgrade.png" alt="+" className="shop-item-upgrade-icon"
+                            onError={e => e.target.style.display = 'none'} />
+                        )}
+                      </div>
+                      <div className={`shop-item-price ${!canAfford(buyPrice) ? 'cant-afford' : ''}`}>
+                        <span className="coin-icon">🪙</span>
+                        <span>{formatPrice(buyPrice)}</span>
+                      </div>
+                      <button
+                        className="btn btn-sm btn-primary shop-buy-btn"
+                        onClick={() => buyItem(itemId)}
+                        disabled={!canAfford(buyPrice)}
+                      >
+                        {t('shop.buy')}
+                      </button>
                     </div>
-                    <div className="shop-item-name">{renderItemName(itemId, itemName)}</div>
-                    <div className="shop-item-sublabel">{getItemLabel(itemId, data)}</div>
-                    <div className={`shop-item-price ${!canAfford(buyPrice) ? 'cant-afford' : ''}`}>
-                      <span className="coin-icon">🪙</span>
-                      <span>{formatPrice(buyPrice)}</span>
-                    </div>
-                    <button
-                      className="btn btn-sm btn-primary shop-buy-btn"
-                      onClick={() => buyItem(itemId)}
-                      disabled={!canAfford(buyPrice)}
-                    >
-                      {t('shop.buy')}
-                    </button>
-                  </div>
+                  </ItemTooltip>
                 );
               })}
             </div>

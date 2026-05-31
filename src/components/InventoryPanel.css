@@ -157,15 +157,31 @@
 }
 
 .inv-tile-name {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  width: 100%;
+  overflow: hidden;
   font-size: 0.63rem;
   font-weight: 600;
   color: var(--color-text-muted);
-  text-align: center;
-  width: 100%;
+  line-height: 1.3;
+}
+
+.inv-tile-name-text {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  line-height: 1.3;
+  min-width: 0;
+}
+
+.inv-tile-upgrade-icon {
+  flex-shrink: 0;
+  width: 0.85em;
+  height: 0.85em;
+  object-fit: contain;
+  opacity: 0.85;
 }
 
 /* ======= TOOLTIP RICO (trinckets) ======= */
