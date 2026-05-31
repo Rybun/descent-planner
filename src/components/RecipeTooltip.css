@@ -248,10 +248,28 @@
   object-position: center top;
 }
 
+.rtt-hero-footer--item {
+  height: 110px;
+}
+
 .rtt-item-footer-img {
   height: 100%;
   width: auto;
   max-width: 100%;
   object-fit: contain;
   object-position: center center;
+}
+
+.rtt-armor-heroes {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  margin-top: 2px;
+  line-height: 1.4;
+}
+
+.rtt-armor-sep {
+  color: var(--color-gold);
+  opacity: 0.6;
 }

@@ -30,7 +30,7 @@ export const HEROES = [
     image: '/assets/heroes/galaden_act1.png',
     imageAct2: '/assets/heroes/galaden_act2.png',
     weapons: ['WEAPON_DUAL_BLADES', 'WEAPON_BOW'],
-    armorTypes: ['light', 'medium'],
+    armorTypes: ['medium'],
   },
   {
     id: 'HERO_VAERIX',
@@ -40,7 +40,7 @@ export const HEROES = [
     image: '/assets/heroes/vaerix_act1.png',
     imageAct2: '/assets/heroes/vaerix_act2.png',
     weapons: ['WEAPON_WARBELL', 'WEAPON_SPEAR'],
-    armorTypes: ['medium', 'heavy'],
+    armorTypes: ['light', 'medium'],
   },
   {
     id: 'HERO_KEHLI',
@@ -50,7 +50,7 @@ export const HEROES = [
     image: '/assets/heroes/kehli_act1.png',
     imageAct2: '/assets/heroes/kehli_act2.png',
     weapons: ['WEAPON_HAMMER', 'WEAPON_CROSSBOW'],
-    armorTypes: ['medium'],
+    armorTypes: ['medium', 'heavy'],
   },
   {
     id: 'HERO_CHANCE',
@@ -61,7 +61,7 @@ export const HEROES = [
     image: '/assets/heroes/chance_act1.png',
     imageAct2: '/assets/heroes/chance_act2.png',
     weapons: ['WEAPON_KUKRI', 'WEAPON_THROWING_KNIVES'],
-    armorTypes: ['light'],
+    armorTypes: ['light', 'medium'],
   },
 ];
 

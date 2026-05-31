@@ -4,6 +4,7 @@ import { useLang, getName } from '../i18n';
 import { MATERIALS_BY_ID } from '../gamedata/materials';
 import { WEAPON_PARTS_BY_ID } from '../gamedata/weaponParts';
 import { ALL_ITEMS_BY_ID } from '../gamedata/items';
+import { HEROES } from '../gamedata/heroes';
 import { DESCRIPTIONS } from '../gamedata/descriptions';
 import { parseGameText, TERM_ICONS } from '../gamedata/gameText';
 import Tooltip from './Tooltip';
@@ -30,6 +31,16 @@ const COMPONENT_LABELS = { es: 'Componente', en: 'Component', fr: 'Composant', i
 const ITEM_TYPE_LABELS = {
   trinket:    { es: 'Accesorio',  en: 'Trinket',     fr: 'Accessoire',   it: 'Accessorio',  pt: 'Acessório'  },
   consumable: { es: 'Consumible', en: 'Consumable',   fr: 'Consommable',  it: 'Consumabile', pt: 'Consumível' },
+};
+
+const ARMOR_CARD_LABEL = {
+  es: 'Carta de Armadura', en: 'Armor Card', fr: "Carte d'Armure", it: 'Carta Armatura', pt: 'Carta de Armadura',
+};
+
+const ARMOR_TYPE_LABELS = {
+  light:  { es: 'Ligera',  en: 'Light',  fr: 'Légère',  it: 'Leggera', pt: 'Leve'   },
+  medium: { es: 'Mediana', en: 'Medium', fr: 'Moyenne', it: 'Media',   pt: 'Média'  },
+  heavy:  { es: 'Pesada',  en: 'Heavy',  fr: 'Lourde',  it: 'Pesante', pt: 'Pesada' },
 };
 
 function renderSimpleText(raw) {
@@ -68,14 +79,15 @@ function ItemTooltip({ id, item, lang, children }) {
   if (!item) return <>{children}</>;
 
   const name   = getName(item, lang);
-  const baseId = id?.replace(/_PLUS$/, '');
 
   // Etiqueta de tipo
   let label = ITEM_TYPE_LABELS[item.type]?.[lang] || item.type || '';
+  let armorTypeLabel = null;
+  let compatibleHeroes = null;
   if (item.type === 'armor') {
-    const rawDesc = DESCRIPTIONS[baseId] || DESCRIPTIONS[id] || '';
-    const cleaned = rawDesc.replace(/^"+|"+$/g, '').replace(/<[^>]+>/g, '').replace(/\.$/, '').trim();
-    label = cleaned || 'Armadura';
+    label = ARMOR_CARD_LABEL[lang] || ARMOR_CARD_LABEL.es;
+    armorTypeLabel = ARMOR_TYPE_LABELS[item.armorType]?.[lang] || item.armorType || '';
+    compatibleHeroes = HEROES.filter(h => h.armorTypes?.includes(item.armorType));
   }
 
   // Descripción de habilidad (trinckets, consumibles)
@@ -84,7 +96,7 @@ function ItemTooltip({ id, item, lang, children }) {
 
   function move(e) { setCoords({ x: e.clientX, y: e.clientY }); }
   const offsetX = coords.x + 16 + 280 > window.innerWidth ? coords.x - 296 : coords.x + 16;
-  const offsetY = Math.min(coords.y - 8, window.innerHeight - 360);
+  const offsetY = Math.min(coords.y - 8, window.innerHeight - 400);
 
   return (
     <span
@@ -101,6 +113,17 @@ function ItemTooltip({ id, item, lang, children }) {
             <span className="rtt-title">
               {label && <span className="rtt-label">{label}</span>}
               {renderItemName(id, name)}
+              {compatibleHeroes && (
+                <span className="rtt-armor-heroes">
+                  {armorTypeLabel}
+                  {compatibleHeroes.map((h, i) => (
+                    <span key={h.id}>
+                      <span className="rtt-armor-sep"> · </span>
+                      {getName(h, lang)}
+                    </span>
+                  ))}
+                </span>
+              )}
             </span>
           </span>
 
@@ -111,7 +134,7 @@ function ItemTooltip({ id, item, lang, children }) {
           )}
 
           {item.image && (
-            <span className="rtt-hero-footer">
+            <span className="rtt-hero-footer rtt-hero-footer--item">
               <img src={item.image} alt={name} className="rtt-item-footer-img"
                 onError={e => e.target.style.display = 'none'} />
             </span>
