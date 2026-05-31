@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useStore } from '../store';
 import { useLang, getName } from '../i18n';
 import { MATERIALS_BY_ID } from '../gamedata/materials';
@@ -7,6 +8,7 @@ import { DESCRIPTIONS } from '../gamedata/descriptions';
 import { parseGameText, TERM_ICONS } from '../gamedata/gameText';
 import Tooltip from './Tooltip';
 import WeaponPartTooltip from './WeaponPartTooltip';
+import './RecipeTooltip.css';
 import './InventoryPanel.css';
 
 const UPGRADE_ICON = '/assets/icons/Icon_Upgrade.png';
@@ -24,6 +26,11 @@ function renderItemName(id, name) {
 }
 
 const COMPONENT_LABELS = { es: 'Componente', en: 'Component', fr: 'Composant', it: 'Componente', pt: 'Componente' };
+
+const ITEM_TYPE_LABELS = {
+  trinket:    { es: 'Accesorio',  en: 'Trinket',     fr: 'Accessoire',   it: 'Accessorio',  pt: 'Acessório'  },
+  consumable: { es: 'Consumible', en: 'Consumable',   fr: 'Consommable',  it: 'Consumabile', pt: 'Consumível' },
+};
 
 function renderSimpleText(raw) {
   if (!raw) return null;
@@ -53,37 +60,67 @@ function renderAbilityNodes(raw) {
   });
 }
 
-function getItemTooltipContent(id, item, lang) {
-  if (!item) return null;
+// Tooltip con estructura idéntica a WeaponPartTooltip (rtt-bubble)
+function ItemTooltip({ id, item, lang, children }) {
+  const [visible, setVisible] = useState(false);
+  const [coords, setCoords] = useState({ x: 0, y: 0 });
 
-  // Trinkets / consumables — ability description
-  const rawAbility = item.abilityDescs?.[lang] || item.abilityDescs?.es || item.abilityDescs?.en || '';
-  if (rawAbility) {
-    const nodes = renderAbilityNodes(rawAbility);
-    const name  = getName(item, lang);
-    return (
-      <div className="inv-tooltip-rich">
-        <div className="inv-tooltip-rich-name">{renderItemName(id, name)}</div>
-        <div className="inv-tooltip-rich-desc">{nodes}</div>
-      </div>
-    );
-  }
+  if (!item) return <>{children}</>;
 
-  // Armors — "Carta de Armadura—Pesada" + nombre
+  const name   = getName(item, lang);
+  const baseId = id?.replace(/_PLUS$/, '');
+
+  // Etiqueta de tipo
+  let label = ITEM_TYPE_LABELS[item.type]?.[lang] || item.type || '';
   if (item.type === 'armor') {
-    const baseId  = id.replace(/_PLUS$/, '');
     const rawDesc = DESCRIPTIONS[baseId] || DESCRIPTIONS[id] || '';
-    const header  = rawDesc.replace(/^"+|"+$/g, '').replace(/<[^>]+>/g, '').replace(/\.$/, '').trim();
-    const name    = getName(item, lang);
-    return (
-      <div className="inv-tooltip-rich">
-        <div className="inv-tooltip-rich-name">{header || 'Armadura'}</div>
-        <div className="inv-tooltip-rich-desc">{renderItemName(id, name)}</div>
-      </div>
-    );
+    const cleaned = rawDesc.replace(/^"+|"+$/g, '').replace(/<[^>]+>/g, '').replace(/\.$/, '').trim();
+    label = cleaned || 'Armadura';
   }
 
-  return null;
+  // Descripción de habilidad (trinckets, consumibles)
+  const rawAbility = item.abilityDescs?.[lang] || item.abilityDescs?.es || item.abilityDescs?.en || '';
+  const abilityNodes = rawAbility ? renderAbilityNodes(rawAbility) : null;
+
+  function move(e) { setCoords({ x: e.clientX, y: e.clientY }); }
+  const offsetX = coords.x + 16 + 280 > window.innerWidth ? coords.x - 296 : coords.x + 16;
+  const offsetY = Math.min(coords.y - 8, window.innerHeight - 360);
+
+  return (
+    <span
+      className="rtt-wrap"
+      onMouseEnter={e => { setVisible(true); move(e); }}
+      onMouseMove={move}
+      onMouseLeave={() => setVisible(false)}
+    >
+      {children}
+      {visible && (
+        <span className="rtt-bubble" style={{ left: offsetX, top: offsetY }}>
+
+          <span className="rtt-header">
+            <span className="rtt-title">
+              {label && <span className="rtt-label">{label}</span>}
+              {renderItemName(id, name)}
+            </span>
+          </span>
+
+          {abilityNodes && (
+            <span className="rtt-effect">
+              {abilityNodes}
+            </span>
+          )}
+
+          {item.image && (
+            <span className="rtt-hero-footer">
+              <img src={item.image} alt={name} className="rtt-item-footer-img"
+                onError={e => e.target.style.display = 'none'} />
+            </span>
+          )}
+
+        </span>
+      )}
+    </span>
+  );
 }
 
 function MatChip({ id, qty, lang }) {
@@ -118,13 +155,11 @@ function ItemTile({ id, qty, lang }) {
   const part = WEAPON_PARTS_BY_ID[id];
   if (part?.level === 0) return null;
 
-  const item    = part || ALL_ITEMS_BY_ID[id];
-  const name    = item ? getName(item, lang) : id;
-  const imgEl   = item?.image
+  const item  = part || ALL_ITEMS_BY_ID[id];
+  const name  = item ? getName(item, lang) : id;
+  const imgEl = item?.image
     ? <img src={item.image} className="inv-tile-img" alt="" onError={e => e.target.style.display = 'none'} />
     : <div className="inv-tile-no-img">?</div>;
-
-  const tooltipContent = !part ? getItemTooltipContent(id, item, lang) : null;
 
   const tile = (
     <div className="inv-item-tile">
@@ -137,13 +172,7 @@ function ItemTile({ id, qty, lang }) {
   );
 
   if (part) return <WeaponPartTooltip partId={id}>{tile}</WeaponPartTooltip>;
-
-  if (tooltipContent && typeof tooltipContent === 'string') {
-    return <Tooltip text={tooltipContent}>{tile}</Tooltip>;
-  }
-  if (tooltipContent) {
-    return <Tooltip content={tooltipContent}>{tile}</Tooltip>;
-  }
+  if (item) return <ItemTooltip id={id} item={item} lang={lang}>{tile}</ItemTooltip>;
   return tile;
 }
 
