@@ -107,6 +107,19 @@ export const useStore = create((set, get) => ({
     }
   },
 
+  // Cargar un save ya parseado (desde enlace compartido)
+  loadParsedState: (gameState, saveMeta) => {
+    const gs = cloneGameState(gameState);
+    set({
+      saveLoaded:    true,
+      saveError:     null,
+      saveMeta,
+      gameState:     gs,
+      originalState: cloneGameState(gameState),
+      actionHistory: [],
+    });
+  },
+
   // Resetear al estado original del save
   resetToSave: () => {
     const { originalState } = get();
