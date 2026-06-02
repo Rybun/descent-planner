@@ -1,7 +1,8 @@
 import { useCallback } from 'react';
 import { useStore } from '../store';
 
-export const SHARE_API = import.meta.env.VITE_SHARE_API_URL || 'https://d.rybun.rocks';
+// URL relativa vacía = usa el mismo origen (descent.rybun.rocks en prod, localhost en dev)
+export const SHARE_API = import.meta.env.VITE_SHARE_API_URL || '';
 
 const LS_KEY = 'descent_shares'; // { [slotGUID]: { id, write_token, label, snapshot_count, snapshots[] } }
 
