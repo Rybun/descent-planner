@@ -9,6 +9,54 @@
   background: var(--color-bg);
 }
 
+/* ── Modo modal (abierto sobre la app) ── */
+.dz-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+  padding: var(--spacing-lg) var(--spacing-md);
+}
+
+.dropzone-modal {
+  min-height: unset;
+  width: 100%;
+  max-width: 700px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+  position: relative;
+}
+
+.dz-close-btn {
+  position: absolute;
+  top: var(--spacing-sm);
+  right: var(--spacing-sm);
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-muted);
+  font-size: 1rem;
+  line-height: 1;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s, border-color 0.15s;
+  z-index: 1;
+}
+
+.dz-close-btn:hover {
+  color: var(--color-text);
+  border-color: var(--color-border-hover);
+}
+
 /* ── Galería de héroes ── */
 .dropzone-heroes {
   display: flex;

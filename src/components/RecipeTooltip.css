@@ -260,6 +260,34 @@
   object-position: center center;
 }
 
+/* ── Weapon part tooltip ── */
+
+.wpt-header-right {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: flex-end;
+  gap: 4px;
+  flex-shrink: 0;
+  max-width: 70px; /* 2 avatares de 32px + gap */
+}
+
+.wpt-hero-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center top;
+  border: 1px solid var(--color-border);
+  flex-shrink: 0;
+}
+
+.wpt-assembly-footer {
+  height: 172px;
+  overflow: hidden;
+}
+
 .rtt-armor-heroes {
   display: block;
   font-size: 0.7rem;

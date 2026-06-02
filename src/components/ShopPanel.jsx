@@ -5,10 +5,9 @@ import { MATERIALS, MATERIALS_BY_ID } from '../gamedata/materials';
 import { WEAPON_PARTS_BY_ID } from '../gamedata/weaponParts';
 import { ALL_ITEMS_BY_ID } from '../gamedata/items';
 import { RECIPES_BY_ID } from '../gamedata/recipes';
-import { DESCRIPTIONS } from '../gamedata/descriptions';
-import Tooltip from './Tooltip';
 import RecipeTooltip from './RecipeTooltip';
 import ItemTooltip from './ItemTooltip';
+import MaterialTooltip from './MaterialTooltip';
 import './ShopPanel.css';
 
 export default function ShopPanel() {
@@ -85,11 +84,6 @@ export default function ShopPanel() {
     if (data.type === 'trinket')   return t('shop.label.trinket');
     if (data.type === 'consumable') return t('shop.label.consumable');
     return '';
-  }
-
-  function getDesc(id) {
-    const base = id?.replace(/_UPGRADED$/, '').replace(/_PLUS$/, '');
-    return DESCRIPTIONS[base] || DESCRIPTIONS[id] || '';
   }
 
   const shopMaterials  = (gameState.shopData || []).filter(s =>
@@ -288,13 +282,12 @@ export default function ShopPanel() {
                 const matName = getName(mat, lang);
 
                 return (
-                  <div key={shopItem.id} className="shop-mat-tile">
+                  <MaterialTooltip key={shopItem.id} mat={mat} lang={lang}>
+                  <div className="shop-mat-tile">
                     <div className="shop-mat-img-area">
-                      <Tooltip text={DESCRIPTIONS[shopItem.id] || matName}>
-                        <img src={mat.image} alt={matName}
-                          className="shop-mat-img"
-                          onError={e => e.target.style.display = 'none'} />
-                      </Tooltip>
+                      <img src={mat.image} alt={matName}
+                        className="shop-mat-img"
+                        onError={e => e.target.style.display = 'none'} />
                       <div className="shop-mat-qty-badge">{shopItem.qty}</div>
                     </div>
                     <div className="shop-mat-name">{matName}</div>
@@ -318,6 +311,7 @@ export default function ShopPanel() {
                       </div>
                     )}
                   </div>
+                  </MaterialTooltip>
                 );
               })}
             </div>
@@ -357,13 +351,12 @@ export default function ShopPanel() {
                 const matName    = getName(mat, lang);
 
                 return (
-                  <div key={mat.id} className="shop-mat-tile">
+                  <MaterialTooltip key={mat.id} mat={mat} lang={lang}>
+                  <div className="shop-mat-tile">
                     <div className="shop-mat-img-area">
-                      <Tooltip text={DESCRIPTIONS[mat.id] || matName}>
-                        <img src={mat.image} alt={matName}
-                          className="shop-mat-img"
-                          onError={e => e.target.style.display = 'none'} />
-                      </Tooltip>
+                      <img src={mat.image} alt={matName}
+                        className="shop-mat-img"
+                        onError={e => e.target.style.display = 'none'} />
                       <div className="shop-mat-qty-badge">{playerQty}</div>
                     </div>
                     <div className="shop-mat-name">{matName}</div>
@@ -388,6 +381,7 @@ export default function ShopPanel() {
                       <div className="shop-mat-no-sell">{t('shop.notSellable')}</div>
                     )}
                   </div>
+                  </MaterialTooltip>
                 );
               })}
             </div>

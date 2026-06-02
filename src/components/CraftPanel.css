@@ -11,31 +11,32 @@
 /* ======= BARRA DE MATERIALES ======= */
 
 .craft-mats-bar {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--spacing-sm);
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-  padding: var(--spacing-sm) var(--spacing-md);
-  flex-wrap: wrap;
+  overflow: hidden;
 }
 
-.craft-mats-label {
-  font-size: 0.72rem;
+.craft-mats-title {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  margin: 0;
+  font-size: 0.8rem;
   font-weight: 700;
-  color: var(--color-text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  flex-shrink: 0;
-  margin-top: 3px;
+  letter-spacing: 0.06em;
+  color: var(--color-gold);
+  background: rgba(var(--color-gold-rgb), 0.06);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .craft-mats-row {
   display: flex;
   flex-wrap: wrap;
   gap: var(--spacing-xs);
-  flex: 1;
+  padding: var(--spacing-sm) var(--spacing-md);
 }
 
 .craft-mats-empty {
@@ -228,6 +229,16 @@
   border-style: dashed;
 }
 
+/* El rtt-wrap dentro del img-area debe llenar el espacio completo */
+.craft-recipe-img-area > .rtt-wrap {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
 /* ======= IMAGEN DE RECETA ======= */
 
 .craft-recipe-img-area {
@@ -257,8 +268,8 @@
   position: absolute;
   top: 4px;
   right: 4px;
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
   background: var(--color-gold);
   color: var(--color-bg);
@@ -267,6 +278,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 2px;
+}
+
+.craft-upgrade-badge.recipe-badge {
+  background: var(--color-surface);
+  border: 1px solid var(--color-gold);
+}
+
+.craft-upgrade-badge .recipe-badge-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 50%;
 }
 
 .craft-done-badge {
@@ -346,6 +370,11 @@
   width: 14px;
   height: 14px;
   object-fit: contain;
+}
+
+.craft-ing-badge--item .craft-ing-icon {
+  width: 18px;
+  height: 18px;
 }
 
 .craft-ing-qty {

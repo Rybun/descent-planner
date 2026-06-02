@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useStore } from '../store';
 import { useT, useLang, getName } from '../i18n';
 import { WEAPON_PARTS_BY_ID } from '../gamedata/weaponParts';
@@ -9,9 +10,16 @@ import { WEAPONS_BY_ID } from '../gamedata/weapons';
 import { HEROES_BY_ID } from '../gamedata/heroes';
 import { DAMAGE_TYPE_BY_ID } from '../gamedata/damageTypes';
 import { parseGameText, TERM_ICONS } from '../gamedata/gameText';
+import WeaponAssemblyView from './WeaponAssemblyView';
 import './RecipeTooltip.css';
 
-const SLOT_A_LABELS = { es: 'Arma', en: 'Weapon', fr: 'Arme', it: 'Arma', pt: 'Arma' };
+const ASSEMBLY_ROTATION  = { SWORD: -45, SPEAR: -45, WARBELL: -45, STAFF: -45, BOW: 80 };
+const ASSEMBLY_OVERRIDES = {
+  BOW: { c: { left: 180.6, top: 60.5, w: 58, h: 369, z: 3, rot: -95 } },
+};
+
+const SLOT_A_LABELS  = { es: 'Arma', en: 'Weapon', fr: 'Arme', it: 'Arma', pt: 'Arma' };
+const UPGRADE_ICON   = '/assets/icons/Icon_Upgrade.png';
 
 const LONG_RANGE_LABELS = { es: 'Gran alcance', en: 'Long range', fr: 'Longue portée', it: 'Lunga gittata', pt: 'Longo alcance' };
 
@@ -32,17 +40,8 @@ function isPartEquipped(itemId, gameState) {
   return false;
 }
 
-const HERO_SLUGS = {
-  HERO_BRYNN:   'brynn',
-  HERO_SYRUS:   'syrus',
-  HERO_GALADEN: 'galaden',
-  HERO_VAERIX:  'vaerix',
-  HERO_KEHLI:   'kehli',
-  HERO_CHANCE:  'chance',
-};
-
 function cleanName(name) {
-  return name.replace(/\s*\+\s*✦.*$/, '').trim();
+  return name.replace(/\s*\+?\s*✦.*$/, '').trim();
 }
 
 function renderNodes(nodes) {
@@ -63,18 +62,26 @@ function renderNodes(nodes) {
 
 function getPassiveDesc(partId, lang) {
   const baseId = partId?.replace(/_UPGRADED$/, '');
+  const isUpgraded = baseId !== partId;
   const abilityKey = PART_ABILITY_KEY[baseId] || PART_ABILITY_KEY[partId];
   if (!abilityKey) return null;
-  const raw = WEAPON_ABILITY_DESCS[abilityKey]?.[lang] || WEAPON_ABILITY_DESCS[abilityKey]?.en || '';
+  const upgKeyPlus = isUpgraded ? `${abilityKey}+` : null;
+  const upgKeyUnderscored = isUpgraded ? `${abilityKey}_UPGRADED` : null;
+  const raw = (upgKeyPlus && WEAPON_ABILITY_DESCS[upgKeyPlus]?.[lang])
+    || (upgKeyUnderscored && WEAPON_ABILITY_DESCS[upgKeyUnderscored]?.[lang])
+    || WEAPON_ABILITY_DESCS[abilityKey]?.[lang]
+    || WEAPON_ABILITY_DESCS[abilityKey]?.en
+    || '';
   const clean = raw.replace(/^"+|"+$/g, '').trim();
   return clean || null;
 }
 
-export default function WeaponPartTooltip({ partId, children }) {
-  const t    = useT();
-  const lang = useLang();
-  const act       = useStore(s => s.saveMeta?.act ?? 0);
+export default function WeaponPartTooltip({ partId, showUpgradeIcon = true, children }) {
+  const t        = useT();
+  const lang     = useLang();
   const gameState = useStore(s => s.gameState);
+  const saveMeta  = useStore(s => s.saveMeta);
+  const isAct2    = (saveMeta?.act ?? 0) >= 1;
   const [visible, setVisible] = useState(false);
   const [coords,  setCoords]  = useState({ x: 0, y: 0 });
 
@@ -84,7 +91,8 @@ export default function WeaponPartTooltip({ partId, children }) {
   const weapon = part.weaponId ? WEAPONS_BY_ID[part.weaponId] : null;
   const hero   = weapon?.heroId ? HEROES_BY_ID[weapon.heroId] : null;
 
-  const partName   = cleanName(getName(part, lang));
+  const rawPartName = getName(part, lang);
+  const partName    = rawPartName.replace(/\s*\+?\s*✦.*$/, '').trim();
   const weaponName = weapon ? getName(weapon, lang) : '';
   const heroKey    = t(`hero.${hero?.id}`);
   const heroName   = hero ? (heroKey.startsWith('hero.') ? (hero.name || hero.id) : heroKey) : '';
@@ -97,13 +105,14 @@ export default function WeaponPartTooltip({ partId, children }) {
 
   const hasStats = part.slot === 'A' && (part.damage > 0 || (part.traits?.length > 0));
 
-  const heroSlug  = hero ? HERO_SLUGS[hero.id] : null;
-  const actSuffix = act >= 1 ? 'act2' : 'act1';
-  const avatarSrc = heroSlug ? `/assets/heroes/tooltip/${heroSlug}_${actSuffix}.png` : null;
-
   const isAccessory = part.slot === 'B' || part.slot === 'C';
 
-  const rawActivation = isAccessory ? '' : (WEAPON_PART_DESCS[partId]?.[lang] || '');
+  const basePartId2 = partId?.replace(/_UPGRADED$/, '');
+  const rawActivation = isAccessory ? '' : (
+    WEAPON_PART_DESCS[partId]?.[lang] ||
+    WEAPON_PART_DESCS[basePartId2]?.[lang] ||
+    ''
+  );
   const activationText = rawActivation.replace(/^"+|"+$/g, '').trim();
   const activationNodes = activationText ? renderNodes(parseGameText(activationText)) : null;
 
@@ -111,9 +120,25 @@ export default function WeaponPartTooltip({ partId, children }) {
   const passiveText  = getPassiveDesc(partId, lang);
   const passiveNodes = passiveText ? renderNodes(parseGameText(passiveText)) : null;
 
-  const basePartId = partId?.replace(/_UPGRADED$/, '');
-  const abilityKey = PART_ABILITY_KEY[basePartId] || PART_ABILITY_KEY[partId];
-  const chance     = abilityKey != null ? ABILITY_CHANCE[abilityKey] : null;
+  const basePartId  = partId?.replace(/_UPGRADED$/, '');
+  const abilityKey  = PART_ABILITY_KEY[basePartId] || PART_ABILITY_KEY[partId];
+  const isUpgPart   = basePartId !== partId;
+  const chanceKey   = (isUpgPart && ABILITY_CHANCE[`${abilityKey}+`] != null)
+    ? `${abilityKey}+` : abilityKey;
+  const chance      = chanceKey != null ? ABILITY_CHANCE[chanceKey] : null;
+
+  // Ensamblaje para el footer
+  function defaultPart(slot) {
+    return WEAPON_PARTS_BY_ID[`WEAPON_PART_${slot}_${part.weaponType}_0`] ?? null;
+  }
+  const assemblyA   = part.slot === 'A' ? part : defaultPart('A');
+  const assemblyB   = part.slot === 'B' ? part : defaultPart('B');
+  const assemblyC   = part.slot === 'C' ? part : defaultPart('C');
+  const asmRotation = ASSEMBLY_ROTATION[part.weaponType] || 0;
+  const asmOverrides = ASSEMBLY_OVERRIDES[part.weaponType] || {};
+
+  // Avatar del héroe
+  const heroAvatar = hero ? (isAct2 ? (hero.imageAct2 || hero.image) : hero.image) : null;
 
   function move(e) { setCoords({ x: e.clientX, y: e.clientY }); }
   const offsetX = coords.x + 16 + 280 > window.innerWidth ? coords.x - 296 : coords.x + 16;
@@ -127,15 +152,23 @@ export default function WeaponPartTooltip({ partId, children }) {
       onMouseLeave={() => setVisible(false)}
     >
       {children}
-      {visible && (
+      {visible && createPortal(
         <span className="rtt-bubble" style={{ left: offsetX, top: offsetY }}>
 
           <span className="rtt-header">
             <span className="rtt-title">
               <span className="rtt-label">{slotLabel}</span>
-              {partName}
+              {showUpgradeIcon && partId?.endsWith('_UPGRADED')
+                ? <span style={{ display: 'inline-flex', alignItems: 'center', gap: '3px' }}>{partName}<img src={UPGRADE_ICON} alt="✦" style={{ width: '1em', height: '1em', flexShrink: 0 }} onError={e => e.target.style.display = 'none'} /></span>
+                : partName}
             </span>
-            {equipped && <span className="rtt-equipped-badge">{t('shop.alreadyEquipped')}</span>}
+            <span className="wpt-header-right">
+              {equipped && <span className="rtt-equipped-badge">{t('shop.alreadyEquipped')}</span>}
+              {heroAvatar && (
+                <img src={heroAvatar} alt={heroName} className="wpt-hero-avatar"
+                  onError={e => e.target.style.display = 'none'} />
+              )}
+            </span>
           </span>
 
           {weapon && (
@@ -195,16 +228,26 @@ export default function WeaponPartTooltip({ partId, children }) {
             </span>
           )}
 
-          {/* Hero footer */}
-          {avatarSrc && (
-            <span className="rtt-hero-footer">
-              <img src={avatarSrc} alt={heroName} className="rtt-hero-avatar"
+          {/* Footer: ensamblaje para slot A, imagen propia para accesorios B/C */}
+          {part.slot === 'A' ? (
+            <span className="rtt-hero-footer wpt-assembly-footer">
+              <WeaponAssemblyView
+                weaponType={part.weaponType}
+                partA={assemblyA} partB={assemblyB} partC={assemblyC}
+                displayH={160}
+                rotation={asmRotation}
+                partOverrides={asmOverrides}
+              />
+            </span>
+          ) : part.image && (
+            <span className="rtt-hero-footer rtt-hero-footer--item">
+              <img src={part.image} alt={partName} className="rtt-item-footer-img"
                 onError={e => e.target.style.display = 'none'} />
             </span>
           )}
 
         </span>
-      )}
+      , document.body)}
     </span>
   );
 }

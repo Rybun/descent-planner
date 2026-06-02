@@ -1,7 +1,10 @@
 import { useState } from 'react';
+import { createPortal } from 'react-dom';
+import { useStore } from '../store';
 import { getName } from '../i18n';
 import { HEROES } from '../gamedata/heroes';
 import { parseGameText, TERM_ICONS } from '../gamedata/gameText';
+import { CONSUMABLE_DESCS } from '../gamedata/consumableDescs';
 
 const UPGRADE_ICON = '/assets/icons/Icon_Upgrade.png';
 
@@ -23,12 +26,12 @@ const ITEM_TYPE_LABELS = {
 export function renderItemName(id, name) {
   if (!id?.endsWith('_PLUS')) return name || id || '';
   return (
-    <>
+    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '3px' }}>
       {name}
       <img src={UPGRADE_ICON} alt="+"
-        style={{ width: '1em', height: '1em', verticalAlign: 'middle', marginLeft: '3px', display: 'inline' }}
+        style={{ width: '1em', height: '1em', flexShrink: 0 }}
         onError={e => e.target.style.display = 'none'} />
-    </>
+    </span>
   );
 }
 
@@ -53,6 +56,8 @@ function renderAbilityNodes(raw) {
 export default function ItemTooltip({ id, item, lang, children }) {
   const [visible, setVisible] = useState(false);
   const [coords, setCoords] = useState({ x: 0, y: 0 });
+  const saveMeta = useStore(s => s.saveMeta);
+  const isAct2   = (saveMeta?.act ?? 0) >= 1;
 
   if (!item) return <>{children}</>;
 
@@ -67,8 +72,20 @@ export default function ItemTooltip({ id, item, lang, children }) {
     compatibleHeroes = HEROES.filter(h => h.armorTypes?.includes(item.armorType));
   }
 
-  const rawAbility = item.abilityDescs?.[lang] || item.abilityDescs?.es || item.abilityDescs?.en || '';
+  const isUpgraded = id?.endsWith('_PLUS');
+
+  // Consumables: use CONSUMABLE_DESCS lookup by exact item id
+  const consumableDesc = item.type === 'consumable'
+    ? (CONSUMABLE_DESCS[id] || CONSUMABLE_DESCS[id?.replace(/_PLUS$/, '')])
+    : null;
+  const descs = consumableDesc || (isUpgraded ? item.abilityDescs : item.baseAbilityDescs);
+  const rawAbility = descs?.[lang] || descs?.es || descs?.en || '';
   const abilityNodes = rawAbility ? renderAbilityNodes(rawAbility) : null;
+
+  const rawBaseRetained = (isUpgraded && item.compound && !consumableDesc)
+    ? (item.baseAbilityDescs?.[lang] || item.baseAbilityDescs?.es || item.baseAbilityDescs?.en || '')
+    : '';
+  const baseRetainedNodes = rawBaseRetained ? renderAbilityNodes(rawBaseRetained) : null;
 
   function move(e) { setCoords({ x: e.clientX, y: e.clientY }); }
   const offsetX = coords.x + 16 + 280 > window.innerWidth ? coords.x - 296 : coords.x + 16;
@@ -82,7 +99,7 @@ export default function ItemTooltip({ id, item, lang, children }) {
       onMouseLeave={() => setVisible(false)}
     >
       {children}
-      {visible && (
+      {visible && createPortal(
         <span className="rtt-bubble" style={{ left: offsetX, top: offsetY }}>
 
           <span className="rtt-header">
@@ -101,10 +118,26 @@ export default function ItemTooltip({ id, item, lang, children }) {
                 </span>
               )}
             </span>
+            {compatibleHeroes?.length > 0 && (
+              <span className="wpt-header-right">
+                {compatibleHeroes.map(h => {
+                  const src = isAct2 ? (h.imageAct2 || h.image) : h.image;
+                  return (
+                    <img key={h.id} src={src} alt={getName(h, lang)}
+                      className="wpt-hero-avatar"
+                      onError={e => e.target.style.display = 'none'} />
+                  );
+                })}
+              </span>
+            )}
           </span>
 
           {abilityNodes && (
             <span className="rtt-effect">{abilityNodes}</span>
+          )}
+
+          {baseRetainedNodes && (
+            <span className="rtt-effect">{baseRetainedNodes}</span>
           )}
 
           {item.image && (
@@ -115,7 +148,7 @@ export default function ItemTooltip({ id, item, lang, children }) {
           )}
 
         </span>
-      )}
+      , document.body)}
     </span>
   );
 }

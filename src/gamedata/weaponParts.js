@@ -5163,7 +5163,15 @@ export const WEAPON_PARTS = [
     "sellPrice": null,
     "damage": 0,
     "traits": [],
-  }
+  },
+
+  // === RUNE (partes especiales/promo) ===
+  {"id": "WEAPON_PART_A_LIGHTNING_STRIKE", "slot": "A", "weaponType": "RUNE", "level": 1, "names": {"es": "Relámpago", "en": "Lightning Strike", "fr": "Foudroiement", "it": "Raffica di Fulmini", "pt": "Golpe do Trovão"}, "weaponId": null, "image": "/assets/weapon_parts/rune a1 - lightning strike.png", "buyPrice": null, "sellPrice": null, "damage": 0, "traits": []},
+  {"id": "WEAPON_PART_A_LIGHTNING_STRIKE_UPGRADED", "slot": "A", "weaponType": "RUNE", "level": 1, "names": {"es": "Relámpago ✦", "en": "Lightning Strike ✦", "fr": "Foudroiement ✦", "it": "Raffica di Fulmini ✦", "pt": "Golpe do Trovão ✦"}, "weaponId": null, "image": "/assets/weapon_parts/rune a1 - lightning strike.png", "buyPrice": null, "sellPrice": null, "damage": 0, "traits": []},
+  {"id": "WEAPON_PART_A_ICE_STORM", "slot": "A", "weaponType": "RUNE", "level": 2, "names": {"es": "Tormenta de hielo", "en": "Ice Storm", "fr": "Orage de grêle", "it": "Tempesta di Ghiaccio", "pt": "Tempestade de Gelo"}, "weaponId": null, "image": "/assets/weapon_parts/rune a2 - ice storm.png", "buyPrice": null, "sellPrice": null, "damage": 0, "traits": []},
+  {"id": "WEAPON_PART_A_ICE_STORM_UPGRADED", "slot": "A", "weaponType": "RUNE", "level": 2, "names": {"es": "Tormenta de hielo ✦", "en": "Ice Storm ✦", "fr": "Orage de grêle ✦", "it": "Tempesta di Ghiaccio ✦", "pt": "Tempestade de Gelo ✦"}, "weaponId": null, "image": "/assets/weapon_parts/rune a2 - ice storm.png", "buyPrice": null, "sellPrice": null, "damage": 0, "traits": []},
+  {"id": "WEAPON_PART_A_RUNE_OF_BLADES", "slot": "A", "weaponType": "RUNE", "level": 3, "names": {"es": "Runa de hojas", "en": "Rune of Blades", "fr": "Rune de lames", "it": "Runa delle Lame", "pt": "Runa das Lâminas"}, "weaponId": null, "image": "/assets/weapon_parts/rune a3 - rune of blades.png", "buyPrice": null, "sellPrice": null, "damage": 0, "traits": []},
+  {"id": "WEAPON_PART_A_RUNE_OF_BLADES_UPGRADED", "slot": "A", "weaponType": "RUNE", "level": 3, "names": {"es": "Runa de hojas ✦", "en": "Rune of Blades ✦", "fr": "Rune de lames ✦", "it": "Runa delle Lame ✦", "pt": "Runa das Lâminas ✦"}, "weaponId": null, "image": "/assets/weapon_parts/rune a3 - rune of blades.png", "buyPrice": null, "sellPrice": null, "damage": 0, "traits": []},
 ];
 
 export const WEAPON_PARTS_BY_ID = Object.fromEntries(WEAPON_PARTS.map(p => [p.id, p]));

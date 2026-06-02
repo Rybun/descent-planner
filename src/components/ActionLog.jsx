@@ -5,9 +5,16 @@ import { WEAPON_PARTS_BY_ID } from '../gamedata/weaponParts';
 import { ALL_ITEMS_BY_ID } from '../gamedata/items';
 import { WEAPONS_BY_ID } from '../gamedata/weapons';
 import { HEROES_BY_ID } from '../gamedata/heroes';
+import { RECIPES_BY_ID } from '../gamedata/recipes';
 import './ActionLog.css';
 
+const UPGRADE_ICON = '/assets/icons/Icon_Upgrade.png';
+
 // ── Helpers ──────────────────────────────────────────────────────────────────
+
+function cleanName(name) {
+  return (name || '').replace(/\s*\+?\s*✦.*$/, '').trim();
+}
 
 function matName(id, lang) {
   const m = MATERIALS_BY_ID[id];
@@ -16,15 +23,31 @@ function matName(id, lang) {
 
 function itemName(id, lang) {
   const p = WEAPON_PARTS_BY_ID[id];
-  if (p) return getName(p, lang);
+  if (p) return cleanName(getName(p, lang));
   const i = ALL_ITEMS_BY_ID[id];
-  if (i) return getName(i, lang);
+  if (i) return cleanName(getName(i, lang));
   return id;
 }
 
 function partName(partId, lang) {
   if (!partId) return '—';
   return itemName(partId, lang);
+}
+
+// Resuelve un recipeId → nombre del ítem producido (limpio, sin ✦)
+function recipeItemName(recipeId, lang) {
+  const recipe = RECIPES_BY_ID[recipeId];
+  const itemId  = recipe?.itemId || recipeId.replace(/^RECIPE_/, '');
+  const baseId  = itemId.replace(/_UPGRADED$/, '').replace(/_PLUS$/, '');
+  const part = WEAPON_PARTS_BY_ID[baseId] || WEAPON_PARTS_BY_ID[itemId];
+  if (part) return cleanName(getName(part, lang));
+  const item = ALL_ITEMS_BY_ID[itemId] || ALL_ITEMS_BY_ID[baseId];
+  if (item) return cleanName(getName(item, lang));
+  return baseId || recipeId;
+}
+
+function isUpgradeRecipe(recipeId) {
+  return recipeId.endsWith('_UPGRADED') || recipeId.endsWith('_PLUS');
 }
 
 // Etiqueta del slot A según idioma
@@ -66,32 +89,23 @@ function effectiveArmoriaSels(state) {
 function computeNetChanges(originalState, gameState, actionHistory) {
   if (!originalState || !gameState) return null;
 
-  // ── Tienda: materiales ─────────────────────────────────────────────────────
-  const matChanges = [];
-  const allMatIds = new Set([
-    ...Object.keys(originalState.craftingMaterials || {}),
-    ...Object.keys(gameState.craftingMaterials || {}),
-  ]);
-  for (const id of allMatIds) {
-    const orig = originalState.craftingMaterials[id] || 0;
-    const curr = gameState.craftingMaterials[id] || 0;
-    if (curr !== orig) matChanges.push({ id, delta: curr - orig });
+  // ── Tienda: solo acciones BUY/SELL (no crafteo) ───────────────────────────
+  const matDelta  = {};
+  const itemDelta = {};
+  for (const action of (actionHistory || [])) {
+    const { type, data } = action;
+    if (type === 'BUY_MATERIAL') {
+      matDelta[data.materialId] = (matDelta[data.materialId] || 0) + data.qty;
+    } else if (type === 'SELL_MATERIAL') {
+      matDelta[data.materialId] = (matDelta[data.materialId] || 0) - data.qty;
+    } else if (type === 'BUY_ITEM') {
+      itemDelta[data.itemId] = (itemDelta[data.itemId] || 0) + data.qty;
+    } else if (type === 'SELL_ITEM') {
+      itemDelta[data.itemId] = (itemDelta[data.itemId] || 0) - data.qty;
+    }
   }
-
-  // ── Tienda: ítems (armaduras, consumibles, amuletos) ───────────────────────
-  const countItems = (inv) => {
-    const c = {};
-    for (const e of (inv || [])) c[e.id] = (c[e.id] || 0) + 1;
-    return c;
-  };
-  const origItems = countItems(originalState.itemInventory);
-  const currItems = countItems(gameState.itemInventory);
-  const allItemIds = new Set([...Object.keys(origItems), ...Object.keys(currItems)]);
-  const itemChanges = [];
-  for (const id of allItemIds) {
-    const delta = (currItems[id] || 0) - (origItems[id] || 0);
-    if (delta !== 0) itemChanges.push({ id, delta });
-  }
+  const matChanges  = Object.entries(matDelta).filter(([, d]) => d !== 0).map(([id, delta]) => ({ id, delta }));
+  const itemChanges = Object.entries(itemDelta).filter(([, d]) => d !== 0).map(([id, delta]) => ({ id, delta }));
 
   // ── Sala de creación: recetas crafteadas ───────────────────────────────────
   const origCrafted = new Set((originalState.discoveredRecipes || []).filter(r => r.crafted).map(r => r.id));
@@ -99,12 +113,11 @@ function computeNetChanges(originalState, gameState, actionHistory) {
   const newlyCrafted = [...currCrafted].filter(id => !origCrafted.has(id));
   const unCrafted    = [...origCrafted].filter(id => !currCrafted.has(id));
 
-  // ── Armería: cambios de piezas (con fallback al valor del save) ───────────
+  // ── Armería: cambios de piezas ────────────────────────────────────────────
   const os = effectiveArmoriaSels(originalState);
   const cs = effectiveArmoriaSels(gameState);
   const allWeaponIds = new Set([...Object.keys(os.a), ...Object.keys(cs.a)]);
   const armoriaChanges = [];
-
   for (const wid of allWeaponIds) {
     const slots = [
       os.a[wid] !== cs.a[wid] ? { slot: 'A', from: os.a[wid], to: cs.a[wid] } : null,
@@ -114,9 +127,9 @@ function computeNetChanges(originalState, gameState, actionHistory) {
     if (slots.length) armoriaChanges.push({ weaponSaveId: wid, slots });
   }
 
-  const hasShop     = matChanges.length > 0 || itemChanges.length > 0;
-  const hasCraft    = newlyCrafted.length > 0 || unCrafted.length > 0;
-  const hasArmoria  = armoriaChanges.length > 0;
+  const hasShop    = matChanges.length > 0 || itemChanges.length > 0;
+  const hasCraft   = newlyCrafted.length > 0 || unCrafted.length > 0;
+  const hasArmoria = armoriaChanges.length > 0;
 
   return { matChanges, itemChanges, newlyCrafted, unCrafted, armoriaChanges, hasShop, hasCraft, hasArmoria };
 }
@@ -235,13 +248,27 @@ export default function ActionLog() {
               {net.newlyCrafted.map(id => (
                 <div key={id} className="log-net-row">
                   <span className="log-delta pos">+</span>
-                  <span className="log-net-name">{itemName(id, lang)}</span>
+                  <span className="log-net-name" style={{ display: 'inline-flex', alignItems: 'center', gap: '3px' }}>
+                    {recipeItemName(id, lang)}
+                    {isUpgradeRecipe(id) && (
+                      <img src={UPGRADE_ICON} alt="✦"
+                        style={{ width: '1em', height: '1em', flexShrink: 0 }}
+                        onError={e => e.target.style.display = 'none'} />
+                    )}
+                  </span>
                 </div>
               ))}
               {net.unCrafted.map(id => (
                 <div key={id} className="log-net-row">
                   <span className="log-delta neg">−</span>
-                  <span className="log-net-name">{itemName(id, lang)}</span>
+                  <span className="log-net-name" style={{ display: 'inline-flex', alignItems: 'center', gap: '3px' }}>
+                    {recipeItemName(id, lang)}
+                    {isUpgradeRecipe(id) && (
+                      <img src={UPGRADE_ICON} alt="✦"
+                        style={{ width: '1em', height: '1em', flexShrink: 0 }}
+                        onError={e => e.target.style.display = 'none'} />
+                    )}
+                  </span>
                 </div>
               ))}
             </div>

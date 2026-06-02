@@ -5,33 +5,44 @@ import { WEAPON_PARTS_BY_ID } from '../gamedata/weaponParts';
 import { CONSUMABLES_BY_ID, ALL_ITEMS_BY_ID } from '../gamedata/items';
 import { RECIPES_BY_ID } from '../gamedata/recipes';
 import { MATERIALS, MATERIALS_BY_ID } from '../gamedata/materials';
-import { DESCRIPTIONS } from '../gamedata/descriptions';
-import Tooltip from './Tooltip';
+import { WEAPONS } from '../gamedata/weapons';
+import WeaponPartTooltip from './WeaponPartTooltip';
+import ItemTooltip from './ItemTooltip';
+import MaterialTooltip from './MaterialTooltip';
 import './CraftPanel.css';
 
 const UPGRADE_ICON = '/assets/icons/Icon_Upgrade.png';
 
-function renderItemName(id, name) {
-  if (!id?.endsWith('_PLUS')) return name || id || '';
-  return (
-    <>
-      {name}
-      <img src={UPGRADE_ICON} alt="+" style={{ width: '1em', height: '1em', verticalAlign: 'middle', marginLeft: '3px', display: 'inline' }}
-        onError={e => e.target.style.display = 'none'} />
-    </>
-  );
+// Mapa rápido: weaponType → primer arma con ese tipo (para el nombre)
+const WEAPON_BY_TYPE = WEAPONS.reduce((acc, w) => {
+  if (!acc[w.weaponType]) acc[w.weaponType] = w;
+  return acc;
+}, {});
+
+function getWeaponTypeName(weaponType, lang) {
+  const w = WEAPON_BY_TYPE[weaponType];
+  if (!w) return weaponType;
+  return lang === 'en' ? (w.nameEn || w.name) : w.name;
 }
 
-// Para filtrar categorías (basado en el ID de receta)
-const isUpgradeRecipe = id => id.endsWith('_UPGRADED') || id.endsWith('_PLUS');
+// Limpia el sufijo " + ✦" o " ✦" que algunos nombres llevan del juego
+function cleanName(name) {
+  return (name || '').replace(/\s*\+?\s*✦.*$/, '').trim();
+}
+
+// Cualquier receta cuyo ID termina en _UPGRADED o _PLUS es una mejora —
+// requiere el objeto base en inventario. Esto incluye mejoras de armas (RUNE / _UPGRADED).
+// Las recetas normales de partes de arma (RECIPE_WEAPON_PART_B_SWORD_1) NO terminan en _UPGRADED.
+const isItemUpgrade = id =>
+  id.endsWith('_UPGRADED') || id.endsWith('_PLUS');
 
 // IDs de categorías — las etiquetas se traducen en el componente
 const CATEGORY_DEFS = [
-  { id: 'consumibles', tKey: 'craft.cat.consumibles', icon: '🧪', filter: id => id.startsWith('RECIPE_CSM_')          && !isUpgradeRecipe(id) },
-  { id: 'armadura',    tKey: 'craft.cat.armadura',    icon: '🛡',  filter: id => id.startsWith('RECIPE_ARMOR_')        && !isUpgradeRecipe(id) },
-  { id: 'accesorios',  tKey: 'craft.cat.accesorios',  icon: '💍',  filter: id => id.startsWith('RECIPE_TRINKET')       && !isUpgradeRecipe(id) },
-  { id: 'partes',      tKey: 'craft.cat.partes',      icon: '⚔️', filter: id => id.startsWith('RECIPE_WEAPON_PART_')  && !isUpgradeRecipe(id) },
-  { id: 'mejoras',     tKey: 'craft.cat.mejoras',     icon: '✨', filter: id => isUpgradeRecipe(id) },
+  { id: 'consumibles', tKey: 'craft.cat.consumibles', icon: '🧪', filter: id => id.startsWith('RECIPE_CSM_')         && !isItemUpgrade(id) },
+  { id: 'armadura',    tKey: 'craft.cat.armadura',    icon: '🛡',  filter: id => id.startsWith('RECIPE_ARMOR_')       && !isItemUpgrade(id) },
+  { id: 'accesorios',  tKey: 'craft.cat.accesorios',  icon: '💍',  filter: id => id.startsWith('RECIPE_TRINKET')      && !isItemUpgrade(id) },
+  { id: 'partes',      tKey: 'craft.cat.partes',      icon: '⚔️', filter: id => id.startsWith('RECIPE_WEAPON_PART_') && !isItemUpgrade(id) },
+  { id: 'mejoras',     tKey: 'craft.cat.mejoras',     icon: '✨', filter: id => isItemUpgrade(id) },
 ];
 
 export default function CraftPanel() {
@@ -52,45 +63,51 @@ export default function CraftPanel() {
   );
   const allDiscoveredIds = Object.keys(discoveredRecipeMap);
 
-  function canCraft(recipe) {
+  function hasBaseItem(recipe, recipeId) {
+    if (!isItemUpgrade(recipeId)) return true;
+    const baseId = (recipe.itemId || '').replace(/_PLUS$/, '').replace(/_UPGRADED$/, '');
+    return (gameState.itemInventory || []).some(i => i.id === baseId);
+  }
+
+  function canCraft(recipe, recipeId) {
     if (!recipe?.ingredients) return null;
     for (const [matId, qty] of Object.entries(recipe.ingredients)) {
       if ((gameState.craftingMaterials[matId] || 0) < qty) return false;
     }
+    if (!hasBaseItem(recipe, recipeId)) return false;
     return true;
   }
 
-  function getMissingIngredients(recipe) {
+  function getMissingIngredients(recipe, recipeId) {
     if (!recipe?.ingredients) return [];
-    return Object.entries(recipe.ingredients)
+    const missing = Object.entries(recipe.ingredients)
       .filter(([matId, qty]) => (gameState.craftingMaterials[matId] || 0) < qty)
       .map(([matId, qty]) => ({
         matId,
         need: qty,
         have: gameState.craftingMaterials[matId] || 0,
       }));
+    if (isItemUpgrade(recipeId) && !hasBaseItem(recipe, recipeId)) {
+      const baseId = (recipe.itemId || '').replace(/_PLUS$/, '').replace(/_UPGRADED$/, '');
+      missing.push({ matId: baseId, need: 1, have: 0, isBaseItem: true });
+    }
+    return missing;
   }
 
   function getItemForRecipe(recipeId) {
     const recipe = RECIPES_BY_ID[recipeId];
-    if (!recipe) return null;
-    const itemId = recipe.itemId;
+    const itemId = recipe?.itemId || recipeId.replace(/^RECIPE_/, '');
     const baseId = itemId.replace(/_UPGRADED$/, '').replace(/_PLUS$/, '');
     return (
-      WEAPON_PARTS_BY_ID[itemId] ||
+      // Para partes de arma: preferir la versión base (misma imagen, sin ✦)
       WEAPON_PARTS_BY_ID[baseId] ||
+      WEAPON_PARTS_BY_ID[itemId] ||
       CONSUMABLES_BY_ID[itemId] ||
       CONSUMABLES_BY_ID[baseId] ||
       ALL_ITEMS_BY_ID[itemId] ||
       ALL_ITEMS_BY_ID[baseId] ||
       null
     );
-  }
-
-  function getDesc(id) {
-    if (!id) return '';
-    const base = id.replace(/_UPGRADED$/, '').replace(/_PLUS$/, '');
-    return DESCRIPTIONS[base] || DESCRIPTIONS[id] || '';
   }
 
   function isAlreadyCrafted(recipeId) {
@@ -120,23 +137,26 @@ export default function CraftPanel() {
   return (
     <div className="craft-panel-v2">
       {/* Barra de materiales */}
-      <div className="craft-mats-bar">
-        <span className="craft-mats-label">{t('craft.materialsLabel')}</span>
+      <section className="craft-mats-bar">
+        <h2 className="craft-mats-title">
+          <img src="/assets/icons/Icon_Materials.png" className="inv-section-icon" alt="" onError={e => e.target.style.display = 'none'} />
+          {t('craft.materialsLabel')}
+        </h2>
         <div className="craft-mats-row">
           {totalMats.length === 0
             ? <span className="craft-mats-empty">{t('craft.noMaterials')}</span>
             : totalMats.map(mat => (
-              <Tooltip key={mat.id} text={DESCRIPTIONS[mat.id] || getName(mat, lang)}>
+              <MaterialTooltip key={mat.id} mat={mat} lang={lang}>
                 <span className="mat-chip">
                   <img src={mat.image} alt="" className="mat-chip-img"
                     onError={e => e.target.style.display = 'none'} />
                   <span className="mat-chip-qty">×{gameState.craftingMaterials[mat.id]}</span>
                 </span>
-              </Tooltip>
+              </MaterialTooltip>
             ))
           }
         </div>
-      </div>
+      </section>
 
       <div className="craft-body">
         {/* Sidebar de categorías */}
@@ -184,61 +204,109 @@ export default function CraftPanel() {
           ) : (
             <div className="craft-recipes-grid">
               {filteredIds.map(recipeId => {
-                const recipe      = RECIPES_BY_ID[recipeId];
-                const item        = getItemForRecipe(recipeId);
-                const crafted     = isAlreadyCrafted(recipeId);
-                const canCraftNow = recipe ? canCraft(recipe) : null;
-                const missing     = recipe ? getMissingIngredients(recipe) : [];
+                // Buscar receta: primero exact match, luego sin sufijo (_UPGRADED/_PLUS).
+                // Para weapon parts _UPGRADED: el exact match existe en recipes.js (WEAPON_PART_UPGRADE_RECIPES).
+                // Para armor/trinket _UPGRADED del save: el save usa _UPGRADED pero nuestros datos tienen sin sufijo.
+                const recipeBase = RECIPES_BY_ID[recipeId]
+                  || RECIPES_BY_ID[recipeId.replace(/_UPGRADED$/, '').replace(/_PLUS$/, '')];
+                const recipe         = recipeBase;
+                const item           = getItemForRecipe(recipeId);
+                const crafted        = isAlreadyCrafted(recipeId);
+                const canCraftNow    = recipe ? canCraft(recipe, recipeId) : null;
+                const missing        = recipe ? getMissingIngredients(recipe, recipeId) : [];
                 const hasIngredients = recipe?.ingredients != null;
-                const recipeItemId = recipe?.itemId || recipeId.replace(/^RECIPE_/, '');
-                const isUpgrade   = recipeItemId?.endsWith('_PLUS') || recipeItemId?.endsWith('_UPGRADED');
-                const itemName    = item ? getName(item, lang) : null;
+                const recipeItemId   = recipe?.itemId || recipeId.replace(/^RECIPE_/, '');
+                const isUpgrade      = isItemUpgrade(recipeId);
+                const isWeaponPart   = 'slot' in (item || {});
+                // Partes de arma: tooltip usa _UPGRADED (descripción real del objeto crafteado)
+                // Mejoras: tooltip usa recipeItemId (_UPGRADED/_PLUS)
+                // Otros (armadura, accesorio, consumible): tooltip usa versión base
+                const tooltipId = isWeaponPart
+                  ? recipeItemId
+                  : (isUpgrade ? recipeItemId : recipeItemId.replace(/_UPGRADED$/, '').replace(/_PLUS$/, ''));
+                const itemName       = item ? cleanName(getName(item, lang)) : null;
+
+                // Nombre con icono de mejora para cualquier mejora (_PLUS o _UPGRADED)
+                const displayName = isUpgrade
+                  ? <><span>{itemName}</span><img src={UPGRADE_ICON} alt="+" style={{ width:'1em', height:'1em', verticalAlign:'middle', marginLeft:'3px' }} onError={e => e.target.style.display='none'} /></>
+                  : itemName;
+
+                // Imagen con tooltip rico
+                const imgAreaContent = (
+                  <>
+                    {item?.image
+                      ? <img src={item.image} alt={itemName || ''} className="craft-recipe-img" onError={e => e.target.style.display='none'} />
+                      : <div className="craft-recipe-no-img">{activeCat.icon}</div>
+                    }
+                    {isUpgrade && (
+                      <div className="craft-upgrade-badge recipe-badge">
+                        <img src="/assets/icons/recipe_badge.png" alt="✦" className="recipe-badge-img"
+                          onError={e => e.target.style.display = 'none'} />
+                      </div>
+                    )}
+                    {crafted && <div className="craft-done-badge">✓</div>}
+                  </>
+                );
+
+                const imgArea = (
+                  <div className="craft-recipe-img-area">
+                    {item
+                      ? (isWeaponPart
+                        ? <WeaponPartTooltip partId={tooltipId} showUpgradeIcon={isUpgrade}>{imgAreaContent}</WeaponPartTooltip>
+                        : <ItemTooltip id={tooltipId} item={item} lang={lang}>{imgAreaContent}</ItemTooltip>)
+                      : imgAreaContent
+                    }
+                  </div>
+                );
 
                 return (
                   <div
                     key={recipeId}
                     className={`craft-recipe-card ${crafted ? 'crafted' : ''} ${canCraftNow === false && !crafted ? 'cant-craft' : ''} ${canCraftNow === true && !crafted ? 'can-craft' : ''}`}
                   >
-                    {/* Imagen */}
-                    <div className="craft-recipe-img-area">
-                      {item?.image ? (
-                        <Tooltip text={getDesc(recipe?.itemId)}>
-                          <img src={item.image} alt={itemName || ''}
-                            className="craft-recipe-img"
-                            onError={e => e.target.style.display = 'none'} />
-                        </Tooltip>
-                      ) : (
-                        <div className="craft-recipe-no-img">{activeCat.icon}</div>
-                      )}
-                      {isUpgrade && <div className="craft-upgrade-badge">★</div>}
-                      {crafted && <div className="craft-done-badge">✓</div>}
-                    </div>
+                    {imgArea}
 
                     {/* Info */}
                     <div className="craft-recipe-info">
                       <div className="craft-recipe-name">
-                        {itemName ? renderItemName(recipeItemId, itemName) : recipeId}
+                        {displayName || recipeId}
                       </div>
-                      {item && 'slot' in item && (
+                      {isWeaponPart && (
                         <div className="craft-recipe-tag">
-                          {t('craft.slotInfo', { slot: item.slot, from: item.level, to: item.level + 1, type: item.weaponType })}
+                          {getWeaponTypeName(item.weaponType, lang)}
                         </div>
-                      )}
-                      {recipe?.goldCost != null && (
-                        <div className="craft-recipe-gold">🪙 {recipe.goldCost}</div>
                       )}
                     </div>
 
                     {/* Ingredientes */}
                     {hasIngredients && recipe?.ingredients ? (
                       <div className="craft-ingredients">
+                        {/* Ítem base requerido para mejoras (_PLUS/_UPGRADED en recipeId) */}
+                        {isUpgrade && recipe?.itemId && (() => {
+                          const baseId      = recipe.itemId.replace(/_PLUS$/, '').replace(/_UPGRADED$/, '');
+                          const baseItem    = ALL_ITEMS_BY_ID[baseId] || WEAPON_PARTS_BY_ID[baseId];
+                          const isWPart     = !!WEAPON_PARTS_BY_ID[baseId];
+                          const hasBase     = (gameState.itemInventory || []).some(i => i.id === baseId);
+                          const badge = (
+                            <span className={`craft-ing-badge craft-ing-badge--item ${hasBase ? 'ok' : 'missing'}`}>
+                              {baseItem?.image && (
+                                <img src={baseItem.image} alt=""
+                                  className="craft-ing-icon"
+                                  onError={e => e.target.style.display = 'none'} />
+                              )}
+                              <span className="craft-ing-qty">{hasBase ? 1 : 0}/1</span>
+                            </span>
+                          );
+                          return isWPart
+                            ? <WeaponPartTooltip key={baseId} partId={baseId}>{badge}</WeaponPartTooltip>
+                            : <ItemTooltip key={baseId} id={baseId} item={baseItem} lang={lang}>{badge}</ItemTooltip>;
+                        })()}
                         {Object.entries(recipe.ingredients).map(([matId, qty]) => {
                           const have = gameState.craftingMaterials[matId] || 0;
                           const ok   = have >= qty;
                           const mat  = MATERIALS_BY_ID[matId];
-                          const matName = mat ? getName(mat, lang) : matId;
                           return (
-                            <Tooltip key={matId} text={matName}>
+                            <MaterialTooltip key={matId} mat={mat} lang={lang}>
                               <span className={`craft-ing-badge ${ok ? 'ok' : 'missing'}`}>
                                 {mat?.image && (
                                   <img src={mat.image} alt=""
@@ -247,7 +315,7 @@ export default function CraftPanel() {
                                 )}
                                 <span className="craft-ing-qty">{have}/{qty}</span>
                               </span>
-                            </Tooltip>
+                            </MaterialTooltip>
                           );
                         })}
                       </div>
@@ -267,7 +335,13 @@ export default function CraftPanel() {
                         onClick={() => craftItem(recipeId)}
                         title={
                           canCraftNow === false
-                            ? `${t('craft.missingPrefix')} ${missing.map(m => `${getName(MATERIALS_BY_ID[m.matId], lang) || m.matId} (${m.have}/${m.need})`).join(', ')}`
+                            ? `${t('craft.missingPrefix')} ${missing.map(m => {
+                                if (m.isBaseItem) {
+                                  const baseItem = ALL_ITEMS_BY_ID[m.matId];
+                                  return baseItem ? getName(baseItem, lang) : m.matId;
+                                }
+                                return `${getName(MATERIALS_BY_ID[m.matId], lang) || m.matId} (${m.have}/${m.need})`;
+                              }).join(', ')}`
                             : t('craft.btn.ready')
                         }
                       >

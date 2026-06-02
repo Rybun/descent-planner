@@ -587,10 +587,40 @@ function applyAction(gs, action) {
 
     case 'CRAFT_ITEM': {
       const { recipeId } = data;
+      const recipe = RECIPES_BY_ID[recipeId]
+        || RECIPES_BY_ID[recipeId.replace(/_UPGRADED$/, '').replace(/_PLUS$/, '')];
+
+      // Marcar receta como crafteada
       const newRecipes = gs.discoveredRecipes.map(r =>
         r.id === recipeId ? { ...r, crafted: true } : r
       );
-      return { ...gs, discoveredRecipes: newRecipes };
+
+      // Restar materiales
+      const newMats = { ...gs.craftingMaterials };
+      if (recipe?.ingredients) {
+        for (const [matId, qty] of Object.entries(recipe.ingredients)) {
+          newMats[matId] = Math.max(0, (newMats[matId] || 0) - qty);
+        }
+      }
+
+      // Actualizar inventario: para mejoras (_PLUS o _UPGRADED), eliminar ítem base y añadir nuevo
+      let newInventory = [...gs.itemInventory];
+      if (recipe?.itemId) {
+        const isUpgrade = recipeId.endsWith('_UPGRADED') || recipeId.endsWith('_PLUS');
+        if (isUpgrade) {
+          const baseId = recipe.itemId.replace(/_PLUS$/, '').replace(/_UPGRADED$/, '');
+          const idx = newInventory.findIndex(i => i.id === baseId);
+          if (idx !== -1) newInventory.splice(idx, 1);
+        }
+        newInventory.push({ id: recipe.itemId });
+      }
+
+      return {
+        ...gs,
+        discoveredRecipes: newRecipes,
+        craftingMaterials: newMats,
+        itemInventory: newInventory,
+      };
     }
 
     case 'EQUIP_PART_A': {

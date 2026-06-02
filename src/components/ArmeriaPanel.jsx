@@ -5,11 +5,16 @@ import { WEAPONS_BY_ID } from '../gamedata/weapons';
 import { WEAPON_PARTS_BY_ID } from '../gamedata/weaponParts';
 import { DESCRIPTIONS } from '../gamedata/descriptions';
 import { WEAPON_ABILITY_DESCS } from '../gamedata/weaponAbilityDescs';
-import { WEAPON_ASSEMBLY, ASSEMBLY_CANVAS, ASSEMBLY_SCALE, ASSEMBLY_DISPLAY_W, ASSEMBLY_DISPLAY_H } from '../gamedata/weaponAssembly';
+import { ASSEMBLY_DISPLAY_H } from '../gamedata/weaponAssembly';
+import WeaponAssemblyView from './WeaponAssemblyView';
 import { DAMAGE_TYPE_BY_ID } from '../gamedata/damageTypes';
 import { PART_ABILITY_KEY, WEAPON_ABILITIES, ABILITY_CHANCE } from '../gamedata/weaponAbilities';
 import Tooltip from './Tooltip';
 import './ArmeriaPanel.css';
+
+function cleanName(name) {
+  return (name || '').replace(/\s*\+?\s*✦.*$/, '').trim();
+}
 
 export default function ArmeriaPanel() {
   const t    = useT();
@@ -208,7 +213,7 @@ export default function ArmeriaPanel() {
                   </div>
 
                   <div className="weapon-card-image-area">
-                    <WeaponAssembly
+                    <WeaponAssemblyView
                       weaponType={weaponType}
                       partA={selectedPartA}
                       partB={selectedPartB}
@@ -240,7 +245,7 @@ export default function ArmeriaPanel() {
                     >◄</button>
                     <Tooltip text={getDesc(selectedPartA?.id)}>
                       <span className="part-a-name">
-                        {selectedPartA ? getName(selectedPartA, lang) : '—'}
+                        {selectedPartA ? cleanName(getName(selectedPartA, lang)) : '—'}
                       </span>
                     </Tooltip>
                     <button
@@ -340,7 +345,8 @@ function parseGameText(text) {
 }
 
 function AbilityDesc({ partId, lang }) {
-  const abilityKey = PART_ABILITY_KEY[partId];
+  const baseId    = partId?.replace(/_UPGRADED$/, '');
+  const abilityKey = PART_ABILITY_KEY[partId] || PART_ABILITY_KEY[baseId];
   const isNoAbility = !abilityKey;
 
   const rawText = isNoAbility
@@ -434,7 +440,7 @@ function SlotRow({ label, options, selectedPart, selectedIdx, onNav, getDesc, no
         >◄</button>
         <Tooltip text={getDesc(selectedPart?.id)}>
           <span className="slot-part-name">
-            {selectedPart ? getName(selectedPart, lang) : '—'}
+            {selectedPart ? cleanName(getName(selectedPart, lang)) : '—'}
           </span>
         </Tooltip>
         <button
@@ -553,83 +559,3 @@ function DamageStats({ part, lang }) {
   );
 }
 
-// ─── Componente de ensamblaje visual ──────────────────────────────────────────
-
-function WeaponAssembly({ weaponType, partA, partB, partC }) {
-  const layout = WEAPON_ASSEMBLY[weaponType];
-
-  if (!layout) {
-    return (
-      <div className="weapon-assembly weapon-assembly-fallback">
-        {partA?.image
-          ? <img src={partA.image} alt={partA.name}
-              className="assembly-layer assembly-layer-a"
-              onError={e => e.target.style.display = 'none'} />
-          : <div className="weapon-no-image">⚔</div>
-        }
-      </div>
-    );
-  }
-
-  const parts = { a: partA, b: partB, c: partC };
-
-  return (
-    <div style={{
-      width: ASSEMBLY_DISPLAY_W, height: ASSEMBLY_DISPLAY_H,
-      position: 'relative', flexShrink: 0,
-    }}>
-      <div style={{
-        position: 'absolute', top: 0, left: 0,
-        width: ASSEMBLY_CANVAS.w, height: ASSEMBLY_CANVAS.h,
-        transformOrigin: 'top left',
-        transform: `scale(${ASSEMBLY_SCALE})`,
-      }}>
-        {['a', 'b', 'c'].map(slot => {
-          const l    = layout[slot];
-          const part = parts[slot];
-          if (!l || !part?.image) return null;
-
-          let maskStyle = {};
-          if (l.maskSlot && parts[l.maskSlot]?.image) {
-            const ml = layout[l.maskSlot];
-            const maskUrl = `url("${parts[l.maskSlot].image}")`;
-            const maskW   = ml ? `${ml.w}px`             : '100%';
-            const maskH   = ml ? `${ml.h}px`             : '100%';
-            const maskX   = ml ? `${ml.left - l.left}px` : '0px';
-            const maskY   = ml ? `${ml.top  - l.top}px`  : '0px';
-            maskStyle = {
-              WebkitMaskImage: maskUrl, WebkitMaskSize: `${maskW} ${maskH}`,
-              WebkitMaskPosition: `${maskX} ${maskY}`, WebkitMaskRepeat: 'no-repeat',
-              maskImage: maskUrl, maskSize: `${maskW} ${maskH}`,
-              maskPosition: `${maskX} ${maskY}`, maskRepeat: 'no-repeat',
-            };
-          }
-
-          return (
-            <img
-              key={slot}
-              src={part.image}
-              alt={part.name || slot}
-              style={{
-                position: 'absolute',
-                left: l.left, top: l.top, width: l.w, height: l.h,
-                zIndex: l.z,
-                transform: l.rot ? `rotate(${l.rot}deg)` : undefined,
-                transformOrigin: 'center center',
-                ...maskStyle,
-              }}
-              onError={e => e.target.style.display = 'none'}
-            />
-          );
-        })}
-        {!partA?.image && (
-          <div style={{
-            position: 'absolute', inset: 0,
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: '5rem', color: 'var(--color-text-disabled)', opacity: 0.4,
-          }}>⚔</div>
-        )}
-      </div>
-    </div>
-  );
-}

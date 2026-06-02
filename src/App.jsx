@@ -1,5 +1,5 @@
 import { useStore } from './store';
-import { useCallback, useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { useT, SUPPORTED_LANGS } from './i18n';
 import DropZone from './components/DropZone';
 import ArmeriaPanel from './components/ArmeriaPanel';
@@ -10,7 +10,7 @@ import GameInfoPanel from './components/GameInfoPanel';
 import InventoryPanel from './components/InventoryPanel';
 import './App.css';
 
-const TAB_KEYS = ['partida', 'tienda', 'crafteo', 'armeria', 'inventario', 'historial'];
+const TAB_KEYS = ['partida', 'armeria', 'tienda', 'crafteo', 'inventario', 'historial'];
 
 function getTabIcons(act) {
   return {
@@ -25,49 +25,6 @@ function getTabIcons(act) {
 
 // Resuelve la selección efectiva de cada arma con el mismo fallback que usa ArmeriaPanel:
 //   partXSelections[wid] si existe, si no el valor del save (weapon.partX)
-function effectiveArmoriaSels(state) {
-  const a = {}, b = {}, c = {};
-  for (const hero of (state.heroes || [])) {
-    for (const w of (hero.equippedWeapons || [])) {
-      a[w.id] = (state.partASelections || {})[w.id] ?? w.partA ?? null;
-      b[w.id] = (state.partBSelections || {})[w.id] ?? w.partB ?? null;
-      c[w.id] = (state.partCSelections || {})[w.id] ?? w.partC ?? null;
-    }
-  }
-  return { a, b, c };
-}
-
-function countNetChanges(orig, curr) {
-  if (!orig || !curr) return 0;
-  let n = 0;
-
-  // Materiales
-  const mIds = new Set([...Object.keys(orig.craftingMaterials || {}), ...Object.keys(curr.craftingMaterials || {})]);
-  for (const id of mIds)
-    if ((curr.craftingMaterials[id] || 0) !== (orig.craftingMaterials[id] || 0)) n++;
-
-  // Ítems
-  const cnt = inv => { const c = {}; for (const e of (inv || [])) c[e.id] = (c[e.id] || 0) + 1; return c; };
-  const oi = cnt(orig.itemInventory), ci = cnt(curr.itemInventory);
-  for (const id of new Set([...Object.keys(oi), ...Object.keys(ci)]))
-    if ((ci[id] || 0) !== (oi[id] || 0)) n++;
-
-  // Recetas
-  const oc = new Set((orig.discoveredRecipes || []).filter(r => r.crafted).map(r => r.id));
-  const cc = new Set((curr.discoveredRecipes || []).filter(r => r.crafted).map(r => r.id));
-  n += [...cc].filter(id => !oc.has(id)).length + [...oc].filter(id => !cc.has(id)).length;
-
-  // Armería — cuenta cada slot cambiado individualmente
-  const os = effectiveArmoriaSels(orig), cs = effectiveArmoriaSels(curr);
-  const wIds = new Set([...Object.keys(os.a), ...Object.keys(cs.a)]);
-  for (const wid of wIds) {
-    if (os.a[wid] !== cs.a[wid]) n++;
-    if (os.b[wid] !== cs.b[wid]) n++;
-    if (os.c[wid] !== cs.c[wid]) n++;
-  }
-
-  return n;
-}
 
 function AboutModal({ onClose }) {
   const t = useT();
@@ -137,44 +94,14 @@ function App() {
   const actionHistory  = useStore(s => s.actionHistory);
   const setActiveTab   = useStore(s => s.setActiveTab);
   const resetToSave    = useStore(s => s.resetToSave);
-  const loadSave       = useStore(s => s.loadSave);
+  const netCount = actionHistory.length;
 
-  const netCount = useMemo(
-    () => countNetChanges(originalState, gameState),
-    [originalState, gameState]
-  );
-
-  const [isDragOver, setIsDragOver] = useState(false);
-  const [showAbout, setShowAbout] = useState(false);
+  const [showAbout,    setShowAbout]    = useState(false);
+  const [showDropZone, setShowDropZone] = useState(false);
 
   const TAB_ICONS = getTabIcons(saveMeta?.act ?? 0);
   const TABS = TAB_KEYS.map(id => ({ id, label: t(`tab.${id}`) }));
 
-  // Drag & drop para reemplazar el save mientras hay uno cargado
-  const handleDragOver = useCallback((e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (e.dataTransfer.types.includes('Files')) setIsDragOver(true);
-  }, []);
-
-  const handleDragLeave = useCallback((e) => {
-    e.preventDefault();
-    setIsDragOver(false);
-  }, []);
-
-  const handleDrop = useCallback((e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsDragOver(false);
-    const file = e.dataTransfer.files?.[0];
-    if (!file) return;
-    if (actionHistory.length > 0) {
-      if (!window.confirm(t('app.unsavedChanges'))) return;
-    }
-    const reader = new FileReader();
-    reader.onload = (ev) => loadSave(ev.target.result);
-    reader.readAsText(file, 'utf-8');
-  }, [actionHistory, loadSave, t]);
 
   if (!saveLoaded) {
     return <DropZone />;
@@ -188,33 +115,14 @@ function App() {
   }
 
   function handleLoadNew() {
-    if (actionHistory.length > 0) {
-      if (!window.confirm(t('app.unsavedChanges'))) return;
-    }
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = '.sav,.SAV';
-    input.onchange = (e) => {
-      const file = e.target.files?.[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = (ev) => loadSave(ev.target.result);
-      reader.readAsText(file, 'utf-8');
-    };
-    input.click();
+    setShowDropZone(true);
   }
 
   return (
-    <div
-      className={`app ${isDragOver ? 'app-drag-over' : ''}`}
-      onDragOver={handleDragOver}
-      onDragLeave={handleDragLeave}
-      onDrop={handleDrop}
-    >
-      {isDragOver && (
-        <div className="app-drop-overlay">
-          <div className="app-drop-msg">{t('app.dropOverlay')}</div>
-        </div>
+    <div className="app">
+
+      {showDropZone && (
+        <DropZone onClose={() => setShowDropZone(false)} />
       )}
 
       {/* ======= TOPBAR ======= */}

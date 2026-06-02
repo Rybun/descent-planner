@@ -7,7 +7,7 @@ import './DropZone.css';
 const HERO_DURATION = 2800;
 const FADE_DELAY    = 600;
 
-export default function DropZone({ onAboutClick }) {
+export default function DropZone({ onClose }) {
   const t         = useT();
   const loadSave  = useStore(s => s.loadSave);
   const saveError = useStore(s => s.saveError);
@@ -42,7 +42,10 @@ export default function DropZone({ onAboutClick }) {
   function handleFile(file) {
     if (!file) return;
     const reader = new FileReader();
-    reader.onload = (e) => loadSave(e.target.result);
+    reader.onload = (e) => {
+      loadSave(e.target.result);
+      if (onClose && !useStore.getState().saveError) onClose();
+    };
     reader.readAsText(file, 'utf-8');
   }
 
@@ -67,22 +70,27 @@ export default function DropZone({ onAboutClick }) {
 
   const activeHero = HEROES[heroIdx];
 
-  return (
-    <div className="dropzone-page">
+  const inner = (
+    <div className={`dropzone-page${onClose ? ' dropzone-modal' : ''}`}>
+      {onClose && (
+        <button className="dz-close-btn" onClick={onClose} aria-label="Cerrar">✕</button>
+      )}
 
-      {/* Selector de idioma (esquina superior derecha) */}
-      <div className="dz-lang-selector">
-        {SUPPORTED_LANGS.map(l => (
-          <button
-            key={l.code}
-            className={`lang-btn ${lang === l.code ? 'active' : ''}`}
-            onClick={() => setLang(l.code)}
-            aria-label={l.label}
-          >
-            {l.label}
-          </button>
-        ))}
-      </div>
+      {/* Selector de idioma (solo en pantalla completa) */}
+      {!onClose && (
+        <div className="dz-lang-selector">
+          {SUPPORTED_LANGS.map(l => (
+            <button
+              key={l.code}
+              className={`lang-btn ${lang === l.code ? 'active' : ''}`}
+              onClick={() => setLang(l.code)}
+              aria-label={l.label}
+            >
+              {l.label}
+            </button>
+          ))}
+        </div>
+      )}
 
       {/* Galería de héroes con animación */}
       <div className="dropzone-heroes">
@@ -185,4 +193,16 @@ export default function DropZone({ onAboutClick }) {
       </div>
     </div>
   );
+
+  if (onClose) {
+    return (
+      <div className="dz-overlay" onClick={onClose}>
+        <div onClick={e => e.stopPropagation()}>
+          {inner}
+        </div>
+      </div>
+    );
+  }
+
+  return inner;
 }

@@ -53,23 +53,31 @@
 /* ======= SECCIÓN ======= */
 
 .shop-section {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-sm);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
 }
 
 .shop-section-title {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   color: var(--color-gold);
   margin: 0;
-  padding-bottom: var(--spacing-xs);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: rgba(var(--color-gold-rgb), 0.06);
   border-bottom: 1px solid var(--color-border);
+}
+
+/* Padding del contenido dentro de las secciones-tarjeta */
+.shop-section > .shop-items-grid,
+.shop-section > .shop-mat-grid {
+  padding: var(--spacing-md);
 }
 
 .section-recipe-icon {
@@ -242,6 +250,10 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--spacing-sm);
+}
+
+.shop-mat-grid > .rtt-wrap {
+  display: contents;
 }
 
 .shop-mat-tile {
@@ -447,20 +459,21 @@
 /* ======= SECCIÓN RECUPERAR ======= */
 
 .shop-section--recover {
-  border: 1px solid rgba(var(--color-gold-rgb), 0.25);
-  border-radius: var(--radius-md);
-  padding: var(--spacing-sm) var(--spacing-md);
+  border-color: rgba(var(--color-gold-rgb), 0.3);
   background: rgba(var(--color-gold-rgb), 0.04);
 }
 
 .shop-section-title--recover {
   color: var(--color-gold-light);
+  background: rgba(var(--color-gold-rgb), 0.08);
+  border-bottom-color: rgba(var(--color-gold-rgb), 0.3);
 }
 
 .recover-list {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-xs);
+  padding: var(--spacing-sm) var(--spacing-md);
 }
 
 .recover-row {
