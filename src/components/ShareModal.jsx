@@ -20,9 +20,8 @@ export default function ShareModal({ onClose }) {
   const [snapLabel, setSnapLabel] = useState('');
   const [snapUrl,   setSnapUrl]   = useState(null);
 
-  // URL que se muestra al usuario: la app principal con parámetro ?share=
   const appOrigin = typeof window !== 'undefined' ? window.location.origin : 'https://descent.rybun.rocks';
-  const shareUrl = shareData ? `${appOrigin}?share=${shareData.id}` : null;
+  const shareUrl = shareData ? `${appOrigin}/${shareData.id}` : null;
 
   async function handleCreate() {
     setLoading(true);
@@ -54,7 +53,7 @@ export default function ShareModal({ onClose }) {
         snapshot_count: (prev.snapshot_count || 1) + 1,
         snapshots: [...(prev.snapshots || []), newSnap],
       }));
-      setSnapUrl(`${appOrigin}?share=${shareData.id}&snap=${data.n}`);
+      setSnapUrl(`${appOrigin}/${shareData.id}/${data.n}`);
       setSnapLabel('');
     } catch (err) {
       setError(err.message);
@@ -149,7 +148,7 @@ export default function ShareModal({ onClose }) {
                       </span>
                       <button
                         className="shr-snap-copy-btn"
-                        onClick={() => copy(`${appOrigin}?share=${shareData.id}&snap=${s.n}`)}
+                        onClick={() => copy(s.n === 0 ? `${appOrigin}/${shareData.id}` : `${appOrigin}/${shareData.id}/${s.n}`)}
                         title={t('share.copy')}
                       >⎘</button>
                     </div>

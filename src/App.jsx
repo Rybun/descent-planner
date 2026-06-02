@@ -185,12 +185,21 @@ function App() {
   const { getSnapshot, getMeta } = useShare();
 
   // Cargar save desde enlace compartido al inicio
+  // Formatos aceptados: /{id}, /{id}/{n}, ?share={id}&snap={n}
   useEffect(() => {
-    const params  = new URLSearchParams(window.location.search);
-    const shareId = params.get('share');
-    const snapN   = params.get('snap') ?? '0';
+    const params     = new URLSearchParams(window.location.search);
+    const paramId    = params.get('share');
+    const paramSnap  = params.get('snap') ?? '0';
+    const pathMatch  = window.location.pathname.match(/^\/([A-Za-z0-9_]{8})(?:\/(\d{1,4}))?$/);
+
+    const shareId = paramId || pathMatch?.[1];
+    const snapN   = paramId ? paramSnap : (pathMatch?.[2] ?? '0');
     if (!shareId) return;
-    window.history.replaceState({}, '', window.location.pathname);
+
+    // Canonicalizar URL a /{id} o /{id}/{n}
+    const canonical = snapN !== '0' ? `/${shareId}/${snapN}` : `/${shareId}`;
+    window.history.replaceState({}, '', canonical);
+
     (async () => {
       try {
         const [snap, meta] = await Promise.all([
@@ -262,12 +271,15 @@ function App() {
       if (!snap?.save) return;
       loadParsedState(snap.save, snap.saveMeta || {});
       setFromShare(prev => ({ ...prev, currentSnap: n }));
+      const newPath = n === 0 ? `/${fromShare.id}` : `/${fromShare.id}/${n}`;
+      window.history.pushState({}, '', newPath);
     } catch {}
   }
 
   function handleLoadShare({ snap, meta, id }) {
     loadParsedState(snap.save, snap.saveMeta || {});
     setFromShare({ id, currentSnap: 0, meta });
+    window.history.pushState({}, '', `/${id}`);
   }
 
   return (
