@@ -312,6 +312,7 @@
   align-items: flex-end;
   justify-content: center;
   animation: rtt-overlay-in 0.15s ease;
+  cursor: pointer; /* iOS Safari requires cursor:pointer to fire click on plain divs */
 }
 
 @keyframes rtt-overlay-in {
@@ -332,6 +333,7 @@
   display: flex;
   flex-direction: column;
   animation: rtt-sheet-in 0.22s cubic-bezier(0.32, 0.72, 0, 1);
+  cursor: default;
 }
 
 @keyframes rtt-sheet-in {
