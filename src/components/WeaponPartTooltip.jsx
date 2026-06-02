@@ -10,6 +10,7 @@ import { WEAPONS_BY_ID } from '../gamedata/weapons';
 import { HEROES_BY_ID } from '../gamedata/heroes';
 import { DAMAGE_TYPE_BY_ID } from '../gamedata/damageTypes';
 import { parseGameText, TERM_ICONS } from '../gamedata/gameText';
+import { useIsMobile } from '../hooks/useIsMobile';
 import WeaponAssemblyView from './WeaponAssemblyView';
 import './RecipeTooltip.css';
 
@@ -82,8 +83,10 @@ export default function WeaponPartTooltip({ partId, showUpgradeIcon = true, chil
   const gameState = useStore(s => s.gameState);
   const saveMeta  = useStore(s => s.saveMeta);
   const isAct2    = (saveMeta?.act ?? 0) >= 1;
+  const isMobile  = useIsMobile();
   const [visible, setVisible] = useState(false);
   const [coords,  setCoords]  = useState({ x: 0, y: 0 });
+  const [modalOpen, setModalOpen] = useState(false);
 
   const part = WEAPON_PARTS_BY_ID[partId];
   if (!part) return <>{children}</>;
@@ -116,7 +119,6 @@ export default function WeaponPartTooltip({ partId, showUpgradeIcon = true, chil
   const activationText = rawActivation.replace(/^"+|"+$/g, '').trim();
   const activationNodes = activationText ? renderNodes(parseGameText(activationText)) : null;
 
-  // Unique passive ability — for accessories this IS the main effect, show in gold
   const passiveText  = getPassiveDesc(partId, lang);
   const passiveNodes = passiveText ? renderNodes(parseGameText(passiveText)) : null;
 
@@ -127,7 +129,6 @@ export default function WeaponPartTooltip({ partId, showUpgradeIcon = true, chil
     ? `${abilityKey}+` : abilityKey;
   const chance      = chanceKey != null ? ABILITY_CHANCE[chanceKey] : null;
 
-  // Ensamblaje para el footer
   function defaultPart(slot) {
     return WEAPON_PARTS_BY_ID[`WEAPON_PART_${slot}_${part.weaponType}_0`] ?? null;
   }
@@ -137,116 +138,133 @@ export default function WeaponPartTooltip({ partId, showUpgradeIcon = true, chil
   const asmRotation = ASSEMBLY_ROTATION[part.weaponType] || 0;
   const asmOverrides = ASSEMBLY_OVERRIDES[part.weaponType] || {};
 
-  // Avatar del héroe
   const heroAvatar = hero ? (isAct2 ? (hero.imageAct2 || hero.image) : hero.image) : null;
 
   function move(e) { setCoords({ x: e.clientX, y: e.clientY }); }
   const offsetX = coords.x + 16 + 280 > window.innerWidth ? coords.x - 296 : coords.x + 16;
   const offsetY = Math.min(coords.y - 8, window.innerHeight - 360);
 
+  function handleClick(e) {
+    if (!isMobile) return;
+    if (e.target.closest('button, input, label, a, select')) return;
+    setModalOpen(true);
+  }
+
+  const bubbleContent = (
+    <>
+      <span className="rtt-header">
+        <span className="rtt-title">
+          <span className="rtt-label">{slotLabel}</span>
+          {showUpgradeIcon && partId?.endsWith('_UPGRADED')
+            ? <span style={{ display: 'inline-flex', alignItems: 'center', gap: '3px' }}>{partName}<img src={UPGRADE_ICON} alt="✦" style={{ width: '1em', height: '1em', flexShrink: 0 }} onError={e => e.target.style.display = 'none'} /></span>
+            : partName}
+        </span>
+        <span className="wpt-header-right">
+          {equipped && <span className="rtt-equipped-badge">{t('shop.alreadyEquipped')}</span>}
+          {heroAvatar && (
+            <img src={heroAvatar} alt={heroName} className="wpt-hero-avatar"
+              onError={e => e.target.style.display = 'none'} />
+          )}
+        </span>
+      </span>
+
+      {weapon && (
+        <span className="rtt-subtitle">
+          {weaponName}{heroName ? ` · ${heroName}` : ''}
+        </span>
+      )}
+
+      {hasStats && (
+        <span className="wpt-stats">
+          {part.traits?.map(traitId => {
+            const dt = DAMAGE_TYPE_BY_ID[traitId];
+            return dt ? (
+              <span key={traitId} className="wpt-chip">
+                <img src={dt.icon} alt="" className="wpt-chip-icon"
+                  onError={e => e.target.style.display = 'none'} />
+                <span>{dt.names[lang] || dt.names.en}</span>
+              </span>
+            ) : null;
+          })}
+          {part.damage > 0 && (
+            <span className="wpt-chip">
+              <img src="/assets/icons/Icon_Damage.png" alt="" className="wpt-chip-icon"
+                onError={e => e.target.style.display = 'none'} />
+              <span>{part.damage}</span>
+            </span>
+          )}
+          {weapon?.range > 0 && (
+            <span className="wpt-chip">
+              {weapon.range === 2 ? (
+                <span>{LONG_RANGE_LABELS[lang] || 'Gran alcance'}</span>
+              ) : (
+                <>
+                  <img src="/assets/icons/weapon_range.png" alt="" className="wpt-chip-icon"
+                    onError={e => e.target.style.display = 'none'} />
+                  <span>{weapon.range}</span>
+                </>
+              )}
+            </span>
+          )}
+        </span>
+      )}
+
+      {activationNodes && (
+        <span className="rtt-effect">
+          {activationNodes}
+        </span>
+      )}
+
+      {passiveNodes && (
+        <span className={`rtt-effect${isAccessory ? '' : ' rtt-passive'}`}>
+          {isAccessory && chance != null && <span className="rtt-chance-chip">{chance}%</span>}
+          {passiveNodes}
+        </span>
+      )}
+
+      {part.slot === 'A' ? (
+        <span className="rtt-hero-footer wpt-assembly-footer">
+          <WeaponAssemblyView
+            weaponType={part.weaponType}
+            partA={assemblyA} partB={assemblyB} partC={assemblyC}
+            displayH={160}
+            rotation={asmRotation}
+            partOverrides={asmOverrides}
+          />
+        </span>
+      ) : part.image && (
+        <span className="rtt-hero-footer rtt-hero-footer--item">
+          <img src={part.image} alt={partName} className="rtt-item-footer-img"
+            onError={e => e.target.style.display = 'none'} />
+        </span>
+      )}
+    </>
+  );
+
   return (
     <span
       className="rtt-wrap"
-      onMouseEnter={e => { setVisible(true); move(e); }}
-      onMouseMove={move}
-      onMouseLeave={() => setVisible(false)}
+      onMouseEnter={e => { if (!isMobile) { setVisible(true); move(e); } }}
+      onMouseMove={e => { if (!isMobile) move(e); }}
+      onMouseLeave={() => { if (!isMobile) setVisible(false); }}
+      onClick={handleClick}
     >
       {children}
-      {visible && createPortal(
+      {!isMobile && visible && createPortal(
         <span className="rtt-bubble" style={{ left: offsetX, top: offsetY }}>
-
-          <span className="rtt-header">
-            <span className="rtt-title">
-              <span className="rtt-label">{slotLabel}</span>
-              {showUpgradeIcon && partId?.endsWith('_UPGRADED')
-                ? <span style={{ display: 'inline-flex', alignItems: 'center', gap: '3px' }}>{partName}<img src={UPGRADE_ICON} alt="✦" style={{ width: '1em', height: '1em', flexShrink: 0 }} onError={e => e.target.style.display = 'none'} /></span>
-                : partName}
-            </span>
-            <span className="wpt-header-right">
-              {equipped && <span className="rtt-equipped-badge">{t('shop.alreadyEquipped')}</span>}
-              {heroAvatar && (
-                <img src={heroAvatar} alt={heroName} className="wpt-hero-avatar"
-                  onError={e => e.target.style.display = 'none'} />
-              )}
-            </span>
-          </span>
-
-          {weapon && (
-            <span className="rtt-subtitle">
-              {weaponName}{heroName ? ` · ${heroName}` : ''}
-            </span>
-          )}
-
-          {/* Stats slot A */}
-          {hasStats && (
-            <span className="wpt-stats">
-              {part.traits?.map(traitId => {
-                const dt = DAMAGE_TYPE_BY_ID[traitId];
-                return dt ? (
-                  <span key={traitId} className="wpt-chip">
-                    <img src={dt.icon} alt="" className="wpt-chip-icon"
-                      onError={e => e.target.style.display = 'none'} />
-                    <span>{dt.names[lang] || dt.names.en}</span>
-                  </span>
-                ) : null;
-              })}
-              {part.damage > 0 && (
-                <span className="wpt-chip">
-                  <img src="/assets/icons/Icon_Damage.png" alt="" className="wpt-chip-icon"
-                    onError={e => e.target.style.display = 'none'} />
-                  <span>{part.damage}</span>
-                </span>
-              )}
-              {weapon?.range > 0 && (
-                <span className="wpt-chip">
-                  {weapon.range === 2 ? (
-                    <span>{LONG_RANGE_LABELS[lang] || 'Gran alcance'}</span>
-                  ) : (
-                    <>
-                      <img src="/assets/icons/weapon_range.png" alt="" className="wpt-chip-icon"
-                        onError={e => e.target.style.display = 'none'} />
-                      <span>{weapon.range}</span>
-                    </>
-                  )}
-                </span>
-              )}
-            </span>
-          )}
-
-          {/* Activation ability — cost and effect inline */}
-          {activationNodes && (
-            <span className="rtt-effect">
-              {activationNodes}
-            </span>
-          )}
-
-          {/* Passive ability — gold for accessories (main effect), grey for weapon (secondary) */}
-          {passiveNodes && (
-            <span className={`rtt-effect${isAccessory ? '' : ' rtt-passive'}`}>
-              {isAccessory && chance != null && <span className="rtt-chance-chip">{chance}%</span>}
-              {passiveNodes}
-            </span>
-          )}
-
-          {/* Footer: ensamblaje para slot A, imagen propia para accesorios B/C */}
-          {part.slot === 'A' ? (
-            <span className="rtt-hero-footer wpt-assembly-footer">
-              <WeaponAssemblyView
-                weaponType={part.weaponType}
-                partA={assemblyA} partB={assemblyB} partC={assemblyC}
-                displayH={160}
-                rotation={asmRotation}
-                partOverrides={asmOverrides}
-              />
-            </span>
-          ) : part.image && (
-            <span className="rtt-hero-footer rtt-hero-footer--item">
-              <img src={part.image} alt={partName} className="rtt-item-footer-img"
-                onError={e => e.target.style.display = 'none'} />
-            </span>
-          )}
-
+          {bubbleContent}
         </span>
+      , document.body)}
+      {isMobile && modalOpen && createPortal(
+        <div className="rtt-modal-overlay" onClick={() => setModalOpen(false)}>
+          <div className="rtt-modal-sheet" onClick={e => e.stopPropagation()}>
+            <div className="rtt-modal-handle-row"><div className="rtt-modal-handle" /></div>
+            <div className="rtt-modal-close-row">
+              <button className="rtt-modal-close-btn" onClick={() => setModalOpen(false)}>✕</button>
+            </div>
+            <div className="rtt-modal-body">{bubbleContent}</div>
+          </div>
+        </div>
       , document.body)}
     </span>
   );

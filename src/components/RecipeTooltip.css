@@ -301,3 +301,86 @@
   color: var(--color-gold);
   opacity: 0.6;
 }
+
+/* ── Mobile bottom-sheet modal (shared by all tooltip components) ── */
+.rtt-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 9998;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  animation: rtt-overlay-in 0.15s ease;
+}
+
+@keyframes rtt-overlay-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.rtt-modal-sheet {
+  width: 100%;
+  max-width: 500px;
+  max-height: 82vh;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 16px 16px 0 0;
+  box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.5);
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  animation: rtt-sheet-in 0.22s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+@keyframes rtt-sheet-in {
+  from { transform: translateY(40%); opacity: 0; }
+  to   { transform: translateY(0);   opacity: 1; }
+}
+
+.rtt-modal-handle-row {
+  display: flex;
+  justify-content: center;
+  padding: 10px 0 4px;
+  flex-shrink: 0;
+}
+
+.rtt-modal-handle {
+  width: 40px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--color-border-hover);
+}
+
+.rtt-modal-close-row {
+  display: flex;
+  justify-content: flex-end;
+  padding: 2px 12px 8px;
+  flex-shrink: 0;
+}
+
+.rtt-modal-close-btn {
+  background: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  border-radius: var(--radius-sm);
+  padding: 4px 16px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.rtt-modal-close-btn:hover {
+  border-color: var(--color-border-hover);
+  color: var(--color-text);
+}
+
+.rtt-modal-body {
+  /* padding matches bubble's 12px horizontal so -12px margins on footer work */
+  padding: 8px 12px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}

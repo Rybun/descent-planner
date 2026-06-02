@@ -1,5 +1,6 @@
 import { useStore } from './store';
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useT, SUPPORTED_LANGS } from './i18n';
 import DropZone from './components/DropZone';
 import ArmeriaPanel from './components/ArmeriaPanel';
@@ -22,9 +23,6 @@ function getTabIcons(act) {
     historial:  '/assets/icons/tab_historial.png',
   };
 }
-
-// Resuelve la selección efectiva de cada arma con el mismo fallback que usa ArmeriaPanel:
-//   partXSelections[wid] si existe, si no el valor del save (weapon.partX)
 
 function AboutModal({ onClose }) {
   const t = useT();
@@ -84,12 +82,80 @@ function LangSelector() {
   );
 }
 
+function MobileMenu({ tabs, tabIcons, netCount, activeTab, onSelectTab, onClose,
+  onReset, onLoadNew, onAbout, canReset }) {
+  const t    = useT();
+  const lang = useStore(s => s.lang);
+  const setLang = useStore(s => s.setLang);
+
+  return createPortal(
+    <div className="mobile-nav-overlay" onClick={onClose}>
+      <div className="mobile-nav-panel" onClick={e => e.stopPropagation()}>
+        <div className="mobile-nav-header">
+          <span className="mobile-nav-title">Descent</span>
+          <button className="mobile-nav-close" onClick={onClose}>✕</button>
+        </div>
+
+        <nav className="mobile-nav-tabs">
+          {tabs.map(tab => (
+            <button
+              key={tab.id}
+              className={`mobile-nav-tab ${activeTab === tab.id ? 'active' : ''}`}
+              onClick={() => onSelectTab(tab.id)}
+            >
+              <img
+                src={tabIcons[tab.id]}
+                className="mobile-nav-tab-icon"
+                alt=""
+                onError={e => e.target.style.display = 'none'}
+              />
+              <span className="mobile-nav-tab-label">{tab.label}</span>
+              {tab.id === 'historial' && netCount > 0 && (
+                <span className="mobile-nav-tab-badge">{netCount}</span>
+              )}
+            </button>
+          ))}
+        </nav>
+
+        <div className="mobile-nav-divider" />
+
+        <div className="mobile-nav-actions">
+          <div className="mobile-nav-actions-label">{t('app.lang') || 'Idioma'}</div>
+          <div className="lang-selector">
+            {SUPPORTED_LANGS.map(l => (
+              <button
+                key={l.code}
+                className={`lang-btn ${lang === l.code ? 'active' : ''}`}
+                onClick={() => setLang(l.code)}
+                aria-label={l.label}
+              >
+                {l.label}
+              </button>
+            ))}
+          </div>
+
+          {canReset && (
+            <button className="mobile-nav-action-btn danger" onClick={onReset}>
+              {t('app.reset')}
+            </button>
+          )}
+          <button className="mobile-nav-action-btn" onClick={onLoadNew}>
+            {t('app.loadOther')}
+          </button>
+          <button className="mobile-nav-action-btn" onClick={onAbout}>
+            {t('about.title')}
+          </button>
+        </div>
+      </div>
+    </div>
+  , document.body);
+}
+
 function App() {
   const t = useT();
   const saveLoaded     = useStore(s => s.saveLoaded);
   const saveMeta       = useStore(s => s.saveMeta);
   const gameState      = useStore(s => s.gameState);
-  const originalState  = useStore(s => s.originalState);
   const activeTab      = useStore(s => s.activeTab);
   const actionHistory  = useStore(s => s.actionHistory);
   const setActiveTab   = useStore(s => s.setActiveTab);
@@ -98,10 +164,10 @@ function App() {
 
   const [showAbout,    setShowAbout]    = useState(false);
   const [showDropZone, setShowDropZone] = useState(false);
+  const [showMenu,     setShowMenu]     = useState(false);
 
   const TAB_ICONS = getTabIcons(saveMeta?.act ?? 0);
   const TABS = TAB_KEYS.map(id => ({ id, label: t(`tab.${id}`) }));
-
 
   if (!saveLoaded) {
     return <DropZone />;
@@ -116,6 +182,21 @@ function App() {
 
   function handleLoadNew() {
     setShowDropZone(true);
+  }
+
+  function handleMenuSelectTab(id) {
+    setActiveTab(id);
+    setShowMenu(false);
+  }
+
+  function handleMenuReset() {
+    setShowMenu(false);
+    handleReset();
+  }
+
+  function handleMenuAbout() {
+    setShowMenu(false);
+    setShowAbout(true);
   }
 
   return (
@@ -154,7 +235,8 @@ function App() {
           </div>
         </div>
 
-        <div className="header-right">
+        {/* Desktop: botones normales */}
+        <div className="header-right header-right--desktop">
           <LangSelector />
           {actionHistory.length > 0 && (
             <button className="btn btn-sm" onClick={handleReset} title={t('log.resetTitle')}>
@@ -171,9 +253,25 @@ function App() {
             aria-label={t('about.title')}
           >i</button>
         </div>
+
+        {/* Mobile: hamburger */}
+        <div className="header-right header-right--mobile">
+          {netCount > 0 && (
+            <span className="hamburger-badge">{netCount}</span>
+          )}
+          <button
+            className="hamburger-btn"
+            onClick={() => setShowMenu(true)}
+            aria-label="Menú"
+          >
+            <span className="hamburger-line" />
+            <span className="hamburger-line" />
+            <span className="hamburger-line" />
+          </button>
+        </div>
       </header>
 
-      {/* ======= TABS ======= */}
+      {/* ======= TABS (desktop only) ======= */}
       <nav className="app-tabs">
         {TABS.map(tab => (
           <button
@@ -233,6 +331,21 @@ function App() {
       </footer>
 
       {showAbout && <AboutModal onClose={() => setShowAbout(false)} />}
+
+      {showMenu && (
+        <MobileMenu
+          tabs={TABS}
+          tabIcons={TAB_ICONS}
+          netCount={netCount}
+          activeTab={activeTab}
+          onSelectTab={handleMenuSelectTab}
+          onClose={() => setShowMenu(false)}
+          onReset={handleMenuReset}
+          onLoadNew={() => { setShowMenu(false); handleLoadNew(); }}
+          onAbout={handleMenuAbout}
+          canReset={actionHistory.length > 0}
+        />
+      )}
     </div>
   );
 }

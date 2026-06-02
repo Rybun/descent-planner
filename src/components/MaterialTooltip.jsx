@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import { getName } from '../i18n';
 import { DESCRIPTIONS } from '../gamedata/descriptions';
 import { parseGameText, TERM_ICONS } from '../gamedata/gameText';
+import { useIsMobile } from '../hooks/useIsMobile';
 
 const MATERIAL_LABEL = {
   es: 'Material', en: 'Material', fr: 'Matériau', it: 'Materiale', pt: 'Material',
@@ -29,6 +30,8 @@ function renderDescNodes(raw) {
 export default function MaterialTooltip({ mat, lang, children }) {
   const [visible, setVisible] = useState(false);
   const [coords, setCoords] = useState({ x: 0, y: 0 });
+  const [modalOpen, setModalOpen] = useState(false);
+  const isMobile = useIsMobile();
 
   if (!mat) return <>{children}</>;
 
@@ -41,36 +44,58 @@ export default function MaterialTooltip({ mat, lang, children }) {
   const offsetX = coords.x + 16 + 280 > window.innerWidth ? coords.x - 296 : coords.x + 16;
   const offsetY = Math.min(coords.y - 8, window.innerHeight - 400);
 
+  function handleClick(e) {
+    if (!isMobile) return;
+    if (e.target.closest('button, input, label, a, select')) return;
+    setModalOpen(true);
+  }
+
+  const bubbleContent = (
+    <>
+      <span className="rtt-header">
+        <span className="rtt-title">
+          <span className="rtt-label">{label}</span>
+          {name}
+        </span>
+      </span>
+
+      {descNodes && (
+        <span className="rtt-effect rtt-passive">{descNodes}</span>
+      )}
+
+      {mat.image && (
+        <span className="rtt-hero-footer rtt-hero-footer--item">
+          <img src={mat.image} alt={name} className="rtt-item-footer-img"
+            onError={e => e.target.style.display = 'none'} />
+        </span>
+      )}
+    </>
+  );
+
   return (
     <span
       className="rtt-wrap"
-      onMouseEnter={e => { setVisible(true); move(e); }}
-      onMouseMove={move}
-      onMouseLeave={() => setVisible(false)}
+      onMouseEnter={e => { if (!isMobile) { setVisible(true); move(e); } }}
+      onMouseMove={e => { if (!isMobile) move(e); }}
+      onMouseLeave={() => { if (!isMobile) setVisible(false); }}
+      onClick={handleClick}
     >
       {children}
-      {visible && createPortal(
+      {!isMobile && visible && createPortal(
         <span className="rtt-bubble" style={{ left: offsetX, top: offsetY }}>
-
-          <span className="rtt-header">
-            <span className="rtt-title">
-              <span className="rtt-label">{label}</span>
-              {name}
-            </span>
-          </span>
-
-          {descNodes && (
-            <span className="rtt-effect rtt-passive">{descNodes}</span>
-          )}
-
-          {mat.image && (
-            <span className="rtt-hero-footer rtt-hero-footer--item">
-              <img src={mat.image} alt={name} className="rtt-item-footer-img"
-                onError={e => e.target.style.display = 'none'} />
-            </span>
-          )}
-
+          {bubbleContent}
         </span>
+      , document.body)}
+      {isMobile && modalOpen && createPortal(
+        <div className="rtt-modal-overlay" onClick={() => setModalOpen(false)}>
+          <div className="rtt-modal-sheet" onClick={e => e.stopPropagation()}>
+            <div className="rtt-modal-handle-row"><div className="rtt-modal-handle" /></div>
+            <div className="rtt-modal-close-row">
+              <button className="rtt-modal-close-btn" onClick={() => setModalOpen(false)}>✕</button>
+            </div>
+            <div className="rtt-modal-body">{bubbleContent}</div>
+          </div>
+        </div>
       , document.body)}
     </span>
   );

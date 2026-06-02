@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useStore } from '../store';
 import { useT, useLang, getName } from '../i18n';
 import { RECIPES_BY_ID } from '../gamedata/recipes';
@@ -11,6 +12,7 @@ import { HEROES_BY_ID } from '../gamedata/heroes';
 import { MATERIALS_BY_ID } from '../gamedata/materials';
 import { ALL_ITEMS_BY_ID } from '../gamedata/items';
 import { parseGameText, TERM_ICONS } from '../gamedata/gameText';
+import { useIsMobile } from '../hooks/useIsMobile';
 import './RecipeTooltip.css';
 
 const UPGRADE_ICON = '/assets/icons/Icon_Upgrade.png';
@@ -61,10 +63,6 @@ function renderNodes(nodes) {
   });
 }
 
-/**
- * Divide la descripción de activación en { costNodes, effectNodes }.
- * Formato esperado: "N <TERM_X>: efecto texto"
- */
 function splitActivation(rawText) {
   if (!rawText) return { costNodes: null, effectNodes: null };
   const clean = rawText.replace(/^"+|"+$/g, '').trim();
@@ -132,11 +130,9 @@ function PartDesc({ partId, lang }) {
   const slot = part?.slot;
   const isAccessory = slot === 'B' || slot === 'C';
 
-  // B/C slot weaponPartDescs is identical to A-slot (weapon's built-in ability) — skip it
   const raw = isAccessory ? '' : (WEAPON_PART_DESCS[partId]?.[lang] || '');
   const { costNodes, effectNodes } = splitActivation(raw);
 
-  // Unique passive ability — for accessories this IS the main effect, show in gold
   const passiveText = getPassiveDesc(partId, lang);
   const passiveNodes = passiveText ? renderNodes(parseGameText(passiveText)) : null;
 
@@ -167,9 +163,11 @@ export default function RecipeTooltip({ recipeId, children }) {
   const lang = useLang();
   const gameState = useStore(s => s.gameState);
   const act       = useStore(s => s.saveMeta?.act ?? 0);
+  const isMobile  = useIsMobile();
 
   const [visible, setVisible] = useState(false);
   const [coords,  setCoords]  = useState({ x: 0, y: 0 });
+  const [modalOpen, setModalOpen] = useState(false);
 
   const recipe = RECIPES_BY_ID[recipeId];
   if (!recipe) return <>{children}</>;
@@ -177,7 +175,7 @@ export default function RecipeTooltip({ recipeId, children }) {
   const itemId  = recipe.itemId || recipeId.replace(/^RECIPE_/, '');
   const isPlus  = itemId?.endsWith('_PLUS');
   const part    = WEAPON_PARTS_BY_ID[itemId];
-  const itemObj = !part ? ALL_ITEMS_BY_ID[itemId] : null; // armor/trinket/consumable
+  const itemObj = !part ? ALL_ITEMS_BY_ID[itemId] : null;
   const weapon  = part?.weaponId ? WEAPONS_BY_ID[part.weaponId] : null;
   const hero    = weapon?.heroId ? HEROES_BY_ID[weapon.heroId] : null;
 
@@ -208,78 +206,94 @@ export default function RecipeTooltip({ recipeId, children }) {
   const offsetX = coords.x + 16 + 280 > window.innerWidth ? coords.x - 296 : coords.x + 16;
   const offsetY = Math.min(coords.y - 8, window.innerHeight - 420);
 
+  function handleClick(e) {
+    if (!isMobile) return;
+    if (e.target.closest('button, input, label, a, select')) return;
+    setModalOpen(true);
+  }
+
+  const bubbleContent = (
+    <>
+      <span className="rtt-header">
+        <span className="rtt-title">
+          <span className="rtt-label">{t('shop.recipe')}</span>
+          {renderItemName(itemId, itemName)}
+        </span>
+        {equipped && <span className="rtt-equipped-badge">{t('shop.alreadyEquipped')}</span>}
+        {conflictId && <span className="rtt-conflict-badge">!</span>}
+      </span>
+
+      {part && weapon && (
+        <span className="rtt-subtitle">
+          {slotLabel} · {weaponName} · {heroName}
+        </span>
+      )}
+
+      {part && <PartDesc partId={itemId} lang={lang} />}
+
+      {recipe.ingredients && (
+        <span className="rtt-ingredients">
+          {Object.entries(recipe.ingredients).map(([matId, qty]) => {
+            const mat     = MATERIALS_BY_ID[matId];
+            const have    = craftingMaterials[matId] ?? 0;
+            const enough  = have >= qty;
+            const matName = mat ? getName(mat, lang) : matId;
+            return (
+              <span key={matId} className={`rtt-mat-row ${enough ? 'rtt-ok' : 'rtt-missing'}`}>
+                {mat?.image && (
+                  <img src={mat.image} alt={matName} className="rtt-mat-img"
+                    onError={e => e.target.style.display='none'} />
+                )}
+                <span className="rtt-mat-name">{matName}</span>
+                <span className="rtt-mat-qty">{have}/{qty}</span>
+              </span>
+            );
+          })}
+        </span>
+      )}
+
+      {conflictId && (
+        <span className="rtt-conflict">
+          <span className="rtt-conflict-label">{t('shop.slotConflict')}</span>
+          <span className="rtt-conflict-name">{conflictName}</span>
+          <PartDesc partId={conflictId} lang={lang} />
+        </span>
+      )}
+
+      {avatarSrc && (
+        <span className="rtt-hero-footer">
+          <img src={avatarSrc} alt={heroName} className="rtt-hero-avatar"
+            onError={e => e.target.style.display='none'} />
+        </span>
+      )}
+    </>
+  );
+
   return (
     <span
       className="rtt-wrap"
-      onMouseEnter={e => { setVisible(true); move(e); }}
-      onMouseMove={move}
-      onMouseLeave={() => setVisible(false)}
+      onMouseEnter={e => { if (!isMobile) { setVisible(true); move(e); } }}
+      onMouseMove={e => { if (!isMobile) move(e); }}
+      onMouseLeave={() => { if (!isMobile) setVisible(false); }}
+      onClick={handleClick}
     >
       {children}
-      {visible && (
+      {!isMobile && visible && (
         <span className="rtt-bubble" style={{ left: offsetX, top: offsetY }}>
-
-          {/* Cabecera */}
-          <span className="rtt-header">
-            <span className="rtt-title">
-              <span className="rtt-label">{t('shop.recipe')}</span>
-              {renderItemName(itemId, itemName)}
-            </span>
-            {equipped && <span className="rtt-equipped-badge">{t('shop.alreadyEquipped')}</span>}
-            {conflictId && <span className="rtt-conflict-badge">!</span>}
-          </span>
-
-          {/* Subtítulo */}
-          {part && weapon && (
-            <span className="rtt-subtitle">
-              {slotLabel} · {weaponName} · {heroName}
-            </span>
-          )}
-
-          {/* Descripción del accesorio (coste + efecto activo + pasivo) */}
-          {part && <PartDesc partId={itemId} lang={lang} />}
-
-          {/* Materiales */}
-          {recipe.ingredients && (
-            <span className="rtt-ingredients">
-              {Object.entries(recipe.ingredients).map(([matId, qty]) => {
-                const mat     = MATERIALS_BY_ID[matId];
-                const have    = craftingMaterials[matId] ?? 0;
-                const enough  = have >= qty;
-                const matName = mat ? getName(mat, lang) : matId;
-                return (
-                  <span key={matId} className={`rtt-mat-row ${enough ? 'rtt-ok' : 'rtt-missing'}`}>
-                    {mat?.image && (
-                      <img src={mat.image} alt={matName} className="rtt-mat-img"
-                        onError={e => e.target.style.display='none'} />
-                    )}
-                    <span className="rtt-mat-name">{matName}</span>
-                    <span className="rtt-mat-qty">{have}/{qty}</span>
-                  </span>
-                );
-              })}
-            </span>
-          )}
-
-          {/* Conflicto de slot */}
-          {conflictId && (
-            <span className="rtt-conflict">
-              <span className="rtt-conflict-label">{t('shop.slotConflict')}</span>
-              <span className="rtt-conflict-name">{conflictName}</span>
-              <PartDesc partId={conflictId} lang={lang} />
-            </span>
-          )}
-
-          {/* Avatar héroe */}
-          {avatarSrc && (
-            <span className="rtt-hero-footer">
-              <img src={avatarSrc} alt={heroName} className="rtt-hero-avatar"
-                onError={e => e.target.style.display='none'} />
-            </span>
-          )}
-
+          {bubbleContent}
         </span>
       )}
+      {isMobile && modalOpen && createPortal(
+        <div className="rtt-modal-overlay" onClick={() => setModalOpen(false)}>
+          <div className="rtt-modal-sheet" onClick={e => e.stopPropagation()}>
+            <div className="rtt-modal-handle-row"><div className="rtt-modal-handle" /></div>
+            <div className="rtt-modal-close-row">
+              <button className="rtt-modal-close-btn" onClick={() => setModalOpen(false)}>✕</button>
+            </div>
+            <div className="rtt-modal-body">{bubbleContent}</div>
+          </div>
+        </div>
+      , document.body)}
     </span>
   );
 }
