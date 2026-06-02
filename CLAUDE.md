@@ -14,21 +14,25 @@ App web estática para planificar compras, ventas y crafteo entre sesiones de **
 - **Vite** + **React** (JS, sin TypeScript)
 - **Zustand** para estado global
 - Sin librerías de UI — CSS puro con custom properties
-- Sin backend — totalmente estático
+- **Backend**: `descent-share-api` (Node/Express) para compartir saves — stack Dockge separado en `pi5:/opt/stacks/descent-share/`
 
 ## Estructura de archivos
 
 ```
 descent-planner/
-├── index.html                   # Título: "Descent: Planificador de Tienda"
+├── .env                         # Variables de entorno Vite (ver sección Variables de Entorno)
+├── index.html
 ├── src/
 │   ├── main.jsx                 # Punto de entrada React
-│   ├── App.jsx                  # Layout: header, tabs, footer
+│   ├── App.jsx                  # Layout: header, tabs, footer, share/feed modals
 │   ├── App.css                  # Estilos del layout principal
 │   ├── index.css                # Design tokens (CSS custom properties), reset, botones globales
 │   ├── store.js                 # Estado global Zustand + historial de acciones
 │   ├── parser/
 │   │   └── savParser.js         # Parseo de ficheros .SAV
+│   ├── hooks/
+│   │   ├── useIsMobile.js       # Detección de móvil reactiva (matchMedia)
+│   │   └── useShare.js          # Hook para crear/cargar shares, feed comunitario
 │   ├── gamedata/
 │   │   ├── materials.js         # 17 materiales de crafteo
 │   │   ├── heroes.js            # 6 héroes con armas
@@ -42,15 +46,17 @@ descent-planner/
 │       ├── CraftPanel.jsx/css   # Recetas disponibles + crafteo
 │       ├── HeroPanel.jsx/css    # Estado de los 6 héroes
 │       ├── ActionLog.jsx/css    # Historial + undo + exportar
-│       └── PriceEditor.jsx/css  # Editar precios (persiste en localStorage)
+│       ├── PriceEditor.jsx/css  # Editar precios (persiste en localStorage)
+│       ├── ShareModal.jsx/css   # Modal para compartir save y gestionar checkpoints
+│       └── FeedModal.jsx/css    # Feed comunitario de partidas compartidas
 └── public/
     └── assets/
-        ├── heroes/              # Imágenes de héroes (brynn_crop.png, etc.)
-        ├── materials/           # Imágenes de materiales
-        ├── weapon_parts/        # 426 imágenes de partes
-        ├── armor/               # Imágenes de armaduras
-        ├── consumables/         # Imágenes de consumibles
-        └── trinkets/            # Imágenes de amuletos
+        ├── heroes/
+        ├── materials/
+        ├── weapon_parts/
+        ├── armor/
+        ├── consumables/
+        └── trinkets/
 ```
 
 ## Convenciones
@@ -93,6 +99,95 @@ Definidas en `src/index.css`:
 | `--color-danger` / `--color-danger-light` / `--color-danger-rgb` | Errores/faltante |
 | `--spacing-xs/sm/md/lg/xl/2xl` | Sistema de espaciado |
 | `--radius-sm/md/lg` | Radios de borde |
+
+## Variables de Entorno (`.env`)
+
+| Variable | Valor por defecto | Descripción |
+|---|---|---|
+| `VITE_SHARE_API_URL` | `""` (vacío) | Base URL de la API de shares. Vacío = mismo origen (proxeado por nginx a `descent-share:3015`). |
+| `VITE_SHARE_LINK_BASE` | `""` (vacío) | Base de los enlaces que se muestran al usuario. Vacío = `window.location.origin`. Cuando `d.rybun.rocks` esté en NPM, poner `https://d.rybun.rocks`. |
+
+## Sistema de Shares (partidas compartidas)
+
+### Arquitectura
+
+```
+descent.rybun.rocks          pi5 (lb_network)
+┌─────────────────┐          ┌──────────────────────────────────────┐
+│  nginx          │          │  descent-share (Node/Express :3015)  │
+│  /api/share ────┼──────────┼─► POST   /api/share        crear     │
+│  /api/feed  ────┼──────────┼─► POST   /api/share/:id   checkpoint │
+│  /*         ────┼──►SPA    │  GET    /api/share/:id    metadata   │
+└─────────────────┘          │  GET    /api/share/:id/:n snapshot   │
+                             │  GET    /api/feed          feed       │
+                             │  GET    /:id          redirect→app   │
+                             │  GET    /:id/:n       redirect→app   │
+                             └──────────────────────────────────────┘
+```
+
+- El frontend llama a `/api/share` y `/api/feed` con rutas relativas (mismo origen).
+- nginx (`/home/rybun/docker/config/descent-planner/nginx.conf`) proxea esas rutas al contenedor `descent-share`.
+- Los enlaces generados usan `VITE_SHARE_LINK_BASE` (o `window.location.origin`): `https://descent.rybun.rocks/AbCd1234`.
+- La SPA detecta paths `/{8chars}` y `/{8chars}/{n}` al cargar y resuelve el share.
+- `d.rybun.rocks` (cuando esté en NPM) redirigirá a `descent.rybun.rocks/{id}`.
+
+### Almacenamiento de datos en el servidor
+
+```
+/home/rybun/docker/data/descent-share/
+└── {id}/                        # carpeta por cada share (ID de 8 chars: A-Z a-z 0-9 _)
+    ├── meta.json                # metadatos públicos del share
+    └── {n}.json                 # snapshot n (0, 1, 2, ...)
+```
+
+**`meta.json`** contiene:
+```json
+{
+  "id": "AbCd1234",
+  "created_at": "2026-06-02T10:00:00.000Z",
+  "label": "Sesión 5",
+  "write_token_hash": "sha256(write_token)",   ← no se expone en la API pública
+  "snapshot_count": 2,
+  "snapshots": [
+    { "n": 0, "label": null, "created_at": "..." },
+    { "n": 1, "label": "Tras comprar espada", "created_at": "..." }
+  ],
+  "heroes": ["HERO_BRYNN", "HERO_SYRUS"],
+  "act": 0,
+  "partyName": "Los Valientes",
+  "actionCount": 7
+}
+```
+
+**`{n}.json`** contiene el snapshot completo:
+```json
+{
+  "save": { ...gameState },
+  "saveMeta": { "partyName": "...", "act": 0, ... },
+  "actionHistory": [ ...acciones realizadas... ]
+}
+```
+
+### Autenticación de escritura
+
+Al crear un share, el servidor devuelve un `write_token` (UUID). El frontend lo guarda en `localStorage` bajo la clave `descent_shares`:
+```json
+{ "{slotGUID}": { "id": "AbCd1234", "write_token": "uuid", "snapshot_count": 1, ... } }
+```
+Para añadir checkpoints se envía el token en el header `X-Write-Token`. El servidor almacena solo el hash SHA-256 del token.
+
+### Stack del backend (Dockge)
+
+- **Ruta en servidor**: `/opt/stacks/descent-share/`
+- **Puerto interno**: `127.0.0.1:3015` (solo accesible desde lb_network y localhost del servidor)
+- **Datos**: `${DATA_DIR}/descent-share` = `/home/rybun/docker/data/descent-share/`
+- **Variable de entorno clave**: `MAIN_APP_URL=https://descent.rybun.rocks`
+
+Para redesplegar el backend tras cambios en `index.js`:
+```bash
+scp descent-share-api/src/index.js pi5:/opt/stacks/descent-share/src/index.js
+ssh pi5 "cd /opt/stacks/descent-share && sudo docker compose up -d --build"
+```
 
 ## Datos del Juego — Limitaciones Conocidas
 
