@@ -256,7 +256,7 @@ export default function WeaponPartTooltip({ partId, showUpgradeIcon = true, chil
         </span>
       , document.body)}
       {isMobile && modalOpen && createPortal(
-        <div className="rtt-modal-overlay" onClick={() => setModalOpen(false)}>
+        <div className="rtt-modal-overlay" onClick={e => { e.stopPropagation(); setModalOpen(false); }}>
           <div className="rtt-modal-sheet" onClick={e => e.stopPropagation()}>
             <div className="rtt-modal-handle-row"><div className="rtt-modal-handle" /></div>
             <div className="rtt-modal-close-row">
