@@ -9,6 +9,11 @@ App web estática para planificar compras, ventas y crafteo entre sesiones de **
 - Historial de acciones con undo completo
 - Precios editables guardados en localStorage
 
+## Repositorios
+
+- **Frontend (este repo)**: [Rybun/descent-planner](https://github.com/Rybun/descent-planner)
+- **Share API**: [Rybun/descent-planner-share-api](https://github.com/Rybun/descent-planner-share-api)
+
 ## Stack
 
 - **Vite** + **React** (JS, sin TypeScript)

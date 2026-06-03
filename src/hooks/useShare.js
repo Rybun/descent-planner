@@ -23,11 +23,11 @@ export function useShare() {
   const actionHistory = useStore(s => s.actionHistory);
   const originalState = useStore(s => s.originalState);
 
-  const createShare = useCallback(async (label) => {
+  const createShare = useCallback(async (label, isPrivate) => {
     const res = await fetch(`${SHARE_API}/api/share`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ save: gameState, saveMeta, actionHistory, originalState, label }),
+      body: JSON.stringify({ save: gameState, saveMeta, actionHistory, originalState, label, private: isPrivate || false }),
     });
     if (!res.ok) throw new Error(`${res.status} ${await res.text()}`);
     const data = await res.json();

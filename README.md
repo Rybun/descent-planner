@@ -1,8 +1,14 @@
 # Descent: Planificador de Tienda
 
-App web estática para planificar compras, ventas y crafteo entre sesiones de **Descent: Legends of the Dark** (Fantasy Flight Games, 2021).
+App web para planificar compras, ventas y crafteo entre sesiones de **Descent: Legends of the Dark** (Fantasy Flight Games, 2021).
 
 Carga un fichero `.SAV` del juego, muestra el estado de tu grupo y te permite simular transacciones sin modificar el save real.
+
+Disponible en: **https://descent.rybun.rocks**
+
+## Repositorios relacionados
+
+- **Share API** (backend): [Rybun/descent-planner-share-api](https://github.com/Rybun/descent-planner-share-api) — API Node/Express para compartir partidas entre jugadores.
 
 ---
 
@@ -24,7 +30,8 @@ Carga un fichero `.SAV` del juego, muestra el estado de tu grupo y te permite si
 | Framework | React 19 + Vite 8 |
 | Estado | Zustand 5 |
 | Estilos | CSS puro (custom properties), sin librerías UI |
-| Build | Totalmente estático, sin backend |
+| Build | Estático (Vite) + API externa para shares |
+| Share API | [descent-planner-share-api](https://github.com/Rybun/descent-planner-share-api) (Node/Express, Docker) |
 
 ---
 

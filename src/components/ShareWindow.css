@@ -99,6 +99,8 @@
 }
 
 .sw-create-btn {
+  display: block;
+  width: 100%;
   padding: 10px;
   font-size: 0.9rem;
   font-weight: 600;
@@ -108,9 +110,50 @@
   border-radius: var(--radius-md);
   cursor: pointer;
   transition: opacity 0.15s;
+  user-select: none;
 }
-.sw-create-btn:hover:not(:disabled) { opacity: 0.88; }
+.sw-create-btn:hover:not(:disabled) { opacity: 0.85; background: var(--color-gold); }
 .sw-create-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ── Privado ── */
+.sw-private-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  cursor: pointer;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface-raised);
+  transition: border-color 0.12s;
+}
+.sw-private-row:hover { border-color: var(--color-border-hover); }
+
+.sw-private-check {
+  margin-top: 2px;
+  flex-shrink: 0;
+  accent-color: var(--color-gold);
+  cursor: pointer;
+  width: 15px;
+  height: 15px;
+}
+
+.sw-private-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sw-private-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.sw-private-subdesc {
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+}
 
 .sw-url-section { display: flex; flex-direction: column; gap: 6px; }
 

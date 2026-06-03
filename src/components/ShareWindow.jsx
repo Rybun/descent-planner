@@ -21,6 +21,7 @@ function ShareTab({ onClose }) {
   const [copied,    setCopied]    = useState(false);
   const [snapLabel, setSnapLabel] = useState('');
   const [snapUrl,   setSnapUrl]   = useState(null);
+  const [isPrivate, setIsPrivate] = useState(false);
 
   const linkBase = import.meta.env.VITE_SHARE_LINK_BASE || (typeof window !== 'undefined' ? window.location.origin : '');
   const shareUrl = shareData ? `${linkBase}/${shareData.id}` : null;
@@ -28,7 +29,7 @@ function ShareTab({ onClose }) {
   async function handleCreate() {
     setLoading(true); setError(null);
     try {
-      const data = await createShare(saveMeta?.partyName || null);
+      const data = await createShare(saveMeta?.partyName || null, isPrivate);
       setShareData({ ...data, snapshot_count: 1, snapshots: [{ n: 0, label: null, created_at: new Date().toISOString() }] });
     } catch (err) { setError(err.message); }
     finally { setLoading(false); }
@@ -56,7 +57,19 @@ function ShareTab({ onClose }) {
       {!shareData ? (
         <div className="sw-create-section">
           <p className="sw-desc">{t('share.desc')}</p>
-          <button className="btn sw-create-btn" onClick={handleCreate} disabled={loading}>
+          <label className="sw-private-row">
+            <input
+              type="checkbox"
+              className="sw-private-check"
+              checked={isPrivate}
+              onChange={e => setIsPrivate(e.target.checked)}
+            />
+            <span className="sw-private-text">
+              <span className="sw-private-label">{t('share.private')}</span>
+              <span className="sw-private-subdesc">{t('share.privateDesc')}</span>
+            </span>
+          </label>
+          <button className="sw-create-btn" onClick={handleCreate} disabled={loading}>
             {loading ? t('share.creating') : t('share.create')}
           </button>
         </div>
@@ -206,15 +219,17 @@ function FeedTab({ onLoadShare, onClose }) {
   );
 }
 
-// ── Tab: Checkpoints ───────────────────────────────────────────────────────────
+// ── Tab: Versiones ─────────────────────────────────────────────────────────────
 function SnapsTab({ fromShare, onLoadSnap }) {
   const t = useT();
-  if (!fromShare?.meta?.snapshots?.length) return (
-    <div className="sw-tab-body"><div className="sw-feed-state">{t('share.snapDefault')}</div></div>
-  );
+  const snaps = fromShare?.meta?.snapshots || [];
   return (
     <div className="sw-tab-body">
-      {fromShare.meta.snapshots.map(s => (
+      <p className="sw-desc">{t('share.versionsInfo')}</p>
+      {snaps.length === 0 && (
+        <div className="sw-feed-state">{t('share.noVersions')}</div>
+      )}
+      {snaps.map(s => (
         <button
           key={s.n}
           className={`sw-snap-pick-entry ${s.n === fromShare.currentSnap ? 'active' : ''}`}
@@ -233,11 +248,12 @@ function SnapsTab({ fromShare, onLoadSnap }) {
 export default function ShareWindow({ onClose, saveLoaded, fromShare, onLoadSnap, onLoadShare }) {
   const t = useT();
 
-  const tabs = [
-    ...(saveLoaded ? [{ id: 'share', label: t('sw.tabShare') }] : []),
-    { id: 'feed',  label: t('sw.tabGroup') },
-    ...(fromShare  ? [{ id: 'snaps', label: t('sw.tabSnaps') }] : []),
-  ];
+  const tabs = saveLoaded
+    ? [
+        { id: 'share', label: t('sw.tabShare') },
+        ...(fromShare ? [{ id: 'snaps', label: t('sw.tabSnaps') }] : []),
+      ]
+    : [{ id: 'feed', label: t('sw.tabGroup') }];
 
   const [tab, setTab] = useState(saveLoaded ? 'share' : 'feed');
 
