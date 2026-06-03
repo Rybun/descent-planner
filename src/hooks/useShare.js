@@ -21,12 +21,13 @@ export function useShare() {
   const gameState     = useStore(s => s.gameState);
   const saveMeta      = useStore(s => s.saveMeta);
   const actionHistory = useStore(s => s.actionHistory);
+  const originalState = useStore(s => s.originalState);
 
   const createShare = useCallback(async (label) => {
     const res = await fetch(`${SHARE_API}/api/share`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ save: gameState, saveMeta, actionHistory, label }),
+      body: JSON.stringify({ save: gameState, saveMeta, actionHistory, originalState, label }),
     });
     if (!res.ok) throw new Error(`${res.status} ${await res.text()}`);
     const data = await res.json();
@@ -45,7 +46,7 @@ export function useShare() {
     const res = await fetch(`${SHARE_API}/api/share/${id}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'X-Write-Token': writeToken },
-      body: JSON.stringify({ save: gameState, saveMeta, actionHistory, label }),
+      body: JSON.stringify({ save: gameState, saveMeta, actionHistory, originalState, label }),
     });
     if (!res.ok) throw new Error(`${res.status} ${await res.text()}`);
     const data = await res.json();

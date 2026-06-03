@@ -108,15 +108,17 @@ export const useStore = create((set, get) => ({
   },
 
   // Cargar un save ya parseado (desde enlace compartido)
-  loadParsedState: (gameState, saveMeta) => {
-    const gs = cloneGameState(gameState);
+  // originalState: estado pre-acciones (para que undo funcione correctamente)
+  loadParsedState: (gameState, saveMeta, actionHistory = [], originalState = null) => {
+    const gs   = cloneGameState(gameState);
+    const orig = originalState ? cloneGameState(originalState) : cloneGameState(gameState);
     set({
       saveLoaded:    true,
       saveError:     null,
       saveMeta,
       gameState:     gs,
-      originalState: cloneGameState(gameState),
-      actionHistory: [],
+      originalState: orig,
+      actionHistory,
     });
   },
 

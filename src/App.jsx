@@ -207,7 +207,7 @@ function App() {
           getMeta(shareId),
         ]);
         if (!snap?.save) return;
-        loadParsedState(snap.save, snap.saveMeta || {});
+        loadParsedState(snap.save, snap.saveMeta || {}, snap.actionHistory || [], snap.originalState || null);
         setFromShare({ id: shareId, currentSnap: parseInt(snapN), meta });
       } catch {}
     })();
@@ -269,7 +269,7 @@ function App() {
     try {
       const snap = await getSnapshot(fromShare.id, n);
       if (!snap?.save) return;
-      loadParsedState(snap.save, snap.saveMeta || {});
+      loadParsedState(snap.save, snap.saveMeta || {}, snap.actionHistory || [], snap.originalState || null);
       setFromShare(prev => ({ ...prev, currentSnap: n }));
       const newPath = n === 0 ? `/${fromShare.id}` : `/${fromShare.id}/${n}`;
       window.history.pushState({}, '', newPath);
@@ -277,7 +277,7 @@ function App() {
   }
 
   function handleLoadShare({ snap, meta, id }) {
-    loadParsedState(snap.save, snap.saveMeta || {});
+    loadParsedState(snap.save, snap.saveMeta || {}, snap.actionHistory || [], snap.originalState || null);
     setFromShare({ id, currentSnap: 0, meta });
     window.history.pushState({}, '', `/${id}`);
   }
