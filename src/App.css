@@ -831,3 +831,17 @@
   color: var(--color-text-muted);
   flex-shrink: 0;
 }
+
+/* ── Botón único de share en desktop ── */
+.share-window-btn {
+  position: relative;
+}
+.share-window-dot {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-gold);
+}

@@ -9,9 +9,8 @@ import CraftPanel from './components/CraftPanel';
 import ActionLog from './components/ActionLog';
 import GameInfoPanel from './components/GameInfoPanel';
 import InventoryPanel from './components/InventoryPanel';
-import ShareModal from './components/ShareModal';
-import FeedModal from './components/FeedModal';
-import { useShare, SHARE_API } from './hooks/useShare';
+import ShareWindow from './components/ShareWindow';
+import { useShare } from './hooks/useShare';
 import './App.css';
 
 const TAB_KEYS = ['partida', 'armeria', 'tienda', 'crafteo', 'inventario', 'historial'];
@@ -86,7 +85,7 @@ function LangSelector() {
 }
 
 function MobileMenu({ tabs, tabIcons, netCount, activeTab, onSelectTab, onClose,
-  onReset, onLoadNew, onAbout, onShare, onFeed, canReset, saveLoaded }) {
+  onReset, onLoadNew, onAbout, onShareWindow, canReset }) {
   const t    = useT();
   const lang = useStore(s => s.lang);
   const setLang = useStore(s => s.setLang);
@@ -137,13 +136,8 @@ function MobileMenu({ tabs, tabIcons, netCount, activeTab, onSelectTab, onClose,
             ))}
           </div>
 
-          {saveLoaded && (
-            <button className="mobile-nav-action-btn" onClick={onShare}>
-              {t('share.btn')}
-            </button>
-          )}
-          <button className="mobile-nav-action-btn" onClick={onFeed}>
-            {t('app.feed')}
+          <button className="mobile-nav-action-btn" onClick={onShareWindow}>
+            {t('share.btn')}
           </button>
           {canReset && (
             <button className="mobile-nav-action-btn danger" onClick={onReset}>
@@ -174,13 +168,11 @@ function App() {
   const loadParsedState  = useStore(s => s.loadParsedState);
   const netCount = actionHistory.length;
 
-  const [showAbout,    setShowAbout]    = useState(false);
-  const [showDropZone, setShowDropZone] = useState(false);
-  const [showMenu,     setShowMenu]     = useState(false);
-  const [showShare,    setShowShare]    = useState(false);
-  const [showFeed,     setShowFeed]     = useState(false);
-  const [fromShare,    setFromShare]    = useState(null); // { id, snapshots, currentSnap }
-  const [showSnapPicker, setShowSnapPicker] = useState(false);
+  const [showAbout,       setShowAbout]       = useState(false);
+  const [showDropZone,    setShowDropZone]    = useState(false);
+  const [showMenu,        setShowMenu]        = useState(false);
+  const [showShareWindow, setShowShareWindow] = useState(false);
+  const [fromShare,       setFromShare]       = useState(null);
 
   const { getSnapshot, getMeta } = useShare();
 
@@ -220,17 +212,16 @@ function App() {
     return (
       <>
         <DropZone />
-        <button className="feed-fab" onClick={() => setShowFeed(true)} title={t('app.feed')}>
+        <button className="feed-fab" onClick={() => setShowShareWindow(true)} title={t('app.feed')}>
           👥
         </button>
-        {showFeed && (
-          <FeedModal
-            onClose={() => setShowFeed(false)}
-            onLoadShare={({ snap, meta, id }) => {
-              loadParsedState(snap.save, snap.saveMeta || {});
-              setFromShare({ id, currentSnap: 0, meta });
-              setShowFeed(false);
-            }}
+        {showShareWindow && (
+          <ShareWindow
+            saveLoaded={false}
+            fromShare={fromShare}
+            onClose={() => setShowShareWindow(false)}
+            onLoadShare={handleLoadShare}
+            onLoadSnap={handleLoadSnap}
           />
         )}
       </>
@@ -265,7 +256,6 @@ function App() {
 
   async function handleLoadSnap(n) {
     if (!fromShare) return;
-    setShowSnapPicker(false);
     try {
       const snap = await getSnapshot(fromShare.id, n);
       if (!snap?.save) return;
@@ -321,25 +311,9 @@ function App() {
         {/* Desktop: botones normales */}
         <div className="header-right header-right--desktop">
           <LangSelector />
-          {fromShare && (
-            <button
-              className="btn btn-sm share-indicator-btn"
-              onClick={() => setShowSnapPicker(true)}
-              title={t('share.fromShare')}
-            >
-              📤 {t('share.fromShare')}
-              {(fromShare.meta?.snapshot_count ?? 1) > 1 && (
-                <span className="share-indicator-snaps">
-                  #{fromShare.currentSnap}
-                </span>
-              )}
-            </button>
-          )}
-          <button className="btn btn-sm" onClick={() => setShowFeed(true)}>
-            {t('app.feed')}
-          </button>
-          <button className="btn btn-sm" onClick={() => setShowShare(true)}>
+          <button className="btn btn-sm share-window-btn" onClick={() => setShowShareWindow(true)}>
             {t('share.btn')}
+            {fromShare && <span className="share-window-dot" />}
           </button>
           {actionHistory.length > 0 && (
             <button className="btn btn-sm" onClick={handleReset} title={t('log.resetTitle')}>
@@ -446,43 +420,20 @@ function App() {
           onReset={handleMenuReset}
           onLoadNew={() => { setShowMenu(false); handleLoadNew(); }}
           onAbout={handleMenuAbout}
-          onShare={() => { setShowMenu(false); setShowShare(true); }}
-          onFeed={() => { setShowMenu(false); setShowFeed(true); }}
+          onShareWindow={() => { setShowMenu(false); setShowShareWindow(true); }}
           canReset={actionHistory.length > 0}
+        />
+      )}
+
+      {showShareWindow && (
+        <ShareWindow
           saveLoaded={saveLoaded}
-        />
-      )}
-
-      {showShare && <ShareModal onClose={() => setShowShare(false)} />}
-
-      {showFeed && (
-        <FeedModal
-          onClose={() => setShowFeed(false)}
+          fromShare={fromShare}
+          onClose={() => setShowShareWindow(false)}
           onLoadShare={handleLoadShare}
+          onLoadSnap={handleLoadSnap}
         />
       )}
-
-      {/* Selector de snapshots cuando se cargó desde enlace */}
-      {showSnapPicker && fromShare?.meta?.snapshots?.length > 1 && createPortal(
-        <div className="snap-picker-overlay" onClick={() => setShowSnapPicker(false)}>
-          <div className="snap-picker" onClick={e => e.stopPropagation()}>
-            <div className="snap-picker-title">{t('share.snapshots')}</div>
-            {fromShare.meta.snapshots.map(s => (
-              <button
-                key={s.n}
-                className={`snap-picker-entry ${s.n === fromShare.currentSnap ? 'active' : ''}`}
-                onClick={() => handleLoadSnap(s.n)}
-              >
-                <span className="snap-picker-n">#{s.n}</span>
-                <span className="snap-picker-label">{s.label || t('share.snapDefault')}</span>
-                <span className="snap-picker-date">
-                  {new Date(s.created_at).toLocaleDateString()}
-                </span>
-              </button>
-            ))}
-          </div>
-        </div>
-      , document.body)}
     </div>
   );
 }
