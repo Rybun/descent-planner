@@ -11,6 +11,7 @@ import GameInfoPanel from './components/GameInfoPanel';
 import InventoryPanel from './components/InventoryPanel';
 import ShareWindow from './components/ShareWindow';
 import { useShare } from './hooks/useShare';
+import { countNetChanges } from './utils/netChanges';
 import './App.css';
 
 const TAB_KEYS = ['partida', 'armeria', 'tienda', 'crafteo', 'inventario', 'historial'];
@@ -163,10 +164,11 @@ function App() {
   const gameState        = useStore(s => s.gameState);
   const activeTab        = useStore(s => s.activeTab);
   const actionHistory    = useStore(s => s.actionHistory);
+  const originalState    = useStore(s => s.originalState);
   const setActiveTab     = useStore(s => s.setActiveTab);
   const resetToSave      = useStore(s => s.resetToSave);
   const loadParsedState  = useStore(s => s.loadParsedState);
-  const netCount = actionHistory.length;
+  const netCount = countNetChanges(originalState, gameState, actionHistory);
 
   const [showAbout,       setShowAbout]       = useState(false);
   const [showDropZone,    setShowDropZone]    = useState(false);

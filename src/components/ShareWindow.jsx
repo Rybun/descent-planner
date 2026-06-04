@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { useT, useLang, getName } from '../i18n';
 import { useStore } from '../store';
-import { useShare, getMyShares, SHARE_API } from '../hooks/useShare';
+import { useShare } from '../hooks/useShare';
 import { HEROES_BY_ID } from '../gamedata/heroes';
 import './ShareWindow.css';
 
@@ -10,12 +10,9 @@ import './ShareWindow.css';
 function ShareTab({ onClose }) {
   const t        = useT();
   const saveMeta = useStore(s => s.saveMeta);
-  const { createShare, addSnapshot } = useShare();
+  const { createShare, addSnapshot, getMeta } = useShare();
 
-  const slotGUID      = saveMeta?.slotGUID;
-  const existingShare = slotGUID ? (getMyShares()[slotGUID] || null) : null;
-
-  const [shareData, setShareData] = useState(existingShare);
+  const [shareData, setShareData] = useState(null);
   const [loading,   setLoading]   = useState(false);
   const [error,     setError]     = useState(null);
   const [copied,    setCopied]    = useState(false);
@@ -30,7 +27,8 @@ function ShareTab({ onClose }) {
     setLoading(true); setError(null);
     try {
       const data = await createShare(saveMeta?.partyName || null, isPrivate);
-      setShareData({ ...data, snapshot_count: 1, snapshots: [{ n: 0, label: null, created_at: new Date().toISOString() }] });
+      const meta = await getMeta(data.id);
+      setShareData({ ...data, snapshot_count: meta?.snapshot_count || 1, snapshots: meta?.snapshots || [] });
     } catch (err) { setError(err.message); }
     finally { setLoading(false); }
   }
