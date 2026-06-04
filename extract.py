@@ -278,8 +278,8 @@ ASSET_RULES = [
     ("assets/d3/heroes/",       "heroes",       lambda p: True),
 ]
 
-# Mapa de icono de tipo de daño: basename del container → nombre en public/assets/icons/
-# Ruta en bundles: assets/d3/glossaryterms/damage/mainsterms/damage types/icons_*.png
+# ── Mapa de iconos de tipo de daño (glossaryterms → icons/) ──────────────────
+# Ruta en bundles: assets/d3/glossaryterms/damage/mainterms/damage types/icons_*.png
 DMG_ICON_MAP = {
     "icons_anemos.png":   "dmg_anemos.png",
     "icons_aquos.png":    "dmg_aquos.png",
@@ -296,30 +296,61 @@ DMG_ICON_MAP = {
     "icons_vigos.png":    "dmg_vigos.png",
 }
 
-# Iconos que DEBEN estar en public/assets/icons/ pero NO se generan aquí.
-# Se encuentran en la carpeta game-resources/raw/textures/d3/ con nombres hash y
-# requieren identificación manual. Guárdalos en el directorio de iconos antes de
-# desplegar o extráelos del zip de backup (descent-planner-full.zip).
-ICONS_MANUAL = [
-    # Iconos UI del planner (vienen de UI atlases del juego — paths sin mapear)
-    "tab_tienda.png", "tab_armeria.png", "tab_creacion.png",
-    "tab_historial.png", "tab_inventario.png",
-    "tab_partida_act1.png", "tab_partida_act2.png",
-    # Decoración de tarjetas de arma (label corners / edges)
-    "label_bg.png",
-    "label_corner_tl.png", "label_corner_tr.png",
-    "label_corner_bl.png", "label_corner_br.png",
-    "label_edge_t.png",    "label_edge_b.png",
-    "label_edge_l.png",    "label_edge_r.png",
-    # Iconos de UI
-    "currency.png",      # moneda de oro — UI de la tienda
-    "recipe_badge.png",  # distintivo de receta crafteable
-    "weapon_range.png",  # icono de rango de arma
-    "dmg_value.png",     # icono del número de dados de daño
-    # Iconos de tipo de ítem (no-SDF — faltan en game-resources/raw/icons)
-    "Icon_Consumable.png",  # referenciado en InventoryPanel.jsx
-    "Icon_Trinket.png",     # referenciado en InventoryPanel.jsx
-]
+# ── Mapa de sprites UI (nombre_sprite → nombre_archivo_destino) ───────────────
+# Sprites extraídos de Atlas_UI y GlossaryAtlas por nombre (m_Name).
+# Confirmados por hash match con las imágenes en public/assets/icons/.
+UI_SPRITE_MAP = {
+    # Tabs del planner → sprites City / Glossary del juego
+    "CityIcon_Shop":         "tab_tienda.png",
+    "CityIcon_Armory":       "tab_armeria.png",
+    "CityIcon_Crafting":     "tab_creacion.png",
+    "CityIcon_Person":       "tab_inventario.png",
+    "Cloth":                 "tab_historial.png",     # material Tela = tab historial
+    "p29_CampaignQuest_Icon":"tab_partida_act1.png",
+    "p29_SideQuest_Icon":    "tab_partida_act2.png",
+    # Iconos de UI general
+    "Icon_Coin":             "currency.png",
+    "Icon_Coin":             "Icon_Coin.png",          # mismo sprite, dos destinos
+    "Leather":               "recipe_badge.png",       # material Cuero = badge receta
+    "Icon_0000_Range":       "weapon_range.png",
+    "Icon_Damage":           "dmg_value.png",
+    "Icon_Consumables":      "Icon_Consumable.png",    # nota: el sprite tiene 's'
+    "Icon_Trinket":          "Icon_Trinket.png",
+    # Iconos no-SDF ya confirmados por hash
+    "Icon_Armor":            "Icon_Armor.png",
+    "Icon_Materials":        "Icon_Materials.png",
+    "Icon_Defense":          "Icon_Defense.png",
+    "Icon_Range":            "Icon_Range.png",
+    "Icon_Action_Combat":    "Icon_Action_Combat.png",
+    "Icon_Action_Generic":   "Icon_Action_Generic.png",
+    "Icon_Action_Interact":  "Icon_Action.png",
+    "Icon_Resistance":       "Icon_Resistance.png",
+    "Icon_Weakness":         "Icon_Weakness.png",
+    "Icon_Coins":            "Icon_Coins.png",
+}
+
+# ── Definición de los 9 pieces del label frame (desde 9Slice_2) ───────────────
+# 9Slice_2 es el sprite (48×50, blanco+alpha) del Atlas_UI que contiene el frame
+# de las tarjetas de piezas de arma. Se divide en 9 pieces:
+#   - label_bg: el sprite completo tal cual (blanco, misma forma)
+#   - label_corner_*: crops en los cuadrantes de 24×25, convertidos a negro
+#   - label_edge_*: crops de 1px en el borde, convertidos a negro
+# Todos verificados por hash exacto con las imágenes del proyecto.
+LABEL_9SLICE_CX = 24   # x split point
+LABEL_9SLICE_CY = 25   # y split point
+
+LABEL_PIECES = {
+    # (crop_box, make_black)
+    "label_bg.png":         ((0,  0,  48, 50), False),   # blanco, tal cual
+    "label_corner_tl.png":  ((0,  0,  24, 25), True),
+    "label_corner_tr.png":  ((24, 0,  48, 25), True),
+    "label_corner_bl.png":  ((0,  25, 24, 50), True),
+    "label_corner_br.png":  ((24, 25, 48, 50), True),
+    "label_edge_t.png":     ((24, 0,  25, 25), True),   # 1px ancho
+    "label_edge_b.png":     ((24, 25, 25, 50), True),
+    "label_edge_l.png":     ((0,  25, 24, 26), True),   # 1px alto
+    "label_edge_r.png":     ((24, 25, 48, 26), True),
+}
 
 
 def extract_images(env, planner_dir, overwrite=False):
@@ -361,84 +392,128 @@ def extract_images(env, planner_dir, overwrite=False):
             print(f"      {folder}: {n}")
 
 
-def extract_dmg_icons(env, planner_dir, overwrite=False):
-    """Extrae iconos de tipos de daño desde los bundles de GlossaryTerms."""
+def extract_ui_icons(env, planner_dir, overwrite=False):
+    """Extrae TODOS los iconos UI del planner desde los bundles del juego.
+
+    Cubre tres grupos:
+    1. Iconos de tipo de daño desde GlossaryTerms (dmg_*.png)
+    2. Sprites de Atlas_UI y otros atlases (tabs, currency, Icon_*, etc.)
+    3. Label frame pieces generadas desde el sprite 9Slice_2
+    """
+    from PIL import Image as _Image
     icons_dir = os.path.join(planner_dir, "public", "assets", "icons")
     os.makedirs(icons_dir, exist_ok=True)
     extracted = skipped = 0
 
+    # ── Grupo 1: iconos de daño (container path matching) ────────────────────
+    # Estos son objetos Sprite en el GlossaryAtlas, no Texture2D
     for container_path, obj in env.container.items():
-        if obj.type.name != "Texture2D":
+        if obj.type.name not in ("Texture2D", "Sprite"):
             continue
-        # Ruta en bundles: assets/d3/glossaryterms/damage/.../icons_*.png
         if "glossaryterms" not in container_path:
             continue
         basename = os.path.basename(container_path).lower()
         dest_name = DMG_ICON_MAP.get(basename)
         if not dest_name:
             continue
-
         out_path = os.path.join(icons_dir, dest_name)
         if not overwrite and os.path.exists(out_path):
             skipped += 1
             continue
         try:
-            img = obj.read().image
+            obj.read().image.save(out_path)
+            extracted += 1
+        except Exception as e:
+            print(f"    ✗ dmg icon {basename}: {e}")
+
+    # ── Grupo 2: sprites UI por nombre (m_Name) ───────────────────────────────
+    # UI_SPRITE_MAP puede tener claves duplicadas si el mismo sprite va a dos archivos;
+    # lo resolvemos como lista de (sprite_name, dest_filename)
+    sprite_targets = list(UI_SPRITE_MAP.items())
+    # También: Icon_Coin → currency.png e Icon_Coin.png (la clave se sobreescribe
+    # en el dict, así que añadimos la segunda entrada explícita aquí)
+    sprite_targets.append(("Icon_Coin", "currency.png"))
+
+    # Construir un set de nombres buscados para filtrar rápido
+    wanted_sprites = {name for name, _ in sprite_targets}
+    found_sprites = {}  # sprite_name → PIL.Image
+
+    seen_pids = set()
+    for obj in env.objects:
+        if obj.path_id in seen_pids:
+            continue
+        seen_pids.add(obj.path_id)
+        try:
+            if obj.type.name != "Sprite":
+                continue
+            d = obj.read()
+            name = getattr(d, 'm_Name', None) or ''
+            if name not in wanted_sprites or name in found_sprites:
+                continue
+            found_sprites[name] = d.image
+        except Exception:
+            pass
+
+    for sprite_name, dest_name in sprite_targets:
+        out_path = os.path.join(icons_dir, dest_name)
+        if not overwrite and os.path.exists(out_path):
+            skipped += 1
+            continue
+        img = found_sprites.get(sprite_name)
+        if img is None:
+            print(f"    ⚠ Sprite no encontrado: '{sprite_name}' → {dest_name}")
+            continue
+        try:
             img.save(out_path)
             extracted += 1
         except Exception as e:
-            print(f"    ✗ Error extrayendo {basename}: {e}")
+            print(f"    ✗ {sprite_name} → {dest_name}: {e}")
 
-    print(f"  ✓ Iconos de daño: {extracted} extraídos, {skipped} ya existían")
-    if extracted + skipped < len(DMG_ICON_MAP):
-        missing = len(DMG_ICON_MAP) - (extracted + skipped)
-        print(f"  ⚠ {missing} iconos de daño no encontrados en los bundles")
+    # ── Grupo 3: label frame pieces desde 9Slice_2 ───────────────────────────
+    slice2_img = found_sprites.get('9Slice_2')
+    if slice2_img is None:
+        # Buscar 9Slice_2 explícitamente si no fue capturado antes
+        for obj in env.objects:
+            try:
+                if obj.type.name != "Sprite":
+                    continue
+                d = obj.read()
+                if getattr(d, 'm_Name', None) == '9Slice_2':
+                    slice2_img = d.image
+                    break
+            except Exception:
+                pass
 
+    if slice2_img:
+        for dest_name, (box, make_black) in LABEL_PIECES.items():
+            out_path = os.path.join(icons_dir, dest_name)
+            if not overwrite and os.path.exists(out_path):
+                skipped += 1
+                continue
+            try:
+                piece = slice2_img.crop(box)
+                if make_black:
+                    r, g, b, a = piece.split()
+                    black = _Image.new("L", piece.size, 0)
+                    piece = _Image.merge("RGBA", (black, black, black, a))
+                piece.save(out_path)
+                extracted += 1
+            except Exception as e:
+                print(f"    ✗ label piece {dest_name}: {e}")
+    else:
+        print("    ⚠ Sprite 9Slice_2 no encontrado — label_*.png no generados")
 
-def copy_raw_icons(planner_dir, overwrite=False):
-    """Copia los Icon_*.png no-SDF desde game-resources/raw/icons/ a public/assets/icons/.
-
-    Estos iconos los extrae extract_all.py o se colocan manualmente; aquí solo se
-    copian a la carpeta de assets del planner para que la app los encuentre.
-    """
-    raw_icons_dir = os.path.join(planner_dir, "..", "game-resources", "raw", "icons")
-    icons_dir     = os.path.join(planner_dir, "public", "assets", "icons")
-    os.makedirs(icons_dir, exist_ok=True)
-
-    if not os.path.isdir(raw_icons_dir):
-        print(f"  ⚠ No se encontró: {raw_icons_dir}")
-        print("     Ejecuta game-resources/extract_all.py primero")
-        return
-
-    copied = skipped = 0
-    # Solo copiar los Icon_*.png que NO son generados por SDF (evitar sobreescribir)
-    sdf_names = {f"{name}.png" for name in SDF_ICON_BOXES}
-    for fname in sorted(os.listdir(raw_icons_dir)):
-        if not fname.endswith(".png"):
-            continue
-        if fname in sdf_names:
-            continue  # el SDF ya los genera directamente
-        if fname.startswith("pua_"):
-            continue  # imágenes de diagnóstico, no son iconos finales
-        src  = os.path.join(raw_icons_dir, fname)
-        dest = os.path.join(icons_dir, fname)
-        if not overwrite and os.path.exists(dest):
-            skipped += 1
-            continue
+    # También necesitamos 9Slice_2 en el grupo 2 (para label_bg.png vía LABEL_PIECES)
+    # Si label_bg no se generó, intentar guardar 9Slice_2 directamente:
+    label_bg_path = os.path.join(icons_dir, "label_bg.png")
+    if not os.path.exists(label_bg_path) and slice2_img:
         try:
-            shutil.copy2(src, dest)
-            copied += 1
-        except Exception as e:
-            print(f"    ✗ Error copiando {fname}: {e}")
+            slice2_img.save(label_bg_path)
+            extracted += 1
+        except Exception:
+            pass
 
-    print(f"  ✓ Iconos raw copiados: {copied} nuevos, {skipped} ya existían")
-    if ICONS_MANUAL:
-        missing_manual = [n for n in ICONS_MANUAL
-                          if not os.path.exists(os.path.join(icons_dir, n))]
-        if missing_manual:
-            print(f"  ⚠ {len(missing_manual)} iconos requieren colocación manual:")
-            for n in missing_manual:
-                print(f"      • {n}")
+    print(f"  ✓ Iconos UI: {extracted} extraídos, {skipped} ya existían")
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -1334,10 +1409,9 @@ def main():
     else:
         print("\n[6/7] Extracción de iconos SDF omitida (--no-sdf-icons)")
 
-    # ── 7. Iconos adicionales ─────────────────────────────────────────────────
+    # ── 7. Iconos adicionales (UI + daño + label frame) ─────────────────────
     print("\n[7/7] Extrayendo iconos adicionales...")
-    extract_dmg_icons(env, planner_dir, overwrite=args.overwrite)
-    copy_raw_icons(planner_dir, overwrite=args.overwrite)
+    extract_ui_icons(env, planner_dir, overwrite=args.overwrite)
 
     print(f"\n{'='*60}")
     print("  ¡Extracción completada!")
