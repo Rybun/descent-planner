@@ -6,14 +6,12 @@ import { useShare } from '../hooks/useShare';
 import { HEROES_BY_ID } from '../gamedata/heroes';
 import './ShareWindow.css';
 
-// ── Tab: Compartir ─────────────────────────────────────────────────────────────
-function ShareTab({ onClose, fromShare }) {
+// ── Panel: Compartir (+ versiones integradas) ─────────────────────────────────
+function SharePanel({ onClose, fromShare, onLoadSnap }) {
   const t        = useT();
   const saveMeta = useStore(s => s.saveMeta);
   const { createShare, addSnapshot, getMeta } = useShare();
 
-  // Si el save se cargó desde un enlace compartido, mostrar ese share directamente.
-  // No habrá write_token (no somos el autor), así que el panel de añadir versión queda oculto.
   const [shareData, setShareData] = useState(
     fromShare?.meta
       ? { id: fromShare.id, snapshot_count: fromShare.meta.snapshot_count, snapshots: fromShare.meta.snapshots || [] }
@@ -28,6 +26,10 @@ function ShareTab({ onClose, fromShare }) {
 
   const linkBase = import.meta.env.VITE_SHARE_LINK_BASE || (typeof window !== 'undefined' ? window.location.origin : '');
   const shareUrl = shareData ? `${linkBase}/${shareData.id}` : null;
+
+  function snapLink(n) {
+    return n === 0 ? `${linkBase}/${shareData.id}` : `${linkBase}/${shareData.id}/${n}`;
+  }
 
   async function handleCreate() {
     setLoading(true); setError(null);
@@ -45,20 +47,28 @@ function ShareTab({ onClose, fromShare }) {
     try {
       const data = await addSnapshot(shareData.id, shareData.write_token, snapLabel || null);
       const newSnap = { n: data.n, label: snapLabel || null, created_at: new Date().toISOString() };
-      setShareData(prev => ({ ...prev, snapshot_count: (prev.snapshot_count || 1) + 1, snapshots: [...(prev.snapshots || []), newSnap] }));
-      setSnapUrl(`${linkBase}/${shareData.id}/${data.n}`);
+      setShareData(prev => ({
+        ...prev,
+        snapshot_count: (prev.snapshot_count || 1) + 1,
+        snapshots: [...(prev.snapshots || []), newSnap],
+      }));
+      setSnapUrl(snapLink(data.n));
       setSnapLabel('');
     } catch (err) { setError(err.message); }
     finally { setLoading(false); }
   }
 
   function copy(text) {
-    navigator.clipboard.writeText(text).then(() => { setCopied(true); setTimeout(() => setCopied(false), 2000); });
+    navigator.clipboard.writeText(text).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
   }
 
   return (
     <div className="sw-tab-body">
       {!shareData ? (
+        /* ── Sin enlace todavía ─────────────────────────────────────── */
         <div className="sw-create-section">
           <p className="sw-desc">{t('share.desc')}</p>
           <label className="sw-private-row">
@@ -78,17 +88,28 @@ function ShareTab({ onClose, fromShare }) {
           </button>
         </div>
       ) : (
+        /* ── Con enlace ────────────────────────────────────────────── */
         <>
+          {/* Enlace principal */}
           <div className="sw-url-section">
             <span className="sw-url-label">{t('share.linkLabel')}</span>
             <div className="sw-url-row">
-              <input className="sw-url-input" value={shareUrl} readOnly onFocus={e => e.target.select()} />
-              <button className={`btn btn-sm sw-copy-btn ${copied ? 'copied' : ''}`} onClick={() => copy(shareUrl)}>
+              <input
+                className="sw-url-input"
+                value={shareUrl}
+                readOnly
+                onFocus={e => e.target.select()}
+              />
+              <button
+                className={`btn btn-sm sw-copy-btn ${copied ? 'copied' : ''}`}
+                onClick={() => copy(shareUrl)}
+              >
                 {copied ? t('share.copied') : t('share.copy')}
               </button>
             </div>
           </div>
 
+          {/* Guardar versión — solo cuando tenemos write_token (sesión de autor) */}
           {shareData.write_token && (
             <div className="sw-snap-section">
               <div className="sw-snap-header">{t('share.addSnap')}</div>
@@ -113,17 +134,34 @@ function ShareTab({ onClose, fromShare }) {
             </div>
           )}
 
-          {shareData.snapshots?.length > 1 && (
+          {/* Lista de versiones — siempre visible cuando hay snapshots */}
+          {shareData.snapshots?.length > 0 && (
             <div className="sw-snaps-list">
               <div className="sw-snaps-title">{t('share.snapshots')}</div>
-              {[...shareData.snapshots].reverse().map(s => (
-                <div key={s.n} className="sw-snap-entry">
-                  <span className="sw-snap-n">#{s.n}</span>
-                  <span className="sw-snap-entry-label">{s.label || t('share.snapDefault')}</span>
-                  <span className="sw-snap-date">{new Date(s.created_at).toLocaleDateString()}</span>
-                  <button className="sw-snap-copy-btn" onClick={() => copy(s.n === 0 ? `${linkBase}/${shareData.id}` : `${linkBase}/${shareData.id}/${s.n}`)} title={t('share.copy')}>⎘</button>
-                </div>
-              ))}
+              {[...shareData.snapshots].reverse().map(s => {
+                const isActive = fromShare && s.n === fromShare.currentSnap;
+                return (
+                  <div key={s.n} className={`sw-snap-entry ${isActive ? 'active' : ''}`}>
+                    <span className="sw-snap-n">#{s.n}</span>
+                    <span className="sw-snap-entry-label">{s.label || t('share.snapDefault')}</span>
+                    <span className="sw-snap-date">{new Date(s.created_at).toLocaleDateString()}</span>
+                    <div className="sw-snap-actions">
+                      <button
+                        className="sw-snap-copy-btn"
+                        onClick={() => copy(snapLink(s.n))}
+                        title={t('share.copy')}
+                      >⎘</button>
+                      {onLoadSnap && !isActive && (
+                        <button
+                          className="sw-snap-copy-btn"
+                          onClick={() => onLoadSnap(s.n)}
+                          title={t('share.loadSnap')}
+                        >↓</button>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           )}
         </>
@@ -133,7 +171,7 @@ function ShareTab({ onClose, fromShare }) {
   );
 }
 
-// ── Tab: Grupo (feed) ──────────────────────────────────────────────────────────
+// ── Panel: Feed del grupo ──────────────────────────────────────────────────────
 function HeroAvatars({ heroIds, isAct2 }) {
   if (!heroIds?.length) return null;
   return (
@@ -148,7 +186,7 @@ function HeroAvatars({ heroIds, isAct2 }) {
   );
 }
 
-function FeedTab({ onLoadShare, onClose }) {
+function FeedPanel({ onLoadShare, onClose }) {
   const t    = useT();
   const lang = useLang();
   const { getFeed, getSnapshot, getMeta } = useShare();
@@ -223,62 +261,29 @@ function FeedTab({ onLoadShare, onClose }) {
   );
 }
 
-// ── Tab: Versiones ─────────────────────────────────────────────────────────────
-function SnapsTab({ fromShare, onLoadSnap }) {
-  const t = useT();
-  const snaps = fromShare?.meta?.snapshots || [];
-  return (
-    <div className="sw-tab-body">
-      <p className="sw-desc">{t('share.versionsInfo')}</p>
-      {snaps.length === 0 && (
-        <div className="sw-feed-state">{t('share.noVersions')}</div>
-      )}
-      {snaps.map(s => (
-        <button
-          key={s.n}
-          className={`sw-snap-pick-entry ${s.n === fromShare.currentSnap ? 'active' : ''}`}
-          onClick={() => onLoadSnap(s.n)}
-        >
-          <span className="sw-snap-n">#{s.n}</span>
-          <span className="sw-snap-pick-label">{s.label || t('share.snapDefault')}</span>
-          <span className="sw-snap-date">{new Date(s.created_at).toLocaleDateString()}</span>
-        </button>
-      ))}
-    </div>
-  );
-}
-
 // ── Ventana principal ──────────────────────────────────────────────────────────
 export default function ShareWindow({ onClose, saveLoaded, fromShare, onLoadSnap, onLoadShare }) {
   const t = useT();
-
-  const tabs = saveLoaded
-    ? [
-        { id: 'share', label: t('sw.tabShare') },
-        ...(fromShare ? [{ id: 'snaps', label: t('sw.tabSnaps') }] : []),
-      ]
-    : [{ id: 'feed', label: t('sw.tabGroup') }];
-
-  const [tab, setTab] = useState(saveLoaded ? 'share' : 'feed');
 
   return createPortal(
     <div className="sw-overlay" onClick={onClose}>
       <div className="sw-modal" onClick={e => e.stopPropagation()}>
 
         <div className="sw-header">
-          <div className="sw-tabs">
-            {tabs.map(tb => (
-              <button key={tb.id} className={`sw-tab ${tab === tb.id ? 'active' : ''}`} onClick={() => setTab(tb.id)}>
-                {tb.label}
-              </button>
-            ))}
-          </div>
+          <span className="sw-title">
+            {saveLoaded ? t('sw.tabShare') : t('sw.tabGroup')}
+          </span>
           <button className="sw-close" onClick={onClose}>✕</button>
         </div>
 
-        {tab === 'share' && saveLoaded && <ShareTab onClose={onClose} fromShare={fromShare} />}
-        {tab === 'feed'  && <FeedTab onLoadShare={onLoadShare} onClose={onClose} />}
-        {tab === 'snaps' && fromShare && <SnapsTab fromShare={fromShare} onLoadSnap={(n) => { onLoadSnap(n); onClose(); }} />}
+        {saveLoaded
+          ? <SharePanel
+              onClose={onClose}
+              fromShare={fromShare}
+              onLoadSnap={onLoadSnap ? (n) => { onLoadSnap(n); onClose(); } : null}
+            />
+          : <FeedPanel onLoadShare={onLoadShare} onClose={onClose} />
+        }
 
       </div>
     </div>
