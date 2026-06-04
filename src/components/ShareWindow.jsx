@@ -7,12 +7,18 @@ import { HEROES_BY_ID } from '../gamedata/heroes';
 import './ShareWindow.css';
 
 // ── Tab: Compartir ─────────────────────────────────────────────────────────────
-function ShareTab({ onClose }) {
+function ShareTab({ onClose, fromShare }) {
   const t        = useT();
   const saveMeta = useStore(s => s.saveMeta);
   const { createShare, addSnapshot, getMeta } = useShare();
 
-  const [shareData, setShareData] = useState(null);
+  // Si el save se cargó desde un enlace compartido, mostrar ese share directamente.
+  // No habrá write_token (no somos el autor), así que el panel de añadir versión queda oculto.
+  const [shareData, setShareData] = useState(
+    fromShare?.meta
+      ? { id: fromShare.id, snapshot_count: fromShare.meta.snapshot_count, snapshots: fromShare.meta.snapshots || [] }
+      : null
+  );
   const [loading,   setLoading]   = useState(false);
   const [error,     setError]     = useState(null);
   const [copied,    setCopied]    = useState(false);
@@ -270,7 +276,7 @@ export default function ShareWindow({ onClose, saveLoaded, fromShare, onLoadSnap
           <button className="sw-close" onClick={onClose}>✕</button>
         </div>
 
-        {tab === 'share' && saveLoaded && <ShareTab onClose={onClose} />}
+        {tab === 'share' && saveLoaded && <ShareTab onClose={onClose} fromShare={fromShare} />}
         {tab === 'feed'  && <FeedTab onLoadShare={onLoadShare} onClose={onClose} />}
         {tab === 'snaps' && fromShare && <SnapsTab fromShare={fromShare} onLoadSnap={(n) => { onLoadSnap(n); onClose(); }} />}
 
