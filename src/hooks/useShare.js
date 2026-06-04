@@ -20,10 +20,10 @@ export function useShare() {
     return res.json();
   }, [gameState, saveMeta, actionHistory, originalState]);
 
-  const addSnapshot = useCallback(async (id, writeToken, label) => {
+  const addSnapshot = useCallback(async (id, label) => {
     const res = await fetch(`${SHARE_API}/api/share/${id}`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'X-Write-Token': writeToken },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ save: gameState, saveMeta, actionHistory, originalState, label }),
     });
     if (!res.ok) throw new Error(`${res.status} ${await res.text()}`);

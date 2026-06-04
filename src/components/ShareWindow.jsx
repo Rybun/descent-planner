@@ -42,10 +42,9 @@ function SharePanel({ onClose, fromShare, onLoadSnap }) {
   }
 
   async function handleAddSnap() {
-    if (!shareData?.write_token) return;
     setLoading(true); setError(null); setSnapUrl(null);
     try {
-      const data = await addSnapshot(shareData.id, shareData.write_token, snapLabel || null);
+      const data = await addSnapshot(shareData.id, snapLabel || null);
       const newSnap = { n: data.n, label: snapLabel || null, created_at: new Date().toISOString() };
       setShareData(prev => ({
         ...prev,
@@ -109,9 +108,8 @@ function SharePanel({ onClose, fromShare, onLoadSnap }) {
             </div>
           </div>
 
-          {/* Guardar versión — solo cuando tenemos write_token (sesión de autor) */}
-          {shareData.write_token && (
-            <div className="sw-snap-section">
+          {/* Guardar versión — abierto a cualquiera con el enlace */}
+          <div className="sw-snap-section">
               <div className="sw-snap-header">{t('share.addSnap')}</div>
               <div className="sw-snap-row">
                 <input
@@ -131,8 +129,7 @@ function SharePanel({ onClose, fromShare, onLoadSnap }) {
                   <span className="sw-snap-created-url">{snapUrl}</span>
                 </button>
               )}
-            </div>
-          )}
+          </div>
 
           {/* Lista de versiones — siempre visible cuando hay snapshots */}
           {shareData.snapshots?.length > 0 && (
