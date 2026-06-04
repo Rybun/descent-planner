@@ -138,19 +138,22 @@ def find_localization_bundle(bundle_dir, lang="es"):
 def parse_localization(bundle_path):
     """
     Extrae pares KEY→valor del CSV embebido en el bundle.
-    Formato: KEY,Text,,Valor\n
-    Devuelve dict {key: value}.
+    Formato: KEY,Text,,Valor\n  o  KEY,Text,,"Valor multi\nlínea"
+    Devuelve dict {key: value} con las comillas CSV externas ya eliminadas.
     """
     with open(bundle_path, "rb") as f:
         raw = f.read()
 
     loc = {}
-    # Patrón: cualquier cosa hasta ',Text,,' y luego el valor hasta '\n'
-    # Usamos regex sobre los bytes decodificados con errors='replace'
     text = raw.decode("utf-8", errors="replace")
-    for m in re.finditer(r'^([A-Z0-9_]+),Text,,([^\n\r]*)', text, re.MULTILINE):
+    # Captura valores quoted multi-línea ("…") y unquoted single-line
+    pattern = r'^([A-Z0-9_]+),Text,,("(?:[^"]|\n)*?"|[^\n\r]*)'
+    for m in re.finditer(pattern, text, re.MULTILINE):
         key = m.group(1)
         val = m.group(2).strip()
+        # Eliminar comillas CSV externas si las hay
+        if val.startswith('"') and val.endswith('"') and len(val) >= 2:
+            val = val[1:-1].strip()
         # Eliminar carácter de "+" especial () que indica versión mejorada
         val = val.replace('', '+').replace('', '').strip()
         if key:
@@ -275,6 +278,49 @@ ASSET_RULES = [
     ("assets/d3/heroes/",       "heroes",       lambda p: True),
 ]
 
+# Mapa de icono de tipo de daño: basename del container → nombre en public/assets/icons/
+# Ruta en bundles: assets/d3/glossaryterms/damage/mainsterms/damage types/icons_*.png
+DMG_ICON_MAP = {
+    "icons_anemos.png":   "dmg_anemos.png",
+    "icons_aquos.png":    "dmg_aquos.png",
+    "icons_crush.png":    "dmg_crush.png",
+    "icons_fortunos.png": "dmg_fortunos.png",
+    "icons_ignos.png":    "dmg_ignos.png",
+    "icons_lumos.png":    "dmg_lumos.png",
+    "icons_mortos.png":   "dmg_mortos.png",
+    "icons_pierce.png":   "dmg_pierce.png",
+    "icons_slash.png":    "dmg_slash.png",
+    "icons_terros.png":   "dmg_terros.png",
+    "icons_toxos.png":    "dmg_toxos.png",
+    "icons_umbros.png":   "dmg_umbros.png",
+    "icons_vigos.png":    "dmg_vigos.png",
+}
+
+# Iconos que DEBEN estar en public/assets/icons/ pero NO se generan aquí.
+# Se encuentran en la carpeta game-resources/raw/textures/d3/ con nombres hash y
+# requieren identificación manual. Guárdalos en el directorio de iconos antes de
+# desplegar o extráelos del zip de backup (descent-planner-full.zip).
+ICONS_MANUAL = [
+    # Iconos UI del planner (vienen de UI atlases del juego — paths sin mapear)
+    "tab_tienda.png", "tab_armeria.png", "tab_creacion.png",
+    "tab_historial.png", "tab_inventario.png",
+    "tab_partida_act1.png", "tab_partida_act2.png",
+    # Decoración de tarjetas de arma (label corners / edges)
+    "label_bg.png",
+    "label_corner_tl.png", "label_corner_tr.png",
+    "label_corner_bl.png", "label_corner_br.png",
+    "label_edge_t.png",    "label_edge_b.png",
+    "label_edge_l.png",    "label_edge_r.png",
+    # Iconos de UI
+    "currency.png",      # moneda de oro — UI de la tienda
+    "recipe_badge.png",  # distintivo de receta crafteable
+    "weapon_range.png",  # icono de rango de arma
+    "dmg_value.png",     # icono del número de dados de daño
+    # Iconos de tipo de ítem (no-SDF — faltan en game-resources/raw/icons)
+    "Icon_Consumable.png",  # referenciado en InventoryPanel.jsx
+    "Icon_Trinket.png",     # referenciado en InventoryPanel.jsx
+]
+
 
 def extract_images(env, planner_dir, overwrite=False):
     """Extrae imágenes Texture2D del env y las guarda en public/assets/."""
@@ -313,6 +359,86 @@ def extract_images(env, planner_dir, overwrite=False):
     for folder, n in sorted(counters.items()):
         if n:
             print(f"      {folder}: {n}")
+
+
+def extract_dmg_icons(env, planner_dir, overwrite=False):
+    """Extrae iconos de tipos de daño desde los bundles de GlossaryTerms."""
+    icons_dir = os.path.join(planner_dir, "public", "assets", "icons")
+    os.makedirs(icons_dir, exist_ok=True)
+    extracted = skipped = 0
+
+    for container_path, obj in env.container.items():
+        if obj.type.name != "Texture2D":
+            continue
+        # Ruta en bundles: assets/d3/glossaryterms/damage/.../icons_*.png
+        if "glossaryterms" not in container_path:
+            continue
+        basename = os.path.basename(container_path).lower()
+        dest_name = DMG_ICON_MAP.get(basename)
+        if not dest_name:
+            continue
+
+        out_path = os.path.join(icons_dir, dest_name)
+        if not overwrite and os.path.exists(out_path):
+            skipped += 1
+            continue
+        try:
+            img = obj.read().image
+            img.save(out_path)
+            extracted += 1
+        except Exception as e:
+            print(f"    ✗ Error extrayendo {basename}: {e}")
+
+    print(f"  ✓ Iconos de daño: {extracted} extraídos, {skipped} ya existían")
+    if extracted + skipped < len(DMG_ICON_MAP):
+        missing = len(DMG_ICON_MAP) - (extracted + skipped)
+        print(f"  ⚠ {missing} iconos de daño no encontrados en los bundles")
+
+
+def copy_raw_icons(planner_dir, overwrite=False):
+    """Copia los Icon_*.png no-SDF desde game-resources/raw/icons/ a public/assets/icons/.
+
+    Estos iconos los extrae extract_all.py o se colocan manualmente; aquí solo se
+    copian a la carpeta de assets del planner para que la app los encuentre.
+    """
+    raw_icons_dir = os.path.join(planner_dir, "..", "game-resources", "raw", "icons")
+    icons_dir     = os.path.join(planner_dir, "public", "assets", "icons")
+    os.makedirs(icons_dir, exist_ok=True)
+
+    if not os.path.isdir(raw_icons_dir):
+        print(f"  ⚠ No se encontró: {raw_icons_dir}")
+        print("     Ejecuta game-resources/extract_all.py primero")
+        return
+
+    copied = skipped = 0
+    # Solo copiar los Icon_*.png que NO son generados por SDF (evitar sobreescribir)
+    sdf_names = {f"{name}.png" for name in SDF_ICON_BOXES}
+    for fname in sorted(os.listdir(raw_icons_dir)):
+        if not fname.endswith(".png"):
+            continue
+        if fname in sdf_names:
+            continue  # el SDF ya los genera directamente
+        if fname.startswith("pua_"):
+            continue  # imágenes de diagnóstico, no son iconos finales
+        src  = os.path.join(raw_icons_dir, fname)
+        dest = os.path.join(icons_dir, fname)
+        if not overwrite and os.path.exists(dest):
+            skipped += 1
+            continue
+        try:
+            shutil.copy2(src, dest)
+            copied += 1
+        except Exception as e:
+            print(f"    ✗ Error copiando {fname}: {e}")
+
+    print(f"  ✓ Iconos raw copiados: {copied} nuevos, {skipped} ya existían")
+    if ICONS_MANUAL:
+        missing_manual = [n for n in ICONS_MANUAL
+                          if not os.path.exists(os.path.join(icons_dir, n))]
+        if missing_manual:
+            print(f"  ⚠ {len(missing_manual)} iconos requieren colocación manual:")
+            for n in missing_manual:
+                print(f"      • {n}")
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -601,6 +727,26 @@ def generate_materials_js(env, locs, planner_dir):
 # Generación de items.js (armaduras, consumibles, amuletos)
 # ──────────────────────────────────────────────────────────────────────────────
 
+# Trinkets donde la versión mejorada CONSERVA el efecto base Y añade uno nuevo
+COMPOUND_TRINKETS = {"TRINKET5", "TRINKET7", "TRINKET11"}
+
+
+def _strip_armor_header(raw):
+    """Elimina la línea de cabecera <b>Carta de Armadura—...</b> del desc de armadura."""
+    if not raw:
+        return ''
+    lines = raw.split('\n')
+    result = []
+    header_done = False
+    for line in lines:
+        s = line.strip()
+        if not header_done and re.search(r'<b>', s):
+            header_done = True
+            continue
+        if s:
+            result.append(s)
+    return ' '.join(result).strip()
+
 def generate_items_js(env, locs, planner_dir):
     """Genera src/gamedata/items.js"""
     armors      = {}
@@ -655,9 +801,26 @@ def generate_items_js(env, locs, planner_dir):
     csm_type_map   = {"Común": "common", "Limitado": "limited", "Especial": "special"}
 
     for armor in armors.values():
-        desc = loc_es.get(f"{armor['id']}_UPGRADED_DESC", "") or loc_es.get(f"{armor['id']}_DESC", "")
-        m = re.search(r'Armadura—(\w+)', desc)
+        aid = armor["id"]
+        base_key = f"{aid}_DESC"
+        up_key   = f"{aid}_UPGRADED_DESC"
+        # Tipo de armadura (pesada/mediana/ligera) desde la cabecera ES
+        desc_es = loc_es.get(up_key, "") or loc_es.get(base_key, "")
+        m = re.search(r'Armadura—(\w+)', desc_es)
         armor["armorType"] = armor_type_map.get(m.group(1) if m else "", None)
+        # Descripciones de habilidad para todos los idiomas
+        base_descs = {}
+        up_descs   = {}
+        for lang in LANGS:
+            loc = locs.get(lang, {})
+            b = _strip_armor_header(loc.get(base_key, ""))
+            u = _strip_armor_header(loc.get(up_key, ""))
+            if b: base_descs[lang] = b
+            if u: up_descs[lang]   = u
+        if base_descs:
+            armor["baseAbilityDescs"] = base_descs
+        if up_descs:
+            armor["abilityDescs"] = up_descs
 
     for csm in consumables.values():
         desc = loc_es.get(f"{csm['id']}_UPGRADED_DESC", "") or loc_es.get(f"{csm['id']}_DESC", "")
@@ -666,7 +829,20 @@ def generate_items_js(env, locs, planner_dir):
 
     for trinket in trinkets.values():
         base = trinket["id"].replace("_ID", "")  # TRINKET1_ID → TRINKET1
-        trinket["abilityDescs"] = _make_names(locs, f"{base}_ABILITY_UPGRADED")
+        base_descs = {}
+        up_descs   = {}
+        for lang in LANGS:
+            loc = locs.get(lang, {})
+            b = loc.get(f"{base}_ABILITY", "").strip()
+            u = loc.get(f"{base}_ABILITY_UPGRADED", "").strip()
+            if b: base_descs[lang] = b
+            if u: up_descs[lang]   = u
+        if base_descs:
+            trinket["baseAbilityDescs"] = base_descs
+        if up_descs:
+            trinket["abilityDescs"] = up_descs
+        if base in COMPOUND_TRINKETS:
+            trinket["compound"] = True
 
     def sort_id(d):
         # Ordenar numéricamente si el ID acaba en número (ej: ARMOR_1 < ARMOR_2)
@@ -1138,13 +1314,13 @@ def main():
 
     # ── 4. Extraer imágenes ──────────────────────────────────────────────────
     if not args.no_images:
-        print("\n[4/5] Extrayendo imágenes...")
+        print("\n[4/7] Extrayendo imágenes...")
         extract_images(env, planner_dir, overwrite=args.overwrite)
     else:
-        print("\n[4/5] Extracción de imágenes omitida (--no-images)")
+        print("\n[4/7] Extracción de imágenes omitida (--no-images)")
 
     # ── 5. Generar JS ────────────────────────────────────────────────────────
-    print("\n[5/6] Generando archivos JS...")
+    print("\n[5/7] Generando archivos JS...")
     generate_weapon_parts_js(items, recipes, locs, planner_dir)
     generate_materials_js(env, locs, planner_dir)
     generate_items_js(env, locs, planner_dir)
@@ -1153,10 +1329,15 @@ def main():
 
     # ── 6. Iconos SDF ────────────────────────────────────────────────────────
     if not args.no_sdf_icons:
-        print("\n[6/6] Extrayendo iconos SDF del atlas de fuentes...")
+        print("\n[6/7] Extrayendo iconos SDF del atlas de fuentes...")
         extract_sdf_icons(planner_dir, overwrite=args.overwrite)
     else:
-        print("\n[6/6] Extracción de iconos SDF omitida (--no-sdf-icons)")
+        print("\n[6/7] Extracción de iconos SDF omitida (--no-sdf-icons)")
+
+    # ── 7. Iconos adicionales ─────────────────────────────────────────────────
+    print("\n[7/7] Extrayendo iconos adicionales...")
+    extract_dmg_icons(env, planner_dir, overwrite=args.overwrite)
+    copy_raw_icons(planner_dir, overwrite=args.overwrite)
 
     print(f"\n{'='*60}")
     print("  ¡Extracción completada!")
