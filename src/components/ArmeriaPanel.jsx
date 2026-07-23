@@ -345,18 +345,29 @@ function parseGameText(text) {
 }
 
 function AbilityDesc({ partId, lang }) {
-  const baseId    = partId?.replace(/_UPGRADED$/, '');
-  const abilityKey = PART_ABILITY_KEY[partId] || PART_ABILITY_KEY[baseId];
+  const baseId      = partId?.replace(/_UPGRADED$/, '');
+  const isUpgraded  = baseId !== partId;
+  const abilityKey  = PART_ABILITY_KEY[baseId] || PART_ABILITY_KEY[partId];
   const isNoAbility = !abilityKey;
+
+  // Para la pieza mejorada, la habilidad nombrada tiene su propio texto y
+  // probabilidad bajo la clave `${abilityKey}+` (ver weaponAbilityDescs.js).
+  // Antes esto siempre se quedaba con el texto BASE aunque se mostrara la
+  // pieza "+", porque WEAPON_ABILITIES no tenía variantes con sufijo.
+  const upgradedKey = isUpgraded ? `${abilityKey}+` : null;
+  const descEntry = isNoAbility
+    ? null
+    : (upgradedKey && WEAPON_ABILITY_DESCS[upgradedKey]) || WEAPON_ABILITY_DESCS[abilityKey];
 
   const rawText = isNoAbility
     ? (WEAPON_ABILITIES['UI_NO_ABILITY']?.[lang] || WEAPON_ABILITIES['UI_NO_ABILITY']?.es || '')
-    : (WEAPON_ABILITIES[abilityKey]?.[lang] || WEAPON_ABILITIES[abilityKey]?.es || '');
+    : (descEntry?.[lang] || descEntry?.es || '');
 
   if (!rawText) return null;
 
   const nodes = parseGameText(rawText);
-  const chance = abilityKey ? (ABILITY_CHANCE[abilityKey] ?? null) : null;
+  const chanceKey = (upgradedKey && ABILITY_CHANCE[upgradedKey] != null) ? upgradedKey : abilityKey;
+  const chance = abilityKey ? (ABILITY_CHANCE[chanceKey] ?? null) : null;
 
   return (
     <div className="ability-desc-wrapper">

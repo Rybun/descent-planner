@@ -179,24 +179,74 @@ def load_env(bundle_dir):
 def scan_items(env):
     """
     Escanea todos los MonoBehaviours y devuelve:
-      items   – dict {base_item_id: {...}}  para ítems base
-      recipes – dict {base_item_id: {...}}  para recetas (IsUpgrade=1)
+      item_defs      – dict {base_item_id: {...}}  definición del ítem "+"/mejorado
+                       (stats reales: Damage, Traits, Ability) — IsUpgrade=1
+      recipes        – dict {base_item_id: {...}}  receta que crea la versión "+"
+                       (Ingredients) — IsUpgrade=1
+      base_recipes   – dict {base_item_id: {...}}  receta que crea el ítem BASE
+                       desde cero (solo existe para consumibles) — IsUpgrade=0
+      base_item_defs – dict {base_item_id: {...}}  definición del ítem BASE
+                       (stats reales de la pieza sin mejorar: Damage, Traits)
+                       — IsUpgrade=0, BaseItemId vacío (identidad en KeyName)
+      mat_map        – dict {path_id: MAT_ID}
+      ability_by_key – dict {KeyName: {...}} de TODOS los objetos "Ability" del
+                       juego (activaciones e instrínsecas), para resolver la
+                       versión base a partir de la mejorada.
+
+    IMPORTANTE — colisiones que había en la versión anterior, todas del mismo
+    tipo: dos objetos Unity distintos comparten la misma identidad final
+    (BaseItemId, o KeyName cuando BaseItemId viene vacío) y antes se guardaban
+    los dos bajo la misma clave de diccionario, así que el que se leyera
+    último (orden no determinista de env.objects) pisaba al otro:
+    1) Partes de arma: la RECETA (Ingredients+Value, IsUpgrade=1) y la
+       DEFINICIÓN del ítem "+" (Ability/Damage/Traits, IsUpgrade=1) — antes
+       compartían `recipes[bid]`, perdiendo ingredientes o daño real.
+    2) Consumibles: además de la receta "+", existe una receta que crea el
+       ítem BASE desde cero (IsUpgrade=0, BaseItemId vacío) — se separa en
+       `base_recipes`.
+    3) Partes de arma (de nuevo): además de la definición "+", casi todas
+       tienen una definición BASE real (IsUpgrade=0, BaseItemId vacío, con su
+       propio Damage/Traits, no simplemente "daño de la mejora menos 1") — se
+       separa en `base_item_defs`.
     """
-    items   = {}
-    recipes = {}
+    item_defs      = {}
+    recipes        = {}
+    base_recipes   = {}
+    base_item_defs = {}
+    ability_by_key = {}
 
     # Mapa path_id → MAT_ID para resolver ingredientes de recetas
     mat_map = {}
+    # Mapa path_id → info de Ability, para resolver los PPtr `Ability`
+    ability_by_pid = {}
 
-    # Primera pasada: recopilar materiales (KeyName = MAT_*)
+    # Primera pasada: materiales (KeyName = MAT_*) y objetos Ability
+    # (identificados por su forma: Chance + KeyDesc + isPartA, únicos de esta clase)
     for obj in env.objects:
         if obj.type.name != "MonoBehaviour":
             continue
         try:
             d = obj.read()
+        except Exception:
+            continue
+        try:
             key = getattr(d, "KeyName", None)
             if key and str(key).startswith("MAT_") and not str(key).endswith("_DESC"):
                 mat_map[obj.path_id] = str(key)
+        except Exception:
+            pass
+        try:
+            if hasattr(d, "Chance") and hasattr(d, "KeyDesc") and hasattr(d, "isPartA"):
+                info = {
+                    "keyName": str(getattr(d, "KeyName", "") or ""),
+                    "keyDesc": str(getattr(d, "KeyDesc", "") or ""),
+                    "chance":  float(getattr(d, "Chance", 0) or 0),
+                    "isPartA": int(getattr(d, "isPartA", 0) or 0),
+                    "isUpgrade": int(getattr(d, "IsUpgrade", 0) or 0),
+                }
+                ability_by_pid[obj.path_id] = info
+                if info["keyName"]:
+                    ability_by_key[info["keyName"]] = info
         except Exception:
             pass
 
@@ -206,21 +256,30 @@ def scan_items(env):
             continue
         try:
             d = obj.read()
-            bid = getattr(d, "BaseItemId", None)
-            if not bid:
-                continue
-            bid = str(bid)
-
+            raw_bid     = getattr(d, "BaseItemId", None)
             is_upgrade  = int(getattr(d, "IsUpgrade", 0))
             key_name    = str(getattr(d, "KeyName", "") or "")
+            # Los objetos "base" de consumibles (p.ej. la receta que crea
+            # CSM_ANTIDOTE_POTION desde cero, con Ingredients reales e
+            # IsUpgrade=0) llevan BaseItemId vacío en estos assets — su
+            # identidad real está en KeyName. Sin este fallback, esas recetas
+            # base se perdían por completo (nunca entraban en `recipes`).
+            if raw_bid:
+                bid = str(raw_bid)
+            elif is_upgrade == 0 and key_name:
+                bid = key_name
+            else:
+                continue
             key_desc    = str(getattr(d, "KeyDescription", "") or "")
             tex_path    = str(getattr(d, "TextureAssetPath", "") or "")
             value       = int(getattr(d, "Value", 0) or 0)
             crafted_id  = str(getattr(d, "CraftedItemId", "") or "")
+            has_ing     = hasattr(d, "Ingredients")
+            has_ability = hasattr(d, "Ability")
 
-            # Resolver ingredientes si es receta
-            ingredients = {}
-            if is_upgrade:
+            if has_ing:
+                # ── Objeto RECETA: ingredientes + coste ─────────────────────
+                ingredients = {}
                 for ing in (getattr(d, "Ingredients", None) or []):
                     try:
                         mat = ing.Material.read()
@@ -234,35 +293,54 @@ def scan_items(env):
                             qty = int(getattr(ing, "Qty", 0) or 0)
                             ingredients[mat_map[mat_pid]] = qty
 
-            # Stats de partes de arma (sólo en versiones UPGRADE con daño real)
-            damage   = int(getattr(d, "Damage",   0) or 0)
-            traits   = [int(t) for t in (getattr(d, "Traits", None) or [])]
-            is_promo = int(getattr(d, "IsPromo",  0) or 0)
+                target = recipes if is_upgrade else base_recipes
+                target[bid] = {
+                    "baseItemId":  bid,
+                    "craftedId":   crafted_id,
+                    "keyName":     key_name,
+                    "keyDesc":     key_desc,
+                    "texPath":     tex_path,
+                    "value":       value,
+                    "isUpgrade":   is_upgrade,
+                    "ingredients": ingredients,
+                }
 
-            entry = {
-                "baseItemId":  bid,
-                "craftedId":   crafted_id,
-                "keyName":     key_name,
-                "keyDesc":     key_desc,
-                "texPath":     tex_path,
-                "value":       value,
-                "isUpgrade":   is_upgrade,
-                "ingredients": ingredients,
-                "damage":      damage,
-                "traits":      traits,
-                "isPromo":     is_promo,
-            }
+            elif has_ability:
+                # ── Objeto DEFINICIÓN: stats reales del ítem ────────────────
+                # Igual que con las recetas: hay un objeto IsUpgrade=1 (stats
+                # de la versión "+", BaseItemId relleno) y, para casi todas
+                # las partes de arma, TAMBIÉN un objeto IsUpgrade=0 con las
+                # stats reales de la versión BASE (BaseItemId vacío, cae en
+                # el fallback de KeyName más arriba). Antes se guardaban
+                # ambos bajo `item_defs[bid]` y el último en leerse pisaba al
+                # otro — a veces el daño base sustituía al daño "+" o
+                # viceversa. Se separan en dos diccionarios distintos.
+                ability_info = None
+                try:
+                    ability_pptr = d.Ability
+                    ability_info = ability_by_pid.get(ability_pptr.path_id)
+                except Exception:
+                    pass
 
-            if is_upgrade:
-                recipes[bid] = entry
-            else:
-                items[bid] = entry
+                target = item_defs if is_upgrade else base_item_defs
+                target[bid] = {
+                    "baseItemId": bid,
+                    "keyName":    key_name,
+                    "texPath":    tex_path,
+                    "value":      value,
+                    "isUpgrade":  is_upgrade,
+                    "damage":     int(getattr(d, "Damage", 0) or 0),
+                    "traits":     [int(t) for t in (getattr(d, "Traits", None) or [])],
+                    "isPromo":    int(getattr(d, "IsPromo", 0) or 0),
+                    "ability":    ability_info,
+                }
 
         except Exception:
             pass
 
-    print(f"  ✓ {len(items)} ítems base, {len(recipes)} recetas encontradas")
-    return items, recipes, mat_map
+    print(f"  ✓ {len(item_defs)} definiciones '+', {len(base_item_defs)} definiciones base, "
+          f"{len(recipes)} recetas '+', {len(base_recipes)} recetas base")
+    return item_defs, recipes, base_recipes, base_item_defs, mat_map, ability_by_key
 
 # ──────────────────────────────────────────────────────────────────────────────
 # Extracción de imágenes
@@ -566,6 +644,30 @@ WEAPON_TYPE_TO_PREFIX = {
     "WAND":        "wand",
     "WARBELL":     "warbell",
     "WARHAMMER":   "warhammer",
+    "RUNE":        "rune",
+    "POLEAXE":     "poleaxe",
+}
+
+# ── Partes de arma "especiales" ──────────────────────────────────────────────
+# No siguen el patrón WEAPON_PART_<SLOT>_<TIPO>_<NIVEL>: son piezas únicas de
+# slot A, sin B/C, sin arma/héroe asociado (no aparecen en WEAPONS). Se listan
+# explícitamente porque son solo 7 y su BaseItemId no tiene sufijo numérico
+# (el regex estándar de parse_weapon_part_id no las reconoce).
+# "level" se asigna según el orden a1..a5 real de los ficheros de imagen del
+# grupo RUNE (ver public/assets/weapon_parts/rune a*.png).
+SPECIAL_WEAPON_PARTS = {
+    "WEAPON_PART_A_LIGHTNING_STRIKE": {"weaponType": "RUNE",    "level": 1},
+    "WEAPON_PART_A_ICE_STORM":        {"weaponType": "RUNE",    "level": 2},
+    "WEAPON_PART_A_RUNE_OF_BLADES":   {"weaponType": "RUNE",    "level": 3},
+    "WEAPON_PART_A_SUNBURST":         {"weaponType": "RUNE",    "level": 4},
+    "WEAPON_PART_A_FEAR":             {"weaponType": "RUNE",    "level": 5},
+    "WEAPON_PART_A_DRAGONSBANE":      {"weaponType": "POLEAXE", "level": 1},
+    # Sword Ancestral: su fichero en disco no lleva número de nivel
+    # ("sword a - ancestral blade.png"), así que necesita ruta de imagen fija.
+    "WEAPON_PART_A_SWORD_ANCESTRAL":  {
+        "weaponType": "SWORD_ANCESTRAL", "level": 1,
+        "image": "/assets/weapon_parts/sword a - ancestral blade.png",
+    },
 }
 
 # Cache built once per run
@@ -626,14 +728,27 @@ def _make_names(locs, *keys, es_fallback=""):
     return result
 
 
-def generate_weapon_parts_js(items, recipes, locs, planner_dir):
-    """Genera src/gamedata/weaponParts.js"""
+def generate_weapon_parts_js(item_defs, base_item_defs, recipes, locs, planner_dir):
+    """Genera src/gamedata/weaponParts.js
+
+    damage/traits de la versión "+" se leen de `item_defs` y NO de `recipes`
+    (que sólo tiene ingredientes y coste) — antes ambos se conflaban en un
+    único diccionario y, según el orden de lectura de Unity, unas veces se
+    perdían los ingredientes y otras el daño/traits real.
+
+    damage/traits de la versión BASE se leen de `base_item_defs` cuando
+    existe (casi siempre) — comprobado contra los assets: la mejora de una
+    pieza SIEMPRE añade exactamente 1 de daño (100% de los casos), pero los
+    traits (tipos de daño) no siempre son los mismos entre base y "+", así
+    que no basta con "daño de la mejora menos 1" reutilizando los traits de
+    la mejora; hay que leer el daño/traits base real cuando esté disponible.
+    """
     parts = {}  # id → part dict
 
-    # Recopilar todos los tipos de arma y slots de las recetas.
-    # En Unity, algunas armas almacenan el BaseItemId de la receta con sufijo _UPGRADED
-    # (p.ej. "WEAPON_PART_A_BOW_1_UPGRADED") y otras sin él ("WEAPON_PART_A_CROSSBOW_1").
-    # Normalizamos siempre quitando el sufijo para obtener el tipo de arma correcto.
+    # Recopilar todos los tipos de arma y slots de las recetas "normales"
+    # (con nivel numérico). En Unity, algunas armas almacenan el BaseItemId
+    # de la receta con sufijo _UPGRADED y otras sin él; normalizamos siempre
+    # quitando el sufijo para obtener el tipo de arma correcto.
     weapon_types = set()
     for bid, rec in recipes.items():
         normalized = re.sub(r"_UPGRADED$", "", bid)
@@ -641,7 +756,11 @@ def generate_weapon_parts_js(items, recipes, locs, planner_dir):
         if info:
             weapon_types.add((info["wtype"], info["slot"]))
 
-    # Crear ítem nivel 0 (base sin imagen) para cada tipo×slot
+    # Crear ítem nivel 0 (pieza "starter") para cada tipo×slot.
+    # Slot A nivel 0 no tiene arte propio (la hoja/cabeza inicial no se
+    # dibuja aparte), pero los accesorios B/C nivel 0 SÍ tienen imagen real
+    # en disco ("<tipo> b0 - starter....png" / "...c0 - starter....png") — se
+    # buscan igual que cualquier otro nivel, no se fuerza a None.
     for wtype, slot in sorted(weapon_types):
         pid = f"WEAPON_PART_{slot}_{wtype}_0"
         if pid not in parts:
@@ -652,7 +771,7 @@ def generate_weapon_parts_js(items, recipes, locs, planner_dir):
                 "level":      0,
                 "names":      _make_names(locs, pid, es_fallback=f"{wtype.replace('_',' ').title()} {slot}0"),
                 "weaponId":   WEAPON_TYPE_TO_ID.get(wtype, f"WEAPON_{wtype}"),
-                "image":      None,
+                "image":      _find_weapon_part_image(wtype, slot.lower(), 0, planner_dir),
                 "buyPrice":   None,
                 "sellPrice":  None,
                 "damage":     0,
@@ -665,34 +784,65 @@ def generate_weapon_parts_js(items, recipes, locs, planner_dir):
         # Normalizar: si bid termina en _UPGRADED, el pid base es sin el sufijo
         normalized = re.sub(r"_UPGRADED$", "", bid)
         info = parse_weapon_part_id(normalized)
-        if not info or info["upgraded"]:
+        is_special = normalized in SPECIAL_WEAPON_PARTS
+        if not info and not is_special:
             continue  # no es una parte de arma válida
+        if info and info["upgraded"]:
+            continue
 
-        pid   = normalized          # ID de la parte base (sin _UPGRADED)
-        wtype = info["wtype"]
-        slot  = info["slot"]
-        level = info["level"]
+        pid = normalized  # ID de la parte base (sin _UPGRADED)
+        if is_special:
+            wtype = SPECIAL_WEAPON_PARTS[pid]["weaponType"]
+            slot  = "A"
+            level = SPECIAL_WEAPON_PARTS[pid]["level"]
+        else:
+            wtype = info["wtype"]
+            slot  = info["slot"]
+            level = info["level"]
 
-        # Nombre: usar KeyName de la receta, que apunta al nombre del ítem base
-        name_key   = rec["keyName"].replace("_UPGRADED", "") if rec["keyName"] else pid
-        desc_key   = rec["keyDesc"].replace("_UPGRADED_DESC","_DESC") if rec["keyDesc"] else ""
+        # Nombre: la clave de localización del nombre de una parte de arma es
+        # SIEMPRE el propio BaseItemId (pid / pid+"_UPGRADED"); NO se usa
+        # rec["keyName"] aquí a propósito. Comprobado contra los assets: en 7
+        # piezas (p.ej. WEAPON_PART_A_ICE_STORM ↔ WEAPON_PART_A_RUNE_OF_BLADES,
+        # WEAPON_PART_A_CROSSBOW_1 ↔ _CROSSBOW_2, los 3 niveles de STAFF slot A)
+        # el campo KeyName de la receta apunta al KeyName de OTRA pieza — un
+        # error de los propios datos del juego que hacía salir nombres
+        # cruzados. Usar el pid directamente evita heredar ese cruce.
+        name_key = pid
 
         # Imagen: buscar imagen a partir del ID (weapon_type, slot, level) en el filesystem.
         # Usamos el disco en lugar de texPath porque la receta apunta a la textura del ítem
         # craftado (con '+') y puede estar en orden diferente al del item base.
-        image = _find_weapon_part_image(wtype, slot.lower(), level, planner_dir)
+        fixed_image = SPECIAL_WEAPON_PARTS.get(pid, {}).get("image")
+        image = fixed_image or _find_weapon_part_image(wtype, slot.lower(), level, planner_dir)
 
-        # Precio de venta: Value es precio de compra de receta (150 gold craft cost)
-        # El ítem en sí tiene Value del juego — usar del ítem base si existe
+        # Daño/traits reales: del objeto "definición" del ítem "+", no de la receta.
+        item_def        = item_defs.get(pid) or {}
+        upgraded_damage = item_def.get("damage", 0)
+        upgraded_traits = item_def.get("traits", [])
+        is_promo        = item_def.get("isPromo", 0)
+
+        # Daño/traits/precio BASE: del objeto "definición" base real cuando
+        # existe (todas las partes de arma menos 3 casos de ranura C); si no
+        # existe, se recurre al heurístico verificado (mejora = +1 de daño
+        # exacto, mismos traits) como red de seguridad.
+        #
+        # Precio: el Value de ese mismo objeto base es el precio real de
+        # venta en la Tienda cuando el juego pone esa parte concreta a la
+        # venta como ítem suelto (comprobado: WEAPON_PART_A_STAFF_2 → 200 oro,
+        # coincide con una partida real). Solo algunos niveles se venden así
+        # (0 = no disponible en tienda, nunca solo craft/loot); los B/C
+        # siempre están a 0 porque no se venden sueltos, solo se craftean.
+        base_def    = base_item_defs.get(pid)
+        if base_def:
+            base_damage = base_def.get("damage", 0)
+            traits      = base_def.get("traits", [])
+            buy_price   = base_def.get("value") or None
+        else:
+            base_damage = max(0, upgraded_damage - 1) if upgraded_damage > 0 else 0
+            traits      = upgraded_traits
+            buy_price   = None
         sell_price = None
-        buy_price  = None
-
-        # Stats de daño: la versión UPGRADED tiene upgraded_damage; la base tiene upgraded_damage - 1
-        # (la mejora de una pieza siempre añade exactamente 1 dado de ataque extra)
-        upgraded_damage = rec.get("damage", 0)
-        traits          = rec.get("traits", [])
-        is_promo        = rec.get("isPromo", 0)
-        base_damage     = max(0, upgraded_damage - 1) if upgraded_damage > 0 else 0
 
         parts[pid] = {
             "id":         pid,
@@ -700,7 +850,7 @@ def generate_weapon_parts_js(items, recipes, locs, planner_dir):
             "weaponType": wtype,
             "level":      level,
             "names":      _make_names(locs, name_key, pid, es_fallback=pid),
-            "weaponId":   WEAPON_TYPE_TO_ID.get(wtype, f"WEAPON_{wtype}"),
+            "weaponId":   None if is_special else WEAPON_TYPE_TO_ID.get(wtype, f"WEAPON_{wtype}"),
             "image":      image,
             "buyPrice":   buy_price,
             "sellPrice":  sell_price,
@@ -710,21 +860,21 @@ def generate_weapon_parts_js(items, recipes, locs, planner_dir):
 
         # También crear la versión UPGRADED (con el daño completo de los assets)
         uid = f"{pid}_UPGRADED"
-        crafted_id = rec.get("craftedId", uid)
         base_names = parts[pid]["names"]
-        upg_key = rec["keyName"] if rec["keyName"] else None
+        # Igual que con el nombre base: se usa el pid (uid), no rec["keyName"].
+        upg_names = _make_names(locs, uid, pid, es_fallback=pid)
         upg_entry = {
             "id":         uid,
             "slot":       slot,
             "weaponType": wtype,
             "level":      level,
-            "names":      {lang: (_make_names(locs, upg_key, pid, es_fallback=pid)[lang] if upg_key else base_names[lang]) + " ✦" for lang in LANGS},
-            "weaponId":   WEAPON_TYPE_TO_ID.get(wtype, f"WEAPON_{wtype}"),
+            "names":      {lang: (upg_names[lang] or base_names[lang]) + " ✦" for lang in LANGS},
+            "weaponId":   None if is_special else WEAPON_TYPE_TO_ID.get(wtype, f"WEAPON_{wtype}"),
             "image":      image,  # misma imagen que la base
             "buyPrice":   None,
             "sellPrice":  None,
             "damage":     upgraded_damage,
-            "traits":     traits,
+            "traits":     upgraded_traits,
         }
         if is_promo:
             upg_entry["isPromo"] = 1
@@ -750,12 +900,146 @@ def generate_weapon_parts_js(items, recipes, locs, planner_dir):
     print(f"  ✓ weaponParts.js → {len(sorted_parts)} partes")
 
 # ──────────────────────────────────────────────────────────────────────────────
+# Generación de weaponPartDescs.js / weaponAbilities.js / weaponAbilityDescs.js
+# ──────────────────────────────────────────────────────────────────────────────
+
+def _base_ability_key(full_key):
+    """
+    Deriva la clave de habilidad BASE a partir de la clave de la versión "+".
+    Convención observada en los propios assets del juego (100% de los casos
+    comprobados, dos familias distintas):
+      - Activaciones genéricas (isPartA=1):  '..._UPGRADED' → sin sufijo
+      - Habilidades nombradas   (isPartA=0):  '...+'        → sin sufijo
+    """
+    if full_key.endswith("_UPGRADED"):
+        return full_key[: -len("_UPGRADED")]
+    if full_key.endswith("+"):
+        return full_key[:-1]
+    return full_key
+
+
+def generate_weapon_ability_files(item_defs, ability_by_key, locs, planner_dir):
+    """
+    Genera weaponPartDescs.js, weaponAbilities.js y weaponAbilityDescs.js a
+    partir del PPtr `Ability` real de cada parte de arma (resuelto en
+    scan_items). Cada parte de arma apunta a un único objeto Ability real del
+    juego, con un flag `isPartA`:
+      - isPartA=1 → activación genérica por tipo de arma + nivel (se imprime
+        en la carta de Arma; comparte texto entre A/B/C del mismo nivel).
+        → va a weaponPartDescs.js, indexado por ID de la parte.
+      - isPartA=0 → habilidad nombrada única de esa pieza concreta (accesorios
+        B/C y las 7 piezas especiales de ranura A).
+        → va a weaponAbilities.js (PART_ABILITY_KEY/ABILITY_CHANCE) +
+          weaponAbilityDescs.js.
+
+    Antes estos tres ficheros se habían escrito a mano en sesiones anteriores
+    (nunca los generaba extract.py), con mapeos incompletos: a esta función
+    sustituye por completo ese contenido, derivado 100% de datos reales.
+    """
+    weapon_part_descs = {}   # part_id[_UPGRADED] → {lang: text}
+    part_ability_key  = {}   # part_id (base)      → ability_key (base)
+    ability_chance    = {}   # ability_key[+]      → % entero
+    ability_descs     = {}   # ability_key[+]      → {lang: text}
+
+    for pid, item_def in sorted(item_defs.items()):
+        ability = item_def.get("ability")
+        if not ability or not ability.get("keyName"):
+            continue
+
+        full_key    = ability["keyName"]
+        full_desc   = ability["keyDesc"]
+        base_key    = _base_ability_key(full_key)
+        base_ability = ability_by_key.get(base_key)
+
+        if ability["isPartA"]:
+            base_texts = _make_names(locs, base_ability["keyDesc"]) if (base_ability and base_ability.get("keyDesc")) else None
+            upg_texts  = _make_names(locs, full_desc) if full_desc else None
+            if base_texts and any(base_texts.values()):
+                weapon_part_descs[pid] = base_texts
+                # ArmeriaPanel.jsx (componente WeaponAbilities) busca la misma
+                # activación por WEAPON_ABILITY_<TIPO>_<NIVEL>, no por ID de parte.
+                ability_descs[base_key] = base_texts
+            if upg_texts and any(upg_texts.values()):
+                weapon_part_descs[f"{pid}_UPGRADED"] = upg_texts
+                ability_descs[f"{base_key}_UPGRADED"] = upg_texts
+        else:
+            part_ability_key[pid] = base_key
+            if base_ability:
+                pct = round(base_ability["chance"] * 100)
+                if base_ability["chance"] > 0:
+                    ability_chance[base_key] = pct
+                if base_ability.get("keyDesc"):
+                    texts = _make_names(locs, base_ability["keyDesc"])
+                    if any(texts.values()):
+                        ability_descs[base_key] = texts
+            if ability["chance"] > 0:
+                ability_chance[f"{base_key}+"] = round(ability["chance"] * 100)
+            if full_desc:
+                texts_up = _make_names(locs, full_desc)
+                if any(texts_up.values()):
+                    ability_descs[f"{base_key}+"] = texts_up
+
+    # weaponPartDescs.js ---------------------------------------------------
+    lines = [
+        "// Descripciones de activación de partes de arma (slot A, isPartA=1 en Unity)",
+        "// Generado automáticamente por extract.py — no editar manualmente",
+        "",
+        "export const WEAPON_PART_DESCS = " + json.dumps(weapon_part_descs, ensure_ascii=False, indent=2) + ";",
+    ]
+    with open(os.path.join(planner_dir, "src", "gamedata", "weaponPartDescs.js"), "w", encoding="utf-8") as f:
+        f.write("\n".join(lines) + "\n")
+    print(f"  ✓ weaponPartDescs.js → {len(weapon_part_descs)} activaciones")
+
+    # weaponAbilities.js -----------------------------------------------------
+    # UI_NO_ABILITY: texto fijo del juego para piezas sin habilidad nombrada.
+    no_ability_texts = _make_names(locs, "UI_NO_ABILITY")
+    weapon_abilities_compat = {k: v for k, v in ability_descs.items() if not k.endswith("+")}
+    if any(no_ability_texts.values()):
+        weapon_abilities_compat["UI_NO_ABILITY"] = no_ability_texts
+
+    lines2 = [
+        "// Mapa parte de arma → habilidad nombrada (isPartA=0 en Unity: accesorios B/C y piezas especiales)",
+        "// Generado automáticamente por extract.py — no editar manualmente",
+        "",
+        "export const PART_ABILITY_KEY = " + json.dumps(part_ability_key, ensure_ascii=False, indent=2) + ";",
+        "",
+        "// Compatibilidad: texto base de cada habilidad nombrada + UI_NO_ABILITY (ver weaponAbilityDescs.js para bases+mejoras)",
+        "export const WEAPON_ABILITIES = " + json.dumps(weapon_abilities_compat, ensure_ascii=False, indent=2) + ";",
+        "",
+        "export const ABILITY_CHANCE = " + json.dumps(dict(sorted(ability_chance.items())), ensure_ascii=False, indent=2) + ";",
+    ]
+    with open(os.path.join(planner_dir, "src", "gamedata", "weaponAbilities.js"), "w", encoding="utf-8") as f:
+        f.write("\n".join(lines2) + "\n")
+    print(f"  ✓ weaponAbilities.js → {len(part_ability_key)} mapeos, {len(ability_chance)} probabilidades")
+
+    # weaponAbilityDescs.js ---------------------------------------------------
+    lines3 = [
+        "// Habilidades nombradas de partes de arma (base y +) — todos los idiomas",
+        "// Generado automáticamente por extract.py — no editar manualmente",
+        "",
+        "export const WEAPON_ABILITY_DESCS = " + json.dumps(ability_descs, ensure_ascii=False, indent=2) + ";",
+    ]
+    with open(os.path.join(planner_dir, "src", "gamedata", "weaponAbilityDescs.js"), "w", encoding="utf-8") as f:
+        f.write("\n".join(lines3) + "\n")
+    print(f"  ✓ weaponAbilityDescs.js → {len(ability_descs)} habilidades")
+
+# ──────────────────────────────────────────────────────────────────────────────
 # Generación de materials.js
 # ──────────────────────────────────────────────────────────────────────────────
 
 def generate_materials_js(env, locs, planner_dir):
-    """Genera src/gamedata/materials.js"""
+    """Genera src/gamedata/materials.js
+
+    buyPrice viene directamente del campo `Value` real del material en Unity
+    (confirmado: coincide con el precio de compra ya usado en la tienda).
+    sellPrice NO tiene ninguna fuente en los assets (no existe un segundo
+    campo de "precio de venta" en el objeto del material) — se conserva el
+    valor ya existente en el fichero actual si lo había, en vez de perderlo.
+    """
     mats = {}
+
+    existing = {m["id"]: m for m in _read_existing_js_array(
+        os.path.join(planner_dir, "src", "gamedata", "materials.js"), "MATERIALS")}
 
     for container_path, obj in env.container.items():
         if not (container_path.startswith("assets/d3/crafting materials/") and
@@ -766,18 +1050,20 @@ def generate_materials_js(env, locs, planner_dir):
             d = obj.read()
             key = str(getattr(d, "KeyName", "") or "")
             tex = str(getattr(d, "TextureAssetPath", "") or "")
+            value = int(getattr(d, "Value", 0) or 0)
             if not key or not key.startswith("MAT_"):
                 continue
 
             mat_name = os.path.basename(tex).lower()
             image    = f"/assets/materials/{mat_name}" if mat_name else None
 
+            prev = existing.get(key) or {}
             mats[key] = {
                 "id":        key,
                 "names":     _make_names(locs, key, es_fallback=key),
                 "image":     image,
-                "sellPrice": None,
-                "buyPrice":  None,
+                "sellPrice": prev.get("sellPrice"),
+                "buyPrice":  value if value > 0 else None,
             }
         except Exception:
             pass
@@ -843,11 +1129,24 @@ def generate_items_js(env, locs, planner_dir):
                 continue
             try:
                 d = obj.read()
-                bid = str(getattr(d, "BaseItemId", "") or "")
-                key = str(getattr(d, "KeyName", "") or "")
-                tex = str(getattr(d, "TextureAssetPath", "") or "")
-                val = int(getattr(d, "Value", 0) or 0)
+                raw_bid  = str(getattr(d, "BaseItemId", "") or "")
+                key      = str(getattr(d, "KeyName", "") or "")
+                is_upg   = int(getattr(d, "IsUpgrade", 0) or 0)
+                tex      = str(getattr(d, "TextureAssetPath", "") or "")
+                val      = int(getattr(d, "Value", 0) or 0)
 
+                # El objeto BASE real (el que representa el ítem tal y como
+                # aparece en catálogo/inventario) tiene IsUpgrade=0 y, en estos
+                # assets, el campo BaseItemId vacío — su identidad real está en
+                # KeyName (p.ej. KeyName="ARMOR_1", BaseItemId=""). Los objetos
+                # con IsUpgrade=1 (la receta "_PLUS" y la definición "_UPGRADED")
+                # SÍ llevan BaseItemId relleno, pero no son el ítem base: si no
+                # se descartan aquí, pisan al ítem base con su propio Value
+                # (p.ej. 1200 de la definición "+") sin que ese Value sea un
+                # precio de tienda real.
+                if is_upg:
+                    continue
+                bid = raw_bid or key
                 if not bid:
                     continue
 
@@ -855,8 +1154,12 @@ def generate_items_js(env, locs, planner_dir):
                 image_name = os.path.basename(tex).lower() if tex else None
                 image      = f"/assets/{folder}/{image_name}" if image_name else None
 
+                # buyPrice = Value real del objeto base (varía: 200 en la
+                # mayoría de armaduras, 600 en las pesadas; 200 en amuletos;
+                # 0→sin precio en consumibles). No hay ningún campo de
+                # "precio de venta" independiente en estos assets.
                 buy_price  = val if val > 0 else None
-                sell_price = (val // 2) if val > 0 else None
+                sell_price = None
 
                 target_dict[bid] = {
                     "id":        bid,
@@ -1007,7 +1310,7 @@ def _read_existing_js_array(js_path, varname):
         return []
 
 
-def generate_recipes_js(recipes, planner_dir):
+def generate_recipes_js(recipes, base_recipes, planner_dir):
     """
     Genera src/gamedata/recipes.js.
 
@@ -1016,11 +1319,35 @@ def generate_recipes_js(recipes, planner_dir):
     - Recetas de consumibles, armaduras y amuletos: intentadas desde Unity; si los
       ingredientes no se resuelven (problema de PPtrs cross-bundle), se preserva el
       contenido del recipes.js existente como fallback.
+    - Recetas BASE de consumibles (`base_recipes`, IsUpgrade=0): crean el
+      consumible desde cero, con su propio coste/ingredientes — no existen
+      para armadura ni amuletos, sólo para consumibles.
     """
     weapon_recipes  = []
     csm_recipes     = []
     armor_recipes   = []
     trinket_recipes = []
+
+    for bid, rec in sorted(base_recipes.items()):
+        if not rec["ingredients"]:
+            continue
+        base_entry = {
+            "id":          f"RECIPE_{bid}",
+            "itemId":      rec["craftedId"] or bid,
+            "goldCost":    rec["value"],
+            "ingredients": rec["ingredients"],
+        }
+        if bid.startswith("CSM_"):
+            csm_recipes.append(base_entry)
+        elif bid.startswith("WEAPON_PART_"):
+            # Receta BASE de un accesorio (ranura B/C): crea la pieza desde
+            # cero con materiales; la reforja a "+" es la receta de más abajo
+            # (IsUpgrade=1). Confirmado en una partida real: ambas conviven
+            # como IDs de receta independientes (p.ej. RECIPE_WEAPON_PART_B_
+            # BOW_1 y RECIPE_WEAPON_PART_B_BOW_1_UPGRADED). No existe para
+            # ranura A (esas piezas sólo se encuentran, nunca se craftean
+            # desde cero).
+            weapon_recipes.append(base_entry)
 
     for bid, rec in sorted(recipes.items()):
         # Normalizar bid: quitar _UPGRADED para el routing
@@ -1028,15 +1355,27 @@ def generate_recipes_js(recipes, planner_dir):
 
         # ── Partes de arma ──────────────────────────────────────────────────────
         info = parse_weapon_part_id(normalized)
-        if info and not info["upgraded"] and rec["ingredients"]:
-            # ID de la receta: usar el bid original tal cual viene de Unity
-            recipe_id = f"RECIPE_{bid}" if not bid.startswith("RECIPE_") else bid
+        is_special = normalized in SPECIAL_WEAPON_PARTS
+        if ((info and not info["upgraded"]) or is_special) and rec["ingredients"]:
+            # ID de la receta: comprobado contra una partida real
+            # (AvailableRecipeIds/DiscoveredRecipes) — el juego identifica
+            # esta receta como RECIPE_<pieza>_UPGRADED, con el sufijo, no como
+            # RECIPE_<pieza> a secas (ese id sin sufijo es el de la receta que
+            # crea la pieza base desde cero, cuando existe — ver base_recipes
+            # más arriba). BaseRecipeId en el propio objeto Unity apunta a la
+            # receta requisito (la base), no a esta receta, así que no sirve
+            # para nombrarla.
+            recipe_id = f"RECIPE_{normalized}_UPGRADED"
             # itemId: lo que produce la receta (siempre la versión _UPGRADED)
             item_id = rec["craftedId"] or f"{normalized}_UPGRADED"
+            # goldCost: coste real (Value) de la receta. Antes se forzaba a 150
+            # si Value<=0, pero Value SIEMPRE está informado en las recetas de
+            # partes de arma (150, 250 o 300 según la pieza) — ya no hace falta
+            # (y no debía) aplicar ningún valor por defecto aquí.
             weapon_recipes.append({
                 "id":          recipe_id,
                 "itemId":      item_id,
-                "goldCost":    rec["value"] if rec["value"] > 0 else 150,
+                "goldCost":    rec["value"],
                 "ingredients": rec["ingredients"],
             })
             continue
@@ -1044,9 +1383,17 @@ def generate_recipes_js(recipes, planner_dir):
         if not rec["ingredients"]:
             continue  # Sin ingredientes resueltos → no podemos generar esta receta
 
+        # ID de receta: para consumibles/armadura/amuletos el KeyName del
+        # objeto-receta lleva el sufijo "_PLUS" (p.ej. "ARMOR_1_PLUS") y ASÍ
+        # es como el save real identifica esta receta en AvailableRecipeIds/
+        # DiscoveredRecipes (comprobado contra una partida real: 'RECIPE_
+        # ARMOR_1_PLUS', no 'RECIPE_ARMOR_1'). Antes se usaba `bid` a secas
+        # (sin "_PLUS"), lo que generaba un ID de receta que no correspondía
+        # exactamente con el que usa el juego.
+        recipe_key = rec["keyName"] or bid
         entry = {
-            "id":          f"RECIPE_{bid}" if not bid.startswith("RECIPE_") else bid,
-            "itemId":      rec["craftedId"] or f"{bid}_UPGRADED",
+            "id":          f"RECIPE_{recipe_key}",
+            "itemId":      rec["craftedId"] or f"{recipe_key}",
             "goldCost":    rec["value"] if rec["value"] > 0 else 150,
             "ingredients": rec["ingredients"],
         }
@@ -1165,7 +1512,16 @@ def generate_recipes_js(recipes, planner_dir):
 # ──────────────────────────────────────────────────────────────────────────────
 
 def generate_descriptions_js(locs, planner_dir):
-    """Genera descriptions.js (ES) y weaponAbilityDescs.js (multi-idioma)."""
+    """Genera descriptions.js (ES, glosario de términos del juego).
+
+    Nota: weaponAbilityDescs.js (y weaponPartDescs.js / weaponAbilities.js)
+    ya NO se generan aquí por escaneo bruto de claves de localización — eso
+    mezclaba en un único diccionario plano tanto activaciones genéricas
+    (isPartA=1) como habilidades nombradas (isPartA=0), sin ninguna forma de
+    saber a qué parte de arma concreta pertenecía cada una. Ahora se generan
+    en generate_weapon_ability_files(), a partir del PPtr `Ability` real de
+    cada parte (ver scan_items).
+    """
     loc_es = locs.get("es", {})
 
     # ── descriptions.js (solo ES, todas las claves _DESC) ─────────────────────
@@ -1184,27 +1540,6 @@ def generate_descriptions_js(locs, planner_dir):
     with open(out_path, "w", encoding="utf-8") as f:
         f.write("\n".join(lines) + "\n")
     print(f"  ✓ descriptions.js → {len(descs)} descripciones")
-
-    # ── weaponAbilityDescs.js (multi-idioma, solo claves WEAPON_ABILITY_*_DESC) ─
-    wa_descs = {}
-    for lang in ["es", "en", "fr", "it", "pt"]:
-        for key, val in locs.get(lang, {}).items():
-            if key.startswith("WEAPON_ABILITY_") and key.endswith("_DESC") and val:
-                item_key = key[:-5]
-                if item_key not in wa_descs:
-                    wa_descs[item_key] = {}
-                wa_descs[item_key][lang] = val
-
-    lines2 = [
-        "// Habilidades intrínsecas de arma por tipo y nivel — todos los idiomas",
-        "// Generado automáticamente por extract.py — no editar manualmente",
-        "",
-        "export const WEAPON_ABILITY_DESCS = " + json.dumps(wa_descs, ensure_ascii=False, indent=2) + ";",
-    ]
-    out_path2 = os.path.join(planner_dir, "src", "gamedata", "weaponAbilityDescs.js")
-    with open(out_path2, "w", encoding="utf-8") as f:
-        f.write("\n".join(lines2) + "\n")
-    print(f"  ✓ weaponAbilityDescs.js → {len(wa_descs)} habilidades")
 
 # ──────────────────────────────────────────────────────────────────────────────
 # Extracción de iconos desde atlas SDF de TextMeshPro
@@ -1385,7 +1720,7 @@ def main():
 
     # ── 3. Escanear ítems ────────────────────────────────────────────────────
     print("\n[3/5] Escaneando datos de ítems...")
-    items, recipes, _mat_map = scan_items(env)
+    item_defs, recipes, base_recipes, base_item_defs, _mat_map, ability_by_key = scan_items(env)
 
     # ── 4. Extraer imágenes ──────────────────────────────────────────────────
     if not args.no_images:
@@ -1396,10 +1731,11 @@ def main():
 
     # ── 5. Generar JS ────────────────────────────────────────────────────────
     print("\n[5/7] Generando archivos JS...")
-    generate_weapon_parts_js(items, recipes, locs, planner_dir)
+    generate_weapon_parts_js(item_defs, base_item_defs, recipes, locs, planner_dir)
+    generate_weapon_ability_files(item_defs, ability_by_key, locs, planner_dir)
     generate_materials_js(env, locs, planner_dir)
     generate_items_js(env, locs, planner_dir)
-    generate_recipes_js(recipes, planner_dir)
+    generate_recipes_js(recipes, base_recipes, planner_dir)
     generate_descriptions_js(locs, planner_dir)
 
     # ── 6. Iconos SDF ────────────────────────────────────────────────────────

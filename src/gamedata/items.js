@@ -6,6 +6,17 @@ export const ARMORS = [
   {
     "id": "ARMOR_1",
     "type": "armor",
+    "names": {
+      "es": "Armadura de placas del ocaso",
+      "en": "Duskplate",
+      "fr": "Plastron du couchant",
+      "it": "Piastre del Crepuscolo",
+      "pt": "Placas Crepusculares"
+    },
+    "image": "/assets/armor/duskplate.png",
+    "buyPrice": 200,
+    "sellPrice": null,
+    "armorType": "heavy",
     "baseAbilityDescs": {
       "es": "Durante tu defensa o la de un héroe adyacente, añade 1 <style=Term><link=TERM_ADVANTAGE></link></style>.",
       "en": "During your or an adjacent hero's defense, add 1 <style=Term><link=TERM_ADVANTAGE></link></style>.",
@@ -19,22 +30,22 @@ export const ARMORS = [
       "fr": "Pendant votre défense ou celle d’un Héros adjacent, ajoutez 2 <style=Term><link=TERM_ADVANTAGE></link></style>.",
       "it": "Durante la tua difesa o quella di un eroe adiacente, aggiungi 2 <style=Term><link=TERM_ADVANTAGE></link></style>.",
       "pt": "Durante uma defesa sua ou de um herói adjacente, some 2 <style=Term><link=TERM_ADVANTAGE></link></style>."
-    },
-    "names": {
-      "es": "Armadura de placas del ocaso",
-      "en": "Duskplate",
-      "fr": "Plastron du couchant",
-      "it": "Piastre del Crepuscolo",
-      "pt": "Placas Crepusculares"
-    },
-    "image": "/assets/armor/duskplate.png",
-    "buyPrice": 200,
-    "sellPrice": null,
-    "armorType": "heavy"
+    }
   },
   {
     "id": "ARMOR_2",
     "type": "armor",
+    "names": {
+      "es": "Armadura de placas de la Piedra Sangrienta",
+      "en": "Plate of the Bloodstone",
+      "fr": "Plastron de la sangemme",
+      "it": "Piastre di Pietra di Sangue",
+      "pt": "Placas de Rocha Sanguínea"
+    },
+    "image": "/assets/armor/plate of the bloodstone.png",
+    "buyPrice": 200,
+    "sellPrice": null,
+    "armorType": "heavy",
     "baseAbilityDescs": {
       "es": "Durante tu turno, puedes <style=Term><link=TERM_SCARRED>cicatrizar</link></style> 1 carta para realizar <b><style=Term><link=TERM_SHIFT>Desplazamiento</link></style> 1</b> y descartar 1 <style=Term><link=TERM_FATIGUE></link></style>.",
       "en": "During your turn, you may <style=Term><link=TERM_SCARRED>scar</link></style> a card to <b><style=Term><link=TERM_SHIFT>Shift</link></style> 1</b> and discard 1 <style=Term><link=TERM_FATIGUE></link></style>.",
@@ -48,22 +59,22 @@ export const ARMORS = [
       "fr": "Pendant votre tour, vous pouvez <style=Term><link=TERM_SCARRED>balafrer</link></style> 1 carte pour <b><style=Term><link=TERM_SHIFT>Glisser</link></style> de 1</b> et défausser 2 <style=Term><link=TERM_FATIGUE></link></style>.",
       "it": "Durante il tuo turno, puoi <style=Term><link=TERM_SCARRED>sfregiare</link></style> 1 carta per <style=Term><link=TERM_SHIFT>scattare</link></style> 1 e scartare 2 <style=Term><link=TERM_FATIGUE></link></style>.",
       "pt": "Durante seu turno, você pode <style=Term><link=TERM_SCARRED>marcar</link></style> uma carta para <b><style=Term><link=TERM_SHIFT>Deslocar</link></style> 1</b> e descartar 2 <style=Term><link=TERM_FATIGUE></link></style>."
-    },
-    "names": {
-      "es": "Armadura de placas de la Piedra Sangrienta",
-      "en": "Plate of the Bloodstone ",
-      "fr": "Plastron de la sangemme",
-      "it": "Piastre di Pietra di Sangue",
-      "pt": "Placas de Rocha Sanguínea"
-    },
-    "image": "/assets/armor/plate of the bloodstone.png",
-    "buyPrice": 200,
-    "sellPrice": null,
-    "armorType": "heavy"
+    }
   },
   {
     "id": "ARMOR_3",
     "type": "armor",
+    "names": {
+      "es": "Guardianes celestiales",
+      "en": "Skykeepers",
+      "fr": "Gardeciel",
+      "it": "Custodi del Cielo",
+      "pt": "Guardacéu"
+    },
+    "image": "/assets/armor/skykeeper's pauldrons.png",
+    "buyPrice": 600,
+    "sellPrice": null,
+    "armorType": "heavy",
     "baseAbilityDescs": {
       "es": "Antes de la defensa de otro héroe, si está a 2 o menos casillas de ti, puedes intercambiar tu casilla con la suya y convertirte en el objetivo.",
       "en": "Before another hero's defense, if they are within 2 spaces of you, you may swap spaces and become the target.",
@@ -77,36 +88,11 @@ export const ARMORS = [
       "fr": "Avant la défense d’un autre Héros dans un rayon de 3 cases autour de vous, vous pouvez intervertir vos figurines pour devenir la cible de l’attaque.",
       "it": "Prima della difesa di un altro eroe, se quell'eroe si trova entro 3 caselle da te, puoi scambiarti di casella con lui e diventare tu il bersaglio.",
       "pt": "Antes da defesa de outro herói, se ele estiver a até 3 espaços de você, você pode trocar de espaço com ele e tornar-se o alvo."
-    },
-    "names": {
-      "es": "Guardianes celestiales",
-      "en": "Skykeepers",
-      "fr": "Gardeciel",
-      "it": "Custodi del Cielo",
-      "pt": "Guardacéu"
-    },
-    "image": "/assets/armor/skykeeper's pauldrons.png",
-    "buyPrice": 200,
-    "sellPrice": null,
-    "armorType": "heavy"
+    }
   },
   {
     "id": "ARMOR_4",
     "type": "armor",
-    "baseAbilityDescs": {
-      "es": "Mientras tengas una <style=Term><link=TERM_INJURIES>dolencia</link></style>, aumenta tu <style=Term><link=TERM_SPEED>velocidad</link></style> en 1 y puedes ignorar el efecto de <style=Term><link=TERM_TERRIFIED>aterrorizar</link></style> en tu <style=Term><link=TERM_ATTACK_CARDS>carta de Ataque</link></style> y en tu <style=Term><link=TERM_HERO_CARD>carta de Héroe</link></style>.",
-      "en": "While you have an <style=Term><link=TERM_INJURIES>injury</link></style>, increase your <style=Term><link=TERM_SPEED>speed</link></style> by 1 and you may ignore the effect of <style=Term><link=TERM_TERRIFIED>terrify</link></style> on your <style=Term><link=TERM_ATTACK_CARDS>attack card</link></style> and <style=Term><link=TERM_HERO_CARD>hero card</link></style>.",
-      "fr": "Tant que vous êtes <style=Term><link=TERM_INJURIES>blessé</link></style>, votre <style=Term><link=TERM_SPEED>vitesse</link></style> augmente de 1 et vous pouvez ignorer l’effet de l’état <style=Term><link=TERM_TERRIFIED>terrifié</link></style> sur vos cartes <style=Term><link=TERM_ATTACK_CARDS>Attaque</link></style> et <style=Term><link=TERM_HERO_CARD>Héros</link></style>.",
-      "it": "Mentre possiedi una <style=Term><link=TERM_INJURIES>ferita</link></style>, aumenta di 1 la tua <style=Term><link=TERM_SPEED>velocità</link></style> e puoi ignorare l'effetto del <style=Term><link=TERM_TERRIFIED>terrore</link></style> sulla tua <style=Term><link=TERM_ATTACK_CARDS>carta attacco</link></style> e sulla tua <style=Term><link=TERM_HERO_CARD>carta eroe</link></style>.",
-      "pt": "Enquanto você tiver um <style=Term><link=TERM_INJURIES>ferimento</link></style>, aumente seu <style=Term><link=TERM_SPEED>deslocamento</link></style> em 1 e você pode ignorar o efeito de <style=Term><link=TERM_TERRIFIED>terror</link></style> na sua <style=Term><link=TERM_ATTACK_CARDS>carta de ataque</link></style> e na sua <style=Term><link=TERM_HERO_CARD>carta de herói</link></style>."
-    },
-    "abilityDescs": {
-      "es": "Mientras tengas una <style=Term><link=TERM_INJURIES>dolencia</link></style>, aumenta tu <style=Term><link=TERM_SPEED>velocidad</link></style> en 1 y puedes ignorar el efecto de <style=Term><link=TERM_TERRIFIED>aterrorizar</link></style> en tu <style=Term><link=TERM_ATTACK_CARDS>carta de Ataque</link></style> y en tu <style=Term><link=TERM_HERO_CARD>carta de Héroe</link></style>.",
-      "en": "While you have an <style=Term><link=TERM_INJURIES>injury</link></style>, increase your <style=Term><link=TERM_SPEED>speed</link></style> by 1 and you may ignore the effect of <style=Term><link=TERM_TERRIFIED>terrify</link></style> on your <style=Term><link=TERM_ATTACK_CARDS>attack card</link></style> and <style=Term><link=TERM_HERO_CARD>hero card</link></style>.",
-      "fr": "Tant que vous êtes <style=Term><link=TERM_INJURIES>blessé</link></style>, votre <style=Term><link=TERM_SPEED>vitesse</link></style> augmente de 1 et vous pouvez ignorer l’effet de l’état <style=Term><link=TERM_TERRIFIED>terrifié</link></style> sur vos cartes <style=Term><link=TERM_ATTACK_CARDS>Attaque</link></style> et <style=Term><link=TERM_HERO_CARD>Héros</link></style>.",
-      "it": "Mentre possiedi una <style=Term><link=TERM_INJURIES>ferita</link></style>, aumenta di 1 la tua <style=Term><link=TERM_SPEED>velocità</link></style> e puoi ignorare l'effetto del <style=Term><link=TERM_TERRIFIED>terrore</link></style> sulla tua <style=Term><link=TERM_ATTACK_CARDS>carta attacco</link></style> e sulla tua <style=Term><link=TERM_HERO_CARD>carta eroe</link></style>.",
-      "pt": "Enquanto você tiver um <style=Term><link=TERM_INJURIES>ferimento</link></style>, aumente seu <style=Term><link=TERM_SPEED>deslocamento</link></style> em 1 e você pode ignorar o efeito de <style=Term><link=TERM_TERRIFIED>terror</link></style> na sua <style=Term><link=TERM_ATTACK_CARDS>carta de ataque</link></style> e na sua <style=Term><link=TERM_HERO_CARD>carta de herói</link></style>."
-    },
     "names": {
       "es": "Memorium",
       "en": "Memorium",
@@ -117,25 +103,25 @@ export const ARMORS = [
     "image": "/assets/armor/memorium pauldrons.png",
     "buyPrice": 200,
     "sellPrice": null,
-    "armorType": "heavy"
+    "armorType": "heavy",
+    "baseAbilityDescs": {
+      "es": "Mientras tengas una <style=Term><link=TERM_INJURIES>dolencia</link></style>, aumenta tu <style=Term><link=TERM_SPEED>velocidad</link></style> en 1 y puedes ignorar el efecto de <style=Term><link=TERM_TERRIFIED>aterrorizar</link></style> en tu <style=Term><link=TERM_ATTACK_CARDS>carta de Ataque</link></style> y en tu <style=Term><link=TERM_HERO_CARD>carta de Héroe</link></style>.",
+      "en": "While you have an <style=Term><link=TERM_INJURIES>injury</link></style>, increase your <style=Term><link=TERM_SPEED>speed</link></style> by 1 and you may ignore the effect of <style=Term><link=TERM_TERRIFIED>terrify</link></style> on your <style=Term><link=TERM_ATTACK_CARDS>attack card</link></style> and <style=Term><link=TERM_HERO_CARD>hero card</link></style>.",
+      "fr": "Tant que vous êtes <style=Term><link=TERM_INJURIES>blessé</link></style>, votre <style=Term><link=TERM_SPEED>vitesse</link></style> augmente de 1 et vous pouvez ignorer l’effet de l’état <style=Term><link=TERM_TERRIFIED>terrifié</link></style> sur vos cartes <style=Term><link=TERM_ATTACK_CARDS>Attaque</link></style> et <style=Term><link=TERM_HERO_CARD>Héros</link></style>.",
+      "it": "Mentre possiedi una <style=Term><link=TERM_INJURIES>ferita</link></style>, aumenta di 1 la tua <style=Term><link=TERM_SPEED>velocità</link></style> e puoi ignorare l'effetto del <style=Term><link=TERM_TERRIFIED>terrore</link></style> sulla tua <style=Term><link=TERM_ATTACK_CARDS>carta attacco</link></style> e sulla tua <style=Term><link=TERM_HERO_CARD>carta eroe</link></style>.",
+      "pt": "Enquanto você tiver um <style=Term><link=TERM_INJURIES>ferimento</link></style>, aumente seu <style=Term><link=TERM_SPEED>deslocamento</link></style> em 1 e você pode ignorar o efeito de <style=Term><link=TERM_TERRIFIED>terror</link></style> na sua <style=Term><link=TERM_ATTACK_CARDS>carta de ataque</link></style> e na sua <style=Term><link=TERM_HERO_CARD>carta de herói</link></style>."
+    },
+    "abilityDescs": {
+      "es": "Mientras tengas una <style=Term><link=TERM_INJURIES>dolencia</link></style>, aumenta tu <style=Term><link=TERM_SPEED>velocidad</link></style> en 1 y puedes ignorar el efecto de <style=Term><link=TERM_TERRIFIED>aterrorizar</link></style> en tu <style=Term><link=TERM_ATTACK_CARDS>carta de Ataque</link></style> y en tu <style=Term><link=TERM_HERO_CARD>carta de Héroe</link></style>.",
+      "en": "While you have an <style=Term><link=TERM_INJURIES>injury</link></style>, increase your <style=Term><link=TERM_SPEED>speed</link></style> by 1 and you may ignore the effect of <style=Term><link=TERM_TERRIFIED>terrify</link></style> on your <style=Term><link=TERM_ATTACK_CARDS>attack card</link></style> and <style=Term><link=TERM_HERO_CARD>hero card</link></style>.",
+      "fr": "Tant que vous êtes <style=Term><link=TERM_INJURIES>blessé</link></style>, votre <style=Term><link=TERM_SPEED>vitesse</link></style> augmente de 1 et vous pouvez ignorer l’effet de l’état <style=Term><link=TERM_TERRIFIED>terrifié</link></style> sur vos cartes <style=Term><link=TERM_ATTACK_CARDS>Attaque</link></style> et <style=Term><link=TERM_HERO_CARD>Héros</link></style>.",
+      "it": "Mentre possiedi una <style=Term><link=TERM_INJURIES>ferita</link></style>, aumenta di 1 la tua <style=Term><link=TERM_SPEED>velocità</link></style> e puoi ignorare l'effetto del <style=Term><link=TERM_TERRIFIED>terrore</link></style> sulla tua <style=Term><link=TERM_ATTACK_CARDS>carta attacco</link></style> e sulla tua <style=Term><link=TERM_HERO_CARD>carta eroe</link></style>.",
+      "pt": "Enquanto você tiver um <style=Term><link=TERM_INJURIES>ferimento</link></style>, aumente seu <style=Term><link=TERM_SPEED>deslocamento</link></style> em 1 e você pode ignorar o efeito de <style=Term><link=TERM_TERRIFIED>terror</link></style> na sua <style=Term><link=TERM_ATTACK_CARDS>carta de ataque</link></style> e na sua <style=Term><link=TERM_HERO_CARD>carta de herói</link></style>."
+    }
   },
   {
     "id": "ARMOR_5",
     "type": "armor",
-    "baseAbilityDescs": {
-      "es": "1 <style=Term><link=TERM_SURGE></link></style>: Durante tu defensa, añade 1 <style=Term><link=TERM_SUCCESS></link></style> y <style=Term><link=TERM_FOCUSED>concentra</link></style> 1 carta.",
-      "en": "1 <style=Term><link=TERM_SURGE></link></style>: During your defense, add 1 <style=Term><link=TERM_SUCCESS></link></style> and <style=Term><link=TERM_FOCUSED>focus</link></style> 1 card.",
-      "fr": "1 <style=Term><link=TERM_SURGE></link></style> : Pendant votre défense, ajoutez 1 <style=Term><link=TERM_SUCCESS></link></style> et <style=Term><link=TERM_FOCUSED>canalisez</link></style> 1 carte.",
-      "it": "1 <style=Term><link=TERM_SURGE></link></style>: Durante la tua difesa, aggiungi 1 <style=Term><link=TERM_SUCCESS></link></style> e <style=Term><link=TERM_FOCUSED>focalizza</link></style> 1 carta.",
-      "pt": "1 <style=Term><link=TERM_SURGE></link></style>: Durante sua defesa, some 1 <style=Term><link=TERM_SUCCESS></link></style> e <style=Term><link=TERM_FOCUSED>foque</link></style> 1 carta."
-    },
-    "abilityDescs": {
-      "es": "1 <style=Term><link=TERM_SURGE></link></style>: Durante tu defensa, añade 1 <style=Term><link=TERM_SUCCESS></link></style>, <style=Term><link=TERM_FOCUSED>concentra</link></style> 1 carta y descarta 2 <style=Term><link=TERM_FATIGUE></link></style>.",
-      "en": "1 <style=Term><link=TERM_SURGE></link></style>: During your defense, add 1 <style=Term><link=TERM_SUCCESS></link></style>, <style=Term><link=TERM_FOCUSED>focus</link></style> 1 card, and discard 2 <style=Term><link=TERM_FATIGUE></link></style>.",
-      "fr": "1 <style=Term><link=TERM_SURGE></link></style> : Pendant votre défense, ajoutez 1 <style=Term><link=TERM_SUCCESS></link></style>, <style=Term><link=TERM_FOCUSED>canalisez</link></style> 1 carte et défaussez 2 <style=Term><link=TERM_FATIGUE></link></style>.",
-      "it": "1 <style=Term><link=TERM_SURGE></link></style>: Durante la tua difesa, aggiungi 1 <style=Term><link=TERM_SUCCESS></link></style>, <style=Term><link=TERM_FOCUSED>focalizza</link></style> 1 carta e scarta 2 <style=Term><link=TERM_FATIGUE></link></style>.",
-      "pt": "1 <style=Term><link=TERM_SURGE></link></style>: Durante sua defesa, some 1 <style=Term><link=TERM_SUCCESS></link></style>, <style=Term><link=TERM_FOCUSED>foque</link></style> 1 carta e descarte 2 <style=Term><link=TERM_FATIGUE></link></style>."
-    },
     "names": {
       "es": "Armadura de placas del caminante del alba",
       "en": "Dawnwalker Plate",
@@ -146,11 +132,36 @@ export const ARMORS = [
     "image": "/assets/armor/sunforged plate.png",
     "buyPrice": 200,
     "sellPrice": null,
-    "armorType": "heavy"
+    "armorType": "heavy",
+    "baseAbilityDescs": {
+      "es": "1 <style=Term><link=TERM_SURGE></link></style>: Durante tu defensa, añade 1 <style=Term><link=TERM_SUCCESS></link></style> y <style=Term><link=TERM_FOCUSED>concentra</link></style> 1 carta.",
+      "en": "1 <style=Term><link=TERM_SURGE></link></style>: During your defense, add 1 <style=Term><link=TERM_SUCCESS></link></style> and <style=Term><link=TERM_FOCUSED>focus</link></style> 1 card.",
+      "fr": "1 <style=Term><link=TERM_SURGE></link></style> : Pendant votre défense, ajoutez 1 <style=Term><link=TERM_SUCCESS></link></style> et <style=Term><link=TERM_FOCUSED>canalisez</link></style> 1 carte.",
+      "it": "1 <style=Term><link=TERM_SURGE></link></style>: Durante la tua difesa, aggiungi 1 <style=Term><link=TERM_SUCCESS></link></style> e <style=Term><link=TERM_FOCUSED>focalizza</link></style> 1 carta.",
+      "pt": "1 <style=Term><link=TERM_SURGE></link></style>: Durante sua defesa, some 1 <style=Term><link=TERM_SUCCESS></link></style> e <style=Term><link=TERM_FOCUSED>foque</link></style> 1 carta."
+    },
+    "abilityDescs": {
+      "es": "1 <style=Term><link=TERM_SURGE></link></style>: Durante tu defensa, añade 1 <style=Term><link=TERM_SUCCESS></link></style>, <style=Term><link=TERM_FOCUSED>concentra</link></style> 1 carta y descarta 2 <style=Term><link=TERM_FATIGUE></link></style>.",
+      "en": "1 <style=Term><link=TERM_SURGE></link></style>: During your defense, add 1 <style=Term><link=TERM_SUCCESS></link></style>, <style=Term><link=TERM_FOCUSED>focus</link></style> 1 card, and discard 2 <style=Term><link=TERM_FATIGUE></link></style>.",
+      "fr": "1 <style=Term><link=TERM_SURGE></link></style> : Pendant votre défense, ajoutez 1 <style=Term><link=TERM_SUCCESS></link></style>, <style=Term><link=TERM_FOCUSED>canalisez</link></style> 1 carte et défaussez 2 <style=Term><link=TERM_FATIGUE></link></style>.",
+      "it": "1 <style=Term><link=TERM_SURGE></link></style>: Durante la tua difesa, aggiungi 1 <style=Term><link=TERM_SUCCESS></link></style>, <style=Term><link=TERM_FOCUSED>focalizza</link></style> 1 carta e scarta 2 <style=Term><link=TERM_FATIGUE></link></style>.",
+      "pt": "1 <style=Term><link=TERM_SURGE></link></style>: Durante sua defesa, some 1 <style=Term><link=TERM_SUCCESS></link></style>, <style=Term><link=TERM_FOCUSED>foque</link></style> 1 carta e descarte 2 <style=Term><link=TERM_FATIGUE></link></style>."
+    }
   },
   {
     "id": "ARMOR_6",
     "type": "armor",
+    "names": {
+      "es": "Armadura de cuero del viajante",
+      "en": "Wayfarers Leather",
+      "fr": "Cuir de voyageur",
+      "it": "Cuoio del Viandante",
+      "pt": "Couro Andarilho"
+    },
+    "image": "/assets/armor/wayfarers leather.png",
+    "buyPrice": 200,
+    "sellPrice": null,
+    "armorType": "medium",
     "baseAbilityDescs": {
       "es": "Aumenta tu <style=Term><link=TERM_SPEED>velocidad</link></style> en 1.",
       "en": "Increase your <style=Term><link=TERM_SPEED>speed</link></style> by 1.",
@@ -164,36 +175,11 @@ export const ARMORS = [
       "fr": "Votre <style=Term><link=TERM_SPEED>vitesse</link></style> augmente de 1. Pendant votre tour, vous pouvez intervertir votre figurine et celle d’un petit Ennemi adjacent.",
       "it": "Aumenta di 1 la tua <style=Term><link=TERM_SPEED>velocità</link></style>. Durante il tuo turno, puoi scambiarti di casella con un nemico piccolo adiacente.",
       "pt": "Aumente seu <style=Term><link=TERM_SPEED>deslocamento</link></style> em 1. Durante seu turno, você pode trocar de espaço com um inimigo pequeno adjacente."
-    },
-    "names": {
-      "es": "Armadura de cuero del viajante",
-      "en": "Wayfarers Leather",
-      "fr": "Cuir de voyageur",
-      "it": "Cuoio del Viandante",
-      "pt": "Couro Andarilho"
-    },
-    "image": "/assets/armor/wayfarers leather.png",
-    "buyPrice": 200,
-    "sellPrice": null,
-    "armorType": "medium"
+    }
   },
   {
     "id": "ARMOR_7",
     "type": "armor",
-    "baseAbilityDescs": {
-      "es": "1 <style=Term><link=TERM_SURGE></link></style>: Durante tu defensa, añade 1 <style=Term><link=TERM_SUCCESS></link></style> y descarta 1 <style=Term><link=TERM_FATIGUE></link></style>.",
-      "en": "1 <style=Term><link=TERM_SURGE></link></style>: During your defense, add 1 <style=Term><link=TERM_SUCCESS></link></style> and discard 1 <style=Term><link=TERM_FATIGUE></link></style>.",
-      "fr": "1 <style=Term><link=TERM_SURGE></link></style> : Pendant votre défense, ajoutez 1 <style=Term><link=TERM_SUCCESS></link></style> et défaussez 1 <style=Term><link=TERM_FATIGUE></link></style>.",
-      "it": "1 <style=Term><link=TERM_SURGE></link></style>: Durante la tua difesa, aggiungi 1 <style=Term><link=TERM_SUCCESS></link></style> e scarta 1 <style=Term><link=TERM_FATIGUE></link></style>.",
-      "pt": "1 <style=Term><link=TERM_SURGE></link></style>: Durante sua defesa, some 1 <style=Term><link=TERM_SUCCESS></link></style> e descarte 1 <style=Term><link=TERM_FATIGUE></link></style>."
-    },
-    "abilityDescs": {
-      "es": "1 <style=Term><link=TERM_SURGE></link></style>: Durante tu defensa, añade 1 <style=Term><link=TERM_SUCCESS></link></style> y descarta 2 <style=Term><link=TERM_FATIGUE></link></style>.",
-      "en": "1 <style=Term><link=TERM_SURGE></link></style>: During your defense, add 1 <style=Term><link=TERM_SUCCESS></link></style> and discard 2 <style=Term><link=TERM_FATIGUE></link></style>.",
-      "fr": "1 <style=Term><link=TERM_SURGE></link></style> : Pendant votre défense, ajoutez 1 <style=Term><link=TERM_SUCCESS></link></style> et défaussez 2 <style=Term><link=TERM_FATIGUE></link></style>.",
-      "it": "1 <style=Term><link=TERM_SURGE></link></style>: Durante la tua difesa, aggiungi 1 <style=Term><link=TERM_SUCCESS></link></style> e scarta 2 <style=Term><link=TERM_FATIGUE></link></style>.",
-      "pt": "1 <style=Term><link=TERM_SURGE></link></style>: Durante sua defesa, some 1 <style=Term><link=TERM_SUCCESS></link></style> e descarte 2 <style=Term><link=TERM_FATIGUE></link></style>."
-    },
     "names": {
       "es": "Cota del anillo tormentoso",
       "en": "Stormring Mail",
@@ -204,11 +190,36 @@ export const ARMORS = [
     "image": "/assets/armor/stormring mail.png",
     "buyPrice": 200,
     "sellPrice": null,
-    "armorType": "medium"
+    "armorType": "medium",
+    "baseAbilityDescs": {
+      "es": "1 <style=Term><link=TERM_SURGE></link></style>: Durante tu defensa, añade 1 <style=Term><link=TERM_SUCCESS></link></style> y descarta 1 <style=Term><link=TERM_FATIGUE></link></style>.",
+      "en": "1 <style=Term><link=TERM_SURGE></link></style>: During your defense, add 1 <style=Term><link=TERM_SUCCESS></link></style> and discard 1 <style=Term><link=TERM_FATIGUE></link></style>.",
+      "fr": "1 <style=Term><link=TERM_SURGE></link></style> : Pendant votre défense, ajoutez 1 <style=Term><link=TERM_SUCCESS></link></style> et défaussez 1 <style=Term><link=TERM_FATIGUE></link></style>.",
+      "it": "1 <style=Term><link=TERM_SURGE></link></style>: Durante la tua difesa, aggiungi 1 <style=Term><link=TERM_SUCCESS></link></style> e scarta 1 <style=Term><link=TERM_FATIGUE></link></style>.",
+      "pt": "1 <style=Term><link=TERM_SURGE></link></style>: Durante sua defesa, some 1 <style=Term><link=TERM_SUCCESS></link></style> e descarte 1 <style=Term><link=TERM_FATIGUE></link></style>."
+    },
+    "abilityDescs": {
+      "es": "1 <style=Term><link=TERM_SURGE></link></style>: Durante tu defensa, añade 1 <style=Term><link=TERM_SUCCESS></link></style> y descarta 2 <style=Term><link=TERM_FATIGUE></link></style>.",
+      "en": "1 <style=Term><link=TERM_SURGE></link></style>: During your defense, add 1 <style=Term><link=TERM_SUCCESS></link></style> and discard 2 <style=Term><link=TERM_FATIGUE></link></style>.",
+      "fr": "1 <style=Term><link=TERM_SURGE></link></style> : Pendant votre défense, ajoutez 1 <style=Term><link=TERM_SUCCESS></link></style> et défaussez 2 <style=Term><link=TERM_FATIGUE></link></style>.",
+      "it": "1 <style=Term><link=TERM_SURGE></link></style>: Durante la tua difesa, aggiungi 1 <style=Term><link=TERM_SUCCESS></link></style> e scarta 2 <style=Term><link=TERM_FATIGUE></link></style>.",
+      "pt": "1 <style=Term><link=TERM_SURGE></link></style>: Durante sua defesa, some 1 <style=Term><link=TERM_SUCCESS></link></style> e descarte 2 <style=Term><link=TERM_FATIGUE></link></style>."
+    }
   },
   {
     "id": "ARMOR_8",
     "type": "armor",
+    "names": {
+      "es": "Abrigo del enterrador",
+      "en": "Undertaker's Coat",
+      "fr": "Manteau de croque-mort",
+      "it": "Cappotto del Becchino",
+      "pt": "Capa Fúnebre"
+    },
+    "image": "/assets/armor/undertakers coat.png",
+    "buyPrice": 600,
+    "sellPrice": null,
+    "armorType": "medium",
     "baseAbilityDescs": {
       "es": "Después de que derrotes a un enemigo, elige 1 opción: •<b><style=Term><link=TERM_SHIFT>Desplazamiento</link></style> 3</b> •Descarta 2 <style=Term><link=TERM_FATIGUE></link></style> •<style=Term><link=TERM_FOCUSED>Concentra</link></style> 1 carta",
       "en": "After you defeat an enemy, choose 1: •<b><style=Term><link=TERM_SHIFT>Shift</link></style> 3</b> •Discard 2 <style=Term><link=TERM_FATIGUE></link></style> •<style=Term><link=TERM_FOCUSED>Focus</link></style> 1 card",
@@ -222,22 +233,22 @@ export const ARMORS = [
       "fr": "Après que vous avez vaincu un Ennemi, résolvez 2 effets au choix : • <b><style=Term><link=TERM_SHIFT>Glisser</link></style> de 3</b> • Défausser 2 <style=Term><link=TERM_FATIGUE></link></style> • <style=Term><link=TERM_FOCUSED>Canaliser</link></style> 1 carte",
       "it": "Dopo che hai sconfitto un nemico, scegli 1 effetto: • <style=Term><link=TERM_SHIFT>Scatta</link></style> 3 • Scarta 2 <style=Term><link=TERM_FATIGUE></link></style> • <style=Term><link=TERM_FOCUSED>Focalizza</link></style> 1 carta",
       "pt": "Depois de derrotar um inimigo, escolha 2: •<b><style=Term><link=TERM_SHIFT>Deslocar</link></style> 3</b> •Descartar 2 <style=Term><link=TERM_FATIGUE></link></style> •<style=Term><link=TERM_FOCUSED>Focar</link></style> 1 carta"
-    },
-    "names": {
-      "es": "Abrigo del enterrador",
-      "en": "Undertaker's Coat",
-      "fr": "Manteau de croque-mort",
-      "it": "Cappotto del Becchino",
-      "pt": "Capa Fúnebre"
-    },
-    "image": "/assets/armor/undertakers coat.png",
-    "buyPrice": 200,
-    "sellPrice": null,
-    "armorType": "medium"
+    }
   },
   {
     "id": "ARMOR_9",
     "type": "armor",
+    "names": {
+      "es": "Armadura de cuero del asesino",
+      "en": "Slayer Leather",
+      "fr": "Cuir de tueur",
+      "it": "Cuoio dell'Uccisore",
+      "pt": "Couro Carrasco"
+    },
+    "image": "/assets/armor/slayer leather.png",
+    "buyPrice": 200,
+    "sellPrice": null,
+    "armorType": "medium",
     "baseAbilityDescs": {
       "es": "Después de tu ataque, si el enemigo es derrotado, puedes sufrir 3 <style=Term><link=TERM_FATIGUE></link></style> para atacar de nuevo.",
       "en": "After your attack, if the enemy is defeated, you may suffer 3 <style=Term><link=TERM_FATIGUE></link></style> to attack again.",
@@ -251,36 +262,11 @@ export const ARMORS = [
       "fr": "Après que vous avez attaqué et vaincu un Ennemi, vous pouvez subir 2 <style=Term><link=TERM_FATIGUE></link></style> pour attaquer de nouveau.",
       "it": "Dopo il tuo attacco, se il nemico è sconfitto, puoi subire 2 <style=Term><link=TERM_FATIGUE></link></style> per attaccare di nuovo.",
       "pt": "Depois do seu ataque, se o inimigo for derrotado, você pode sofrer 2 <style=Term><link=TERM_FATIGUE></link></style> para atacar de novo."
-    },
-    "names": {
-      "es": "Armadura de cuero del asesino",
-      "en": "Slayer Leather",
-      "fr": "Cuir de tueur",
-      "it": "Cuoio dell'Uccisore",
-      "pt": "Couro Carrasco"
-    },
-    "image": "/assets/armor/slayer leather.png",
-    "buyPrice": 200,
-    "sellPrice": null,
-    "armorType": "medium"
+    }
   },
   {
     "id": "ARMOR_10",
     "type": "armor",
-    "baseAbilityDescs": {
-      "es": "Durante la activación de un enemigo, puedes ignorar las capacidades que te muevan.",
-      "en": "During an enemy activation, you may ignore abilities that move you.",
-      "fr": "Pendant l’activation des Ennemis, vous pouvez ignorer les capacités qui vous déplacent.",
-      "it": "Durante l'attivazione di un nemico, puoi ignorare le capacità che ti muovono.",
-      "pt": "Durante a ativação de um inimigo, você pode ignorar habilidades que movam você."
-    },
-    "abilityDescs": {
-      "es": "Durante la activación de un enemigo, puedes ignorar las capacidades que te muevan.",
-      "en": "During an enemy activation, you may ignore abilities that move you.",
-      "fr": "Pendant l’activation des Ennemis, vous pouvez ignorer les capacités qui vous déplacent.",
-      "it": "Durante l'attivazione di un nemico, puoi ignorare le capacità che ti muovono.",
-      "pt": "Durante a ativação de um inimigo, você pode ignorar habilidades que movam você."
-    },
     "names": {
       "es": "Cota de firmeza",
       "en": "Stalwart Mail",
@@ -289,13 +275,38 @@ export const ARMORS = [
       "pt": "Couro Valente"
     },
     "image": "/assets/armor/stalwart mail.png",
-    "buyPrice": 200,
+    "buyPrice": 600,
     "sellPrice": null,
-    "armorType": "medium"
+    "armorType": "medium",
+    "baseAbilityDescs": {
+      "es": "Durante la activación de un enemigo, puedes ignorar las capacidades que te muevan.",
+      "en": "During an enemy activation, you may ignore abilities that move you.",
+      "fr": "Pendant l’activation des Ennemis, vous pouvez ignorer les capacités qui vous déplacent.",
+      "it": "Durante l'attivazione di un nemico, puoi ignorare le capacità che ti muovono.",
+      "pt": "Durante a ativação de um inimigo, você pode ignorar habilidades que movam você."
+    },
+    "abilityDescs": {
+      "es": "Durante la activación de un enemigo, puedes ignorar las capacidades que te muevan.",
+      "en": "During an enemy activation, you may ignore abilities that move you.",
+      "fr": "Pendant l’activation des Ennemis, vous pouvez ignorer les capacités qui vous déplacent.",
+      "it": "Durante l'attivazione di un nemico, puoi ignorare le capacità che ti muovono.",
+      "pt": "Durante a ativação de um inimigo, você pode ignorar habilidades que movam você."
+    }
   },
   {
     "id": "ARMOR_11",
     "type": "armor",
+    "names": {
+      "es": "Jubón de asedio",
+      "en": "Sieging Doublet",
+      "fr": "Pourpoint de siège",
+      "it": "Farsetto da Assedio",
+      "pt": "Gibão de Cerco"
+    },
+    "image": "/assets/armor/enemys plight.png",
+    "buyPrice": 600,
+    "sellPrice": null,
+    "armorType": "medium",
     "baseAbilityDescs": {
       "es": "Al comienzo de cada misión, fija tu vida en 4 puntos por encima de su valor máximo.",
       "en": "At the start of each quest, set your health to 4 greater than its maximum.",
@@ -309,22 +320,22 @@ export const ARMORS = [
       "fr": "Au début de chaque quête, réglez votre cadran sur votre Santé maximale plus 4.",
       "it": "All'inizio di ogni impresa, regola la tua salute a 4 punti in più del suo massimo.",
       "pt": "No começo de cada missão, ajuste seu mostrador de vida para 4 pontos acima de sua vida máxima."
-    },
-    "names": {
-      "es": "Jubón de asedio",
-      "en": "Sieging Doublet",
-      "fr": "Pourpoint de siège",
-      "it": "Farsetto da Assedio",
-      "pt": "Gibão de Cerco"
-    },
-    "image": "/assets/armor/enemys plight.png",
-    "buyPrice": 200,
-    "sellPrice": null,
-    "armorType": "medium"
+    }
   },
   {
     "id": "ARMOR_12",
     "type": "armor",
+    "names": {
+      "es": "Atuendo noble",
+      "en": "Noble Attire",
+      "fr": "Nobles atours",
+      "it": "Tenuta Nobiliare",
+      "pt": "Veste Nobre"
+    },
+    "image": "/assets/armor/noble attire.png",
+    "buyPrice": 200,
+    "sellPrice": null,
+    "armorType": "light",
     "baseAbilityDescs": {
       "es": "Después de que sufras <style=Term><link=TERM_DAMAGE></link></style>, puedes descartar 1 <style=Term><link=TERM_FATIGUE></link></style>.",
       "en": "After you suffer <style=Term><link=TERM_DAMAGE></link></style>, you may discard 1 <style=Term><link=TERM_FATIGUE></link></style>.",
@@ -338,22 +349,22 @@ export const ARMORS = [
       "fr": "Après que vous avez subi des <style=Term><link=TERM_DAMAGE></link></style>, vous pouvez défausser 2 <style=Term><link=TERM_FATIGUE></link></style>.",
       "it": "Dopo che hai subito <style=Term><link=TERM_DAMAGE></link></style>, puoi scartare 2 <style=Term><link=TERM_FATIGUE></link></style>.",
       "pt": "Depois de sofrer <style=Term><link=TERM_DAMAGE></link></style>, você pode descartar 2 <style=Term><link=TERM_FATIGUE></link></style>."
-    },
-    "names": {
-      "es": "Atuendo noble",
-      "en": "Noble Attire",
-      "fr": "Nobles atours",
-      "it": "Tenuta Nobiliare",
-      "pt": "Veste Nobre"
-    },
-    "image": "/assets/armor/noble attire.png",
-    "buyPrice": 200,
-    "sellPrice": null,
-    "armorType": "light"
+    }
   },
   {
     "id": "ARMOR_13",
     "type": "armor",
+    "names": {
+      "es": "Túnica siniestra",
+      "en": "Sinister Robe",
+      "fr": "Robe menaçante",
+      "it": "Veste Sinistra",
+      "pt": "Manto Sinistro"
+    },
+    "image": "/assets/armor/sinister robe.png",
+    "buyPrice": 200,
+    "sellPrice": null,
+    "armorType": "light",
     "baseAbilityDescs": {
       "es": "Después de que un enemigo a 3 o menos casillas de ti sea derrotado, cúrate 1 <style=Term><link=TERM_HEALTH_DIAL></link></style>. Si tú derrotaste al enemigo, <style=Term><link=TERM_FOCUSED>concentra</link></style> 1 carta.",
       "en": "After an enemy within 3 spaces of you is defeated, heal 1 <style=Term><link=TERM_HEALTH_DIAL></link></style>. If you defeated the enemy, <style=Term><link=TERM_FOCUSED>focus</link></style> 1 card.",
@@ -367,36 +378,11 @@ export const ARMORS = [
       "fr": "Après qu’un Ennemi dans un rayon de 5 cases autour de vous a été vaincu, soignez-vous de 1 <style=Term><link=TERM_HEALTH_DIAL></link></style>. Si c’est vous qui l’avez vaincu, <style=Term><link=TERM_FOCUSED>canalisez</link></style> ou <style=Term><link=TERM_PREPARED>préparez</link></style> 1 carte.",
       "it": "Dopo che un nemico entro 5 caselle da te è stato sconfitto, curati 1 <style=Term><link=TERM_HEALTH_DIAL></link></style>. Se hai sconfitto tu quel nemico, <style=Term><link=TERM_FOCUSED>focalizza</link></style> oppure <style=Term><link=TERM_PREPARED>prepara</link></style> 1 carta.",
       "pt": "Depois que um inimigo a até 5 espaços de você for derrotado, cure 1 <style=Term><link=TERM_HEALTH_DIAL></link></style>. Se foi você quem derrotou o inimigo, <style=Term><link=TERM_FOCUSED>foque</link></style> ou <style=Term><link=TERM_PREPARED>prepare</link></style> 1 carta."
-    },
-    "names": {
-      "es": "Túnica siniestra",
-      "en": "Sinister Robe",
-      "fr": "Robe menaçante",
-      "it": "Veste Sinistra",
-      "pt": "Manto Sinistro"
-    },
-    "image": "/assets/armor/sinister robe.png",
-    "buyPrice": 200,
-    "sellPrice": null,
-    "armorType": "light"
+    }
   },
   {
     "id": "ARMOR_14",
     "type": "armor",
-    "baseAbilityDescs": {
-      "es": "Antes de tu defensa, <style=Term><link=TERM_FOCUSED>concentra</link></style> 1 carta.",
-      "en": "Before your defense, <style=Term><link=TERM_FOCUSED>focus</link></style> 1 card.",
-      "fr": "Avant votre défense, <style=Term><link=TERM_FOCUSED>canalisez</link></style> 1 carte.",
-      "it": "Prima della tua difesa, <style=Term><link=TERM_FOCUSED>focalizza</link></style> 1 carta.",
-      "pt": "Antes de sua defesa, <style=Term><link=TERM_FOCUSED>foque</link></style> 1 carta."
-    },
-    "abilityDescs": {
-      "es": "Antes de tu defensa, <style=Term><link=TERM_FOCUSED>concentra</link></style> 1 carta.",
-      "en": "Before your defense, <style=Term><link=TERM_FOCUSED>focus</link></style> 1 card.",
-      "fr": "Avant votre défense, <style=Term><link=TERM_FOCUSED>canalisez</link></style> 1 carte.",
-      "it": "Prima della tua difesa, <style=Term><link=TERM_FOCUSED>focalizza</link></style> 1 carta.",
-      "pt": "Antes de sua defesa, <style=Term><link=TERM_FOCUSED>foque</link></style> 1 carta."
-    },
     "names": {
       "es": "Chaleco de siete botones",
       "en": "Seven Button Vest",
@@ -405,27 +391,27 @@ export const ARMORS = [
       "pt": "Colete de Sete Botões"
     },
     "image": "/assets/armor/seven button vest.png",
-    "buyPrice": 200,
+    "buyPrice": 600,
     "sellPrice": null,
-    "armorType": "light"
+    "armorType": "light",
+    "baseAbilityDescs": {
+      "es": "Antes de tu defensa, <style=Term><link=TERM_FOCUSED>concentra</link></style> 1 carta.",
+      "en": "Before your defense, <style=Term><link=TERM_FOCUSED>focus</link></style> 1 card.",
+      "fr": "Avant votre défense, <style=Term><link=TERM_FOCUSED>canalisez</link></style> 1 carte.",
+      "it": "Prima della tua difesa, <style=Term><link=TERM_FOCUSED>focalizza</link></style> 1 carta.",
+      "pt": "Antes de sua defesa, <style=Term><link=TERM_FOCUSED>foque</link></style> 1 carta."
+    },
+    "abilityDescs": {
+      "es": "Antes de tu defensa, <style=Term><link=TERM_FOCUSED>concentra</link></style> 1 carta.",
+      "en": "Before your defense, <style=Term><link=TERM_FOCUSED>focus</link></style> 1 card.",
+      "fr": "Avant votre défense, <style=Term><link=TERM_FOCUSED>canalisez</link></style> 1 carte.",
+      "it": "Prima della tua difesa, <style=Term><link=TERM_FOCUSED>focalizza</link></style> 1 carta.",
+      "pt": "Antes de sua defesa, <style=Term><link=TERM_FOCUSED>foque</link></style> 1 carta."
+    }
   },
   {
     "id": "ARMOR_15",
     "type": "armor",
-    "baseAbilityDescs": {
-      "es": "Antes de tu defensa, puedes colocar 2 <style=Term><link=TERM_FATIGUE></link></style> para añadir 1 dado azul.",
-      "en": "Before your defense, you may place 2 <style=Term><link=TERM_FATIGUE></link></style> to add 1 blue die.",
-      "fr": "Avant votre défense, vous pouvez assigner 2 <style=Term><link=TERM_FATIGUE></link></style> pour ajouter 1 dé bleu.",
-      "it": "Prima della tua difesa, puoi collocare 2 <style=Term><link=TERM_FATIGUE></link></style> per aggiungere 1 dado blu.",
-      "pt": "Antes de sua defesa, você pode colocar 2 <style=Term><link=TERM_FATIGUE></link></style> para somar 1 dado azul."
-    },
-    "abilityDescs": {
-      "es": "Antes de tu defensa, puedes colocar 2 <style=Term><link=TERM_FATIGUE></link></style> para añadir 1 dado azul.",
-      "en": "Before your defense, you may place 2 <style=Term><link=TERM_FATIGUE></link></style> to add 1 blue die.",
-      "fr": "Avant votre défense, vous pouvez assigner 2 <style=Term><link=TERM_FATIGUE></link></style> pour ajouter 1 dé bleu.",
-      "it": "Prima della tua difesa, puoi collocare 2 <style=Term><link=TERM_FATIGUE></link></style> per aggiungere 1 dado blu.",
-      "pt": "Antes de sua defesa, você pode colocar 2 <style=Term><link=TERM_FATIGUE></link></style> para somar 1 dado azul."
-    },
     "names": {
       "es": "Capa imperceptible",
       "en": "Imperceptible Cape",
@@ -436,11 +422,36 @@ export const ARMORS = [
     "image": "/assets/armor/imperceptible cape.png",
     "buyPrice": 200,
     "sellPrice": null,
-    "armorType": "light"
+    "armorType": "light",
+    "baseAbilityDescs": {
+      "es": "Antes de tu defensa, puedes colocar 2 <style=Term><link=TERM_FATIGUE></link></style> para añadir 1 dado azul.",
+      "en": "Before your defense, you may place 2 <style=Term><link=TERM_FATIGUE></link></style> to add 1 blue die.",
+      "fr": "Avant votre défense, vous pouvez assigner 2 <style=Term><link=TERM_FATIGUE></link></style> pour ajouter 1 dé bleu.",
+      "it": "Prima della tua difesa, puoi collocare 2 <style=Term><link=TERM_FATIGUE></link></style> per aggiungere 1 dado blu.",
+      "pt": "Antes de sua defesa, você pode colocar 2 <style=Term><link=TERM_FATIGUE></link></style> para somar 1 dado azul."
+    },
+    "abilityDescs": {
+      "es": "Antes de tu defensa, puedes colocar 2 <style=Term><link=TERM_FATIGUE></link></style> para añadir 1 dado azul.",
+      "en": "Before your defense, you may place 2 <style=Term><link=TERM_FATIGUE></link></style> to add 1 blue die.",
+      "fr": "Avant votre défense, vous pouvez assigner 2 <style=Term><link=TERM_FATIGUE></link></style> pour ajouter 1 dé bleu.",
+      "it": "Prima della tua difesa, puoi collocare 2 <style=Term><link=TERM_FATIGUE></link></style> per aggiungere 1 dado blu.",
+      "pt": "Antes de sua defesa, você pode colocar 2 <style=Term><link=TERM_FATIGUE></link></style> para somar 1 dado azul."
+    }
   },
   {
     "id": "ARMOR_16",
     "type": "armor",
+    "names": {
+      "es": "Túnica de camaradería",
+      "en": "Robe of Camaraderie",
+      "fr": "Robe de camaraderie",
+      "it": "Veste del Cameratismo",
+      "pt": "Manto da Camaradagem"
+    },
+    "image": "/assets/armor/robe of camaraderie.png",
+    "buyPrice": 200,
+    "sellPrice": null,
+    "armorType": "light",
     "baseAbilityDescs": {
       "es": "Después de que recibas un <style=Term><link=TERM_CONDITIONS>estado</link></style>, puedes sufrir 2 <style=Term><link=TERM_FATIGUE></link></style>. Si lo haces, otro héroe que esté a 3 o menos casillas de ti también recibe ese <style=Term><link=TERM_CONDITIONS>estado</link></style>.",
       "en": "After you gain a <style=Term><link=TERM_CONDITIONS>condition</link></style>, you may suffer 2 <style=Term><link=TERM_FATIGUE></link></style>. If you do, another hero within 3 spaces of you also gains that <style=Term><link=TERM_CONDITIONS>condition</link></style>.",
@@ -454,22 +465,22 @@ export const ARMORS = [
       "fr": "Après avoir gagné un <style=Term><link=TERM_CONDITIONS>état</link></style>, vous pouvez subir 1 <style=Term><link=TERM_FATIGUE></link></style>. Si vous le faites, un autre Héros dans un rayon de 3 cases autour de vous gagne lui aussi cet <style=Term><link=TERM_CONDITIONS>état</link></style>.",
       "it": "Dopo che hai ottenuto una <style=Term><link=TERM_CONDITIONS>condizione</link></style>, puoi subire 1 <style=Term><link=TERM_FATIGUE></link></style>. Se lo fai, anche un altro eroe entro 3 caselle da te ottiene quella <style=Term><link=TERM_CONDITIONS>condizione</link></style>.",
       "pt": "Depois de ganhar uma <style=Term><link=TERM_CONDITIONS>condição</link></style>, você pode sofrer 1 <style=Term><link=TERM_FATIGUE></link></style>. Se o fizer, outro herói a até 3 espaços de você também ganha essa <style=Term><link=TERM_CONDITIONS>condição</link></style>."
-    },
-    "names": {
-      "es": "Túnica de camaradería",
-      "en": "Robe of Camaraderie",
-      "fr": "Robe de camaraderie",
-      "it": "Veste del Cameratismo",
-      "pt": "Manto da Camaradagem"
-    },
-    "image": "/assets/armor/robe of camaraderie.png",
-    "buyPrice": 200,
-    "sellPrice": null,
-    "armorType": "light"
+    }
   },
   {
     "id": "ARMOR_17",
     "type": "armor",
+    "names": {
+      "es": "Túnica de Tarianor",
+      "en": "Tarianor Tunic",
+      "fr": "Tunique de Tarianor",
+      "it": "Tunica di Tarianor",
+      "pt": "Túnica de Tarianor"
+    },
+    "image": "/assets/armor/tarianor tunic.png",
+    "buyPrice": 200,
+    "sellPrice": null,
+    "armorType": "light",
     "baseAbilityDescs": {
       "es": "Ignora los efectos del agua y del veneno.",
       "en": "Ignore the effects of water and poison.",
@@ -483,22 +494,22 @@ export const ARMORS = [
       "fr": "Ignorez les effets de l’eau et du poison.",
       "it": "Ignora gli effetti dell'acqua e del veleno.",
       "pt": "Ignore os efeitos de água e veneno."
-    },
-    "names": {
-      "es": "Túnica de Tarianor",
-      "en": "Tarianor Tunic",
-      "fr": "Tunique de Tarianor",
-      "it": "Tunica di Tarianor",
-      "pt": "Túnica de Tarianor"
-    },
-    "image": "/assets/armor/tarianor tunic.png",
-    "buyPrice": 200,
-    "sellPrice": null,
-    "armorType": "light"
+    }
   },
   {
     "id": "ARMOR_18",
     "type": "armor",
+    "names": {
+      "es": "Capa del pesar",
+      "en": "Cloak of Sorrow",
+      "fr": "Manteau de chagrin",
+      "it": "Manto del Rimpianto",
+      "pt": "Manto do Sofrimento"
+    },
+    "image": "/assets/armor/cloak of sorrow.png",
+    "buyPrice": 200,
+    "sellPrice": null,
+    "armorType": "light",
     "baseAbilityDescs": {
       "es": "Al comienzo de tu turno, puedes descartar 1 <style=Term><link=TERM_CONDITIONS>estado</link></style>.",
       "en": "At the start of your turn, you may discard 1 <style=Term><link=TERM_CONDITIONS>condition</link></style>.",
@@ -512,22 +523,22 @@ export const ARMORS = [
       "fr": "Au début de votre tour, vous pouvez échanger 1 <style=Term><link=TERM_CONDITIONS>état</link></style> contre 1 autre.",
       "it": "All'inizio del tuo turno, puoi sostituire 1 <style=Term><link=TERM_CONDITIONS>condizione</link></style> con 1 altra <style=Term><link=TERM_CONDITIONS>condizione</link></style>.",
       "pt": "No começo do seu turno, você pode substituir 1 <style=Term><link=TERM_CONDITIONS>condição</link></style> por 1 outra <style=Term><link=TERM_CONDITIONS>condição</link></style>."
-    },
-    "names": {
-      "es": "Capa del pesar",
-      "en": "Cloak of Sorrow",
-      "fr": "Manteau de chagrin",
-      "it": "Manto del Rimpianto",
-      "pt": "Manto do Sofrimento"
-    },
-    "image": "/assets/armor/cloak of sorrow.png",
-    "buyPrice": 200,
-    "sellPrice": null,
-    "armorType": "light"
+    }
   },
   {
     "id": "ARMOR_19",
     "type": "armor",
+    "names": {
+      "es": "Armadura de placas monumental",
+      "en": "Monument Plate",
+      "fr": "Plastron monumental",
+      "it": "Piastre Monumentali",
+      "pt": "Placas Monumentais"
+    },
+    "image": "/assets/armor/monument plate.png",
+    "buyPrice": 200,
+    "sellPrice": null,
+    "armorType": "heavy",
     "baseAbilityDescs": {
       "es": "Durante tu turno, puedes gastar 1 punto de movimiento para descartar 1 <style=Term><link=TERM_FATIGUE></link></style>.",
       "en": "During your turn, you may spend 1 movement point to discard 1 <style=Term><link=TERM_FATIGUE></link></style>.",
@@ -541,36 +552,11 @@ export const ARMORS = [
       "fr": "Pendant votre tour, vous pouvez dépenser jusqu'à 3 points de déplacement pour défausser un nombre égal de <style=Term><link=TERM_FATIGUE></link></style>.",
       "it": "Durante il tuo turno, puoi spendere fino a 3 punti movimento per scartare un pari ammontare di <style=Term><link=TERM_FATIGUE></link></style>.",
       "pt": "Durante seu turno, você pode gastar 3 pontos de movimento para descartar um número igual de <style=Term><link=TERM_FATIGUE></link></style>."
-    },
-    "names": {
-      "es": "Armadura de placas monumental",
-      "en": "Monument Plate",
-      "fr": "Plastron monumental",
-      "it": "Piastre Monumentali",
-      "pt": "Placas Monumentais"
-    },
-    "image": "/assets/armor/monument plate.png",
-    "buyPrice": 200,
-    "sellPrice": null,
-    "armorType": "heavy"
+    }
   },
   {
     "id": "ARMOR_20",
     "type": "armor",
-    "baseAbilityDescs": {
-      "es": "1 <style=Term><link=TERM_SURGE></link></style>: Durante tu defensa, añade 2 <style=Term><link=TERM_SUCCESS></link></style>. Puedes sustituir 1 <style=Term><link=TERM_CONDITIONS>estado</link></style> por otro <style=Term><link=TERM_CONDITIONS>estado</link></style>.",
-      "en": "1 <style=Term><link=TERM_SURGE></link></style>: During your defense, add 2 <style=Term><link=TERM_SUCCESS></link></style>. You may replace 1 <style=Term><link=TERM_CONDITIONS>condition</link></style> with another <style=Term><link=TERM_CONDITIONS>condition</link></style>.",
-      "fr": "1 <style=Term><link=TERM_SURGE></link></style> : Pendant votre défense, ajoutez 2 <style=Term><link=TERM_SUCCESS></link></style>. Vous pouvez remplacer 1 <style=Term><link=TERM_CONDITIONS>état</link></style> par un autre <style=Term><link=TERM_CONDITIONS>état</link></style>.",
-      "it": "1 <style=Term><link=TERM_SURGE></link></style>: Durante la tua difesa, aggiungi 2 <style=Term><link=TERM_SUCCESS></link></style>. Puoi sostituire 1 <style=Term><link=TERM_CONDITIONS>condizione</link></style> con 1 altra <style=Term><link=TERM_CONDITIONS>condizione</link></style>.",
-      "pt": "1 <style=Term><link=TERM_SURGE></link></style>: Durante sua defesa, some 2 <style=Term><link=TERM_SUCCESS></link></style>. Você pode substituir 1 <style=Term><link=TERM_CONDITIONS>condição</link></style> por outra <style=Term><link=TERM_CONDITIONS>condição</link></style>."
-    },
-    "abilityDescs": {
-      "es": "1 <style=Term><link=TERM_SURGE></link></style>: Durante tu defensa, añade 2 <style=Term><link=TERM_SUCCESS></link></style>. Puedes sustituir 1 <style=Term><link=TERM_CONDITIONS>estado</link></style> por otro <style=Term><link=TERM_CONDITIONS>estado</link></style>.",
-      "en": "1 <style=Term><link=TERM_SURGE></link></style>: During your defense, add 2 <style=Term><link=TERM_SUCCESS></link></style>. You may replace 1 <style=Term><link=TERM_CONDITIONS>condition</link></style> with another <style=Term><link=TERM_CONDITIONS>condition</link></style>.",
-      "fr": "1 <style=Term><link=TERM_SURGE></link></style> : Pendant votre défense, ajoutez 2 <style=Term><link=TERM_SUCCESS></link></style>. Vous pouvez remplacer 1 <style=Term><link=TERM_CONDITIONS>état</link></style> par un autre <style=Term><link=TERM_CONDITIONS>état</link></style>.",
-      "it": "1 <style=Term><link=TERM_SURGE></link></style>: Durante la tua difesa, aggiungi 2 <style=Term><link=TERM_SUCCESS></link></style>. Puoi sostituire 1 <style=Term><link=TERM_CONDITIONS>condizione</link></style> con 1 altra <style=Term><link=TERM_CONDITIONS>condizione</link></style>.",
-      "pt": "1 <style=Term><link=TERM_SURGE></link></style>: Durante sua defesa, some 2 <style=Term><link=TERM_SUCCESS></link></style>. Você pode substituir 1 <style=Term><link=TERM_CONDITIONS>condição</link></style> por outra <style=Term><link=TERM_CONDITIONS>condição</link></style>."
-    },
     "names": {
       "es": "Chapitel",
       "en": "Spire",
@@ -581,11 +567,36 @@ export const ARMORS = [
     "image": "/assets/armor/spire.png",
     "buyPrice": 200,
     "sellPrice": null,
-    "armorType": "heavy"
+    "armorType": "heavy",
+    "baseAbilityDescs": {
+      "es": "1 <style=Term><link=TERM_SURGE></link></style>: Durante tu defensa, añade 2 <style=Term><link=TERM_SUCCESS></link></style>. Puedes sustituir 1 <style=Term><link=TERM_CONDITIONS>estado</link></style> por otro <style=Term><link=TERM_CONDITIONS>estado</link></style>.",
+      "en": "1 <style=Term><link=TERM_SURGE></link></style>: During your defense, add 2 <style=Term><link=TERM_SUCCESS></link></style>. You may replace 1 <style=Term><link=TERM_CONDITIONS>condition</link></style> with another <style=Term><link=TERM_CONDITIONS>condition</link></style>.",
+      "fr": "1 <style=Term><link=TERM_SURGE></link></style> : Pendant votre défense, ajoutez 2 <style=Term><link=TERM_SUCCESS></link></style>. Vous pouvez remplacer 1 <style=Term><link=TERM_CONDITIONS>état</link></style> par un autre <style=Term><link=TERM_CONDITIONS>état</link></style>.",
+      "it": "1 <style=Term><link=TERM_SURGE></link></style>: Durante la tua difesa, aggiungi 2 <style=Term><link=TERM_SUCCESS></link></style>. Puoi sostituire 1 <style=Term><link=TERM_CONDITIONS>condizione</link></style> con 1 altra <style=Term><link=TERM_CONDITIONS>condizione</link></style>.",
+      "pt": "1 <style=Term><link=TERM_SURGE></link></style>: Durante sua defesa, some 2 <style=Term><link=TERM_SUCCESS></link></style>. Você pode substituir 1 <style=Term><link=TERM_CONDITIONS>condição</link></style> por outra <style=Term><link=TERM_CONDITIONS>condição</link></style>."
+    },
+    "abilityDescs": {
+      "es": "1 <style=Term><link=TERM_SURGE></link></style>: Durante tu defensa, añade 2 <style=Term><link=TERM_SUCCESS></link></style>. Puedes sustituir 1 <style=Term><link=TERM_CONDITIONS>estado</link></style> por otro <style=Term><link=TERM_CONDITIONS>estado</link></style>.",
+      "en": "1 <style=Term><link=TERM_SURGE></link></style>: During your defense, add 2 <style=Term><link=TERM_SUCCESS></link></style>. You may replace 1 <style=Term><link=TERM_CONDITIONS>condition</link></style> with another <style=Term><link=TERM_CONDITIONS>condition</link></style>.",
+      "fr": "1 <style=Term><link=TERM_SURGE></link></style> : Pendant votre défense, ajoutez 2 <style=Term><link=TERM_SUCCESS></link></style>. Vous pouvez remplacer 1 <style=Term><link=TERM_CONDITIONS>état</link></style> par un autre <style=Term><link=TERM_CONDITIONS>état</link></style>.",
+      "it": "1 <style=Term><link=TERM_SURGE></link></style>: Durante la tua difesa, aggiungi 2 <style=Term><link=TERM_SUCCESS></link></style>. Puoi sostituire 1 <style=Term><link=TERM_CONDITIONS>condizione</link></style> con 1 altra <style=Term><link=TERM_CONDITIONS>condizione</link></style>.",
+      "pt": "1 <style=Term><link=TERM_SURGE></link></style>: Durante sua defesa, some 2 <style=Term><link=TERM_SUCCESS></link></style>. Você pode substituir 1 <style=Term><link=TERM_CONDITIONS>condição</link></style> por outra <style=Term><link=TERM_CONDITIONS>condição</link></style>."
+    }
   },
   {
     "id": "ARMOR_21",
     "type": "armor",
+    "names": {
+      "es": "Coraza del guardián de la luz",
+      "en": "Lightkeeper's Cuirass",
+      "fr": "Cuirasse de gardejour",
+      "it": "Corazza del Custode della Luce",
+      "pt": "Peitoral do Guarda-luz"
+    },
+    "image": "/assets/armor/lightkeeper's suit.png",
+    "buyPrice": 200,
+    "sellPrice": null,
+    "armorType": "heavy",
     "baseAbilityDescs": {
       "es": "Cuando se produce el paso del tiempo, puedes descartar 1 <style=Term><link=TERM_CONDITIONS>estado</link></style>.",
       "en": "When time passes, you may discard 1 <style=Term><link=TERM_CONDITIONS>condition</link></style>.",
@@ -599,22 +610,22 @@ export const ARMORS = [
       "fr": "Lorsque le temps passe, vous pouvez défausser 1 <style=Term><link=TERM_CONDITIONS>état</link></style>.",
       "it": "Quando il tempo passa, puoi scartare 1 <style=Term><link=TERM_CONDITIONS>condizione</link></style>.",
       "pt": "Quando o tempo passar, você pode descartar 1 <style=Term><link=TERM_CONDITIONS>condição</link></style>."
-    },
-    "names": {
-      "es": "Coraza del guardián de la luz",
-      "en": "Lightkeeper's Cuirass",
-      "fr": "Cuirasse de gardejour",
-      "it": "Corazza del Custode della Luce",
-      "pt": "Peitoral do Guarda-luz"
-    },
-    "image": "/assets/armor/lightkeeper's suit.png",
-    "buyPrice": 200,
-    "sellPrice": null,
-    "armorType": "heavy"
+    }
   },
   {
     "id": "ARMOR_22",
     "type": "armor",
+    "names": {
+      "es": "Capucha de elfo del abismo",
+      "en": "Deep Elf Cowl",
+      "fr": "Pèlerine d'Elfe des profondeurs",
+      "it": "Cappuccio Elfico delle Profondità",
+      "pt": "Capucho dos Elfos das Profundezas"
+    },
+    "image": "/assets/armor/deep elf cowl.png",
+    "buyPrice": 200,
+    "sellPrice": null,
+    "armorType": "light",
     "baseAbilityDescs": {
       "es": "Durante tu turno, puedes sufrir 2 <style=Term><link=TERM_FATIGUE></link></style> para ignorar los efectos de las casillas de <style=Term><link=TERM_UNDERLAYS>capa inferior</link></style> durante el resto de tu turno.",
       "en": "During your turn, you may suffer 2 <style=Term><link=TERM_FATIGUE></link></style> to ignore the effects of <style=Term><link=TERM_UNDERLAYS>underlay</link></style> spaces for the rest of your turn.",
@@ -628,22 +639,22 @@ export const ARMORS = [
       "fr": "Pendant votre tour, vous pouvez subir 1 <style=Term><link=TERM_FATIGUE></link></style> pour ignorer les effets des cases de <style=Term><link=TERM_UNDERLAYS>strates</link></style> pour le reste de votre tour.",
       "it": "Durante il tuo turno, puoi subire 1 <style=Term><link=TERM_FATIGUE></link></style> per ignorare gli effetti dei <style=Term><link=TERM_UNDERLAYS>sottostrati</link></style> per il resto del turno.",
       "pt": "Durante seu turno, você pode sofrer 1 <style=Term><link=TERM_FATIGUE></link></style> para ignorar os efeitos de <style=Term><link=TERM_UNDERLAYS>espaços de</link></style> subcamadas até o fim do seu turno."
-    },
-    "names": {
-      "es": "Capucha de elfo del abismo",
-      "en": "Deep Elf Cowl",
-      "fr": "Pèlerine d'Elfe des profondeurs",
-      "it": "Cappuccio Elfico delle Profondità",
-      "pt": "Capucho dos Elfos das Profundezas"
-    },
-    "image": "/assets/armor/deep elf cowl.png",
-    "buyPrice": 200,
-    "sellPrice": null,
-    "armorType": "light"
+    }
   },
   {
     "id": "ARMOR_23",
     "type": "armor",
+    "names": {
+      "es": "Túnica de erudito",
+      "en": "Scholar's Robe",
+      "fr": "Robe d'érudit",
+      "it": "Veste dello Studioso",
+      "pt": "Manto dos Acadêmicos"
+    },
+    "image": "/assets/armor/scholar's robe.png",
+    "buyPrice": 200,
+    "sellPrice": null,
+    "armorType": "light",
     "baseAbilityDescs": {
       "es": "Durante tu turno, después de que interactúes, puedes descartar 1 <style=Term><link=TERM_FATIGUE></link></style> o <style=Term><link=TERM_FOCUSED>concentrar</link></style> 1 carta.",
       "en": "During your turn, after you interact, you may discard 1 <style=Term><link=TERM_FATIGUE></link></style> or <style=Term><link=TERM_FOCUSED>focus</link></style> 1 card.",
@@ -657,22 +668,22 @@ export const ARMORS = [
       "fr": "Pendant votre tour, après avoir interagi, vous pouvez défausser 2 <style=Term><link=TERM_FATIGUE></link></style> ou <style=Term><link=TERM_FOCUSED>canaliser</link></style> 1 carte.",
       "it": "Durante il tuo turno, dopo che hai interagito, puoi scartare 2 <style=Term><link=TERM_FATIGUE></link></style> oppure <style=Term><link=TERM_FOCUSED>focalizzare</link></style> 1 carta.",
       "pt": "Durante seu turno, depois de interagir, você pode descartar 2 <style=Term><link=TERM_FATIGUE></link></style> ou <style=Term><link=TERM_FOCUSED>focar</link></style> 1 carta."
-    },
-    "names": {
-      "es": "Túnica de erudito",
-      "en": "Scholar's Robe",
-      "fr": "Robe d'érudit",
-      "it": "Veste dello Studioso",
-      "pt": "Manto dos Acadêmicos"
-    },
-    "image": "/assets/armor/scholar's robe.png",
-    "buyPrice": 200,
-    "sellPrice": null,
-    "armorType": "light"
+    }
   },
   {
     "id": "ARMOR_24",
     "type": "armor",
+    "names": {
+      "es": "Capucha reluciente",
+      "en": "Glimmer Hood",
+      "fr": "Capuchon scintillant",
+      "it": "Cappuccio Sfavillante",
+      "pt": "Capuz Luzente"
+    },
+    "image": "/assets/armor/glimmer hood.png",
+    "buyPrice": 200,
+    "sellPrice": null,
+    "armorType": "light",
     "baseAbilityDescs": {
       "es": "Después de tu defensa, puedes <style=Term><link=TERM_FOCUSED>concentrar</link></style> 1 carta y <style=Term><link=TERM_SHROUDED>velar</link></style> 1 carta.",
       "en": "After your defense, you may <style=Term><link=TERM_FOCUSED>focus</link></style> 1 card and <style=Term><link=TERM_SHROUDED>shroud</link></style> 1 card.",
@@ -686,36 +697,11 @@ export const ARMORS = [
       "fr": "Après votre défense, vous pouvez <style=Term><link=TERM_FOCUSED>canaliser</link></style> 1 carte, <style=Term><link=TERM_SHROUDED>camoufler</link></style> 1 carte et défausser jusqu'à 1 <style=Term><link=TERM_CONDITIONS>état</link></style>.",
       "it": "Dopo la tua difesa, puoi <style=Term><link=TERM_FOCUSED>focalizzare</link></style> 1 carta, <style=Term><link=TERM_SHROUDED>velare</link></style> 1 carta e scartare fino a 1 <style=Term><link=TERM_CONDITIONS>condizione</link></style>.",
       "pt": "Depois da sua defesa, você pode <style=Term><link=TERM_FOCUSED>focar</link></style> 1 carta, <style=Term><link=TERM_SHROUDED>encobrir</link></style> 1 carta e descartar até 1 <style=Term><link=TERM_CONDITIONS>condição</link></style>."
-    },
-    "names": {
-      "es": "Capucha reluciente",
-      "en": "Glimmer Hood",
-      "fr": "Capuchon scintillant",
-      "it": "Cappuccio Sfavillante",
-      "pt": "Capuz Luzente"
-    },
-    "image": "/assets/armor/glimmer hood.png",
-    "buyPrice": 200,
-    "sellPrice": null,
-    "armorType": "light"
+    }
   },
   {
     "id": "ARMOR_25",
     "type": "armor",
-    "baseAbilityDescs": {
-      "es": "1 <style=Term><link=TERM_SURGE></link></style>: Durante tu defensa, añade 1 <style=Term><link=TERM_SUCCESS></link></style>. Después de tu defensa, dale la vuelta exactamente a 2 cartas.",
-      "en": "1 <style=Term><link=TERM_SURGE></link></style>: During your defense, add 1 <style=Term><link=TERM_SUCCESS></link></style>. After the defense, flip exactly 2 cards.",
-      "fr": "1 <style=Term><link=TERM_SURGE></link></style> : Pendant votre défense, ajoutez 1 <style=Term><link=TERM_SUCCESS></link></style>. Après votre défense, retournez exactement 2 cartes.",
-      "it": "1 <style=Term><link=TERM_SURGE></link></style>: Durante la tua difesa, aggiungi 1 <style=Term><link=TERM_SUCCESS></link></style>. Dopo la tua difesa, gira esattamente 2 carte.",
-      "pt": "1 <style=Term><link=TERM_SURGE></link></style>: Durante sua defesa, some 1 <style=Term><link=TERM_SUCCESS></link></style>. Depois da sua defesa, vire exatamente 2 cartas."
-    },
-    "abilityDescs": {
-      "es": "1 <style=Term><link=TERM_SURGE></link></style>: Durante tu defensa, añade 1 <style=Term><link=TERM_SUCCESS></link></style>. Después de tu defensa, dale la vuelta exactamente a 2 cartas y luego <style=Term><link=TERM_PREPARED>apresta</link></style> esas cartas.",
-      "en": "1 <style=Term><link=TERM_SURGE></link></style>: During your defense, add 1 <style=Term><link=TERM_SUCCESS></link></style>. After the defense, flip exactly 2 cards, then <style=Term><link=TERM_PREPARED>prepare</link></style> those cards.",
-      "fr": "1 <style=Term><link=TERM_SURGE></link></style> : Pendant votre défense, ajoutez 1 <style=Term><link=TERM_SUCCESS></link></style>. Après votre défense, retournez exactement 2 cartes. Ensuite, <style=Term><link=TERM_PREPARED>préparez</link></style> ces cartes.",
-      "it": "1 <style=Term><link=TERM_SURGE></link></style>: Durante la tua difesa, aggiungi 1 <style=Term><link=TERM_SUCCESS></link></style>. Dopo la tua difesa, gira esattamente 2 carte, poi <style=Term><link=TERM_PREPARED>prepara</link></style> quelle carte.",
-      "pt": "1 <style=Term><link=TERM_SURGE></link></style>: Durante sua defesa, some 1 <style=Term><link=TERM_SUCCESS></link></style>. Depois da sua defesa, vire exatamente 2 cartas; em seguida <style=Term><link=TERM_PREPARED>prepare</link></style> essas cartas."
-    },
     "names": {
       "es": "Encrucijada",
       "en": "Crossroads",
@@ -726,11 +712,36 @@ export const ARMORS = [
     "image": "/assets/armor/crossroads.png",
     "buyPrice": 200,
     "sellPrice": null,
-    "armorType": "medium"
+    "armorType": "medium",
+    "baseAbilityDescs": {
+      "es": "1 <style=Term><link=TERM_SURGE></link></style>: Durante tu defensa, añade 1 <style=Term><link=TERM_SUCCESS></link></style>. Después de tu defensa, dale la vuelta exactamente a 2 cartas.",
+      "en": "1 <style=Term><link=TERM_SURGE></link></style>: During your defense, add 1 <style=Term><link=TERM_SUCCESS></link></style>. After the defense, flip exactly 2 cards.",
+      "fr": "1 <style=Term><link=TERM_SURGE></link></style> : Pendant votre défense, ajoutez 1 <style=Term><link=TERM_SUCCESS></link></style>. Après votre défense, retournez exactement 2 cartes.",
+      "it": "1 <style=Term><link=TERM_SURGE></link></style>: Durante la tua difesa, aggiungi 1 <style=Term><link=TERM_SUCCESS></link></style>. Dopo la tua difesa, gira esattamente 2 carte.",
+      "pt": "1 <style=Term><link=TERM_SURGE></link></style>: Durante sua defesa, some 1 <style=Term><link=TERM_SUCCESS></link></style>. Depois da sua defesa, vire exatamente 2 cartas."
+    },
+    "abilityDescs": {
+      "es": "1 <style=Term><link=TERM_SURGE></link></style>: Durante tu defensa, añade 1 <style=Term><link=TERM_SUCCESS></link></style>. Después de tu defensa, dale la vuelta exactamente a 2 cartas y luego <style=Term><link=TERM_PREPARED>apresta</link></style> esas cartas.",
+      "en": "1 <style=Term><link=TERM_SURGE></link></style>: During your defense, add 1 <style=Term><link=TERM_SUCCESS></link></style>. After the defense, flip exactly 2 cards, then <style=Term><link=TERM_PREPARED>prepare</link></style> those cards.",
+      "fr": "1 <style=Term><link=TERM_SURGE></link></style> : Pendant votre défense, ajoutez 1 <style=Term><link=TERM_SUCCESS></link></style>. Après votre défense, retournez exactement 2 cartes. Ensuite, <style=Term><link=TERM_PREPARED>préparez</link></style> ces cartes.",
+      "it": "1 <style=Term><link=TERM_SURGE></link></style>: Durante la tua difesa, aggiungi 1 <style=Term><link=TERM_SUCCESS></link></style>. Dopo la tua difesa, gira esattamente 2 carte, poi <style=Term><link=TERM_PREPARED>prepara</link></style> quelle carte.",
+      "pt": "1 <style=Term><link=TERM_SURGE></link></style>: Durante sua defesa, some 1 <style=Term><link=TERM_SUCCESS></link></style>. Depois da sua defesa, vire exatamente 2 cartas; em seguida <style=Term><link=TERM_PREPARED>prepare</link></style> essas cartas."
+    }
   },
   {
     "id": "ARMOR_26",
     "type": "armor",
+    "names": {
+      "es": "Malla del cavador",
+      "en": "Delver's Chain",
+      "fr": "Haubergeon de prospecteur",
+      "it": "Cotta dello Scavatore",
+      "pt": "Cota de Anéis do Escavador"
+    },
+    "image": "/assets/armor/delver's chain.png",
+    "buyPrice": 200,
+    "sellPrice": null,
+    "armorType": "medium",
     "baseAbilityDescs": {
       "es": "Durante tu <style=Term><link=TERM_TESTS>prueba</link></style>, puedes sufrir 2 <style=Term><link=TERM_FATIGUE></link></style> para añadir un dado azul o naranja.",
       "en": "During your <style=Term><link=TERM_TESTS>test</link></style>, you may suffer 2 <style=Term><link=TERM_FATIGUE></link></style> to add 1 blue or 1 orange die.",
@@ -744,22 +755,22 @@ export const ARMORS = [
       "fr": "Pendant votre <style=Term><link=TERM_TESTS>test</link></style>, vous pouvez subir 1 <style=Term><link=TERM_FATIGUE></link></style> pour ajouter 1 dé bleu ou 1 dé orange.",
       "it": "Durante la tua <style=Term><link=TERM_TESTS>prova</link></style>, puoi subire 1 <style=Term><link=TERM_FATIGUE></link></style> per aggiungere 1 dado blu oppure 1 dado arancione.",
       "pt": "Durante seu <style=Term><link=TERM_TESTS>teste</link></style>, você pode sofrer 1 <style=Term><link=TERM_FATIGUE></link></style> para somar 1 dado azul ou laranja."
-    },
-    "names": {
-      "es": "Malla del cavador",
-      "en": "Delver's Chain",
-      "fr": "Haubergeon de prospecteur",
-      "it": "Cotta dello Scavatore",
-      "pt": "Cota de Anéis do Escavador"
-    },
-    "image": "/assets/armor/delver's chain.png",
-    "buyPrice": 200,
-    "sellPrice": null,
-    "armorType": "medium"
+    }
   },
   {
     "id": "ARMOR_27",
     "type": "armor",
+    "names": {
+      "es": "Traje de cuero de explorador",
+      "en": "Scout's Leathers",
+      "fr": "Cuir d'éclaireur",
+      "it": "Cuoio dell'Esploratore",
+      "pt": "Couraça dos Batedores"
+    },
+    "image": "/assets/armor/scout's leathers.png",
+    "buyPrice": 200,
+    "sellPrice": null,
+    "armorType": "medium",
     "baseAbilityDescs": {
       "es": "Después de que aparezca un enemigo, puedes <style=Term><link=TERM_SHROUDED>velar</link></style> 1 carta.",
       "en": "After an enemy spawns, you may <style=Term><link=TERM_SHROUDED>shroud</link></style> 1 card.",
@@ -773,18 +784,7 @@ export const ARMORS = [
       "fr": "Après qu'un Ennemi a été généré, vous pouvez <style=Term><link=TERM_SHROUDED>camoufler</link></style> 1 carte.",
       "it": "Dopo che un nemico è stato generato, puoi <style=Term><link=TERM_SHROUDED>velare</link></style> 1 carta.",
       "pt": "Depois de um inimigo surgir, você pode <style=Term><link=TERM_SHROUDED>encobrir</link></style> 1 carta."
-    },
-    "names": {
-      "es": "Traje de cuero de explorador",
-      "en": "Scout's Leathers",
-      "fr": "Cuir d'éclaireur",
-      "it": "Cuoio dell'Esploratore",
-      "pt": "Couraça dos Batedores"
-    },
-    "image": "/assets/armor/scout's leathers.png",
-    "buyPrice": 200,
-    "sellPrice": null,
-    "armorType": "medium"
+    }
   }
 ];
 
@@ -1159,260 +1159,6 @@ export const CONSUMABLES_BY_ID = Object.fromEntries(CONSUMABLES.map(c => [c.id, 
 // === AMULETOS ===
 export const TRINKETS = [
   {
-    "id": "TRINKET1_ID",
-    "type": "trinket",
-    "names": {
-      "es": "Brazaletes sanguinarios",
-      "en": "Bloodthirsty Bracers ",
-      "fr": "Brassards soif-de-sang",
-      "it": "Bracciali Sanguinari",
-      "pt": "Braceletes Sedentos de Sangue"
-    },
-    "image": "/assets/trinkets/bloodthirsty bracers.png",
-    "buyPrice": 200,
-    "sellPrice": null,
-        "baseAbilityDescs": {
-      "es": "Durante tu ataque, si el enemigo ya está dañado, sufre 3 <style=Term><link=TERM_DAMAGE></link></style> adicionales.",
-      "en": "During your attack, if the enemy is already damaged, it suffers an additional 3 <style=Term><link=TERM_DAMAGE></link></style>.",
-      "fr": "Si l’Ennemi a déjà subi des dégâts, il subit 3 <style=Term><link=TERM_DAMAGE></link></style> supplémentaires pendant votre attaque.",
-      "it": "Durante il tuo attacco, se il nemico è già danneggiato, subisce 3 <style=Term><link=TERM_DAMAGE></link></style> aggiuntivi.",
-      "pt": "Durante seu ataque, se o inimigo já tiver sofrido dano, ele sofre 3 <style=Term><link=TERM_DAMAGE></link></style> adicionais."
-    },
-    "abilityDescs": {
-      "es": "Durante tu ataque, si el enemigo ya está dañado, sufre 5 <style=Term><link=TERM_DAMAGE></link></style> adicionales.",
-      "en": "During your attack, if the enemy is already damaged, it suffers an additional 5 <style=Term><link=TERM_DAMAGE></link></style>.",
-      "fr": "Si l’Ennemi a déjà subi des dégâts, il subit 5 <style=Term><link=TERM_DAMAGE></link></style> supplémentaires pendant votre attaque.",
-      "it": "Durante il tuo attacco, se il nemico è già danneggiato, subisce 5 <style=Term><link=TERM_DAMAGE></link></style> aggiuntivi.",
-      "pt": "Durante seu ataque, se o inimigo já tiver sofrido dano, ele sofre 5 <style=Term><link=TERM_DAMAGE></link></style> adicionais."
-    }
-  },
-  {
-    "id": "TRINKET2_ID",
-    "type": "trinket",
-    "names": {
-      "es": "Cesta de brebajes",
-      "en": "Brew Basket",
-      "fr": "Panier à décoctions",
-      "it": "Cestino del Mescitore",
-      "pt": "Cesto para Poções"
-    },
-    "image": "/assets/trinkets/brew basket.png",
-    "buyPrice": 200,
-    "sellPrice": null,
-        "baseAbilityDescs": {
-      "es": "Al comienzo de cada misión, obtén 1 consumible aleatorio.",
-      "en": "At the start of each quest, gain 1 random consumable.",
-      "fr": "Au début de chaque quête, vous gagnez 1 denrée aléatoire.",
-      "it": "All'inizio di ogni impresa, ottieni 1 consumabile casuale.",
-      "pt": "No início de cada missão, ganhe 1 consumível aleatório."
-    },
-    "abilityDescs": {
-      "es": "Al comienzo de cada misión, obtén 1 consumible aleatorio y algunos materiales de creación.",
-      "en": "At the start of each quest, gain 1 random consumable and some crafting materials.",
-      "fr": "Au début de chaque quête, vous gagnez 1 denrée aléatoire et un certain nombre de matériaux.",
-      "it": "All'inizio di ogni impresa, ottieni 1 consumabile casuale e alcuni materiali da fabbricazione.",
-      "pt": "No início de cada missão, ganhe 1 consumível aleatório e alguns materiais para construção."
-    }
-  },
-  {
-    "id": "TRINKET3_ID",
-    "type": "trinket",
-    "names": {
-      "es": "Brújula del hombre muerto",
-      "en": "Dead Man's Compass",
-      "fr": "Boussole du mort",
-      "it": "Bussola del Morto",
-      "pt": "Bússola do Cadáver"
-    },
-    "image": "/assets/trinkets/dead mans compass.png",
-    "buyPrice": 200,
-    "sellPrice": null,
-        "baseAbilityDescs": {
-      "es": "Después de que un enemigo sea derrotado, si los héroes no obtienen materiales de creación, obtienen una pequeña cantidad de oro.",
-      "en": "After an enemy is defeated, if the heroes do not gain crafting materials, they gain a small amount of gold.",
-      "fr": "Après qu’un Ennemi a été vaincu, les Héros gagnent quelques pièces d’or s’ils ne reçoivent aucun matériau.",
-      "it": "Dopo che un nemico è stato sconfitto, se gli eroi non ottengono materiali da fabbricazione, ottengono alcune monete d'oro.",
-      "pt": "Depois que um inimigo é derrotado, e se o herói não tiver ganhado materiais para construção, ele ganha uma pequena quantidade de ouro."
-    },
-    "abilityDescs": {
-      "es": "Después de que un enemigo sea derrotado, si los héroes no obtienen materiales de creación, obtienen una pequeña cantidad de oro y, ocasionalmente, una gran cantidad de oro.",
-      "en": "After an enemy is defeated, if the heroes do not gain crafting materials, they gain a small amount of gold and occasionally a large amount of gold.",
-      "fr": "Après qu’un Ennemi a été vaincu, les Héros gagnent quelques pièces d’or (et parfois beaucoup) s’ils ne reçoivent aucun matériau.",
-      "it": "Dopo che un nemico è stato sconfitto, se gli eroi non ottengono materiali da fabbricazione, ottengono alcune monete d'oro o, più raramente, molte monete d'oro.",
-      "pt": "Depois que um inimigo é derrotado, e se o herói não tiver ganhado materiais para construção, ele ganha uma pequena quantidade de ouro e, ocasionalmente, uma grande quantidade de ouro."
-    }
-  },
-  {
-    "id": "TRINKET4_ID",
-    "type": "trinket",
-    "names": {
-      "es": "Cuerno de coraje",
-      "en": "Horn of Courage",
-      "fr": "Cor de vaillance",
-      "it": "Corno del Coraggio",
-      "pt": "Trombeta da Coragem"
-    },
-    "image": "/assets/trinkets/horn of courage.png",
-    "buyPrice": 200,
-    "sellPrice": null,
-        "baseAbilityDescs": {
-      "es": "Después de que un héroe quede <style=Term><link=TERM_WOUNDS>herido</link></style>, otro héroe recibe un beneficio aleatorio.",
-      "en": "After a hero is <style=Term><link=TERM_WOUNDS>wounded</link></style>, another hero receives a random benefit.",
-      "fr": "Après qu’un Héros est devenu <style=Term><link=TERM_WOUNDS>infirme</link></style>, un autre Héros reçoit un bénéfice aléatoire.",
-      "it": "Dopo che un eroe è diventato <style=Term><link=TERM_WOUNDS>ferito</link></style>, un altro eroe riceve 1 beneficio casuale.",
-      "pt": "Depois que um herói é <style=Term><link=TERM_WOUNDS>ferido</link></style>, outro herói recebe um benefício aleatório."
-    },
-    "abilityDescs": {
-      "es": "Después de que un héroe quede <style=Term><link=TERM_WOUNDS>herido</link></style>, tú y otro héroe recibís un beneficio aleatorio.",
-      "en": "After a hero is <style=Term><link=TERM_WOUNDS>wounded</link></style>, you and another hero receive a random benefit.",
-      "fr": "Après qu’un Héros est devenu <style=Term><link=TERM_WOUNDS>infirme</link></style>, vous et un autre Héros recevez un bénéfice aléatoire chacun.",
-      "it": "Dopo che un eroe è diventato <style=Term><link=TERM_WOUNDS>ferito</link></style>, tu e un altro eroe ricevete 1 beneficio casuale.",
-      "pt": "Depois que um herói é <style=Term><link=TERM_WOUNDS>ferido</link></style>, você e outro herói recebem um benefício aleatório."
-    }
-  },
-  {
-    "id": "TRINKET5_ID",
-    "type": "trinket",
-    "compound": true,
-    "names": {
-      "es": "Runa férrica",
-      "en": "Ironbound Rune",
-      "fr": "Rune de cuiracier",
-      "it": "Runa del Ferrovivo",
-      "pt": "Runa de Ferro"
-    },
-    "image": "/assets/trinkets/ironbound rune.png",
-    "buyPrice": 200,
-    "sellPrice": null,
-        "baseAbilityDescs": {
-      "es": "Cuando quedas <style=Term><link=TERM_WOUNDS>herido</link></style>, obtienes una <style=Term><link=TERM_INJURIES>dolencia</link></style> especial.",
-      "en": "When you are <style=Term><link=TERM_WOUNDS>wounded</link></style>, you gain a unique <style=Term><link=TERM_INJURIES>injury</link></style>.",
-      "fr": "Lorsque vous devenez <style=Term><link=TERM_WOUNDS>infirme</link></style>, vous gagnez une <style=Term><link=TERM_INJURIES>blessure</link></style> unique.",
-      "it": "Quando diventi <style=Term><link=TERM_WOUNDS>ferito</link></style>, ottieni una <style=Term><link=TERM_INJURIES>ferita</link></style> unica.",
-      "pt": "Quando você sofre um <style=Term><link=TERM_WOUNDS>ferimento</link></style>, recebe um <link=TERM_INJURIES>injury</link></style> especial."
-    },
-    "abilityDescs": {
-      "es": "Tus ataques obtienen el tipo de daño terros, y el <style=Term><link=TERM_DAMAGE></link></style> de tu arma aumenta en 1.",
-      "en": "Your attacks gain the terros damage type, and your weapon's <style=Term><link=TERM_DAMAGE></link></style> is increased by 1.",
-      "fr": "Vos attaques gagnent le type de dégâts terros et la <style=Term><link=TERM_DAMAGE></link></style> de votre arme augmente de 1.",
-      "it": "I tuoi attacchi ottengono il tipo di danno terros e il <style=Term><link=TERM_DAMAGE></link></style> della tua arma aumenta di 1.",
-      "pt": "Seus ataques ganham o tipo de dano terros, e o <style=Term><link=TERM_DAMAGE></link></style> das suas armas aumenta em 1."
-    }
-  },
-  {
-    "id": "TRINKET6_ID",
-    "type": "trinket",
-    "names": {
-      "es": "Amuleto de la suerte",
-      "en": "Lucky Charm",
-      "fr": "Porte-bonheur",
-      "it": "Portafortuna",
-      "pt": "Amuleto da Sorte"
-    },
-    "image": "/assets/trinkets/lucky charm.png",
-    "buyPrice": 200,
-    "sellPrice": null,
-        "baseAbilityDescs": {
-      "es": "Después de que realices una <style=Term><link=TERM_TESTS>prueba</link></style> e introduzcas los resultados en la aplicación, se añaden 0–2 <style=Term><link=TERM_SUCCESS></link></style> adicionales.",
-      "en": "After you <style=Term><link=TERM_TESTS>test</link></style> and input your results into the app, an additional 0–2 <style=Term><link=TERM_SUCCESS></link></style> are added.",
-      "fr": "Après votre <style=Term><link=TERM_TESTS>test</link></style> et la saisie du résultat, l’application ajoute 0–2 <style=Term><link=TERM_SUCCESS></link></style> supplémentaires.",
-      "it": "Dopo che hai effettuato una <style=Term><link=TERM_TESTS>prova</link></style> e inserito i tuoi risultati nell'app, vengono aggiunti 0-2 <style=Term><link=TERM_SUCCESS></link></style> aggiuntivi.",
-      "pt": "Depois de fazer um <style=Term><link=TERM_TESTS>teste</link></style> e inserir os seus resultados no aplicativo, um adicional entre 0-2 <style=Term><link=TERM_SUCCESS></link></style> é acrescentado."
-    },
-    "abilityDescs": {
-      "es": "Después de que realices una <style=Term><link=TERM_TESTS>prueba</link></style> e introduzcas los resultados en la aplicación, se añaden 0–3 <style=Term><link=TERM_SUCCESS></link></style> adicionales.",
-      "en": "After you <style=Term><link=TERM_TESTS>test</link></style> and input your results into the app, an additional 0–3 <style=Term><link=TERM_SUCCESS></link></style> are added.",
-      "fr": "Après votre <style=Term><link=TERM_TESTS>test</link></style> et la saisie du résultat, l’application ajoute 0–3 <style=Term><link=TERM_SUCCESS></link></style> supplémentaires.",
-      "it": "Dopo che hai effettuato una <style=Term><link=TERM_TESTS>prova</link></style> e inserito i tuoi risultati nell'app, vengono aggiunti 0-3 <style=Term><link=TERM_SUCCESS></link></style> aggiuntivi.",
-      "pt": "Depois de fazer <style=Term><link=TERM_TESTS>teste</link></style> e inserir os seus resultados no aplicativo, um adicional entre 0-3 <style=Term><link=TERM_SUCCESS></link></style> é acrescentado."
-    }
-  },
-  {
-    "id": "TRINKET7_ID",
-    "type": "trinket",
-    "compound": true,
-    "names": {
-      "es": "Tapiz de maná",
-      "en": "Mana Weave",
-      "fr": "Toile de mana",
-      "it": "Trama di Mana",
-      "pt": "Trama de Mana"
-    },
-    "image": "/assets/trinkets/mana weave.png",
-    "buyPrice": 200,
-    "sellPrice": null,
-        "baseAbilityDescs": {
-      "es": "Durante tu primer ataque en cada ronda, la probabilidad de tu capacidad secundaria aumenta un 5%.",
-      "en": "During your first attack each round, your secondary ability chances are increased by 5%.",
-      "fr": "Chaque round, pendant votre première attaque, la probabilité que votre capacité secondaire soit utilisée augmente de 5%.",
-      "it": "Durante il tuo primo attacco ogni round, le probabilità delle tue capacità secondarie aumentano di 5%.",
-      "pt": "Durante seu primeiro ataque a cada rodada, as chances da sua habilidade secundária aumentam em 5%."
-    },
-    "abilityDescs": {
-      "es": "Tus ataques obtienen el tipo de daño aquos, y el <style=Term><link=TERM_DAMAGE></link></style> de tu arma aumenta en 1.",
-      "en": "Your attacks gain the aquos damage type, and your weapon's <style=Term><link=TERM_DAMAGE></link></style> is increased by 1.",
-      "fr": "Vos attaques gagnent le type de dégâts aquos et la <style=Term><link=TERM_DAMAGE></link></style> de votre arme augmente de 1.",
-      "it": "I tuoi attacchi ottengono il tipo di danno aquos e il <style=Term><link=TERM_DAMAGE></link></style> della tua arma aumenta di 1.",
-      "pt": "Seus ataques ganham o tipo de dano aquos, e o <style=Term><link=TERM_DAMAGE></link></style> das suas armas aumenta em 1."
-    }
-  },
-  {
-    "id": "TRINKET8_ID",
-    "type": "trinket",
-    "names": {
-      "es": "Brazaletes de la sombra",
-      "en": "Shadow Bracers",
-      "fr": "Brassards de l’ombre",
-      "it": "Bracciali dell'Ombra",
-      "pt": "Braceletes de Sombra"
-    },
-    "image": "/assets/trinkets/shadow bracers.png",
-    "buyPrice": 200,
-    "sellPrice": null,
-        "baseAbilityDescs": {
-      "es": "Durante tus primeros 3 ataques de cada misión, el enemigo sufre 7 <style=Term><link=TERM_DAMAGE></link></style> adicionales y queda <style=Term><link=TERM_DAZED>conmocionado</link></style>.",
-      "en": "During your first 3 attacks each quest, the enemy suffers an additional 7 <style=Term><link=TERM_DAMAGE></link></style> and is <style=Term><link=TERM_DAZED>dazed</link></style>.",
-      "fr": "Pendant vos 3 premières attaques de chaque quête, l’Ennemi subit 7 <style=Term><link=TERM_DAMAGE></link></style> supplémentaires et devient <style=Term><link=TERM_DAZED>étourdi</link></style>.",
-      "it": "Durante i tuoi primi 3 attacchi ogni impresa, il nemico subisce 7 <style=Term><link=TERM_DAMAGE></link></style> aggiuntivi e diventa <style=Term><link=TERM_DAZED>frastornato</link></style>.",
-      "pt": "Durante seus 3 primeiros ataques em cada missão, o inimigo sofre 7 <style=Term><link=TERM_DAMAGE></link></style> adicionais e fica <style=Term><link=TERM_DAZED>confuso</link></style>."
-    },
-    "abilityDescs": {
-      "es": "Durante tus primeros 4 ataques de cada misión, el enemigo sufre 10 <style=Term><link=TERM_DAMAGE></link></style> adicionales y queda <style=Term><link=TERM_DAZED>conmocionado</link></style>.",
-      "en": "During your first 4 attacks each quest, the enemy suffers an additional 10 <style=Term><link=TERM_DAMAGE></link></style> and is <style=Term><link=TERM_DAZED>dazed</link></style>.",
-      "fr": "Pendant vos 4 premières attaques de chaque quête, l’Ennemi subit 10 <style=Term><link=TERM_DAMAGE></link></style> supplémentaires et devient <style=Term><link=TERM_DAZED>étourdi</link></style>.",
-      "it": "Durante i tuoi primi 4 attacchi ogni impresa, il nemico subisce 10 <style=Term><link=TERM_DAMAGE></link></style> aggiuntivi e diventa <style=Term><link=TERM_DAZED>frastornato</link></style>.",
-      "pt": "Durante seus 4 primeiros ataques em cada missão, o inimigo sofre 10 <style=Term><link=TERM_DAMAGE></link></style> adicionais e fica <style=Term><link=TERM_DAZED>confuso</link></style>."
-    }
-  },
-  {
-    "id": "TRINKET9_ID",
-    "type": "trinket",
-    "names": {
-      "es": "Colgante de la tormenta",
-      "en": "Stormbound Pendant",
-      "fr": "Pendentif orageux",
-      "it": "Pendente della Tempesta",
-      "pt": "Pingente da Tempestade"
-    },
-    "image": "/assets/trinkets/stormbound pendant.png",
-    "buyPrice": 200,
-    "sellPrice": null,
-        "baseAbilityDescs": {
-      "es": "Durante tu ataque, si el enemigo no ha sido atacado en esta ronda, sufre 1–7 <style=Term><link=TERM_DAMAGE></link></style> adicionales.",
-      "en": "During your attack, if the enemy has not been attacked this round, it suffers 1–7 additional <style=Term><link=TERM_DAMAGE></link></style>.",
-      "fr": "Pendant votre attaque, si l’Ennemi n’a pas été attaqué lors de ce round, il subit 1–7 <style=Term><link=TERM_DAMAGE></link></style> supplémentaire(s).",
-      "it": "Durante il tuo attacco, se il nemico non era già stato attaccato in questo round, subisce 1-7 <style=Term><link=TERM_DAMAGE></link></style> aggiuntivi.",
-      "pt": "Durante seu ataque, se o inimigo não tiver sido atacado na rodada atual, ele sofre de 1-7 <style=Term><link=TERM_DAMAGE></link></style> adicionais."
-    },
-    "abilityDescs": {
-      "es": "Durante los ataques de los héroes, si el enemigo no ha sido atacado en esta ronda, sufre 1–9 <style=Term><link=TERM_DAMAGE></link></style> adicionales.",
-      "en": "During hero attacks, if the enemy has not been attacked this round, it suffers 1–9 additional <style=Term><link=TERM_DAMAGE></link></style>.",
-      "fr": "Pendant l’attaque d’un Héros, si l’Ennemi n’a pas été attaqué lors de ce round, il subit 1–9 <style=Term><link=TERM_DAMAGE></link></style> supplémentaire(s).",
-      "it": "Durante l'attacco di un eroe, se il nemico non era già stato attaccato in questo round, subisce 1-9 <style=Term><link=TERM_DAMAGE></link></style> aggiuntivi.",
-      "pt": "Durante os ataques de herói, se o inimigo não tiver sido atacado na rodada atual, ele sofre de 1-9 <style=Term><link=TERM_DAMAGE></link></style> adicionais."
-    }
-  },
-  {
     "id": "TRINKET10_ID",
     "type": "trinket",
     "names": {
@@ -1425,7 +1171,7 @@ export const TRINKETS = [
     "image": "/assets/trinkets/undying skull.png",
     "buyPrice": 200,
     "sellPrice": null,
-        "baseAbilityDescs": {
+    "baseAbilityDescs": {
       "es": "Después de que derrotes a un enemigo, si es la primera vez en la campaña que un héroe que tenga este accesorio equipado derrota a ese tipo de enemigo, obtén una receta especial.",
       "en": "After you defeat an enemy, if it is the first time any hero with this trinket equipped defeats that enemy type, gain a unique recipe.",
       "fr": "Après que vous avez vaincu un Ennemi, si c’est la première fois de la campagne qu’un Héros équipé de cet accessoire élimine un Ennemi de ce type, vous gagnez une recette unique.",
@@ -1443,7 +1189,6 @@ export const TRINKETS = [
   {
     "id": "TRINKET11_ID",
     "type": "trinket",
-    "compound": true,
     "names": {
       "es": "Piedra del errante",
       "en": "Wanderer's Stone",
@@ -1454,7 +1199,7 @@ export const TRINKETS = [
     "image": "/assets/trinkets/wanderers stone.png",
     "buyPrice": 200,
     "sellPrice": null,
-        "baseAbilityDescs": {
+    "baseAbilityDescs": {
       "es": "Cuando se produce el paso del tiempo, cada héroe puede elegir el beneficio alternativo mostrado en vez de descartar <style=Term><link=TERM_FATIGUE></link></style>.",
       "en": "When time passes, each hero may choose the displayed alternate benefit instead of discarding <style=Term><link=TERM_FATIGUE></link></style>.",
       "fr": "Lorsque le temps passe, chaque Héros peut choisir le bénéfice alternatif affiché sur l’écran au lieu de défausser de la <style=Term><link=TERM_FATIGUE></link></style>.",
@@ -1462,12 +1207,13 @@ export const TRINKETS = [
       "pt": "Quando o tempo passa, cada herói pode escolher o benefício alternativo apresentado em vez de descartar <style=Term><link=TERM_FATIGUE></link></style>."
     },
     "abilityDescs": {
-      "es": "Tus ataques obtienen el tipo de daño anemos, y el <style=Term><link=TERM_DAMAGE></link></style> de tu arma aumenta en 1.",
-      "en": "Your attacks gain the anemos damage type, and your weapon's <style=Term><link=TERM_DAMAGE></link></style> is increased by 1.",
-      "fr": "Vos attaques gagnent le type de dégâts anemos et la <style=Term><link=TERM_DAMAGE></link></style> de votre arme augmente de 1.",
-      "it": "I tuoi attacchi ottengono il tipo di danno anemos e il <style=Term><link=TERM_DAMAGE></link></style> della tua arma aumenta di 1.",
-      "pt": "Seus ataques ganham o tipo de dano anemos, e o <style=Term><link=TERM_DAMAGE></link></style> das suas armas aumenta em 1."
-    }
+      "es": "Tus ataques obtienen el tipo de daño anemos, y el <style=Term><link=TERM_DAMAGE></link></style> de tu arma aumenta en 1.\n  \n  Cuando se produce el paso del tiempo, cada héroe puede elegir el beneficio alternativo mostrado en vez de descartar <style=Term><link=TERM_FATIGUE></link></style>.",
+      "en": "Your attacks gain the anemos damage type, and your weapon's <style=Term><link=TERM_DAMAGE></link></style> is increased by 1.\n\nWhen time passes, each hero may choose the displayed alternate benefit instead of discarding <style=Term><link=TERM_FATIGUE></link></style>.",
+      "fr": "Vos attaques gagnent le type de dégâts anemos et la <style=Term><link=TERM_DAMAGE></link></style> de votre arme augmente de 1.\n \n Lorsque le temps passe, chaque Héros peut choisir le bénéfice alternatif affiché sur l’écran au lieu de défausser de la <style=Term><link=TERM_FATIGUE></link></style>.",
+      "it": "I tuoi attacchi ottengono il tipo di danno anemos e il <style=Term><link=TERM_DAMAGE></link></style> della tua arma aumenta di 1.\n\nQuando il tempo passa, ogni eroe può scegliere il beneficio alternativo mostrato invece di scartare <style=Term><link=TERM_FATIGUE></link></style>.",
+      "pt": "Seus ataques ganham o tipo de dano anemos, e o <style=Term><link=TERM_DAMAGE></link></style> das suas armas aumenta em 1.\n \nQuando o tempo passa, cada herói pode escolher o benefício alternativo apresentado em vez de descartar <style=Term><link=TERM_FATIGUE></link></style>."
+    },
+    "compound": true
   },
   {
     "id": "TRINKET12_ID",
@@ -1482,7 +1228,7 @@ export const TRINKETS = [
     "image": "/assets/trinkets/war rune.png",
     "buyPrice": 200,
     "sellPrice": null,
-        "baseAbilityDescs": {
+    "baseAbilityDescs": {
       "es": "Durante tu ataque, si el enemigo tiene más vida que cada uno de los demás enemigos, el <style=Term><link=TERM_DAMAGE></link></style> de tu arma aumenta en 1.",
       "en": "During your attack, if the enemy has more health than any other enemy, your weapon's <style=Term><link=TERM_DAMAGE></link></style> is increased by 1.",
       "fr": "Pendant votre attaque, si la Santé de l’Ennemi est supérieure à celle de tous les autres Ennemis, la <style=Term><link=TERM_DAMAGE></link></style> de votre arme augmente de 1.",
@@ -1510,7 +1256,7 @@ export const TRINKETS = [
     "image": "/assets/trinkets/bolt of blood.png",
     "buyPrice": 200,
     "sellPrice": null,
-        "baseAbilityDescs": {
+    "baseAbilityDescs": {
       "es": "Después de que derrotes a un enemigo durante un ataque, 1 enemigo aleatorio distinto sufre una cantidad de <style=Term><link=TERM_DAMAGE></link></style> igual al 10% de la vida inicial del enemigo derrotado.",
       "en": "After you defeat an enemy during an attack, 1 random different enemy suffers <style=Term><link=TERM_DAMAGE></link></style> equal to 10% of the defeated enemy's starting health.",
       "fr": "Après que vous avez vaincu un Ennemi pendant une attaque, 1 autre Ennemi aléatoire subit un nombre de <style=Term><link=TERM_DAMAGE></link></style> égal à 10 % de la valeur de la Santé de départ de l'Ennemi vaincu.",
@@ -1518,11 +1264,11 @@ export const TRINKETS = [
       "pt": "Depois de você derrotar um inimigo durante um ataque, 1 outro inimigo aleatório sofre <style=Term><link=TERM_DAMAGE></link></style> igual a 10% da vida inicial do inimigo derrotado."
     },
     "abilityDescs": {
-      "es": "Tus ataques obtienen el tipo de daño vigos, y el <style=Term><link=TERM_DAMAGE></link></style> de tu arma aumenta en 1.",
-      "en": "Your attacks gain the vigos damage type, and your weapon's <style=Term><link=TERM_DAMAGE></link></style> is increased by 1.",
-      "fr": "Vos attaques gagnent le type de dégâts vigos et les <style=Term><link=TERM_DAMAGE></link></style> de votre arme augmentent de 1.",
-      "it": "I tuoi attacchi ottengono il tipo di danno vigos e il <style=Term><link=TERM_DAMAGE></link></style> della tua arma aumenta di 1.",
-      "pt": "Seus ataques ganham o tipo de dano vigos e o <style=Term><link=TERM_DAMAGE></link></style> da arma aumenta em 1."
+      "es": "Tus ataques obtienen el tipo de daño vigos, y el <style=Term><link=TERM_DAMAGE></link></style> de tu arma aumenta en 1.\n Después de que derrotes a un enemigo durante un ataque, 1 enemigo aleatorio distinto sufre una cantidad de <style=Term><link=TERM_DAMAGE></link></style> igual al 10% de la vida inicial del enemigo derrotado.",
+      "en": "Your attacks gain the vigos damage type, and your weapon's <style=Term><link=TERM_DAMAGE></link></style> is increased by 1.\nAfter you defeat an enemy during an attack, 1 random different enemy suffers <style=Term><link=TERM_DAMAGE></link></style> equal to 10% of the defeated enemy's starting health.",
+      "fr": "Vos attaques gagnent le type de dégâts vigos et les <style=Term><link=TERM_DAMAGE></link></style> de votre arme augmentent de 1.\n Après que vous avez vaincu un Ennemi pendant une attaque, 1 autre Ennemi aléatoire subit un nombre de <style=Term><link=TERM_DAMAGE></link></style> égal à 10 % de la valeur de la Santé de départ de l'Ennemi vaincu.",
+      "it": "I tuoi attacchi ottengono il tipo di danno vigos e il <style=Term><link=TERM_DAMAGE></link></style> della tua arma aumenta di 1.\nDopo che hai sconfitto un nemico durante un attacco, un nemico diverso casuale subisce un ammontare di <style=Term><link=TERM_DAMAGE></link></style> pari al 10% della salute massima del nemico sconfitto.",
+      "pt": "Seus ataques ganham o tipo de dano vigos e o <style=Term><link=TERM_DAMAGE></link></style> da arma aumenta em 1.\n Depois de você derrotar um inimigo durante um ataque, 1 outro inimigo aleatório sofre <style=Term><link=TERM_DAMAGE></link></style> igual a 10% da vida inicial do inimigo derrotado."
     }
   },
   {
@@ -1538,7 +1284,7 @@ export const TRINKETS = [
     "image": "/assets/trinkets/cracked mirror.png",
     "buyPrice": 200,
     "sellPrice": null,
-        "baseAbilityDescs": {
+    "baseAbilityDescs": {
       "es": "Durante tu ataque, si el enemigo no ha sido atacado en esta ronda, obtiene 1 estado aleatorio.",
       "en": "During your attack, if the enemy has not been attacked this round, it gains 1 random status.",
       "fr": "Pendant votre attaque, si l'Ennemi n'a pas été attaqué lors de ce round, il subit 1 statut aléatoire.",
@@ -1546,11 +1292,11 @@ export const TRINKETS = [
       "pt": "Durante seu ataque, se o inimigo não tiver sido atacado nesta rodada, ele ganha 1 status aleatório."
     },
     "abilityDescs": {
-      "es": "Tus ataques obtienen el tipo de daño lumos, y el <style=Term><link=TERM_DAMAGE></link></style> de tu arma aumenta en 1.",
-      "en": "Your attacks gain the lumos damage type, and your weapon's <style=Term><link=TERM_DAMAGE></link></style> is increased by 1.",
-      "fr": "Vos attaques gagnent le type de dégâts lumos et les <style=Term><link=TERM_DAMAGE></link></style> de votre arme augmentent de 1.",
-      "it": "I tuoi attacchi ottengono il tipo di danno lumos e il <style=Term><link=TERM_DAMAGE></link></style> della tua arma aumenta di 1.",
-      "pt": "Seus ataques ganham o tipo de dano lumos e o <style=Term><link=TERM_DAMAGE></link></style> da sua arma aumenta em 1."
+      "es": "Tus ataques obtienen el tipo de daño lumos, y el <style=Term><link=TERM_DAMAGE></link></style> de tu arma aumenta en 1.\n Durante tu ataque, si el enemigo no ha sido atacado en esta ronda, obtiene 1 estado aleatorio.",
+      "en": "Your attacks gain the lumos damage type, and your weapon's <style=Term><link=TERM_DAMAGE></link></style> is increased by 1.\nDuring your attack, if the enemy has not been attacked this round, it gains 1 random status.",
+      "fr": "Vos attaques gagnent le type de dégâts lumos et les <style=Term><link=TERM_DAMAGE></link></style> de votre arme augmentent de 1.\n Pendant votre attaque, si l'Ennemi n'a pas été attaqué lors de ce round, il subit 1 statut aléatoire.",
+      "it": "I tuoi attacchi ottengono il tipo di danno lumos e il <style=Term><link=TERM_DAMAGE></link></style> della tua arma aumenta di 1. \nDurante il tuo attacco, se il nemico non era già stato attaccato in questo round, ottiene 1 status casuale.",
+      "pt": "Seus ataques ganham o tipo de dano lumos e o <style=Term><link=TERM_DAMAGE></link></style> da sua arma aumenta em 1.\n Durante seu ataque, se o inimigo não tiver sido atacado nesta rodada, ele ganha 1 status aleatório."
     }
   },
   {
@@ -1566,7 +1312,7 @@ export const TRINKETS = [
     "image": "/assets/trinkets/fae crystal.png",
     "buyPrice": 200,
     "sellPrice": null,
-        "baseAbilityDescs": {
+    "baseAbilityDescs": {
       "es": "Después de tu ataque, a veces obtienes un beneficio adicional.",
       "en": "After your attack, sometimes gain an extra benefit.",
       "fr": "Après votre attaque, gagnez parfois un bénéfice supplémentaire.",
@@ -1594,7 +1340,7 @@ export const TRINKETS = [
     "image": "/assets/trinkets/heart thorn root.png",
     "buyPrice": 200,
     "sellPrice": null,
-        "baseAbilityDescs": {
+    "baseAbilityDescs": {
       "es": "El daño de ataque de cada enemigo <style=Term><link=TERM_ENFEEBLED>debilitado</link></style> se reduce un 10% adicional.",
       "en": "Each <style=Term><link=TERM_ENFEEBLED>enfeebled</link></style> enemy's attack damage is reduced by an additional 10%.",
       "fr": "Les dégâts infligés par les attaques des Ennemis <style=Term><link=TERM_ENFEEBLED>affaiblis</link></style> sont réduits de 10 % supplémentaires.",
@@ -1602,11 +1348,11 @@ export const TRINKETS = [
       "pt": "O dano de ataque de todo inimigo <style=Term><link=TERM_ENFEEBLED>febril</link></style> é reduzido em 10% adicionais."
     },
     "abilityDescs": {
-      "es": "El daño de ataque de cada enemigo <style=Term><link=TERM_ENFEEBLED>debilitado</link></style> se reduce un 10% adicional.",
-      "en": "Each <style=Term><link=TERM_ENFEEBLED>enfeebled</link></style> enemy's attack damage is reduced by an additional 10%.",
-      "fr": "Les dégâts infligés par les attaques des Ennemis <style=Term><link=TERM_ENFEEBLED>affaiblis</link></style> sont réduits de 10 % supplémentaires.",
-      "it": "I danni degli attacchi di ogni nemico <style=Term><link=TERM_ENFEEBLED>indebolito</link></style> si riducono di un ulteriore 10%.",
-      "pt": "O dano de ataque de todo inimigo <style=Term><link=TERM_ENFEEBLED>febril</link></style> é reduzido em 10% adicionais."
+      "es": "El daño de ataque de cada enemigo <style=Term><link=TERM_ENFEEBLED>debilitado</link></style> se reduce un 10% adicional.\n Los enemigos <style=Term><link=TERM_AFFLICTED>afligidos</link></style> sufren más daño durante la fase de Oscuridad.",
+      "en": "Each <style=Term><link=TERM_ENFEEBLED>enfeebled</link></style> enemy's attack damage is reduced by an additional 10%.\n<style=Term><link=TERM_AFFLICTED>Afflicted</link></style> enemies suffer more damage during the darkness phase.",
+      "fr": "Les dégâts infligés par les attaques des Ennemis <style=Term><link=TERM_ENFEEBLED>affaiblis</link></style> sont réduits de 10 % supplémentaires.\n Les Ennemis <style=Term><link=TERM_AFFLICTED>accablés</link></style> subissent davantage de dégâts pendant la phase des Ténèbres.",
+      "it": "I danni degli attacchi di ogni nemico <style=Term><link=TERM_ENFEEBLED>indebolito</link></style> si riducono di un ulteriore 10%. \nI nemici <style=Term><link=TERM_AFFLICTED>afflitti</link></style> subiscono più danni durante la Fase delle Tenebre.",
+      "pt": "O dano de ataque de todo inimigo <style=Term><link=TERM_ENFEEBLED>febril</link></style> é reduzido em 10% adicionais.\n Os inimigos <style=Term><link=TERM_AFFLICTED>atormentados</link></style> sofrem mais dano durante a fase da escuridão."
     }
   },
   {
@@ -1622,7 +1368,7 @@ export const TRINKETS = [
     "image": "/assets/trinkets/mage-sight goggles.png",
     "buyPrice": 200,
     "sellPrice": null,
-        "baseAbilityDescs": {
+    "baseAbilityDescs": {
       "es": "Después de que interactúes por primera vez en cada ronda, a veces obtienes una acción adicional.",
       "en": "After you interact for the first time each round, sometimes gain an additional action.",
       "fr": "Chaque round, après avoir interagi pour la première fois, gagnez parfois une action supplémentaire.",
@@ -1650,7 +1396,7 @@ export const TRINKETS = [
     "image": "/assets/trinkets/prescient charm.png",
     "buyPrice": 200,
     "sellPrice": null,
-        "baseAbilityDescs": {
+    "baseAbilityDescs": {
       "es": "Cuando aparece un enemigo, queda <style=Term><link=TERM_EXPOSED>expuesto</link></style>.",
       "en": "When an enemy spawns, it is <style=Term><link=TERM_EXPOSED>exposed</link></style>.",
       "fr": "Quand un Ennemi est généré, il est <style=Term><link=TERM_EXPOSED>exposé</link></style>.",
@@ -1658,11 +1404,39 @@ export const TRINKETS = [
       "pt": "Quando um inimigo surgir, ele fica <style=Term><link=TERM_EXPOSED>exposto</link></style>."
     },
     "abilityDescs": {
-      "es": "Tus ataques obtienen el tipo de daño fortunos, y el <style=Term><link=TERM_DAMAGE></link></style> de tu arma aumenta en 1.",
-      "en": "Your attacks gain the fortunos damage type, and your weapon's <style=Term><link=TERM_DAMAGE></link></style> is increased by 1.",
-      "fr": "Vos attaques gagnent le type de dégâts fortunos et les <style=Term><link=TERM_DAMAGE></link></style> de votre arme augmentent de 1.",
-      "it": "I tuoi attacchi ottengono il tipo di danno fortunos e il <style=Term><link=TERM_DAMAGE></link></style> della tua arma aumenta di 1.",
-      "pt": "Seus ataques ganham o tipo de dano fortunos e o <style=Term><link=TERM_DAMAGE></link></style> da arma aumenta em 1."
+      "es": "Tus ataques obtienen el tipo de daño fortunos, y el <style=Term><link=TERM_DAMAGE></link></style> de tu arma aumenta en 1.\n Cuando aparece un enemigo, queda <style=Term><link=TERM_ENFEEBLED>debilitado</link></style> y <style=Term><link=TERM_EXPOSED>expuesto</link></style>.",
+      "en": "Your attacks gain the fortunos damage type, and your weapon's <style=Term><link=TERM_DAMAGE></link></style> is increased by 1.\nWhen an enemy spawns, it is <style=Term><link=TERM_ENFEEBLED>enfeebled</link></style> and <style=Term><link=TERM_EXPOSED>exposed</link></style>.",
+      "fr": "Vos attaques gagnent le type de dégâts fortunos et les <style=Term><link=TERM_DAMAGE></link></style> de votre arme augmentent de 1.\n Quand un Ennemi est généré, il est <style=Term><link=TERM_ENFEEBLED>affaibli</link></style> et <style=Term><link=TERM_EXPOSED>exposé</link></style>.",
+      "it": "I tuoi attacchi ottengono il tipo di danno fortunos e il <style=Term><link=TERM_DAMAGE></link></style> della tua arma aumenta di 1.\nQuando un nemico viene generato, esso diventa <style=Term><link=TERM_ENFEEBLED>indebolito</link></style> ed <style=Term><link=TERM_EXPOSED>esposto</link></style>.",
+      "pt": "Seus ataques ganham o tipo de dano fortunos e o <style=Term><link=TERM_DAMAGE></link></style> da arma aumenta em 1.\n Quando um inimigo surgir, ele fica <style=Term><link=TERM_ENFEEBLED>febril</link></style> e <style=Term><link=TERM_EXPOSED>exposto</link></style>."
+    }
+  },
+  {
+    "id": "TRINKET1_ID",
+    "type": "trinket",
+    "names": {
+      "es": "Brazaletes sanguinarios",
+      "en": "Bloodthirsty Bracers",
+      "fr": "Brassards soif-de-sang",
+      "it": "Bracciali Sanguinari",
+      "pt": "Braceletes Sedentos de Sangue"
+    },
+    "image": "/assets/trinkets/bloodthirsty bracers.png",
+    "buyPrice": 200,
+    "sellPrice": null,
+    "baseAbilityDescs": {
+      "es": "Durante tu ataque, si el enemigo ya está dañado, sufre 3 <style=Term><link=TERM_DAMAGE></link></style> adicionales.",
+      "en": "During your attack, if the enemy is already damaged, it suffers an additional 3 <style=Term><link=TERM_DAMAGE></link></style>.",
+      "fr": "Si l’Ennemi a déjà subi des dégâts, il subit 3 <style=Term><link=TERM_DAMAGE></link></style> supplémentaires pendant votre attaque.",
+      "it": "Durante il tuo attacco, se il nemico è già danneggiato, subisce 3 <style=Term><link=TERM_DAMAGE></link></style> aggiuntivi.",
+      "pt": "Durante seu ataque, se o inimigo já tiver sofrido dano, ele sofre 3 <style=Term><link=TERM_DAMAGE></link></style> adicionais."
+    },
+    "abilityDescs": {
+      "es": "Durante tu ataque, si el enemigo ya está dañado, sufre 5 <style=Term><link=TERM_DAMAGE></link></style> adicionales.",
+      "en": "During your attack, if the enemy is already damaged, it suffers an additional 5 <style=Term><link=TERM_DAMAGE></link></style>.",
+      "fr": "Si l’Ennemi a déjà subi des dégâts, il subit 5 <style=Term><link=TERM_DAMAGE></link></style> supplémentaires pendant votre attaque.",
+      "it": "Durante il tuo attacco, se il nemico è già danneggiato, subisce 5 <style=Term><link=TERM_DAMAGE></link></style> aggiuntivi.",
+      "pt": "Durante seu ataque, se o inimigo já tiver sofrido dano, ele sofre 5 <style=Term><link=TERM_DAMAGE></link></style> adicionais."
     }
   },
   {
@@ -1678,19 +1452,19 @@ export const TRINKETS = [
     "image": "/assets/trinkets/rusted nail.png",
     "buyPrice": 200,
     "sellPrice": null,
-        "baseAbilityDescs": {
+    "baseAbilityDescs": {
       "es": "Tus ataques obtienen un tipo de daño aleatorio. Después de tu ataque, revela una <style=Term><link=TERM_WEAKNESSES>debilidad</link></style> enemiga aleatoria.",
       "en": "Your attacks gain a random damage type. After your attack, reveal one random enemy <style=Term><link=TERM_WEAKNESSES>weakness</link></style>.",
       "fr": "Vos attaques gagnent un type de dégâts aléatoire. Après votre attaque, révélez une <style=Term><link=TERM_WEAKNESSES>faiblesse</link></style> aléatoire de l'Ennemi.",
-      "it": "I tuoi attacchi ottengono 1 tipo di danno casuale.",
+      "it": "I tuoi attacchi ottengono 1 tipo di danno casuale. \nDopo il tuo attacco, rivela una <style=Term><link=TERM_WEAKNESSES>vulnerabilità</link></style> del nemico casuale.",
       "pt": "Seus ataques ganham um tipo de dano aleatório. Depois de seu ataque, revele aleatoriamente uma <style=Term><link=TERM_WEAKNESSES>fraqueza</link></style> de um inimigo."
     },
     "abilityDescs": {
-      "es": "Tus ataques obtienen un tipo de daño aleatorio, y el <style=Term><link=TERM_DAMAGE></link></style> de tu arma aumenta en 1.",
-      "en": "Your attacks gain a random damage type, and your weapon's <style=Term><link=TERM_DAMAGE></link></style> is increased by 1.",
-      "fr": "Vos attaques gagnent un type de dégâts aléatoire et les <style=Term><link=TERM_DAMAGE></link></style> de votre arme augmentent de 1.",
-      "it": "I tuoi attacchi ottengono 1 tipo di danno casuale e il <style=Term><link=TERM_DAMAGE></link></style> della tua arma aumenta di 1.",
-      "pt": "Seus ataques ganham um tipo de dano aleatório e o <style=Term><link=TERM_DAMAGE></link></style> de sua arma aumenta em 1."
+      "es": "Tus ataques obtienen un tipo de daño aleatorio, y el <style=Term><link=TERM_DAMAGE></link></style> de tu arma aumenta en 1.\n Después de tu ataque, revela una <style=Term><link=TERM_WEAKNESSES>debilidad</link></style> enemiga aleatoria",
+      "en": "Your attacks gain a random damage type, and your weapon's <style=Term><link=TERM_DAMAGE></link></style> is increased by 1.\nAfter your attack, reveal one random enemy <style=Term><link=TERM_WEAKNESSES>weakness</link></style>.",
+      "fr": "Vos attaques gagnent un type de dégâts aléatoire et les <style=Term><link=TERM_DAMAGE></link></style> de votre arme augmentent de 1.\n Après votre attaque, révélez une <style=Term><link=TERM_WEAKNESSES>faiblesse</link></style> aléatoire de l'Ennemi.",
+      "it": "I tuoi attacchi ottengono 1 tipo di danno casuale e il <style=Term><link=TERM_DAMAGE></link></style> della tua arma aumenta di 1. \nDopo il tuo attacco, rivela una <style=Term><link=TERM_WEAKNESSES>vulnerabilità</link></style> del nemico casuale.",
+      "pt": "Seus ataques ganham um tipo de dano aleatório e o <style=Term><link=TERM_DAMAGE></link></style> de sua arma aumenta em 1.\n Depois de seu ataque, revele aleatoriamente uma <style=Term><link=TERM_WEAKNESSES>fraqueza</link></style> de um inimigo."
     }
   },
   {
@@ -1706,7 +1480,7 @@ export const TRINKETS = [
     "image": "/assets/trinkets/tarnished brooch.png",
     "buyPrice": 200,
     "sellPrice": null,
-        "baseAbilityDescs": {
+    "baseAbilityDescs": {
       "es": "Alguien está buscando esto.",
       "en": "A stranger is looking for this.",
       "fr": "Un étranger cherche cet objet.",
@@ -1714,11 +1488,237 @@ export const TRINKETS = [
       "pt": "Alguém desconhecido anda procurando isto."
     },
     "abilityDescs": {
-      "es": "1 <style=Term><link=TERM_ACTIONS></link></style>: Ataca, interactúa y realiza una acción de Maniobra en cualquier orden. A continuación, sufre 2 <style=Term><link=TERM_FATIGUE></link></style> y termina tu turno.",
-      "en": "1 <style=Term><link=TERM_ACTIONS></link></style>: Attack, interact, and perform a maneuver action in any order. Then suffer 2 <style=Term><link=TERM_FATIGUE></link></style> and end your turn.",
-      "fr": "1 <style=Term><link=TERM_ACTIONS></link></style> : Attaquer, interagir et effectuer une manœuvre dans n'importe quel ordre. Ensuite, subissez 2 <style=Term><link=TERM_FATIGUE></link></style> et terminez votre tour.",
-      "it": "1 <style=Term><link=TERM_ACTIONS></link></style>: Attacca, interagisci ed effettua 1 azione di manovra in qualsiasi ordine. Poi subisci 2 <style=Term><link=TERM_FATIGUE></link></style> e termina il tuo turno.",
-      "pt": "1 <style=Term><link=TERM_ACTIONS></link></style>: Ataque, interaja e realize uma ação de manobra na ordem que você desejar. Em seguida, sofra 2 <style=Term><link=TERM_FATIGUE></link></style> e encerre seu turno."
+      "es": "1 <style=Term><link=TERM_ACTIONS></link></style>: Ataca, interactúa y realiza una acción de Maniobra en cualquier orden. A continuación, sufre 2 <style=Term><link=TERM_FATIGUE></link></style> y termina tu turno.\n Este objeto está vinculado a alguien.",
+      "en": "1 <style=Term><link=TERM_ACTIONS></link></style>: Attack, interact, and perform a maneuver action in any order. Then suffer 2 <style=Term><link=TERM_FATIGUE></link></style> and end your turn.\nThis item is bonded to a stranger.",
+      "fr": "1 <style=Term><link=TERM_ACTIONS></link></style> : Attaquer, interagir et effectuer une manœuvre dans n'importe quel ordre. Ensuite, subissez 2 <style=Term><link=TERM_FATIGUE></link></style> et terminez votre tour.\n Cet objet est lié à un étranger.",
+      "it": "1 <style=Term><link=TERM_ACTIONS></link></style>: Attacca, interagisci ed effettua 1 azione di manovra in qualsiasi ordine. Poi subisci 2 <style=Term><link=TERM_FATIGUE></link></style> e termina il tuo turno.\nQuesto oggetto è vincolato a uno straniero.",
+      "pt": "1 <style=Term><link=TERM_ACTIONS></link></style>: Ataque, interaja e realize uma ação de manobra na ordem que você desejar. Em seguida, sofra 2 <style=Term><link=TERM_FATIGUE></link></style> e encerre seu turno.\n Este objeto está vinculado a alguém desconhecido."
+    }
+  },
+  {
+    "id": "TRINKET2_ID",
+    "type": "trinket",
+    "names": {
+      "es": "Cesta de brebajes",
+      "en": "Brew Basket",
+      "fr": "Panier à décoctions",
+      "it": "Cestino del Mescitore",
+      "pt": "Cesto para Poções"
+    },
+    "image": "/assets/trinkets/brew basket.png",
+    "buyPrice": 200,
+    "sellPrice": null,
+    "baseAbilityDescs": {
+      "es": "Al comienzo de cada misión, obtén 1 consumible aleatorio.",
+      "en": "At the start of each quest, gain 1 random consumable.",
+      "fr": "Au début de chaque quête, vous gagnez 1 denrée aléatoire.",
+      "it": "All'inizio di ogni impresa, ottieni 1 consumabile casuale.",
+      "pt": "No início de cada missão, ganhe 1 consumível aleatório."
+    },
+    "abilityDescs": {
+      "es": "Al comienzo de cada misión, obtén 1 consumible aleatorio y algunos materiales de creación.",
+      "en": "At the start of each quest, gain 1 random consumable and some crafting materials.",
+      "fr": "Au début de chaque quête, vous gagnez 1 denrée aléatoire et un certain nombre de matériaux.",
+      "it": "All'inizio di ogni impresa, ottieni 1 consumabile casuale e alcuni materiali da fabbricazione.",
+      "pt": "No início de cada missão, ganhe 1 consumível aleatório e alguns materiais para construção."
+    }
+  },
+  {
+    "id": "TRINKET3_ID",
+    "type": "trinket",
+    "names": {
+      "es": "Brújula del hombre muerto",
+      "en": "Dead Man's Compass",
+      "fr": "Boussole du mort",
+      "it": "Bussola del Morto",
+      "pt": "Bússola do Cadáver"
+    },
+    "image": "/assets/trinkets/dead mans compass.png",
+    "buyPrice": 200,
+    "sellPrice": null,
+    "baseAbilityDescs": {
+      "es": "Después de que un enemigo sea derrotado, si los héroes no obtienen materiales de creación, obtienen una pequeña cantidad de oro.",
+      "en": "After an enemy is defeated, if the heroes do not gain crafting materials, they gain a small amount of gold.",
+      "fr": "Après qu’un Ennemi a été vaincu, les Héros gagnent quelques pièces d’or s’ils ne reçoivent aucun matériau.",
+      "it": "Dopo che un nemico è stato sconfitto, se gli eroi non ottengono materiali da fabbricazione, ottengono alcune monete d'oro.",
+      "pt": "Depois que um inimigo é derrotado, e se o herói não tiver ganhado materiais para construção, ele ganha uma pequena quantidade de ouro."
+    },
+    "abilityDescs": {
+      "es": "Después de que un enemigo sea derrotado, si los héroes no obtienen materiales de creación, obtienen una pequeña cantidad de oro y, ocasionalmente, una gran cantidad de oro.",
+      "en": "After an enemy is defeated, if the heroes do not gain crafting materials, they gain a small amount of gold and occasionally a large amount of gold.",
+      "fr": "Après qu’un Ennemi a été vaincu, les Héros gagnent quelques pièces d’or (et parfois beaucoup) s’ils ne reçoivent aucun matériau.",
+      "it": "Dopo che un nemico è stato sconfitto, se gli eroi non ottengono materiali da fabbricazione, ottengono alcune monete d'oro o, più raramente, molte monete d'oro.",
+      "pt": "Depois que um inimigo é derrotado, e se o herói não tiver ganhado materiais para construção, ele ganha uma pequena quantidade de ouro e, ocasionalmente, uma grande quantidade de ouro."
+    }
+  },
+  {
+    "id": "TRINKET4_ID",
+    "type": "trinket",
+    "names": {
+      "es": "Cuerno de coraje",
+      "en": "Horn of Courage",
+      "fr": "Cor de vaillance",
+      "it": "Corno del Coraggio",
+      "pt": "Trombeta da Coragem"
+    },
+    "image": "/assets/trinkets/horn of courage.png",
+    "buyPrice": 200,
+    "sellPrice": null,
+    "baseAbilityDescs": {
+      "es": "Después de que un héroe quede <style=Term><link=TERM_WOUNDS>herido</link></style>, otro héroe recibe un beneficio aleatorio.",
+      "en": "After a hero is <style=Term><link=TERM_WOUNDS>wounded</link></style>, another hero receives a random benefit.",
+      "fr": "Après qu’un Héros est devenu <style=Term><link=TERM_WOUNDS>infirme</link></style>, un autre Héros reçoit un bénéfice aléatoire.",
+      "it": "Dopo che un eroe è diventato <style=Term><link=TERM_WOUNDS>ferito</link></style>, un altro eroe riceve 1 beneficio casuale.",
+      "pt": "Depois que um herói é <style=Term><link=TERM_WOUNDS>ferido</link></style>, outro herói recebe um benefício aleatório."
+    },
+    "abilityDescs": {
+      "es": "Después de que un héroe quede <style=Term><link=TERM_WOUNDS>herido</link></style>, tú y otro héroe recibís un beneficio aleatorio.",
+      "en": "After a hero is <style=Term><link=TERM_WOUNDS>wounded</link></style>, you and another hero receive a random benefit.",
+      "fr": "Après qu’un Héros est devenu <style=Term><link=TERM_WOUNDS>infirme</link></style>, vous et un autre Héros recevez un bénéfice aléatoire chacun.",
+      "it": "Dopo che un eroe è diventato <style=Term><link=TERM_WOUNDS>ferito</link></style>, tu e un altro eroe ricevete 1 beneficio casuale.",
+      "pt": "Depois que um herói é <style=Term><link=TERM_WOUNDS>ferido</link></style>, você e outro herói recebem um benefício aleatório."
+    }
+  },
+  {
+    "id": "TRINKET5_ID",
+    "type": "trinket",
+    "names": {
+      "es": "Runa férrica",
+      "en": "Ironbound Rune",
+      "fr": "Rune de cuiracier",
+      "it": "Runa del Ferrovivo",
+      "pt": "Runa de Ferro"
+    },
+    "image": "/assets/trinkets/ironbound rune.png",
+    "buyPrice": 200,
+    "sellPrice": null,
+    "baseAbilityDescs": {
+      "es": "Cuando quedas <style=Term><link=TERM_WOUNDS>herido</link></style>, obtienes una <style=Term><link=TERM_INJURIES>dolencia</link></style> especial.",
+      "en": "When you are <style=Term><link=TERM_WOUNDS>wounded</link></style>, you gain a unique <style=Term><link=TERM_INJURIES>injury</link></style>.",
+      "fr": "Lorsque vous devenez <style=Term><link=TERM_WOUNDS>infirme</link></style>, vous gagnez une <style=Term><link=TERM_INJURIES>blessure</link></style> unique.",
+      "it": "Quando diventi <style=Term><link=TERM_WOUNDS>ferito</link></style>, ottieni una <style=Term><link=TERM_INJURIES>ferita</link></style> unica.",
+      "pt": "Quando você sofre um <style=Term><link=TERM_WOUNDS>ferimento</link></style>, recebe um <link=TERM_INJURIES>injury</link></style> especial."
+    },
+    "abilityDescs": {
+      "es": "Tus ataques obtienen el tipo de daño terros, y el <style=Term><link=TERM_DAMAGE></link></style> de tu arma aumenta en 1.\n  \n  Cuando quedas <style=Term><link=TERM_WOUNDS>herido</link></style>, obtienes una <style=Term><link=TERM_INJURIES>dolencia</link></style> especial.",
+      "en": "Your attacks gain the terros damage type, and your weapon's <style=Term><link=TERM_DAMAGE></link></style> is increased by 1.\n\nWhen you are <style=Term><link=TERM_WOUNDS>wounded</link></style>, you gain a unique <style=Term><link=TERM_INJURIES>injury</link></style>.",
+      "fr": "Vos attaques gagnent le type de dégâts terros et la <style=Term><link=TERM_DAMAGE></link></style> de votre arme augmente de 1.\n \n Lorsque vous devenez <style=Term><link=TERM_WOUNDS>infirme</link></style>, vous gagnez une <style=Term><link=TERM_INJURIES>blessure</link></style> unique.",
+      "it": "I tuoi attacchi ottengono il tipo di danno terros e il <style=Term><link=TERM_DAMAGE></link></style> della tua arma aumenta di 1.\n\nQuando diventi <style=Term><link=TERM_WOUNDS>feriti</link></style>, ottieni una <style=Term><link=TERM_INJURIES>ferita</link></style> unica.",
+      "pt": "Seus ataques ganham o tipo de dano terros, e o <style=Term><link=TERM_DAMAGE></link></style> das suas armas aumenta em 1.\n \nQuando você sofre um <style=Term><link=TERM_WOUNDS>ferimento</link></style>, recebe um <link=TERM_INJURIES>injury</link></style> especial."
+    },
+    "compound": true
+  },
+  {
+    "id": "TRINKET6_ID",
+    "type": "trinket",
+    "names": {
+      "es": "Amuleto de la suerte",
+      "en": "Lucky Charm",
+      "fr": "Porte-bonheur",
+      "it": "Portafortuna",
+      "pt": "Amuleto da Sorte"
+    },
+    "image": "/assets/trinkets/lucky charm.png",
+    "buyPrice": 200,
+    "sellPrice": null,
+    "baseAbilityDescs": {
+      "es": "Después de que realices una <style=Term><link=TERM_TESTS>prueba</link></style> e introduzcas los resultados en la aplicación, se añaden 0–2 <style=Term><link=TERM_SUCCESS></link></style> adicionales.",
+      "en": "After you <style=Term><link=TERM_TESTS>test</link></style> and input your results into the app, an additional 0–2 <style=Term><link=TERM_SUCCESS></link></style> are added.",
+      "fr": "Après votre <style=Term><link=TERM_TESTS>test</link></style> et la saisie du résultat, l’application ajoute 0–2 <style=Term><link=TERM_SUCCESS></link></style> supplémentaires.",
+      "it": "Dopo che hai effettuato una <style=Term><link=TERM_TESTS>prova</link></style> e inserito i tuoi risultati nell'app, vengono aggiunti 0-2 <style=Term><link=TERM_SUCCESS></link></style> aggiuntivi.",
+      "pt": "Depois de fazer um <style=Term><link=TERM_TESTS>teste</link></style> e inserir os seus resultados no aplicativo, um adicional entre 0-2 <style=Term><link=TERM_SUCCESS></link></style> é acrescentado."
+    },
+    "abilityDescs": {
+      "es": "Después de que realices una <style=Term><link=TERM_TESTS>prueba</link></style> e introduzcas los resultados en la aplicación, se añaden 0–3 <style=Term><link=TERM_SUCCESS></link></style> adicionales.\n  \n  Además, tienes una suerte especial.",
+      "en": "After you <style=Term><link=TERM_TESTS>test</link></style> and input your results into the app, an additional 0–3 <style=Term><link=TERM_SUCCESS></link></style> are added.\n\nAlso, you are uniquely lucky.",
+      "fr": "Après votre <style=Term><link=TERM_TESTS>test</link></style> et la saisie du résultat, l’application ajoute 0–3 <style=Term><link=TERM_SUCCESS></link></style> supplémentaires.\n \n Vous devenez particulièrement chanceux.",
+      "it": "Dopo che hai effettuato una <style=Term><link=TERM_TESTS>prova</link></style> e inserito i tuoi risultati nell'app, vengono aggiunti 0-3 <style=Term><link=TERM_SUCCESS></link></style> aggiuntivi.\n\nInoltre, hai proprio una fortuna sfacciata.",
+      "pt": "Depois de fazer <style=Term><link=TERM_TESTS>teste</link></style> e inserir os seus resultados no aplicativo, um adicional entre 0-3 <style=Term><link=TERM_SUCCESS></link></style> é acrescentado.\n \nAlém disso, você tem uma sorte especial."
+    }
+  },
+  {
+    "id": "TRINKET7_ID",
+    "type": "trinket",
+    "names": {
+      "es": "Tapiz de maná",
+      "en": "Mana Weave",
+      "fr": "Toile de mana",
+      "it": "Trama di Mana",
+      "pt": "Trama de Mana"
+    },
+    "image": "/assets/trinkets/mana weave.png",
+    "buyPrice": 200,
+    "sellPrice": null,
+    "baseAbilityDescs": {
+      "es": "Durante tu primer ataque en cada ronda, la probabilidad de tu capacidad secundaria aumenta un 5%.",
+      "en": "During your first attack each round, your secondary ability chances are increased by 5%.",
+      "fr": "Chaque round, pendant votre première attaque, la probabilité que votre capacité secondaire soit utilisée augmente de 5%.",
+      "it": "Durante il tuo primo attacco ogni round, le probabilità delle tue capacità secondarie aumentano di 5%.",
+      "pt": "Durante seu primeiro ataque a cada rodada, as chances da sua habilidade secundária aumentam em 5%."
+    },
+    "abilityDescs": {
+      "es": "Tus ataques obtienen el tipo de daño aquos, y el <style=Term><link=TERM_DAMAGE></link></style> de tu arma aumenta en 1.\n  \n  Durante tu primer ataque en cada ronda, la probabilidad de tu capacidad secundaria aumenta un 5%.",
+      "en": "Your attacks gain the aquos damage type, and your weapon's <style=Term><link=TERM_DAMAGE></link></style> is increased by 1.\n\nDuring your first attack each round, your secondary ability chances are increased by 5%.",
+      "fr": "Vos attaques gagnent le type de dégâts aquos et la <style=Term><link=TERM_DAMAGE></link></style> de votre arme augmente de 1.\n \n Chaque round, pendant votre première attaque, la probabilité que votre capacité secondaire soit utilisée augmente de 5%.",
+      "it": "I tuoi attacchi ottengono il tipo di danno aquos e il <style=Term><link=TERM_DAMAGE></link></style> della tua arma aumenta di 1.\n\nDurante il tuo primo attacco ogni round, le probabilità delle tue capacità secondarie aumentano di 5%.",
+      "pt": "Seus ataques ganham o tipo de dano aquos, e o <style=Term><link=TERM_DAMAGE></link></style> das suas armas aumenta em 1.\n \nDurante seu primeiro ataque a cada rodada, as chances da sua habilidade secundária aumentam em 5%."
+    },
+    "compound": true
+  },
+  {
+    "id": "TRINKET8_ID",
+    "type": "trinket",
+    "names": {
+      "es": "Brazaletes de la sombra",
+      "en": "Shadow Bracers",
+      "fr": "Brassards de l’ombre",
+      "it": "Bracciali dell'Ombra",
+      "pt": "Braceletes de Sombra"
+    },
+    "image": "/assets/trinkets/shadow bracers.png",
+    "buyPrice": 200,
+    "sellPrice": null,
+    "baseAbilityDescs": {
+      "es": "Durante tus primeros 3 ataques de cada misión, el enemigo sufre 7 <style=Term><link=TERM_DAMAGE></link></style> adicionales y queda <style=Term><link=TERM_DAZED>conmocionado</link></style>.",
+      "en": "During your first 3 attacks each quest, the enemy suffers an additional 7 <style=Term><link=TERM_DAMAGE></link></style> and is <style=Term><link=TERM_DAZED>dazed</link></style>.",
+      "fr": "Pendant vos 3 premières attaques de chaque quête, l’Ennemi subit 7 <style=Term><link=TERM_DAMAGE></link></style> supplémentaires et devient <style=Term><link=TERM_DAZED>étourdi</link></style>.",
+      "it": "Durante i tuoi primi 3 attacchi ogni impresa, il nemico subisce 7 <style=Term><link=TERM_DAMAGE></link></style> aggiuntivi e diventa <style=Term><link=TERM_DAZED>frastornato</link></style>.",
+      "pt": "Durante seus 3 primeiros ataques em cada missão, o inimigo sofre 7 <style=Term><link=TERM_DAMAGE></link></style> adicionais e fica <style=Term><link=TERM_DAZED>confuso</link></style>."
+    },
+    "abilityDescs": {
+      "es": "Durante tus primeros 4 ataques de cada misión, el enemigo sufre 10 <style=Term><link=TERM_DAMAGE></link></style> adicionales y queda <style=Term><link=TERM_DAZED>conmocionado</link></style>.",
+      "en": "During your first 4 attacks each quest, the enemy suffers an additional 10 <style=Term><link=TERM_DAMAGE></link></style> and is <style=Term><link=TERM_DAZED>dazed</link></style>.",
+      "fr": "Pendant vos 4 premières attaques de chaque quête, l’Ennemi subit 10 <style=Term><link=TERM_DAMAGE></link></style> supplémentaires et devient <style=Term><link=TERM_DAZED>étourdi</link></style>.",
+      "it": "Durante i tuoi primi 4 attacchi ogni impresa, il nemico subisce 10 <style=Term><link=TERM_DAMAGE></link></style> aggiuntivi e diventa <style=Term><link=TERM_DAZED>frastornato</link></style>.",
+      "pt": "Durante seus 4 primeiros ataques em cada missão, o inimigo sofre 10 <style=Term><link=TERM_DAMAGE></link></style> adicionais e fica <style=Term><link=TERM_DAZED>confuso</link></style>."
+    }
+  },
+  {
+    "id": "TRINKET9_ID",
+    "type": "trinket",
+    "names": {
+      "es": "Colgante de la tormenta",
+      "en": "Stormbound Pendant",
+      "fr": "Pendentif orageux",
+      "it": "Pendente della Tempesta",
+      "pt": "Pingente da Tempestade"
+    },
+    "image": "/assets/trinkets/stormbound pendant.png",
+    "buyPrice": 200,
+    "sellPrice": null,
+    "baseAbilityDescs": {
+      "es": "Durante tu ataque, si el enemigo no ha sido atacado en esta ronda, sufre 1–7 <style=Term><link=TERM_DAMAGE></link></style> adicionales.",
+      "en": "During your attack, if the enemy has not been attacked this round, it suffers 1–7 additional <style=Term><link=TERM_DAMAGE></link></style>.",
+      "fr": "Pendant votre attaque, si l’Ennemi n’a pas été attaqué lors de ce round, il subit 1–7 <style=Term><link=TERM_DAMAGE></link></style> supplémentaire(s).",
+      "it": "Durante il tuo attacco, se il nemico non era già stato attaccato in questo round, subisce 1-7 <style=Term><link=TERM_DAMAGE></link></style> aggiuntivi.",
+      "pt": "Durante seu ataque, se o inimigo não tiver sido atacado na rodada atual, ele sofre de 1-7 <style=Term><link=TERM_DAMAGE></link></style> adicionais."
+    },
+    "abilityDescs": {
+      "es": "Durante los ataques de los héroes, si el enemigo no ha sido atacado en esta ronda, sufre 1–9 <style=Term><link=TERM_DAMAGE></link></style> adicionales.",
+      "en": "During hero attacks, if the enemy has not been attacked this round, it suffers 1–9 additional <style=Term><link=TERM_DAMAGE></link></style>.",
+      "fr": "Pendant l’attaque d’un Héros, si l’Ennemi n’a pas été attaqué lors de ce round, il subit 1–9 <style=Term><link=TERM_DAMAGE></link></style> supplémentaire(s).",
+      "it": "Durante l'attacco di un eroe, se il nemico non era già stato attaccato in questo round, subisce 1-9 <style=Term><link=TERM_DAMAGE></link></style> aggiuntivi.",
+      "pt": "Durante os ataques de herói, se o inimigo não tiver sido atacado na rodada atual, ele sofre de 1-9 <style=Term><link=TERM_DAMAGE></link></style> adicionais."
     }
   }
 ];
@@ -1727,8 +1727,4 @@ export const TRINKETS_BY_ID = Object.fromEntries(TRINKETS.map(t => [t.id, t]));
 
 // Índice global de todos los ítems
 export const ALL_ITEMS = [...ARMORS, ...CONSUMABLES, ...TRINKETS];
-export const ALL_ITEMS_BY_ID = Object.fromEntries([
-  ...ALL_ITEMS.map(i => [i.id, i]),
-  // Alias _PLUS → mismo objeto base (el _PLUS es la versión mejorada creada por recetas)
-  ...ALL_ITEMS.map(i => [`${i.id}_PLUS`, i]),
-]);
+export const ALL_ITEMS_BY_ID = Object.fromEntries(ALL_ITEMS.map(i => [i.id, i]));
