@@ -22,6 +22,15 @@ const ASSEMBLY_OVERRIDES = {
 const SLOT_A_LABELS  = { es: 'Arma', en: 'Weapon', fr: 'Arme', it: 'Arma', pt: 'Arma' };
 const UPGRADE_ICON   = '/assets/icons/Icon_Upgrade.png';
 
+const HERO_SLUGS = {
+  HERO_BRYNN:   'brynn',
+  HERO_SYRUS:   'syrus',
+  HERO_GALADEN: 'galaden',
+  HERO_VAERIX:  'vaerix',
+  HERO_KEHLI:   'kehli',
+  HERO_CHANCE:  'chance',
+};
+
 const LONG_RANGE_LABELS = { es: 'Gran alcance', en: 'Long range', fr: 'Longue portée', it: 'Lunga gittata', pt: 'Longo alcance' };
 
 function isPartEquipped(itemId, gameState) {
@@ -81,6 +90,7 @@ export default function WeaponPartTooltip({ partId, showUpgradeIcon = true, chil
   const t        = useT();
   const lang     = useLang();
   const gameState = useStore(s => s.gameState);
+  const act       = useStore(s => s.saveMeta?.act ?? 0);
   const isMobile  = useIsMobile();
   const [visible, setVisible] = useState(false);
   const [coords,  setCoords]  = useState({ x: 0, y: 0 });
@@ -91,6 +101,10 @@ export default function WeaponPartTooltip({ partId, showUpgradeIcon = true, chil
 
   const weapon = part.weaponId ? WEAPONS_BY_ID[part.weaponId] : null;
   const hero   = weapon?.heroId ? HEROES_BY_ID[weapon.heroId] : null;
+
+  const heroSlug  = hero ? HERO_SLUGS[hero.id] : null;
+  const actSuffix = act >= 1 ? 'act2' : 'act1';
+  const avatarSrc = heroSlug ? `/assets/heroes/tooltip/${heroSlug}_${actSuffix}.png` : null;
 
   const rawPartName = getName(part, lang);
   const partName    = rawPartName.replace(/\s*\+?\s*✦.*$/, '').trim();
@@ -227,6 +241,13 @@ export default function WeaponPartTooltip({ partId, showUpgradeIcon = true, chil
       ) : part.image && (
         <span className="rtt-hero-footer rtt-hero-footer--item">
           <img src={part.image} alt={partName} className="rtt-item-footer-img"
+            onError={e => e.target.style.display = 'none'} />
+        </span>
+      )}
+
+      {avatarSrc && (
+        <span className="rtt-hero-footer">
+          <img src={avatarSrc} alt={heroName} className="rtt-hero-avatar"
             onError={e => e.target.style.display = 'none'} />
         </span>
       )}
