@@ -81,8 +81,6 @@ export default function WeaponPartTooltip({ partId, showUpgradeIcon = true, chil
   const t        = useT();
   const lang     = useLang();
   const gameState = useStore(s => s.gameState);
-  const saveMeta  = useStore(s => s.saveMeta);
-  const isAct2    = (saveMeta?.act ?? 0) >= 1;
   const isMobile  = useIsMobile();
   const [visible, setVisible] = useState(false);
   const [coords,  setCoords]  = useState({ x: 0, y: 0 });
@@ -138,8 +136,6 @@ export default function WeaponPartTooltip({ partId, showUpgradeIcon = true, chil
   const asmRotation = ASSEMBLY_ROTATION[part.weaponType] || 0;
   const asmOverrides = ASSEMBLY_OVERRIDES[part.weaponType] || {};
 
-  const heroAvatar = hero ? (isAct2 ? (hero.imageAct2 || hero.image) : hero.image) : null;
-
   function move(e) { setCoords({ x: e.clientX, y: e.clientY }); }
   const offsetX = coords.x + 16 + 280 > window.innerWidth ? coords.x - 296 : coords.x + 16;
   const offsetY = Math.min(coords.y - 8, window.innerHeight - 360);
@@ -161,10 +157,6 @@ export default function WeaponPartTooltip({ partId, showUpgradeIcon = true, chil
         </span>
         <span className="wpt-header-right">
           {equipped && <span className="rtt-equipped-badge">{t('shop.alreadyEquipped')}</span>}
-          {heroAvatar && (
-            <img src={heroAvatar} alt={heroName} className="wpt-hero-avatar"
-              onError={e => e.target.style.display = 'none'} />
-          )}
         </span>
       </span>
 
