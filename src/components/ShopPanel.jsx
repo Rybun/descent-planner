@@ -7,6 +7,7 @@ import { ALL_ITEMS_BY_ID } from '../gamedata/items';
 import { RECIPES_BY_ID } from '../gamedata/recipes';
 import RecipeTooltip from './RecipeTooltip';
 import ItemTooltip from './ItemTooltip';
+import WeaponPartTooltip from './WeaponPartTooltip';
 import MaterialTooltip from './MaterialTooltip';
 import './ShopPanel.css';
 
@@ -233,8 +234,17 @@ export default function ShopPanel() {
                 const data = getItemData(itemId);
                 const buyPrice = getItemBuyPrice(itemId);
                 const itemName = data ? getName(data, lang) : itemId;
+                // Las partes de arma (slot A/B/C) llevan su propio tooltip
+                // con daño, tipo de ataque, alcance, héroe y descripción —
+                // ItemTooltip solo sabe de armadura/amuleto/consumible y no
+                // muestra nada de eso para una parte de arma.
+                const isWeaponPart = data && 'slot' in data;
+                const Tooltip = isWeaponPart ? WeaponPartTooltip : ItemTooltip;
+                const tooltipProps = isWeaponPart
+                  ? { partId: itemId }
+                  : { id: itemId, item: data, lang };
                 return (
-                  <ItemTooltip key={itemId} id={itemId} item={data} lang={lang}>
+                  <Tooltip key={itemId} {...tooltipProps}>
                     <div className="shop-item-tile">
                       <div className="shop-item-img-area">
                         {data?.image
@@ -263,7 +273,7 @@ export default function ShopPanel() {
                         {t('shop.buy')}
                       </button>
                     </div>
-                  </ItemTooltip>
+                  </Tooltip>
                 );
               })}
             </div>
