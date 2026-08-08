@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useStore } from '../store';
-import { getName } from '../i18n';
+import { useT, getName } from '../i18n';
 import { HEROES } from '../gamedata/heroes';
 import { parseGameText, TERM_ICONS } from '../gamedata/gameText';
 import { CONSUMABLE_DESCS } from '../gamedata/consumableDescs';
@@ -55,16 +55,26 @@ function renderAbilityNodes(raw) {
 }
 
 export default function ItemTooltip({ id, item, lang, children }) {
+  const t = useT();
   const [visible, setVisible] = useState(false);
   const [coords, setCoords] = useState({ x: 0, y: 0 });
   const [modalOpen, setModalOpen] = useState(false);
   const isMobile = useIsMobile();
-  const saveMeta = useStore(s => s.saveMeta);
+  const saveMeta  = useStore(s => s.saveMeta);
+  const gameState = useStore(s => s.gameState);
   const isAct2   = (saveMeta?.act ?? 0) >= 1;
 
   if (!item) return <>{children}</>;
 
   const name = getName(item, lang);
+
+  // Un amuleto está equipado si algún héroe lo lleva puesto ahora mismo
+  // (comparando también sin el sufijo "_PLUS", igual que con las partes de
+  // arma: el hueco de amuleto guarda el ID base, mejorado o no).
+  const baseId = id?.replace(/_PLUS$/, '');
+  const equipped = item.type === 'trinket' && (gameState?.heroes || []).some(
+    h => h.equippedTrinketId === id || h.equippedTrinketId === baseId
+  );
 
   let label = ITEM_TYPE_LABELS[item.type]?.[lang] || item.type || '';
   let armorTypeLabel = null;
@@ -117,9 +127,10 @@ export default function ItemTooltip({ id, item, lang, children }) {
             </span>
           )}
         </span>
-        {compatibleHeroes?.length > 0 && (
+        {(compatibleHeroes?.length > 0 || equipped) && (
           <span className="wpt-header-right">
-            {compatibleHeroes.map(h => {
+            {equipped && <span className="rtt-equipped-badge">{t('shop.alreadyEquipped')}</span>}
+            {compatibleHeroes?.map(h => {
               const src = isAct2 ? (h.imageAct2 || h.image) : h.image;
               return (
                 <img key={h.id} src={src} alt={getName(h, lang)}
