@@ -50,6 +50,31 @@ function isPartEquipped(itemId, gameState) {
   return false;
 }
 
+// Otra pieza (de nivel > 0, es decir no la de partida) ya ocupa ese mismo
+// hueco en un arma del mismo tipo — igual que el aviso "Ya equipado en este
+// hueco" de RecipeTooltip.jsx (tienda), portado aquí porque la Sala de
+// creación usa este mismo componente para las partes de arma.
+function getConflictingPart(itemId, gameState) {
+  if (!gameState || !itemId) return null;
+  const part = WEAPON_PARTS_BY_ID[itemId];
+  if (!part) return null;
+  const slotKey = { A: 'partA', B: 'partB', C: 'partC' }[part.slot];
+  const selKey  = { A: 'partASelections', B: 'partBSelections', C: 'partCSelections' }[part.slot];
+  if (!slotKey) return null;
+  const selections = gameState[selKey] || {};
+  for (const hero of (gameState.heroes || [])) {
+    for (const w of (hero.equippedWeapons || [])) {
+      const defaultPartA = WEAPON_PARTS_BY_ID[w.partA];
+      if (defaultPartA?.weaponType !== part.weaponType) continue;
+      const effective = selections[w.id] ?? w[slotKey] ?? null;
+      if (!effective || effective === itemId) continue;
+      const conflictPart = WEAPON_PARTS_BY_ID[effective];
+      if (conflictPart?.level > 0) return effective;
+    }
+  }
+  return null;
+}
+
 function cleanName(name) {
   return name.replace(/\s*\+?\s*✦.*$/, '').trim();
 }
@@ -86,6 +111,30 @@ function getPassiveDesc(partId, lang) {
   return clean || null;
 }
 
+// Activación + pasiva de una pieza cualquiera (se usa tanto para la pieza
+// mostrada como para la pieza en conflicto, que puede ser otra distinta).
+function getPartDescNodes(pid, lang) {
+  if (!pid) return { activationNodes: null, passiveNodes: null, chance: null, isAccessory: false };
+  const p = WEAPON_PARTS_BY_ID[pid];
+  if (!p) return { activationNodes: null, passiveNodes: null, chance: null, isAccessory: false };
+
+  const isAcc = p.slot === 'B' || p.slot === 'C';
+  const baseId = pid.replace(/_UPGRADED$/, '');
+  const rawActivation = isAcc ? '' : (WEAPON_PART_DESCS[pid]?.[lang] || WEAPON_PART_DESCS[baseId]?.[lang] || '');
+  const activationText = rawActivation.replace(/^"+|"+$/g, '').trim();
+  const activationNodes = activationText ? renderNodes(parseGameText(activationText)) : null;
+
+  const passiveText = getPassiveDesc(pid, lang);
+  const passiveNodes = passiveText ? renderNodes(parseGameText(passiveText)) : null;
+
+  const abilityKey = PART_ABILITY_KEY[baseId] || PART_ABILITY_KEY[pid];
+  const isUpg = baseId !== pid;
+  const chanceKey = (isUpg && ABILITY_CHANCE[`${abilityKey}+`] != null) ? `${abilityKey}+` : abilityKey;
+  const chance = chanceKey != null ? ABILITY_CHANCE[chanceKey] : null;
+
+  return { activationNodes, passiveNodes, chance, isAccessory: isAcc };
+}
+
 export default function WeaponPartTooltip({ partId, showUpgradeIcon = true, children }) {
   const t        = useT();
   const lang     = useLang();
@@ -117,29 +166,18 @@ export default function WeaponPartTooltip({ partId, showUpgradeIcon = true, chil
     : t(`slot.${part.weaponType}.${part.slot}`);
 
   const equipped = isPartEquipped(partId, gameState);
+  // Si esta pieza concreta ya está puesta no tiene sentido avisar de
+  // conflicto (es la misma); si no, comprobar si otra distinta ocupa el hueco.
+  const conflictId    = equipped ? null : getConflictingPart(partId, gameState);
+  const conflictPart  = conflictId ? WEAPON_PARTS_BY_ID[conflictId] : null;
+  const conflictName  = conflictPart ? cleanName(getName(conflictPart, lang)) : '';
+  const conflictDescs = conflictId ? getPartDescNodes(conflictId, lang) : null;
 
   const hasStats = part.slot === 'A' && (part.damage > 0 || (part.traits?.length > 0));
 
   const isAccessory = part.slot === 'B' || part.slot === 'C';
 
-  const basePartId2 = partId?.replace(/_UPGRADED$/, '');
-  const rawActivation = isAccessory ? '' : (
-    WEAPON_PART_DESCS[partId]?.[lang] ||
-    WEAPON_PART_DESCS[basePartId2]?.[lang] ||
-    ''
-  );
-  const activationText = rawActivation.replace(/^"+|"+$/g, '').trim();
-  const activationNodes = activationText ? renderNodes(parseGameText(activationText)) : null;
-
-  const passiveText  = getPassiveDesc(partId, lang);
-  const passiveNodes = passiveText ? renderNodes(parseGameText(passiveText)) : null;
-
-  const basePartId  = partId?.replace(/_UPGRADED$/, '');
-  const abilityKey  = PART_ABILITY_KEY[basePartId] || PART_ABILITY_KEY[partId];
-  const isUpgPart   = basePartId !== partId;
-  const chanceKey   = (isUpgPart && ABILITY_CHANCE[`${abilityKey}+`] != null)
-    ? `${abilityKey}+` : abilityKey;
-  const chance      = chanceKey != null ? ABILITY_CHANCE[chanceKey] : null;
+  const { activationNodes, passiveNodes, chance } = getPartDescNodes(partId, lang);
 
   function defaultPart(slot) {
     return WEAPON_PARTS_BY_ID[`WEAPON_PART_${slot}_${part.weaponType}_0`] ?? null;
@@ -171,6 +209,7 @@ export default function WeaponPartTooltip({ partId, showUpgradeIcon = true, chil
         </span>
         <span className="wpt-header-right">
           {equipped && <span className="rtt-equipped-badge">{t('shop.alreadyEquipped')}</span>}
+          {conflictId && <span className="rtt-conflict-badge">!</span>}
         </span>
       </span>
 
@@ -225,6 +264,24 @@ export default function WeaponPartTooltip({ partId, showUpgradeIcon = true, chil
         <span className={`rtt-effect${isAccessory ? '' : ' rtt-passive'}`}>
           {isAccessory && chance != null && <span className="rtt-chance-chip">{chance}%</span>}
           {passiveNodes}
+        </span>
+      )}
+
+      {conflictId && (
+        <span className="rtt-conflict">
+          <span className="rtt-conflict-label">{t('shop.slotConflict')}</span>
+          <span className="rtt-conflict-name">{conflictName}</span>
+          {conflictDescs.activationNodes && (
+            <span className="rtt-effect">{conflictDescs.activationNodes}</span>
+          )}
+          {conflictDescs.passiveNodes && (
+            <span className={`rtt-effect${conflictDescs.isAccessory ? '' : ' rtt-passive'}`}>
+              {conflictDescs.isAccessory && conflictDescs.chance != null && (
+                <span className="rtt-chance-chip">{conflictDescs.chance}%</span>
+              )}
+              {conflictDescs.passiveNodes}
+            </span>
+          )}
         </span>
       )}
 
