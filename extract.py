@@ -147,7 +147,11 @@ def parse_localization(bundle_path):
     loc = {}
     text = raw.decode("utf-8", errors="replace")
     # Captura valores quoted multi-línea ("…") y unquoted single-line
-    pattern = r'^([A-Z0-9_]+),Text,,("(?:[^"]|\n)*?"|[^\n\r]*)'
+    # NOTA: la clase de caracteres de la clave incluye "+" porque las claves de
+    # habilidades nombradas mejoradas usan el sufijo literal "+" (p.ej.
+    # WEAPON_ABILITY_FROM_THE_DARKNESS+_DESC); sin él, esas filas del CSV se
+    # descartaban en silencio y el texto mejorado nunca se resolvía.
+    pattern = r'^([A-Z0-9_+]+),Text,,("(?:[^"]|\n)*?"|[^\n\r]*)'
     for m in re.finditer(pattern, text, re.MULTILINE):
         key = m.group(1)
         val = m.group(2).strip()
@@ -1088,10 +1092,6 @@ def generate_materials_js(env, locs, planner_dir):
 # Generación de items.js (armaduras, consumibles, amuletos)
 # ──────────────────────────────────────────────────────────────────────────────
 
-# Trinkets donde la versión mejorada CONSERVA el efecto base Y añade uno nuevo
-COMPOUND_TRINKETS = {"TRINKET5", "TRINKET7", "TRINKET11"}
-
-
 def _strip_armor_header(raw):
     """Elimina la línea de cabecera <b>Carta de Armadura—...</b> del desc de armadura."""
     if not raw:
@@ -1219,8 +1219,6 @@ def generate_items_js(env, locs, planner_dir):
             trinket["baseAbilityDescs"] = base_descs
         if up_descs:
             trinket["abilityDescs"] = up_descs
-        if base in COMPOUND_TRINKETS:
-            trinket["compound"] = True
 
     def sort_id(d):
         # Ordenar numéricamente si el ID acaba en número (ej: ARMOR_1 < ARMOR_2)

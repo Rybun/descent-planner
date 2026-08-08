@@ -94,11 +94,6 @@ export default function ItemTooltip({ id, item, lang, children }) {
   const rawAbility = descs?.[lang] || descs?.es || descs?.en || '';
   const abilityNodes = rawAbility ? renderAbilityNodes(rawAbility) : null;
 
-  const rawBaseRetained = (isUpgraded && item.compound && !consumableDesc)
-    ? (item.baseAbilityDescs?.[lang] || item.baseAbilityDescs?.es || item.baseAbilityDescs?.en || '')
-    : '';
-  const baseRetainedNodes = rawBaseRetained ? renderAbilityNodes(rawBaseRetained) : null;
-
   function move(e) { setCoords({ x: e.clientX, y: e.clientY }); }
   const offsetX = coords.x + 16 + 280 > window.innerWidth ? coords.x - 296 : coords.x + 16;
   const offsetY = Math.min(coords.y - 8, window.innerHeight - 400);
@@ -144,10 +139,6 @@ export default function ItemTooltip({ id, item, lang, children }) {
 
       {abilityNodes && (
         <span className="rtt-effect">{abilityNodes}</span>
-      )}
-
-      {baseRetainedNodes && (
-        <span className="rtt-effect">{baseRetainedNodes}</span>
       )}
 
       {item.image && (

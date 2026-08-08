@@ -551,10 +551,15 @@ function applyAction(gs, action) {
           newInventory.push({ id: itemId, soldOut: false });
         }
       }
+      // Retirar el objeto de la tienda una vez comprado
+      const newShopData = (gs.shopData || [])
+        .map(s => (s.id === itemId ? { ...s, qty: s.qty - qty } : s))
+        .filter(s => s.id !== itemId || s.qty > 0);
       return {
         ...gs,
         gold: gs.gold - cost,
         itemInventory: newInventory,
+        shopData: newShopData,
       };
     }
 

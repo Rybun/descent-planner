@@ -51,12 +51,26 @@ export const WEAPON_PART_DESCS = {
     "it": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante il tuo attacco, aggiungi 1 <style=Term><link=TERM_SUCCESS></link></style> e un eroe adiacente al nemico può <style=Term><link=TERM_SHROUDED>velare</link></style> 1 carta oppure scartare 1 <style=Term><link=TERM_FATIGUE></link></style>.",
     "pt": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante seu ataque, some 1 <style=Term><link=TERM_SUCCESS></link></style> e um herói adjacente ao inimigo pode <style=Term><link=TERM_SHROUDED>encobrir</link></style> 1 carta ou descartar 1 <style=Term><link=TERM_FATIGUE></link></style>."
   },
+  "WEAPON_PART_A_BOW_4_UPGRADED": {
+    "es": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante tu ataque, añade 1 <style=Term><link=TERM_SUCCESS></link></style> y un héroe adyacente al enemigo puede <style=Term><link=TERM_SHROUDED>velar</link></style> 1 carta y descartar 1 <style=Term><link=TERM_FATIGUE></link></style>.",
+    "en": "2 <style=Term><link=TERM_FATIGUE></link></style>: During your attack, add 1 <style=Term><link=TERM_SUCCESS></link></style> and a hero adjacent to the enemy may <style=Term><link=TERM_SHROUDED>shroud</link></style> 1 card and discard 1 <style=Term><link=TERM_FATIGUE></link></style>.",
+    "fr": "2 <style=Term><link=TERM_FATIGUE></link></style> : Pendant votre attaque, ajoutez 1 <style=Term><link=TERM_SUCCESS></link></style> et un Héros adjacent à l'Ennemi peut <style=Term><link=TERM_SHROUDED>camoufler</link></style> 1 carte et défausser 1 <style=Term><link=TERM_FATIGUE></link></style>.",
+    "it": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante il tuo attacco, aggiungi 1 <style=Term><link=TERM_SUCCESS></link></style> e un eroe adiacente al nemico può <style=Term><link=TERM_SHROUDED>velare</link></style> 1 carta e scartare 1 <style=Term><link=TERM_FATIGUE></link></style>.",
+    "pt": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante seu ataque, some 1 <style=Term><link=TERM_SUCCESS></link></style> e um herói adjacente ao inimigo pode <style=Term><link=TERM_SHROUDED>encobrir</link></style> 1 carta e descartar 1 <style=Term><link=TERM_FATIGUE></link></style>."
+  },
   "WEAPON_PART_A_BOW_5": {
     "es": "1 <style=Term><link=TERM_SURGE></link></style>: Durante tu ataque, añade 2 <style=Term><link=TERM_SUCCESS></link></style>. Después de este ataque, si el enemigo fue derrotado, puedes atacar de nuevo.",
     "en": "1 <style=Term><link=TERM_SURGE></link></style>: During your attack, add 2 <style=Term><link=TERM_SUCCESS></link></style>. After this attack, if the enemy was defeated, you may attack again.",
     "fr": "1 <style=Term><link=TERM_SURGE></link></style> : Pendant votre attaque, ajoutez 2 <style=Term><link=TERM_SUCCESS></link></style>. Après cette attaque, si l'Ennemi a été vaincu, vous pouvez attaquer à nouveau.",
     "it": "1 <style=Term><link=TERM_SURGE></link></style>: Durante il tuo attacco, aggiungi 2 <style=Term><link=TERM_SUCCESS></link></style>. Dopo questo attacco, se il nemico è stato sconfitto, puoi attaccare di nuovo.",
     "pt": "1 <style=Term><link=TERM_SURGE></link></style>: Durante seu ataque, some 2 <style=Term><link=TERM_SUCCESS></link></style>. Após este ataque, se o inimigo foi derrotado, você pode atacar novamente."
+  },
+  "WEAPON_PART_A_BOW_5_UPGRADED": {
+    "es": "1 <style=Term><link=TERM_SURGE></link></style>: Durante tu ataque, añade 3 <style=Term><link=TERM_SUCCESS></link></style>. Después de este ataque, si el enemigo fue derrotado, puedes atacar de nuevo.",
+    "en": "1 <style=Term><link=TERM_SURGE></link></style>: During your attack, add 3 <style=Term><link=TERM_SUCCESS></link></style>. After this attack, if the enemy was defeated, you may attack again.",
+    "fr": "1 <style=Term><link=TERM_SURGE></link></style> : Pendant votre attaque, ajoutez 3 <style=Term><link=TERM_SUCCESS></link></style>. Après cette attaque, si l'Ennemi a été vaincu, vous pouvez attaquer à nouveau.",
+    "it": "1 <style=Term><link=TERM_SURGE></link></style>: Durante il tuo attacco, aggiungi 2 <style=Term><link=TERM_SUCCESS></link></style>. Dopo questo attacco, se il nemico è stato sconfitto, puoi attaccare di nuovo.",
+    "pt": "1 <style=Term><link=TERM_SURGE></link></style>: Durante seu ataque, some 3 <style=Term><link=TERM_SUCCESS></link></style>. Após este ataque, se o inimigo foi derrotado, você pode atacar novamente."
   },
   "WEAPON_PART_A_CROSSBOW_1": {
     "es": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante tu ataque, repite la tirada de 1 dado.",
@@ -107,7 +121,21 @@ export const WEAPON_PART_DESCS = {
     "it": "1 <style=Term><link=TERM_FATIGUE></link></style>: Dopo il tuo attacco, <style=Term><link=TERM_SHIFT>scatta</link></style> 1. \n1 <style=Term><link=TERM_FATIGUE></link></style>: Dopo il tuo attacco, muovi il nemico di 1 casella.",
     "pt": "1 <style=Term><link=TERM_FATIGUE></link></style>: Depois do seu ataque, <style=Term><link=TERM_SHIFT>Desloque</link></style> 1.\n 1 <style=Term><link=TERM_FATIGUE></link></style>: Depois do seu ataque, mova o inimigo 1 espaço."
   },
+  "WEAPON_PART_A_CROSSBOW_4_UPGRADED": {
+    "es": "1 <style=Term><link=TERM_FATIGUE></link></style>: Después de tu ataque, puedes realizar <style=Term><link=TERM_SHIFT>Desplazamiento</link></style> 1 y puedes mover al enemigo hasta 1 casilla.",
+    "en": "1 <style=Term><link=TERM_FATIGUE></link></style>: After your attack, you may <style=Term><link=TERM_SHIFT>Shift</link></style> 1 and you may move the enemy up to 1 space.",
+    "fr": "1 <style=Term><link=TERM_FATIGUE></link></style> : Après votre attaque, vous pouvez <style=Term><link=TERM_SHIFT>Glisser</link></style> de 1 et vous pouvez déplacer l'Ennemi de 1 case au maximum.",
+    "it": "1 <style=Term><link=TERM_FATIGUE></link></style>: Dopo il tuo attacco, puoi <style=Term><link=TERM_SHIFT>scattare</link></style> 1 e puoi muovere il nemico di un massimo di 1 casella.",
+    "pt": "1 <style=Term><link=TERM_FATIGUE></link></style>: Após seu ataque, você pode <style=Term><link=TERM_SHIFT>Deslocar</link></style> 1 e pode mover o inimigo até 1 espaço."
+  },
   "WEAPON_PART_A_CROSSBOW_5": {
+    "es": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante tu ataque, añade 1 <style=Term><link=TERM_SUCCESS></link></style>.",
+    "en": "2 <style=Term><link=TERM_FATIGUE></link></style>: During your attack, add 1 <style=Term><link=TERM_SUCCESS></link></style>.",
+    "fr": "2 <style=Term><link=TERM_FATIGUE></link></style> : Pendant votre attaque, ajoutez 1 <style=Term><link=TERM_SUCCESS></link></style>.",
+    "it": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante il tuo attacco, aggiungi 1 <style=Term><link=TERM_SUCCESS></link></style>.",
+    "pt": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante o seu ataque, some 1 <style=Term><link=TERM_SUCCESS></link></style>."
+  },
+  "WEAPON_PART_A_CROSSBOW_5_UPGRADED": {
     "es": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante tu ataque, añade 1 <style=Term><link=TERM_SUCCESS></link></style>.",
     "en": "2 <style=Term><link=TERM_FATIGUE></link></style>: During your attack, add 1 <style=Term><link=TERM_SUCCESS></link></style>.",
     "fr": "2 <style=Term><link=TERM_FATIGUE></link></style> : Pendant votre attaque, ajoutez 1 <style=Term><link=TERM_SUCCESS></link></style>.",
@@ -120,6 +148,13 @@ export const WEAPON_PART_DESCS = {
     "fr": "Cette arme n'est efficace que contre les Dragons.\n 1 <style=Term><link=TERM_FATIGUE></link></style> : Pendant votre attaque, ajoutez 1 <style=Term><link=TERM_SUCCESS></link></style> et 1 <style=Term><link=TERM_ADVANTAGE></link></style>.\n Coût d'équipement : 1 <style=Term><link=TERM_EXPERIENCE>XP</link></style>.",
     "it": "Quest'arma è particolarmente potente contro la stirpe draconica.\n1 <style=Term><link=TERM_FATIGUE></link></style>: Durante il tuo attacco, aggiungi 1 <style=Term><link=TERM_SUCCESS></link></style> e 1 <style=Term><link=TERM_ADVANTAGE></link></style>.\nCosto di equipaggiamento: 1 <style=Term><link=TERM_EXPERIENCE>PE</link></style>.",
     "pt": "Esta arma é particularmente efetiva contra as espécies de dragões.\n 1 <style=Term><link=TERM_FATIGUE></link></style>: Durante seu ataque, some 1 <style=Term><link=TERM_SUCCESS></link></style> e 1 <style=Term><link=TERM_ADVANTAGE></link></style>.\n Custa 1 <style=Term><link=TERM_EXPERIENCE>XP</link></style> para equipar."
+  },
+  "WEAPON_PART_A_DRAGONSBANE_UPGRADED": {
+    "es": "Esta arma es verdaderamente poderosa contra la raza dragón.\n 2 <style=Term><link=TERM_FATIGUE></link></style>: Durante tu ataque, añade 1 <style=Term><link=TERM_SURGE></link></style>, 1 <style=Term><link=TERM_SUCCESS></link></style> y 1 <style=Term><link=TERM_ADVANTAGE></link></style>.\n Cuesta 1 <style=Term><link=TERM_EXPERIENCE>XP</link></style> para equipar.",
+    "en": "This weapon is uniquely powerful against dragonkind.\n2 <style=Term><link=TERM_FATIGUE></link></style>: During your attack, add 1 <style=Term><link=TERM_SURGE></link></style>, 1 <style=Term><link=TERM_SUCCESS></link></style>, and 1 <style=Term><link=TERM_ADVANTAGE></link></style>.\nCosts 1 <style=Term><link=TERM_EXPERIENCE>XP</link></style> to equip.",
+    "fr": "Cette arme n'est efficace que contre les Dragons.\n 2 <style=Term><link=TERM_FATIGUE></link></style> : Pendant votre attaque, ajoutez 1 <style=Term><link=TERM_SURGE></link></style>, 1 <style=Term><link=TERM_SUCCESS></link></style> et 1 <style=Term><link=TERM_ADVANTAGE></link></style>.\n Coût d'équipement : 1 <style=Term><link=TERM_EXPERIENCE>XP</link></style>.",
+    "it": "Quest'arma è particolarmente potente contro la stirpe draconica.\n2 <style=Term><link=TERM_FATIGUE></link></style>: Durante il tuo attacco, aggiungi 1 <style=Term><link=TERM_SURGE></link></style>, 1 <style=Term><link=TERM_SUCCESS></link></style> e 1 <style=Term><link=TERM_ADVANTAGE></link></style>.\nCosto di equipaggiamento: 1 <style=Term><link=TERM_EXPERIENCE>PE</link></style>.",
+    "pt": "Esta arma é particularmente efetiva contra as espécies de dragões.\n 2 <style=Term><link=TERM_FATIGUE></link></style>: Durante seu ataque, some 1 <style=Term><link=TERM_SURGE></link></style>, 1 <style=Term><link=TERM_SUCCESS></link></style> e 1 <style=Term><link=TERM_ADVANTAGE></link></style>.\n Custa 1 <style=Term><link=TERM_EXPERIENCE>XP</link></style> para equipar."
   },
   "WEAPON_PART_A_DUAL_BLADES_1": {
     "es": "1 <style=Term><link=TERM_SURGE></link></style>: Durante tu ataque, añade 2 <style=Term><link=TERM_SUCCESS></link></style>. Si no hay ningún héroe adyacente a ti, en vez de eso añade 3 <style=Term><link=TERM_SUCCESS></link></style>.",
@@ -170,6 +205,13 @@ export const WEAPON_PART_DESCS = {
     "it": "3 <style=Term><link=TERM_FATIGUE></link></style>: Durante il tuo attacco, scegli 1 altra carta. Aggiungi 1 <style=Term><link=TERM_SUCCESS></link></style> per ogni <style=Term><link=TERM_FATIGUE></link></style> su quella carta, poi girala.",
     "pt": "3 <style=Term><link=TERM_FATIGUE></link></style>: Durante seu ataque, escolha 1 outra carta. Some 1 <style=Term><link=TERM_SUCCESS></link></style> para cada <style=Term><link=TERM_FATIGUE></link></style> na carta escolhida; em seguida, vire-a."
   },
+  "WEAPON_PART_A_DUAL_BLADES_4_UPGRADED": {
+    "es": "3 <style=Term><link=TERM_FATIGUE></link></style>: Durante tu ataque, elige otra carta. Añade 1 <style=Term><link=TERM_SUCCESS></link></style> por cada <style=Term><link=TERM_FATIGUE></link></style> que tenga esa carta y luego dale la vuelta.",
+    "en": "3 <style=Term><link=TERM_FATIGUE></link></style>: During your attack, choose 1 other card. Add 1 <style=Term><link=TERM_SUCCESS></link></style> for each <style=Term><link=TERM_FATIGUE></link></style> on that card, then flip it.",
+    "fr": "3 <style=Term><link=TERM_FATIGUE></link></style> : Pendant votre attaque, choisissez 1 autre carte. Ajoutez 1 <style=Term><link=TERM_SUCCESS></link></style> pour chaque <style=Term><link=TERM_FATIGUE></link></style> sur cette carte. Ensuite, retournez-la.",
+    "it": "3 <style=Term><link=TERM_FATIGUE></link></style>: Durante il tuo attacco, scegli 1 altra carta. Aggiungi 1 <style=Term><link=TERM_SUCCESS></link></style> per ogni <style=Term><link=TERM_FATIGUE></link></style> su quella carta, poi girala.",
+    "pt": "3 <style=Term><link=TERM_FATIGUE></link></style>: Durante seu ataque, escolha 1 outra carta. Some 1 <style=Term><link=TERM_SUCCESS></link></style> para cada <style=Term><link=TERM_FATIGUE></link></style> na carta escolhida; em seguida, vire-a."
+  },
   "WEAPON_PART_A_DUAL_BLADES_5": {
     "es": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante tu ataque, añade 1 <style=Term><link=TERM_SUCCESS></link></style>. Si te has movido 3 o más casillas en este turno, en vez de eso añade 2 <style=Term><link=TERM_SUCCESS></link></style>.",
     "en": "2 <style=Term><link=TERM_FATIGUE></link></style>: During your attack, add 1 <style=Term><link=TERM_SUCCESS></link></style>. If you have moved 3 or more spaces this turn, add 2 <style=Term><link=TERM_SUCCESS></link></style> instead.",
@@ -177,12 +219,26 @@ export const WEAPON_PART_DESCS = {
     "it": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante il tuo attacco, aggiungi 1 <style=Term><link=TERM_SUCCESS></link></style>. Se ti sei mosso di 3 o più caselle in questo turno, aggiungi invece 2 <style=Term><link=TERM_SUCCESS></link></style>.",
     "pt": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante o seu ataque, some 1 <style=Term><link=TERM_SUCCESS></link></style>. Se você tiver se movido 3 ou mais espaços neste turno, some 2 <style=Term><link=TERM_SUCCESS></link></style> em vez disso."
   },
+  "WEAPON_PART_A_DUAL_BLADES_5_UPGRADED": {
+    "es": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante tu ataque, añade 1 <style=Term><link=TERM_SUCCESS></link></style>. Si te has movido 3 o más casillas en este turno, en vez de eso añade 3 <style=Term><link=TERM_SUCCESS></link></style>.",
+    "en": "2 <style=Term><link=TERM_FATIGUE></link></style>: During your attack, add 1 <style=Term><link=TERM_SUCCESS></link></style>. If you have moved 3 or more spaces this turn, add 3 <style=Term><link=TERM_SUCCESS></link></style> instead.",
+    "fr": "2 <style=Term><link=TERM_FATIGUE></link></style> : Pendant votre attaque, ajoutez 1 <style=Term><link=TERM_SUCCESS></link></style>. Si vous avez effectué un déplacement d'au moins 3 cases ce tour-ci, ajoutez 3 <style=Term><link=TERM_SUCCESS></link></style> à la place.",
+    "it": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante il tuo attacco, aggiungi 1 <style=Term><link=TERM_SUCCESS></link></style>. Se ti sei mosso di 3 o più caselle in questo turno, aggiungi invece 3 <style=Term><link=TERM_SUCCESS></link></style>.",
+    "pt": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante o seu ataque, some 1 <style=Term><link=TERM_SUCCESS></link></style>. Se você tiver se movido 3 ou mais espaços neste turno, some 3 <style=Term><link=TERM_SUCCESS></link></style> em vez disso."
+  },
   "WEAPON_PART_A_FEAR": {
     "es": "X <style=Term><link=TERM_FATIGUE></link></style>: Durante tu ataque, añade X <style=Term><link=TERM_SUCCESS></link></style>. Después de tu ataque, mueve al enemigo hasta X casillas.\n Cuesta 1 <style=Term><link=TERM_EXPERIENCE>XP</link></style> para equipar.",
     "en": "X <style=Term><link=TERM_FATIGUE></link></style>: During your attack, add X <style=Term><link=TERM_SUCCESS></link></style>. After your attack, move the enemy up to X spaces.\nCosts 1 <style=Term><link=TERM_EXPERIENCE>XP</link></style> to equip.",
     "fr": "X <style=Term><link=TERM_FATIGUE></link></style> : Pendant votre attaque, ajoutez X <style=Term><link=TERM_SUCCESS></link></style>. Après votre attaque, déplacez l'Ennemi d'un maximum de X cases.\n Coût d'équipement : 1 <style=Term><link=TERM_EXPERIENCE>XP</link></style>.",
     "it": "X <style=Term><link=TERM_FATIGUE></link></style>: Durante il tuo attacco, aggiungi X <style=Term><link=TERM_SUCCESS></link></style>. Dopo il tuo attacco, muovi il nemico di un massimo di X caselle.\nCosto di equipaggiamento: 1 <style=Term><link=TERM_EXPERIENCE>PE</link></style>.",
     "pt": "X <style=Term><link=TERM_FATIGUE></link></style>: Durante seu ataque, some X <style=Term><link=TERM_SUCCESS></link></style>. Depois de seu ataque, mova o inimigo até X espaços.\n Custa 1 <style=Term><link=TERM_EXPERIENCE>XP</link></style> para equipar."
+  },
+  "WEAPON_PART_A_FEAR_UPGRADED": {
+    "es": "X <style=Term><link=TERM_FATIGUE></link></style>: Durante tu ataque o defensa, añade X <style=Term><link=TERM_SUCCESS></link></style>. Después de tu ataque, mueve al enemigo hasta X casillas.\n Cuesta 1 <style=Term><link=TERM_EXPERIENCE>XP</link></style> para equipar.",
+    "en": "X <style=Term><link=TERM_FATIGUE></link></style>: During your attack or defense, add X <style=Term><link=TERM_SUCCESS></link></style>. After your roll, move the enemy up to X spaces.\nCosts 1 <style=Term><link=TERM_EXPERIENCE>XP</link></style> to equip.",
+    "fr": "X <style=Term><link=TERM_FATIGUE></link></style> : Pendant votre attaque ou votre défense, ajoutez X <style=Term><link=TERM_SUCCESS></link></style>. Après votre jet de dés, déplacez l'Ennemi d'un maximum de X cases.\n Coût d'équipement : 1 <style=Term><link=TERM_EXPERIENCE>XP</link></style>.",
+    "it": "X <style=Term><link=TERM_FATIGUE></link></style>: Durante il tuo attacco o la tua difesa, aggiungi X <style=Term><link=TERM_SUCCESS></link></style>. Dopo il tuo tiro, muovi il nemico di un massimo di X caselle.\nCosto di equipaggiamento: 1 <style=Term><link=TERM_EXPERIENCE>PE</link></style>.",
+    "pt": "X <style=Term><link=TERM_FATIGUE></link></style>: Durante seu ataque ou sua defesa, some X <style=Term><link=TERM_SUCCESS></link></style>. Depois da sua rolagem, mova o inimigo até X espaços.\n Custa 1 <style=Term><link=TERM_EXPERIENCE>XP</link></style> para equipar."
   },
   "WEAPON_PART_A_GAUNTLET_1": {
     "es": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante tu ataque, si tienes una carta <i>Sombra</i>, añade 1 <style=Term><link=TERM_SUCCESS></link></style>.",
@@ -233,12 +289,26 @@ export const WEAPON_PART_DESCS = {
     "it": "1 <style=Term><link=TERM_SURGE></link></style>: Durante il tuo attacco, aggiungi 2 <style=Term><link=TERM_SUCCESS></link></style> e scarta 1 <style=Term><link=TERM_FATIGUE></link></style> da una carta <i>Ombra</i>.",
     "pt": "1 <style=Term><link=TERM_SURGE></link></style>: Durante seu ataque, some 2 <style=Term><link=TERM_SUCCESS></link></style> e descarte 1 <style=Term><link=TERM_FATIGUE></link></style> de uma carta <i>Sombra</i>."
   },
+  "WEAPON_PART_A_GAUNTLET_4_UPGRADED": {
+    "es": "1 <style=Term><link=TERM_SURGE></link></style>: Durante tu ataque, añade 2 <style=Term><link=TERM_SUCCESS></link></style> y descarta 1 <style=Term><link=TERM_FATIGUE></link></style> de cada carta <i>Sombra</i>.",
+    "en": "1 <style=Term><link=TERM_SURGE></link></style>: During your attack, add 2 <style=Term><link=TERM_SUCCESS></link></style> and discard 1 <style=Term><link=TERM_FATIGUE></link></style> from each <i>Shadow</i> card.",
+    "fr": "1 <style=Term><link=TERM_SURGE></link></style> : Pendant votre attaque, ajoutez 2 <style=Term><link=TERM_SUCCESS></link></style> et défaussez 1 <style=Term><link=TERM_FATIGUE></link></style> de chaque carte <i>Ombre</i>.",
+    "it": "1 <style=Term><link=TERM_SURGE></link></style>: Durante il tuo attacco, aggiungi 2 <style=Term><link=TERM_SUCCESS></link></style> e scarta 1 <style=Term><link=TERM_FATIGUE></link></style> da ogni carta <i>Ombra</i>.",
+    "pt": "1 <style=Term><link=TERM_SURGE></link></style>: Durante seu ataque, some 2 <style=Term><link=TERM_SUCCESS></link></style> e descarte 1 <style=Term><link=TERM_FATIGUE></link></style> de cada carta <i>Sombra</i>."
+  },
   "WEAPON_PART_A_GAUNTLET_5": {
     "es": "Durante tu ataque, puedes sufrir 2 <style=Term><link=TERM_DAMAGE></link></style> para añadir 1 dado azul.",
     "en": "During your attack, you may suffer 2 <style=Term><link=TERM_DAMAGE></link></style> to add 1 blue die.",
     "fr": "Pendant votre attaque, vous pouvez subir 2 <style=Term><link=TERM_DAMAGE></link></style> pour ajouter 1 dé bleu.",
     "it": "Durante il tuo attacco, puoi subire 2 <style=Term><link=TERM_DAMAGE></link></style> per aggiungere 1 dado blu.",
     "pt": "Durante seu ataque, você pode sofrer 2 <style=Term><link=TERM_DAMAGE></link></style> para somar 1 dado azul."
+  },
+  "WEAPON_PART_A_GAUNTLET_5_UPGRADED": {
+    "es": "Durante tu ataque, puedes sufrir 1 <style=Term><link=TERM_DAMAGE></link></style> para añadir 1 dado azul.",
+    "en": "During your attack, you may suffer 1 <style=Term><link=TERM_DAMAGE></link></style> to add 1 blue die.",
+    "fr": "Pendant votre attaque, vous pouvez subir 1 <style=Term><link=TERM_DAMAGE></link></style> pour ajouter 1 dé bleu.",
+    "it": "Durante il tuo attacco, puoi subire 1 <style=Term><link=TERM_DAMAGE></link></style> per aggiungere 1 dado blu.",
+    "pt": "Durante seu ataque, você pode sofrer 1 <style=Term><link=TERM_DAMAGE></link></style> para somar 1 dado azul."
   },
   "WEAPON_PART_A_HAMMER_1": {
     "es": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante tu ataque o defensa, ignora 1 cara de dado y añade 3 <style=Term><link=TERM_SUCCESS></link></style>.",
@@ -289,12 +359,26 @@ export const WEAPON_PART_DESCS = {
     "it": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante il tuo attacco, <style=Term><link=TERM_PREPARED>prepara</link></style> 1 abilità <i>Ispirazione</i>.",
     "pt": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante seu ataque, <style=Term><link=TERM_PREPARED>prepare</link></style> uma perícia de <i>Inspiração</i>."
   },
+  "WEAPON_PART_A_HAMMER_4_UPGRADED": {
+    "es": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante tu ataque, añade 1 <style=Term><link=TERM_SUCCESS></link></style> y <style=Term><link=TERM_PREPARED>apresta</link></style> una habilidad <i>Inspiración</i>.",
+    "en": "2 <style=Term><link=TERM_FATIGUE></link></style>: During your attack, add 1 <style=Term><link=TERM_SUCCESS></link></style> and <style=Term><link=TERM_PREPARED>prepare</link></style> an <i>Inspiration</i> skill.",
+    "fr": "2 <style=Term><link=TERM_FATIGUE></link></style> : Pendant votre attaque, ajoutez 1 <style=Term><link=TERM_SUCCESS></link></style> et <style=Term><link=TERM_PREPARED>préparez</link></style> une compétence <i>Inspiration</i>.",
+    "it": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante il tuo attacco, aggiungi 1 <style=Term><link=TERM_SUCCESS></link></style> e <style=Term><link=TERM_PREPARED>prepara</link></style> 1 abilità <i>Ispirazione</i>.",
+    "pt": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante seu ataque, some 1 <style=Term><link=TERM_SUCCESS></link></style> e <style=Term><link=TERM_PREPARED>prepare</link></style> uma perícia de <i>Inspiração</i>."
+  },
   "WEAPON_PART_A_HAMMER_5": {
     "es": "1 <style=Term><link=TERM_SURGE></link></style>: Durante tu ataque o defensa, añade 1 dado negro y <style=Term><link=TERM_STRESSED>estresa</link></style> una carta.",
     "en": "1 <style=Term><link=TERM_SURGE></link></style>: During your attack or defense, add 1 black die and <style=Term><link=TERM_STRESSED>stress</link></style> a card.",
     "fr": "1 <style=Term><link=TERM_SURGE></link></style> : Pendant votre attaque ou votre défense, ajoutez 1 dé noir et <style=Term><link=TERM_STRESSED>stressez</link></style> une carte.",
     "it": "1 <style=Term><link=TERM_SURGE></link></style>: Durante il tuo attacco o la tua difesa, aggiungi 1 dado nero e <style=Term><link=TERM_STRESSED>spossa</link></style> 1 carta.",
     "pt": "1 <style=Term><link=TERM_SURGE></link></style>: Durante seu ataque ou defesa, some 1 dado preto e <style=Term><link=TERM_STRESSED>estresse</link></style> uma carta."
+  },
+  "WEAPON_PART_A_HAMMER_5_UPGRADED": {
+    "es": "1 <style=Term><link=TERM_SURGE></link></style>: Durante tu ataque o defensa, añade 1 dado negro.",
+    "en": "1 <style=Term><link=TERM_SURGE></link></style>: During your attack or defense, add 1 black die.",
+    "fr": "1 <style=Term><link=TERM_SURGE></link></style> : Pendant votre attaque ou votre défense, ajoutez 1 dé noir.",
+    "it": "1 <style=Term><link=TERM_SURGE></link></style>: Durante il tuo attacco o la tua difesa, aggiungi 1 dado nero.",
+    "pt": "1 <style=Term><link=TERM_SURGE></link></style>: Durante seu ataque ou defesa, some 1 dado preto."
   },
   "WEAPON_PART_A_ICE_STORM": {
     "es": "1 <style=Term><link=TERM_ACTIONS></link></style>: Mueve 2 casillas cada una de las demás miniaturas que esté a 3 o menos casillas de ti. A continuación, <style=Term><link=TERM_DAZED>conmociona</link></style> a cada enemigo movido.\n  \n  Cuesta 1 XP para equipar.",
@@ -359,12 +443,26 @@ export const WEAPON_PART_DESCS = {
     "it": "1 <style=Term><link=TERM_SURGE></link></style>: Aggiungi 2 <style=Term><link=TERM_SUCCESS></link></style> e sposta fino a 1 <style=Term><link=TERM_FATIGUE></link></style> da un'altra carta a questa carta.",
     "pt": "1 <style=Term><link=TERM_SURGE></link></style>: Some 2 <style=Term><link=TERM_SUCCESS></link></style> e mova até 1 <style=Term><link=TERM_FATIGUE></link></style> de uma outra carta para esta carta."
   },
+  "WEAPON_PART_A_KNIVES_4_UPGRADED": {
+    "es": "1 <style=Term><link=TERM_SURGE></link></style>: Añade 3 <style=Term><link=TERM_SUCCESS></link></style> y mueve hasta 2 <style=Term><link=TERM_FATIGUE></link></style> de otra carta a esta carta.",
+    "en": "1 <style=Term><link=TERM_SURGE></link></style>: Add 3 <style=Term><link=TERM_SUCCESS></link></style> and move up to 2 <style=Term><link=TERM_FATIGUE></link></style> from another card to this card.",
+    "fr": "1 <style=Term><link=TERM_SURGE></link></style> : Ajoutez 3 <style=Term><link=TERM_SUCCESS></link></style> et déplacez jusqu'à 2 <style=Term><link=TERM_FATIGUE></link></style> d'une autre carte sur celle-ci.",
+    "it": "1 <style=Term><link=TERM_SURGE></link></style>: Aggiungi 2 <style=Term><link=TERM_SUCCESS></link></style> e sposta fino a 2 <style=Term><link=TERM_FATIGUE></link></style> da un'altra carta a questa carta.",
+    "pt": "1 <style=Term><link=TERM_SURGE></link></style>: Some 3 <style=Term><link=TERM_SUCCESS></link></style> e mova até 2 <style=Term><link=TERM_FATIGUE></link></style> de uma outra carta para esta carta."
+  },
   "WEAPON_PART_A_KNIVES_5": {
     "es": "1 <style=Term><link=TERM_FATIGUE></link></style>: Durante tu ataque, repite la tirada de 1 dado.",
     "en": "1 <style=Term><link=TERM_FATIGUE></link></style>: During your attack, reroll 1 die.",
     "fr": "1 <style=Term><link=TERM_FATIGUE></link></style> : Pendant votre attaque, relancez 1 dé.",
     "it": "1 <style=Term><link=TERM_FATIGUE></link></style>: Durante il tuo attacco, ripeti il tiro di 1 dado.",
     "pt": "1 <style=Term><link=TERM_FATIGUE></link></style>: Durante seu ataque, rerrole 1 dado."
+  },
+  "WEAPON_PART_A_KNIVES_5_UPGRADED": {
+    "es": "1 <style=Term><link=TERM_FATIGUE></link></style>: Durante tu ataque, añade 1 <style=Term><link=TERM_SUCCESS></link></style> y repite la tirada de 1 dado.",
+    "en": "1 <style=Term><link=TERM_FATIGUE></link></style>: During your attack, add 1 <style=Term><link=TERM_SUCCESS></link></style> and reroll 1 die.",
+    "fr": "1 <style=Term><link=TERM_FATIGUE></link></style> : Pendant votre attaque, ajoutez 1 <style=Term><link=TERM_SUCCESS></link></style> et relancez 1 dé.",
+    "it": "1 <style=Term><link=TERM_FATIGUE></link></style>: Durante il tuo attacco, aggiungi 1 <style=Term><link=TERM_SUCCESS></link></style> e ripeti il tiro di 1 dado.",
+    "pt": "1 <style=Term><link=TERM_FATIGUE></link></style>: Durante seu ataque, some 1 <style=Term><link=TERM_SUCCESS></link></style> e rerrole 1 dado."
   },
   "WEAPON_PART_A_LIGHTNING_STRIKE": {
     "es": "1 <style=Term><link=TERM_ACTIONS></link></style>: Ataca a un enemigo. Luego ataca a otro enemigo que esté a 2 o menos casillas del primer enemigo.\n  \n  Cuesta 1 XP para equipar.",
@@ -443,12 +541,26 @@ export const WEAPON_PART_DESCS = {
     "it": "Durante l'attacco o la difesa di un eroe, se quell'eroe si trova entro 3 caselle da te, può scartare 1 segnalino <style=Term><link=TERM_FOCUSED>focus</link></style> o <style=Term><link=TERM_PREPARED>preparazione</link></style> per convertire 1 <style=Term><link=TERM_SUCCESS></link></style> in 1 <style=Term><link=TERM_SURGE></link></style>.",
     "pt": "Durante o ataque ou a defesa de um herói, se esse herói estiver a até 3 espaços de você, ele pode descartar 1 ficha de <style=Term><link=TERM_FOCUSED>foco</link></style> ou de <style=Term><link=TERM_PREPARED>preparar</link></style> para converter 1 <style=Term><link=TERM_SUCCESS></link></style> em 1 <style=Term><link=TERM_SURGE></link></style>."
   },
+  "WEAPON_PART_A_SPEAR_4_UPGRADED": {
+    "es": "Durante el ataque o defensa de un héroe, si ese héroe está a 3 o menos casillas de ti, puede descartar 1 ficha de <style=Term><link=TERM_FOCUSED>Concentración</link></style> o de <style=Term><link=TERM_PREPARED>Presteza</link></style> para añadir 1 <style=Term><link=TERM_SURGE></link></style>.",
+    "en": "During a hero's attack or defense, if that hero is within 3 spaces of you, they may discard 1 <style=Term><link=TERM_FOCUSED>focus</link></style> or <style=Term><link=TERM_PREPARED>prepare</link></style> token to add 1 <style=Term><link=TERM_SURGE></link></style>.",
+    "fr": "Pendant l'attaque ou la défense d'un Héros, si celui-ci se trouve dans un rayon de 3 cases de vous, il peut défausser 1 pion <style=Term><link=TERM_FOCUSED>Canalisation</link></style> ou <style=Term><link=TERM_PREPARED>Préparation</link></style> pour ajouter 1 <style=Term><link=TERM_SURGE></link></style>.",
+    "it": "Durante l'attacco o la difesa di un eroe, se quell'eroe si trova entro 3 caselle da te, può scartare 1 segnalino <style=Term><link=TERM_FOCUSED>focus</link></style> o <style=Term><link=TERM_PREPARED>preparazione</link></style> per aggiungere 1 <style=Term><link=TERM_SURGE></link></style>.",
+    "pt": "Durante o ataque ou a defesa de um herói, se esse herói estiver a até 3 espaços de você, ele pode descartar 1 ficha de <style=Term><link=TERM_FOCUSED>foco</link></style> ou de <style=Term><link=TERM_PREPARED>preparar</link></style> para somar 1 <style=Term><link=TERM_SURGE></link></style>."
+  },
   "WEAPON_PART_A_SPEAR_5": {
     "es": "1 <style=Term><link=TERM_SURGE></link></style>: Durante tu ataque, añade 1 <style=Term><link=TERM_SUCCESS></link></style>. Un héroe adyacente al enemigo puede curarse 2 <style=Term><link=TERM_HEALTH_DIAL></link></style>.",
     "en": "1 <style=Term><link=TERM_SURGE></link></style>: During your attack, add 1 <style=Term><link=TERM_SUCCESS></link></style>. A hero adjacent to the enemy may heal 2 <style=Term><link=TERM_HEALTH_DIAL></link></style>.",
     "fr": "1 <style=Term><link=TERM_SURGE></link></style> : Pendant votre attaque, ajoutez 1 <style=Term><link=TERM_SUCCESS></link></style>. Un Héros adjacent à l'Ennemi peut se soigner de 2 <style=Term><link=TERM_HEALTH_DIAL></link></style>.",
     "it": "1 <style=Term><link=TERM_SURGE></link></style>: Durante il tuo attacco, aggiungi 1 <style=Term><link=TERM_SUCCESS></link></style>. Un eroe adiacente al nemico può curarsi 2 <style=Term><link=TERM_HEALTH_DIAL></link></style>.",
     "pt": "1 <style=Term><link=TERM_SURGE></link></style>: Durante seu ataque, some 1 <style=Term><link=TERM_SUCCESS></link></style>. Um herói adjacente ao inimigo pode curar 2 <style=Term><link=TERM_HEALTH_DIAL></link></style>."
+  },
+  "WEAPON_PART_A_SPEAR_5_UPGRADED": {
+    "es": "1 <style=Term><link=TERM_SURGE></link></style>: Durante tu ataque, añade 1 <style=Term><link=TERM_SUCCESS></link></style>. Un héroe adyacente al enemigo puede curarse 3 <style=Term><link=TERM_HEALTH_DIAL></link></style>.",
+    "en": "1 <style=Term><link=TERM_SURGE></link></style>: During your attack, add 1 <style=Term><link=TERM_SUCCESS></link></style>. A hero adjacent to the enemy may heal 3 <style=Term><link=TERM_HEALTH_DIAL></link></style>.",
+    "fr": "1 <style=Term><link=TERM_SURGE></link></style> : Pendant votre attaque, ajoutez 1 <style=Term><link=TERM_SUCCESS></link></style>. Un Héros adjacent à l'Ennemi peut se soigner de 3 <style=Term><link=TERM_HEALTH_DIAL></link></style>.",
+    "it": "1 <style=Term><link=TERM_SURGE></link></style>: Durante il tuo attacco, aggiungi 1 <style=Term><link=TERM_SUCCESS></link></style>. Un eroe adiacente al nemico può curarsi 3 <style=Term><link=TERM_HEALTH_DIAL></link></style>.",
+    "pt": "1 <style=Term><link=TERM_SURGE></link></style>: Durante seu ataque, some 1 <style=Term><link=TERM_SUCCESS></link></style>. Um herói adjacente ao inimigo pode curar 3 <style=Term><link=TERM_HEALTH_DIAL></link></style>."
   },
   "WEAPON_PART_A_STAFF_1": {
     "es": "2 <style=Term><link=TERM_FATIGUE></link></style>: Antes de tu ataque o defensa, descarta 2 <style=Term><link=TERM_FATIGUE></link></style> de 1 carta distinta.",
@@ -499,6 +611,13 @@ export const WEAPON_PART_DESCS = {
     "it": "1 <style=Term><link=TERM_ADVANTAGE></link></style>: Durante il tuo attacco, aggiungi 1 <style=Term><link=TERM_SUCCESS></link></style> e scarta 1 <style=Term><link=TERM_FATIGUE></link></style> da una qualsiasi carta.",
     "pt": "1 <style=Term><link=TERM_ADVANTAGE></link></style>: Durante seu ataque, some 1 <style=Term><link=TERM_SUCCESS></link></style> e descarte 1 <style=Term><link=TERM_FATIGUE></link></style> de qualquer carta."
   },
+  "WEAPON_PART_A_STAFF_4_UPGRADED": {
+    "es": "1 <style=Term><link=TERM_ADVANTAGE></link></style>: Durante tu ataque, añade 2 <style=Term><link=TERM_SUCCESS></link></style> y descarta 1 <style=Term><link=TERM_FATIGUE></link></style> de cualquier carta.",
+    "en": "1 <style=Term><link=TERM_ADVANTAGE></link></style>: During your attack, add 2 <style=Term><link=TERM_SUCCESS></link></style> and discard 1 <style=Term><link=TERM_FATIGUE></link></style> from any card.",
+    "fr": "1 <style=Term><link=TERM_ADVANTAGE></link></style> : Pendant votre attaque, ajoutez 2 <style=Term><link=TERM_SUCCESS></link></style> et défaussez 1 <style=Term><link=TERM_FATIGUE></link></style> de n'importe quelle carte.",
+    "it": "1 <style=Term><link=TERM_ADVANTAGE></link></style>: Durante il tuo attacco, aggiungi 2 <style=Term><link=TERM_SUCCESS></link></style> e scarta 1 <style=Term><link=TERM_FATIGUE></link></style> da una qualsiasi carta.",
+    "pt": "1 <style=Term><link=TERM_ADVANTAGE></link></style>: Durante seu ataque, some 2 <style=Term><link=TERM_SUCCESS></link></style> e descarte 1 <style=Term><link=TERM_FATIGUE></link></style> de qualquer carta."
+  },
   "WEAPON_PART_A_STAFF_5": {
     "es": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante tu ataque o defensa, convierte 1 <style=Term><link=TERM_ADVANTAGE></link></style> en 1 <style=Term><link=TERM_SURGE></link></style>.",
     "en": "2 <style=Term><link=TERM_FATIGUE></link></style>: During your attack or defense, convert 1 <style=Term><link=TERM_ADVANTAGE></link></style> to 1 <style=Term><link=TERM_SURGE></link></style>.",
@@ -506,12 +625,26 @@ export const WEAPON_PART_DESCS = {
     "it": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante il tuo attacco o la tua difesa, converti 1 <style=Term><link=TERM_ADVANTAGE></link></style> in 1 <style=Term><link=TERM_SURGE></link></style>.",
     "pt": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante seu ataque ou sua defesa, converta 1 <style=Term><link=TERM_ADVANTAGE></link></style> em 1 <style=Term><link=TERM_SURGE></link></style>."
   },
+  "WEAPON_PART_A_STAFF_5_UPGRADED": {
+    "es": "1 <style=Term><link=TERM_FATIGUE></link></style>: Durante tu ataque o defensa, convierte 1 <style=Term><link=TERM_ADVANTAGE></link></style> en 1 <style=Term><link=TERM_SURGE></link></style>.",
+    "en": "1 <style=Term><link=TERM_FATIGUE></link></style>: During your attack or defense, convert 1 <style=Term><link=TERM_ADVANTAGE></link></style> to 1 <style=Term><link=TERM_SURGE></link></style>.",
+    "fr": "1 <style=Term><link=TERM_FATIGUE></link></style> : Pendant votre attaque ou votre défense, convertissez 1 <style=Term><link=TERM_ADVANTAGE></link></style> en 1 <style=Term><link=TERM_SURGE></link></style>.",
+    "it": "1 <style=Term><link=TERM_FATIGUE></link></style>: Durante il tuo attacco o la tua difesa, converti 1 <style=Term><link=TERM_ADVANTAGE></link></style> in 1 <style=Term><link=TERM_SURGE></link></style>.",
+    "pt": "1 <style=Term><link=TERM_FATIGUE></link></style>: Durante seu ataque ou sua defesa, converta 1 <style=Term><link=TERM_ADVANTAGE></link></style> em 1 <style=Term><link=TERM_SURGE></link></style>."
+  },
   "WEAPON_PART_A_SUNBURST": {
     "es": "1 <style=Term><link=TERM_SURGE></link></style>: Durante tu ataque, añade 2 <style=Term><link=TERM_SUCCESS></link></style>. Después de este ataque, <style=Term><link=TERM_AFFLICTED>aflige</link></style> a cada enemigo adyacente al objetivo.\n Cuesta 1 <style=Term><link=TERM_EXPERIENCE>XP</link></style> para equipar.",
     "en": "1 <style=Term><link=TERM_SURGE></link></style>: During your attack, add 2 <style=Term><link=TERM_SUCCESS></link></style>. After this attack, <style=Term><link=TERM_AFFLICTED>afflict</link></style> each enemy adjacent to the target.\nCosts 1 <style=Term><link=TERM_EXPERIENCE>XP</link></style> to equip.",
     "fr": "1 <style=Term><link=TERM_SURGE></link></style> : Pendant votre attaque, ajoutez 2 <style=Term><link=TERM_SUCCESS></link></style>. Après cette attaque, <style=Term><link=TERM_AFFLICTED>accablez</link></style> chaque Ennemi adjacent à la cible.\n Coût d'équipement : 1 <style=Term><link=TERM_EXPERIENCE>XP</link></style>.",
     "it": "1 <style=Term><link=TERM_SURGE></link></style>: Durante il tuo attacco, aggiungi 2 <style=Term><link=TERM_SUCCESS></link></style>. Dopo questo attacco, <style=Term><link=TERM_AFFLICTED>affliggi</link></style> ogni nemico adiacente al bersaglio.\nCosto di equipaggiamento: 1 <style=Term><link=TERM_EXPERIENCE>PE</link></style>.",
     "pt": "1 <style=Term><link=TERM_SURGE></link></style>: Durante seu ataque, some 2 <style=Term><link=TERM_SUCCESS></link></style>. Depois desse ataque, deixe <style=Term><link=TERM_AFFLICTED>atormentado</link></style> cada inimigo adjacente ao alvo.\n Custa 1 <style=Term><link=TERM_EXPERIENCE>XP</link></style> para equipar."
+  },
+  "WEAPON_PART_A_SUNBURST_UPGRADED": {
+    "es": "1 <style=Term><link=TERM_SURGE></link></style>: Durante tu ataque, añade 2 <style=Term><link=TERM_SUCCESS></link></style>. Después de este ataque, <style=Term><link=TERM_AFFLICTED>aflige</link></style> a cada enemigo que esté dentro de la línea de visión del objetivo.\n Cuesta 1 <style=Term><link=TERM_EXPERIENCE>XP</link></style> para equipar.",
+    "en": "1 <style=Term><link=TERM_SURGE></link></style>: During your attack, add 2 <style=Term><link=TERM_SUCCESS></link></style>. After this attack, <style=Term><link=TERM_AFFLICTED>afflict</link></style> each enemy in the target's line of sight.\nCosts 1 <style=Term><link=TERM_EXPERIENCE>XP</link></style> to equip.",
+    "fr": "1 <style=Term><link=TERM_SURGE></link></style> : Pendant votre attaque, ajoutez 2 <style=Term><link=TERM_SUCCESS></link></style>. Après cette attaque, <style=Term><link=TERM_AFFLICTED>accablez</link></style> chaque Ennemi en ligne de vue de la cible.\n Coût d'équipement : 1 <style=Term><link=TERM_EXPERIENCE>XP</link></style>.",
+    "it": "1 <style=Term><link=TERM_SURGE></link></style>: Durante il tuo attacco, aggiungi 2 <style=Term><link=TERM_SUCCESS></link></style>. Dopo questo attacco, <style=Term><link=TERM_AFFLICTED>affliggi</link></style> ogni nemico in linea di vista del bersaglio.\nCosto di equipaggiamento: 1 <style=Term><link=TERM_EXPERIENCE>PE</link></style>.",
+    "pt": "1 <style=Term><link=TERM_SURGE></link></style>: Durante seu ataque, some 2 <style=Term><link=TERM_SUCCESS></link></style>. Depois desse ataque, deixe <style=Term><link=TERM_AFFLICTED>atormentado</link></style> cada inimigo na linha de visão do alvo.\n Custa 1 <style=Term><link=TERM_EXPERIENCE>XP</link></style> para equipar."
   },
   "WEAPON_PART_A_SWORD_1": {
     "es": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante tu ataque o defensa, si estás adyacente a otro héroe, añade 1 <style=Term><link=TERM_SUCCESS></link></style>.",
@@ -562,12 +695,26 @@ export const WEAPON_PART_DESCS = {
     "it": "2 <style=Term><link=TERM_FATIGUE></link></style>: Prima del tuo attacco, quest'arma ottiene <b><style=Term><link=TERM_REACH>Portata</link></style></b>. Se possiedi carte <i>Tecnica</i>, riduci di 1 <style=Term><link=TERM_FATIGUE></link></style> il costo di questa capacità.",
     "pt": "2 <style=Term><link=TERM_FATIGUE></link></style>: Antes de seu ataque, esta arma ganha <b><style=Term><link=TERM_REACH>Alcance</link></style></b>. Se você tiver uma carta de <i>Técnica</i>, reduza em 1 <style=Term><link=TERM_FATIGUE></link></style> o custo desta habilidade."
   },
+  "WEAPON_PART_A_SWORD_4_UPGRADED": {
+    "es": "2 <style=Term><link=TERM_FATIGUE></link></style>: Antes de tu ataque, esta arma obtiene <b><style=Term><link=TERM_REACH>Gran alcance</link></style></b>. Si tienes una carta <i>Técnica</i>, reduce el coste de esta capacidad en 1 <style=Term><link=TERM_FATIGUE></link></style>.",
+    "en": "2 <style=Term><link=TERM_FATIGUE></link></style>: Before your attack, this weapon gains <b><style=Term><link=TERM_REACH>Reach</link></style></b>. If you have a <i>Technique</i> card, reduce this ability's cost by 1 <style=Term><link=TERM_FATIGUE></link></style>.",
+    "fr": "2 <style=Term><link=TERM_FATIGUE></link></style> : Avant votre attaque, cette arme gagne <b><style=Term><link=TERM_REACH>Allonge</link></style></b>. Si vous possédez une carte <i>Technique</i>, réduisez de 1 <style=Term><link=TERM_FATIGUE></link></style> le coût de cette capacité.",
+    "it": "2 <style=Term><link=TERM_FATIGUE></link></style>: Prima del tuo attacco, quest'arma ottiene <b><style=Term><link=TERM_REACH>Portata</link></style></b>. Se possiedi carte <i>Tecnica</i>, riduci di 1 <style=Term><link=TERM_FATIGUE></link></style> il costo di questa capacità.",
+    "pt": "2 <style=Term><link=TERM_FATIGUE></link></style>: Antes de seu ataque, esta arma ganha <b><style=Term><link=TERM_REACH>Alcance</link></style></b>. Se você tiver uma carta de <i>Técnica</i>, reduza em 1 <style=Term><link=TERM_FATIGUE></link></style> o custo desta habilidade."
+  },
   "WEAPON_PART_A_SWORD_5": {
     "es": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante el ataque o defensa de un héroe contra un enemigo que esté adyacente a ti, ese héroe añade 1 <style=Term><link=TERM_SUCCESS></link></style>.",
     "en": "2 <style=Term><link=TERM_FATIGUE></link></style>: During a hero's attack or defense against an enemy that is adjacent to you, that hero adds 1 <style=Term><link=TERM_SUCCESS></link></style>.",
     "fr": "2 <style=Term><link=TERM_FATIGUE></link></style> : Pendant l'attaque d'un Héros ou sa défense contre un Ennemi adjacent à vous, ce Héros ajoute 1 <style=Term><link=TERM_SUCCESS></link></style>.",
     "it": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante l'attacco o la difesa di un eroe contro un nemico che è adiacente a te, quell'eroe aggiunge 1 <style=Term><link=TERM_SUCCESS></link></style>.",
     "pt": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante o ataque ou a defesa de um herói contra um inimigo adjacente a você, esse herói soma 1 <style=Term><link=TERM_SUCCESS></link></style>."
+  },
+  "WEAPON_PART_A_SWORD_5_UPGRADED": {
+    "es": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante el ataque o defensa de un héroe contra un enemigo que esté adyacente a ti, ese héroe añade 2 <style=Term><link=TERM_SUCCESS></link></style>.",
+    "en": "2 <style=Term><link=TERM_FATIGUE></link></style>: During a hero's attack or defense against an enemy that is adjacent to you, that hero adds 2 <style=Term><link=TERM_SUCCESS></link></style>.",
+    "fr": "2 <style=Term><link=TERM_FATIGUE></link></style> : Pendant l'attaque d'un Héros ou sa défense contre un Ennemi adjacent à vous, ce Héros ajoute 2 <style=Term><link=TERM_SUCCESS></link></style>.",
+    "it": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante l'attacco o la difesa di un eroe contro un nemico che è adiacente a te, quell'eroe aggiunge 2 <style=Term><link=TERM_SUCCESS></link></style>.",
+    "pt": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante o ataque ou defesa de um herói contra um inimigo adjacente a você, esse herói soma 2 <style=Term><link=TERM_SUCCESS></link></style>."
   },
   "WEAPON_PART_A_SWORD_ANCESTRAL": {
     "es": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante tu ataque, añade 1 <style=Term><link=TERM_SUCCESS></link></style> por cada una de tus cartas <i>Liderazgo</i>.",
@@ -632,7 +779,21 @@ export const WEAPON_PART_DESCS = {
     "it": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante il tuo attacco, <style=Term><link=TERM_SHROUDED>vela</link></style> 1 carta oppure <style=Term><link=TERM_SLOWED>rallenta</link></style> il nemico.",
     "pt": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante o seu ataque, <style=Term><link=TERM_SHROUDED>encubra</link></style> 1 carta ou deixe o inimigo <style=Term><link=TERM_SLOWED>atrasado</link></style>."
   },
+  "WEAPON_PART_A_WAND_4_UPGRADED": {
+    "es": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante tu ataque, <style=Term><link=TERM_SHROUDED>vela</link></style> 1 carta o <style=Term><link=TERM_ENFEEBLED>debilita</link></style> y <style=Term><link=TERM_SLOWED>ralentiza</link></style> al enemigo.",
+    "en": "2 <style=Term><link=TERM_FATIGUE></link></style>: During your attack, <style=Term><link=TERM_SHROUDED>shroud</link></style> 1 card or <style=Term><link=TERM_ENFEEBLED>enfeeble</link></style> and <style=Term><link=TERM_SLOWED>slow</link></style> the enemy.",
+    "fr": "2 <style=Term><link=TERM_FATIGUE></link></style> : Pendant votre attaque, <style=Term><link=TERM_SHROUDED>camouflez</link></style> 1 carte ou <style=Term><link=TERM_ENFEEBLED>affaiblissez</link></style> et <style=Term><link=TERM_SLOWED>ralentissez</link></style> l'Ennemi.",
+    "it": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante il tuo attacco, <style=Term><link=TERM_SHROUDED>vela</link></style> 1 carta oppure <style=Term><link=TERM_ENFEEBLED>indebolisci</link></style> e <style=Term><link=TERM_SLOWED>rallenta</link></style> il nemico.",
+    "pt": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante seu ataque, <style=Term><link=TERM_SHROUDED>encubra</link></style> 1 carta ou deixe o inimigo <style=Term><link=TERM_ENFEEBLED>febril</link></style> e <style=Term><link=TERM_SLOWED>atrasado</link></style>."
+  },
   "WEAPON_PART_A_WAND_5": {
+    "es": "3 <style=Term><link=TERM_FATIGUE></link></style>: Después de tu ataque, ataca a un enemigo distinto como si estuvieras en la casilla del primer objetivo.",
+    "en": "3 <style=Term><link=TERM_FATIGUE></link></style>: After your attack, attack a different enemy as if you were in the first target's space.",
+    "fr": "3 <style=Term><link=TERM_FATIGUE></link></style> : Après votre attaque, attaquez un Ennemi différent comme si vous vous trouviez sur la case de votre première cible.",
+    "it": "3 <style=Term><link=TERM_FATIGUE></link></style>: Dopo il tuo attacco, attacca 1 nemico diverso come se ti trovassi nella casella del primo bersaglio.",
+    "pt": "3 <style=Term><link=TERM_FATIGUE></link></style>: Depois de seu ataque, ataque um inimigo diferente como se você estivesse no espaço do primeiro alvo."
+  },
+  "WEAPON_PART_A_WAND_5_UPGRADED": {
     "es": "3 <style=Term><link=TERM_FATIGUE></link></style>: Después de tu ataque, ataca a un enemigo distinto como si estuvieras en la casilla del primer objetivo.",
     "en": "3 <style=Term><link=TERM_FATIGUE></link></style>: After your attack, attack a different enemy as if you were in the first target's space.",
     "fr": "3 <style=Term><link=TERM_FATIGUE></link></style> : Après votre attaque, attaquez un Ennemi différent comme si vous vous trouviez sur la case de votre première cible.",
@@ -688,12 +849,26 @@ export const WEAPON_PART_DESCS = {
     "it": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante il tuo attacco, ogni eroe adiacente al nemico può scartare 1 <style=Term><link=TERM_CONDIZIONI>condizione</link></style>.",
     "pt": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante seu ataque, cada herói adjacente ao inimigo pode descartar 1 <style=Term><link=TERM_CONDITIONS>condição</link></style>."
   },
+  "WEAPON_PART_A_WARBELL_4_UPGRADED": {
+    "es": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante tu ataque, cada héroe que esté a 2 o menos casillas del enemigo puede descartar 1 <style=Term><link=TERM_CONDITIONS>estado</link></style>.",
+    "en": "2 <style=Term><link=TERM_FATIGUE></link></style>: During your attack, each hero within 2 spaces of the enemy may discard 1 <style=Term><link=TERM_CONDITIONS>condition</link></style>.",
+    "fr": "2 <style=Term><link=TERM_FATIGUE></link></style> : Pendant votre attaque, chaque Héros dans un rayon de 2 cases autour de l'Ennemi peut défausser 1 <style=Term><link=TERM_CONDITIONS>état</link></style>.",
+    "it": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante il tuo attacco, ogni eroe entro 2 caselle dal nemico può scartare 1 <style=Term><link=TERM_CONDIZIONI>condizione</link></style>.",
+    "pt": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante seu ataque, cada herói a até 2 espaços do inimigo pode descartar 1 <style=Term><link=TERM_CONDITIONS>condição</link></style>."
+  },
   "WEAPON_PART_A_WARBELL_5": {
     "es": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante tu ataque o defensa, añade 1 <style=Term><link=TERM_SUCCESS></link></style>. Si tienes una carta <i>Juramento</i>, reduce el coste de esta capacidad en 1 <style=Term><link=TERM_FATIGUE></link></style>.",
     "en": "2 <style=Term><link=TERM_FATIGUE></link></style>: During your attack or defense, add 1 <style=Term><link=TERM_SUCCESS></link></style>. If you have an <i>Oath</i> card, reduce this ability's cost by 1 <style=Term><link=TERM_FATIGUE></link></style>.",
     "fr": "2 <style=Term><link=TERM_FATIGUE></link></style> : Pendant votre attaque ou votre défense, ajoutez 1 <style=Term><link=TERM_SUCCESS></link></style>. Si vous possédez une carte <i>Serment</i>, réduisez de 1 <style=Term><link=TERM_FATIGUE></link></style> le coût de cette capacité.",
     "it": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante il tuo attacco o la tua difesa, aggiungi 1 <style=Term><link=TERM_SUCCESS></link></style>. Se possiedi carte <i>Giuramento</i>, riduci di 1 <style=Term><link=TERM_FATIGUE></link></style> il costo di questa capacità.",
     "pt": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante seu ataque ou defesa, some 1 <style=Term><link=TERM_SUCCESS></link></style>. Se você tiver uma carta de <i>Juramento</i>, reduza em 1 <style=Term><link=TERM_FATIGUE></link></style> o custo desta habilidade."
+  },
+  "WEAPON_PART_A_WARBELL_5_UPGRADED": {
+    "es": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante tu ataque o defensa, añade 1 <style=Term><link=TERM_SUCCESS></link></style>. Si tienes una carta <i>Juramento</i>, reduce el coste de esta capacidad en 1 <style=Term><link=TERM_FATIGUE></link></style>. Si tienes una carta <i>Palabra</i>, añade 1 <style=Term><link=TERM_SUCCESS></link></style> adicional.",
+    "en": "2 <style=Term><link=TERM_FATIGUE></link></style>: During your attack or defense, add 1 <style=Term><link=TERM_SUCCESS></link></style>. If you have an <i>Oath</i> card, reduce this ability's cost by 1 <style=Term><link=TERM_FATIGUE></link></style>. If you have a <i>Word</i> card, add 1 additional <style=Term><link=TERM_SUCCESS></link></style>.",
+    "fr": "2 <style=Term><link=TERM_FATIGUE></link></style> : Pendant votre attaque ou votre défense, ajoutez 1 <style=Term><link=TERM_SUCCESS></link></style>. Si vous possédez une carte <i>Serment</i>, réduisez de 1 <style=Term><link=TERM_FATIGUE></link></style> le coût de cette capacité. Si vous possédez une carte <i>Mot</i>, ajoutez 1 <style=Term><link=TERM_SUCCESS></link></style> supplémentaire.",
+    "it": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante il tuo attacco o la tua difesa, aggiungi 1 <style=Term><link=TERM_SUCCESS></link></style>. Se possiedi carte <i>Giuramento</i>, riduci di 1 <style=Term><link=TERM_FATIGUE></link></style> il costo di questa capacità. Se possiedi carte <i>Parola</i>, aggiungi 1 <style=Term><link=TERM_SUCCESS></link></style> aggiuntivo.",
+    "pt": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante seu ataque ou sua defesa, some 1 <style=Term><link=TERM_SUCCESS></link></style>. Se você tiver uma carta de <i>Juramento</i>, reduza em 1 <style=Term><link=TERM_FATIGUE></link></style> o custo desta habilidade. Se você tiver uma carta de <i>Palavra</i>, some 1 <style=Term><link=TERM_SUCCESS></link></style> adicional."
   },
   "WEAPON_PART_A_WARHAMMER_1": {
     "es": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante tu ataque, añade 1 <style=Term><link=TERM_SUCCESS></link></style>. Después de este ataque, puedes mover el enemigo 1 casilla alejándose de ti.",
@@ -744,11 +919,25 @@ export const WEAPON_PART_DESCS = {
     "it": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante il tuo attacco, <style=Term><link=TERM_EXPOSED>esponi</link></style> il nemico. Se possiedi carte <i>Tecnica</i>, riduci di 1 <style=Term><link=TERM_FATIGUE></link></style> il costo di questa capacità.",
     "pt": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante seu ataque, deixe o inimigo <style=Term><link=TERM_EXPOSED>exposto</link></style>. Se você tiver uma carta de <i>Técnica</i>, reduza em 1 <style=Term><link=TERM_FATIGUE></link></style> o custo desta habilidade."
   },
+  "WEAPON_PART_A_WARHAMMER_4_UPGRADED": {
+    "es": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante tu ataque, <style=Term><link=TERM_DAZED>conmociona</link></style> y <style=Term><link=TERM_EXPOSED>expón</link></style> al enemigo. Si tienes una carta <i>Técnica</i>, reduce el coste de esta capacidad en 1 <style=Term><link=TERM_FATIGUE></link></style>.",
+    "en": "2 <style=Term><link=TERM_FATIGUE></link></style>: During your attack, <style=Term><link=TERM_DAZED>daze</link></style> and <style=Term><link=TERM_EXPOSED>expose</link></style> the enemy. If you have a <i>Technique</i> card, reduce this ability's cost by 1 <style=Term><link=TERM_FATIGUE></link></style>.",
+    "fr": "2 <style=Term><link=TERM_FATIGUE></link></style> : Pendant votre attaque, <style=Term><link=TERM_DAZED>étourdissez</link></style> et <style=Term><link=TERM_EXPOSED>exposez</link></style> l'Ennemi. Si vous possédez une carte <i>Technique</i>, réduisez de 1 <style=Term><link=TERM_FATIGUE></link></style> le coût de cette capacité.",
+    "it": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante il tuo attacco, <style=Term><link=TERM_DAZED>frastorna</link></style> ed <style=Term><link=TERM_EXPOSED>esponi</link></style> il nemico. Se possiedi carte <i>Tecnica</i>, riduci di 1 <style=Term><link=TERM_FATIGUE></link></style> il costo di questa capacità.",
+    "pt": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante o seu ataque, deixe o inimigo <style=Term><link=TERM_DAZED>confuso</link></style> e <style=Term><link=TERM_EXPOSED>exposto</link></style>. Se você tiver uma carta de <i>Técnica</i>, reduza em 1 <style=Term><link=TERM_FATIGUE></link></style> o custo desta habilidade."
+  },
   "WEAPON_PART_A_WARHAMMER_5": {
     "es": "4 <style=Term><link=TERM_FATIGUE></link></style>: Después de tu ataque, realiza una <style=Term><link=TERM_TESTS>prueba</link></style> de fuerza. Por cada <style=Term><link=TERM_SUCCESS></link></style>, inflige 1 <style=Term><link=TERM_DAMAGE></link></style> a cada enemigo adyacente a ti.",
     "en": "4 <style=Term><link=TERM_FATIGUE></link></style>: After your attack, <style=Term><link=TERM_TESTS>test</link></style> might. For each <style=Term><link=TERM_SUCCESS></link></style>, deal 1 <style=Term><link=TERM_DAMAGE></link></style> to each enemy adjacent to you.",
     "fr": "4 <style=Term><link=TERM_FATIGUE></link></style> : Après votre attaque, <style=Term><link=TERM_TESTS>testez</link></style> votre puissance. Pour chaque <style=Term><link=TERM_SUCCESS></link></style>, infligez 1 <style=Term><link=TERM_DAMAGE></link></style> à chaque Ennemi qui est adjacent à vous.",
     "it": "4 <style=Term><link=TERM_FATIGUE></link></style>: Dopo il tuo attacco, effettua una <style=Term><link=TERM_TESTS>prova</link></style> di Forza. Per ogni <style=Term><link=TERM_SUCCESS></link></style>, infliggi 1 <style=Term><link=TERM_DAMAGE></link></style> a ogni nemico adiacente a te.",
     "pt": "4 <style=Term><link=TERM_FATIGUE></link></style>: Depois do seu ataque, <style=Term><link=TERM_TESTS>teste</link></style> força. Para cada <style=Term><link=TERM_SUCCESS></link></style>, cause 1 <style=Term><link=TERM_DAMAGE></link></style> em cada inimigo adjacente a você."
+  },
+  "WEAPON_PART_A_WARHAMMER_5_UPGRADED": {
+    "es": "3 <style=Term><link=TERM_FATIGUE></link></style>: Después de tu ataque, realiza una <style=Term><link=TERM_TESTS>prueba</link></style> de fuerza. Por cada <style=Term><link=TERM_SUCCESS></link></style>, inflige 1 <style=Term><link=TERM_DAMAGE></link></style> a cada enemigo adyacente a ti.",
+    "en": "3 <style=Term><link=TERM_FATIGUE></link></style>: After your attack, <style=Term><link=TERM_TESTS>test</link></style> might. For each <style=Term><link=TERM_SUCCESS></link></style>, deal 1 <style=Term><link=TERM_DAMAGE></link></style> to each enemy adjacent to you.",
+    "fr": "3 <style=Term><link=TERM_FATIGUE></link></style> : Après votre attaque, <style=Term><link=TERM_TESTS>testez</link></style> votre puissance. Pour chaque <style=Term><link=TERM_SUCCESS></link></style>, infligez 1 <style=Term><link=TERM_DAMAGE></link></style> à chaque Ennemi qui est adjacent à vous.",
+    "it": "3 <style=Term><link=TERM_FATIGUE></link></style>: Dopo il tuo attacco, effettua una <style=Term><link=TERM_TESTS>prova</link></style> di Forza. Per ogni <style=Term><link=TERM_SUCCESS></link></style>, infliggi 1 <style=Term><link=TERM_DAMAGE></link></style> a ogni nemico adiacente a te.",
+    "pt": "3 <style=Term><link=TERM_FATIGUE></link></style>: Depois do seu ataque, <style=Term><link=TERM_TESTS>teste</link></style> força. Para cada <style=Term><link=TERM_SUCCESS></link></style>, cause 1 <style=Term><link=TERM_DAMAGE></link></style> em cada inimigo adjacente a você."
   }
 };

@@ -1212,8 +1212,7 @@ export const TRINKETS = [
       "fr": "Vos attaques gagnent le type de dégâts anemos et la <style=Term><link=TERM_DAMAGE></link></style> de votre arme augmente de 1.\n \n Lorsque le temps passe, chaque Héros peut choisir le bénéfice alternatif affiché sur l’écran au lieu de défausser de la <style=Term><link=TERM_FATIGUE></link></style>.",
       "it": "I tuoi attacchi ottengono il tipo di danno anemos e il <style=Term><link=TERM_DAMAGE></link></style> della tua arma aumenta di 1.\n\nQuando il tempo passa, ogni eroe può scegliere il beneficio alternativo mostrato invece di scartare <style=Term><link=TERM_FATIGUE></link></style>.",
       "pt": "Seus ataques ganham o tipo de dano anemos, e o <style=Term><link=TERM_DAMAGE></link></style> das suas armas aumenta em 1.\n \nQuando o tempo passa, cada herói pode escolher o benefício alternativo apresentado em vez de descartar <style=Term><link=TERM_FATIGUE></link></style>."
-    },
-    "compound": true
+    }
   },
   {
     "id": "TRINKET12_ID",
@@ -1605,8 +1604,7 @@ export const TRINKETS = [
       "fr": "Vos attaques gagnent le type de dégâts terros et la <style=Term><link=TERM_DAMAGE></link></style> de votre arme augmente de 1.\n \n Lorsque vous devenez <style=Term><link=TERM_WOUNDS>infirme</link></style>, vous gagnez une <style=Term><link=TERM_INJURIES>blessure</link></style> unique.",
       "it": "I tuoi attacchi ottengono il tipo di danno terros e il <style=Term><link=TERM_DAMAGE></link></style> della tua arma aumenta di 1.\n\nQuando diventi <style=Term><link=TERM_WOUNDS>feriti</link></style>, ottieni una <style=Term><link=TERM_INJURIES>ferita</link></style> unica.",
       "pt": "Seus ataques ganham o tipo de dano terros, e o <style=Term><link=TERM_DAMAGE></link></style> das suas armas aumenta em 1.\n \nQuando você sofre um <style=Term><link=TERM_WOUNDS>ferimento</link></style>, recebe um <link=TERM_INJURIES>injury</link></style> especial."
-    },
-    "compound": true
+    }
   },
   {
     "id": "TRINKET6_ID",
@@ -1662,8 +1660,7 @@ export const TRINKETS = [
       "fr": "Vos attaques gagnent le type de dégâts aquos et la <style=Term><link=TERM_DAMAGE></link></style> de votre arme augmente de 1.\n \n Chaque round, pendant votre première attaque, la probabilité que votre capacité secondaire soit utilisée augmente de 5%.",
       "it": "I tuoi attacchi ottengono il tipo di danno aquos e il <style=Term><link=TERM_DAMAGE></link></style> della tua arma aumenta di 1.\n\nDurante il tuo primo attacco ogni round, le probabilità delle tue capacità secondarie aumentano di 5%.",
       "pt": "Seus ataques ganham o tipo de dano aquos, e o <style=Term><link=TERM_DAMAGE></link></style> das suas armas aumenta em 1.\n \nDurante seu primeiro ataque a cada rodada, as chances da sua habilidade secundária aumentam em 5%."
-    },
-    "compound": true
+    }
   },
   {
     "id": "TRINKET8_ID",
