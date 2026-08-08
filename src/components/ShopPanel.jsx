@@ -23,7 +23,7 @@ export default function ShopPanel() {
   const sellItem     = useStore(s => s.sellItem);
   const buyRecipe    = useStore(s => s.buyRecipe);
   const actionHistory = useStore(s => s.actionHistory);
-  const removeAction  = useStore(s => s.removeAction);
+  const removeActions = useStore(s => s.removeActions);
 
   const [shopView, setShopView] = useState('comprar');
 
@@ -119,19 +119,41 @@ export default function ShopPanel() {
       a.type === 'SELL_MATERIAL' || a.type === 'SELL_ITEM'
     );
 
+    // Varias ventas del mismo material/ítem (p.ej. vender de uno en uno hasta
+    // 100) se agrupan en una sola fila con la cantidad y la ganancia
+    // sumadas, en vez de una fila por cada venta. Al reinsertar la clave que
+    // ya existía, el Map la mueve al final -> el grupo sube al principio de
+    // la lista (más reciente primero) en cuanto se vende algo más de él.
+    const sellGroups = new Map();
+    for (const action of sellActions) {
+      const isMat = action.type === 'SELL_MATERIAL';
+      const id    = isMat ? action.data.materialId : action.data.itemId;
+      const key   = `${action.type}:${id}`;
+      const prev  = sellGroups.get(key);
+      sellGroups.delete(key);
+      sellGroups.set(key, {
+        type: action.type,
+        id,
+        qty: (prev?.qty || 0) + action.data.qty,
+        gain: (prev?.gain || 0) + action.data.gain,
+        actionIds: [...(prev?.actionIds || []), action.id],
+      });
+    }
+    const sellRows = [...sellGroups.values()].reverse();
+
     return (
       <>
-        {sellActions.length > 0 && (
+        {sellRows.length > 0 && (
           <section className="shop-section shop-section--recover">
             <h2 className="shop-section-title shop-section-title--recover">
               {t('shop.sectionRecover')}
             </h2>
             <div className="recover-list">
-              {[...sellActions].reverse().map(action => {
-                const isMat = action.type === 'SELL_MATERIAL';
-                const id    = isMat ? action.data.materialId : action.data.itemId;
-                const qty   = action.data.qty;
-                const gain  = action.data.gain;
+              {sellRows.map(group => {
+                const isMat = group.type === 'SELL_MATERIAL';
+                const id    = group.id;
+                const qty   = group.qty;
+                const gain  = group.gain;
 
                 let img = null, name = id;
                 if (isMat) {
@@ -145,7 +167,7 @@ export default function ShopPanel() {
                 }
 
                 return (
-                  <div key={action.id} className="recover-row">
+                  <div key={`${group.type}:${id}`} className="recover-row">
                     <div className="sell-item-left">
                       {img && (
                         <img src={img} alt={name} className="sell-item-img"
@@ -169,7 +191,7 @@ export default function ShopPanel() {
                       </span>
                       <button
                         className="btn btn-sm btn-primary"
-                        onClick={() => removeAction(action.id)}
+                        onClick={() => removeActions(group.actionIds)}
                       >{t('shop.recover')}</button>
                     </div>
                   </div>

@@ -159,6 +159,20 @@ export const useStore = create((set, get) => ({
     set({ gameState: gs, actionHistory: newHistory });
   },
 
+  // Eliminar varias acciones a la vez (p.ej. varias ventas del mismo
+  // material agrupadas en una sola fila de "Recuperar") reconstruyendo
+  // el estado una única vez.
+  removeActions: (actionIds) => {
+    const { actionHistory, originalState } = get();
+    const idSet = new Set(actionIds);
+    const newHistory = actionHistory.filter(a => !idSet.has(a.id));
+    let gs = cloneGameState(originalState);
+    for (const action of newHistory) {
+      gs = applyAction(gs, action);
+    }
+    set({ gameState: gs, actionHistory: newHistory });
+  },
+
   // Deshacer hasta una acción específica (exclusive)
   undoUntil: (actionId) => {
     const { actionHistory, originalState } = get();
