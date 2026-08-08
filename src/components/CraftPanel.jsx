@@ -114,10 +114,46 @@ export default function CraftPanel() {
     return discoveredRecipeMap[recipeId]?.crafted === true;
   }
 
+  // Mismo ID que se le pasa al tooltip (WeaponPartTooltip/ItemTooltip) para
+  // esta receta — se calcula aquí también para poder saber, ANTES de pintar
+  // la tarjeta, si lo que produce está puesto ahora mismo en algún héroe.
+  function getTooltipId(recipeId, item) {
+    const recipe = RECIPES_BY_ID[recipeId];
+    const recipeItemId = recipe?.itemId || recipeId.replace(/^RECIPE_/, '');
+    const isWeaponPart = item && 'slot' in item;
+    const isUpgrade = isItemUpgrade(recipeId);
+    return isWeaponPart
+      ? recipeItemId
+      : (isUpgrade ? recipeItemId : recipeItemId.replace(/_UPGRADED$/, '').replace(/_PLUS$/, ''));
+  }
+
+  // Una pieza/amuleto ya equipado debe verse siempre en la lista, esté o no
+  // marcada como crafteada — si no, con el filtro por defecto (oculta lo ya
+  // crafteado) casi nunca se llega a ver el badge "Ya equipado", porque lo
+  // que llevas puesto casi siempre ya está marcado como crafteado.
+  function isRecipeItemEquipped(recipeId) {
+    const item = getItemForRecipe(recipeId);
+    if (!item) return false;
+    const tooltipId = getTooltipId(recipeId, item);
+    if ('slot' in item) {
+      const slotKey = { A: 'partA', B: 'partB', C: 'partC' }[item.slot];
+      const selKey  = { A: 'partASelections', B: 'partBSelections', C: 'partCSelections' }[item.slot];
+      if (!slotKey) return false;
+      const selections = gameState[selKey] || {};
+      return (gameState.heroes || []).some(hero =>
+        (hero.equippedWeapons || []).some(w => (selections[w.id] ?? w[slotKey] ?? null) === tooltipId)
+      );
+    }
+    if (item.type === 'trinket') {
+      return (gameState.heroes || []).some(h => h.equippedTrinketId === tooltipId);
+    }
+    return false;
+  }
+
   const activeCat   = CATEGORIES.find(c => c.id === selectedCategory) || CATEGORIES[0];
   const filteredIds = allDiscoveredIds
     .filter(id => activeCat.filter(id))
-    .filter(id => showCrafted || !isAlreadyCrafted(id))
+    .filter(id => showCrafted || !isAlreadyCrafted(id) || isRecipeItemEquipped(id))
     .sort((a, b) => {
       const ac = isAlreadyCrafted(a) ? 1 : 0;
       const bc = isAlreadyCrafted(b) ? 1 : 0;
