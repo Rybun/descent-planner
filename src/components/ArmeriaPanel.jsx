@@ -12,8 +12,25 @@ import { PART_ABILITY_KEY, WEAPON_ABILITIES, ABILITY_CHANCE } from '../gamedata/
 import Tooltip from './Tooltip';
 import './ArmeriaPanel.css';
 
+const UPGRADE_ICON = '/assets/icons/Icon_Upgrade.png';
+
 function cleanName(name) {
   return (name || '').replace(/\s*\+?\s*✦.*$/, '').trim();
+}
+
+// Nombre de una parte de arma con el icono de mejora si es la versión "+"
+// (mismo patrón que CraftPanel/ShopPanel/ItemTooltip en el resto de la app).
+function renderPartName(part, lang) {
+  if (!part) return '—';
+  const name = cleanName(getName(part, lang));
+  if (!part.id?.endsWith('_UPGRADED')) return name;
+  return (
+    <>
+      <span>{name}</span>
+      <img src={UPGRADE_ICON} alt="+" style={{ width: '1em', height: '1em', verticalAlign: 'middle', marginLeft: '3px' }}
+        onError={e => e.target.style.display = 'none'} />
+    </>
+  );
 }
 
 export default function ArmeriaPanel() {
@@ -245,7 +262,7 @@ export default function ArmeriaPanel() {
                     >◄</button>
                     <Tooltip text={getDesc(selectedPartA?.id)}>
                       <span className="part-a-name">
-                        {selectedPartA ? cleanName(getName(selectedPartA, lang)) : '—'}
+                        {renderPartName(selectedPartA, lang)}
                       </span>
                     </Tooltip>
                     <button
@@ -451,7 +468,7 @@ function SlotRow({ label, options, selectedPart, selectedIdx, onNav, getDesc, no
         >◄</button>
         <Tooltip text={getDesc(selectedPart?.id)}>
           <span className="slot-part-name">
-            {selectedPart ? cleanName(getName(selectedPart, lang)) : '—'}
+            {renderPartName(selectedPart, lang)}
           </span>
         </Tooltip>
         <button
