@@ -34,6 +34,15 @@ function cloneGameState(gs) {
   };
 }
 
+// Reconstruye el estado aplicando una lista de acciones desde el original
+function replayHistory(originalState, history) {
+  let gs = cloneGameState(originalState);
+  for (const action of history) {
+    gs = applyAction(gs, action);
+  }
+  return gs;
+}
+
 function createAction(type, description, data) {
   return {
     id: Date.now() + Math.random(),
@@ -138,13 +147,7 @@ export const useStore = create((set, get) => ({
     if (actionHistory.length === 0) return;
 
     const newHistory = actionHistory.slice(0, -1);
-
-    // Reconstruir el estado aplicando todas las acciones anteriores desde el original
-    let gs = cloneGameState(originalState);
-    for (const action of newHistory) {
-      gs = applyAction(gs, action);
-    }
-
+    const gs = replayHistory(originalState, newHistory);
     set({ gameState: gs, actionHistory: newHistory });
   },
 
@@ -152,25 +155,52 @@ export const useStore = create((set, get) => ({
   removeAction: (actionId) => {
     const { actionHistory, originalState } = get();
     const newHistory = actionHistory.filter(a => a.id !== actionId);
-    let gs = cloneGameState(originalState);
-    for (const action of newHistory) {
-      gs = applyAction(gs, action);
-    }
+    const gs = replayHistory(originalState, newHistory);
     set({ gameState: gs, actionHistory: newHistory });
   },
 
-  // Eliminar varias acciones a la vez (p.ej. varias ventas del mismo
-  // material agrupadas en una sola fila de "Recuperar") reconstruyendo
-  // el estado una única vez.
+  // Eliminar varias acciones a la vez (p.ej. "Recuperar todos" de una fila
+  // de venta agrupada) reconstruyendo el estado una única vez. Deshacer una
+  // venta resta el oro que ganaste al venderla, así que si ya te lo has
+  // gastado en otra cosa, se rechaza para no dejar el oro en negativo.
   removeActions: (actionIds) => {
     const { actionHistory, originalState } = get();
     const idSet = new Set(actionIds);
     const newHistory = actionHistory.filter(a => !idSet.has(a.id));
-    let gs = cloneGameState(originalState);
-    for (const action of newHistory) {
-      gs = applyAction(gs, action);
-    }
+    const gs = replayHistory(originalState, newHistory);
+    if (gs.gold < 0) return false;
     set({ gameState: gs, actionHistory: newHistory });
+    return true;
+  },
+
+  // Recupera una única unidad de la venta más reciente de un grupo (p.ej.
+  // si vendiste ×5 de un material, deja ×4 vendidas y te devuelve 1 al
+  // inventario), reduciendo el oro ganado proporcionalmente. Igual que
+  // removeActions, rechaza la operación si dejaría el oro en negativo.
+  recoverOneUnit: (actionIds) => {
+    const { actionHistory, originalState } = get();
+    const lastId = actionIds[actionIds.length - 1];
+    const idx = actionHistory.findIndex(a => a.id === lastId);
+    if (idx === -1) return false;
+
+    const action = actionHistory[idx];
+    const { qty, gain } = action.data;
+    const unitGain = gain / qty;
+
+    let newHistory;
+    if (qty <= 1) {
+      newHistory = actionHistory.filter(a => a.id !== lastId);
+    } else {
+      newHistory = actionHistory.map(a => a.id === lastId
+        ? { ...a, data: { ...a.data, qty: qty - 1, gain: gain - unitGain } }
+        : a
+      );
+    }
+
+    const gs = replayHistory(originalState, newHistory);
+    if (gs.gold < 0) return false;
+    set({ gameState: gs, actionHistory: newHistory });
+    return true;
   },
 
   // Deshacer hasta una acción específica (exclusive)
@@ -180,11 +210,7 @@ export const useStore = create((set, get) => ({
     if (idx === -1) return;
 
     const newHistory = actionHistory.slice(0, idx);
-    let gs = cloneGameState(originalState);
-    for (const action of newHistory) {
-      gs = applyAction(gs, action);
-    }
-
+    const gs = replayHistory(originalState, newHistory);
     set({ gameState: gs, actionHistory: newHistory });
   },
 

@@ -486,3 +486,10 @@
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
 }
+
+.recover-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  justify-content: center;
+}

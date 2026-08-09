@@ -24,6 +24,7 @@ export default function ShopPanel() {
   const buyRecipe    = useStore(s => s.buyRecipe);
   const actionHistory = useStore(s => s.actionHistory);
   const removeActions = useStore(s => s.removeActions);
+  const recoverOneUnit = useStore(s => s.recoverOneUnit);
 
   const [shopView, setShopView] = useState('comprar');
 
@@ -154,6 +155,11 @@ export default function ShopPanel() {
                 const id    = group.id;
                 const qty   = group.qty;
                 const gain  = group.gain;
+                // "Recuperar ×1" deshace solo la venta más reciente del grupo;
+                // su coste en oro es el de esa acción concreta, no la media.
+                const lastActionId = group.actionIds[group.actionIds.length - 1];
+                const lastAction   = actionHistory.find(a => a.id === lastActionId);
+                const unitGain     = lastAction ? lastAction.data.gain / lastAction.data.qty : gain / qty;
 
                 let img = null, name = id;
                 if (isMat) {
@@ -189,10 +195,18 @@ export default function ShopPanel() {
                         <span className="coin-icon">🪙</span>
                         <span>{gain}</span>
                       </span>
-                      <button
-                        className="btn btn-sm btn-primary"
-                        onClick={() => removeActions(group.actionIds)}
-                      >{t('shop.recover')}</button>
+                      <div className="recover-actions">
+                        <button
+                          className="btn btn-xs btn-primary"
+                          disabled={gameState.gold - unitGain < 0}
+                          onClick={() => recoverOneUnit(group.actionIds)}
+                        >{t('shop.recoverOne')}</button>
+                        <button
+                          className="btn btn-xs btn-primary"
+                          disabled={gameState.gold - gain < 0}
+                          onClick={() => removeActions(group.actionIds)}
+                        >{t('shop.recoverAll', { qty })}</button>
+                      </div>
                     </div>
                   </div>
                 );
