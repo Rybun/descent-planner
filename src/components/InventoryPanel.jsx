@@ -111,7 +111,10 @@ function ItemTile({ id, qty, lang }) {
   const part = WEAPON_PARTS_BY_ID[id];
   if (part?.level === 0) return null;
 
-  const item = part || ALL_ITEMS_BY_ID[id];
+  // Armaduras/amuletos/consumibles mejorados usan sufijo "_PLUS" pero no
+  // tienen una entrada propia en ALL_ITEMS_BY_ID (a diferencia de las partes
+  // de arma, que sí la tienen con "_UPGRADED"): hay que caer a la base.
+  const item = part || ALL_ITEMS_BY_ID[id] || ALL_ITEMS_BY_ID[id?.replace(/_PLUS$/, '')];
   const name = item ? getName(item, lang) : id;
   const imgEl = item?.image
     ? <img src={item.image} className="inv-tile-img" alt="" onError={e => e.target.style.display = 'none'} />
@@ -170,7 +173,8 @@ export default function InventoryPanel() {
       weaponPartsByType[wt][part.slot]?.push({ id, qty });
       continue;
     }
-    const item = ALL_ITEMS_BY_ID[id];
+    // Igual que en ItemTile: la versión "_PLUS" no tiene entrada propia.
+    const item = ALL_ITEMS_BY_ID[id] || ALL_ITEMS_BY_ID[id.replace(/_PLUS$/, '')];
     if (!item) continue;
     if (item.type === 'armor') {
       (armorsByType[item.armorType] ?? armorsByType.heavy).push({ id, qty });
