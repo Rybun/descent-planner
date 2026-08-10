@@ -11,6 +11,7 @@ import { WEAPONS_BY_ID } from '../gamedata/weapons';
 import { HEROES_BY_ID } from '../gamedata/heroes';
 import { MATERIALS_BY_ID } from '../gamedata/materials';
 import { ALL_ITEMS_BY_ID } from '../gamedata/items';
+import { CONSUMABLE_DESCS } from '../gamedata/consumableDescs';
 import { parseGameText, TERM_ICONS } from '../gamedata/gameText';
 import { useIsMobile } from '../hooks/useIsMobile';
 import './RecipeTooltip.css';
@@ -33,6 +34,11 @@ const ITEM_TYPE_LABELS = {
   armor:      { es: 'Armadura', en: 'Armor', fr: 'Armure', it: 'Armatura', pt: 'Armadura' },
   trinket:    { es: 'Accesorio', en: 'Trinket', fr: 'Accessoire', it: 'Accessorio', pt: 'Acessório' },
   consumable: { es: 'Consumible', en: 'Consumable', fr: 'Consommable', it: 'Consumabile', pt: 'Consumível' },
+};
+const ARMOR_TYPE_LABELS = {
+  light:  { es: 'Ligera',  en: 'Light',  fr: 'Légère',  it: 'Leggera', pt: 'Leve'   },
+  medium: { es: 'Mediana', en: 'Medium', fr: 'Moyenne', it: 'Media',   pt: 'Média'  },
+  heavy:  { es: 'Pesada',  en: 'Heavy',  fr: 'Lourde',  it: 'Pesante', pt: 'Pesada' },
 };
 
 const HERO_SLUGS = {
@@ -158,6 +164,30 @@ function PartDesc({ partId, lang }) {
   );
 }
 
+// Descripción de una armadura/amuleto/consumible (equivalente a PartDesc
+// pero para recetas cuyo ítem crafteado NO es una parte de arma). Antes de
+// este arreglo, ninguna receta de este tipo mostraba su descripción en el
+// tooltip — la mejorada de armadura ni siquiera mostraba su nombre, porque
+// ALL_ITEMS_BY_ID no tiene entrada propia para el id "_PLUS" (solo la
+// versión base), igual que el bug ya corregido en InventoryPanel.jsx.
+function ItemDesc({ itemObj, itemId, lang }) {
+  if (!itemObj) return null;
+  const isUpgrade = itemId?.endsWith('_PLUS');
+  const baseId    = itemId?.replace(/_PLUS$/, '');
+
+  let raw = '';
+  if (itemObj.type === 'consumable') {
+    const entry = CONSUMABLE_DESCS[itemId] || CONSUMABLE_DESCS[baseId];
+    raw = entry?.[lang] || entry?.es || '';
+  } else {
+    const descs = isUpgrade ? itemObj.abilityDescs : itemObj.baseAbilityDescs;
+    raw = descs?.[lang] || descs?.es || '';
+  }
+  const clean = raw.replace(/^"+|"+$/g, '').trim();
+  if (!clean) return null;
+  return <span className="rtt-effect">{renderNodes(parseGameText(clean))}</span>;
+}
+
 export default function RecipeTooltip({ recipeId, children }) {
   const t    = useT();
   const lang = useLang();
@@ -175,7 +205,9 @@ export default function RecipeTooltip({ recipeId, children }) {
   const itemId  = recipe.itemId || recipeId.replace(/^RECIPE_/, '');
   const isPlus  = itemId?.endsWith('_PLUS');
   const part    = WEAPON_PARTS_BY_ID[itemId];
-  const itemObj = !part ? ALL_ITEMS_BY_ID[itemId] : null;
+  // Armadura/amuleto/consumible mejorados no tienen entrada propia en
+  // ALL_ITEMS_BY_ID (solo la base) — hay que caer al id sin "_PLUS".
+  const itemObj = !part ? (ALL_ITEMS_BY_ID[itemId] || ALL_ITEMS_BY_ID[itemId?.replace(/_PLUS$/, '')]) : null;
   const weapon  = part?.weaponId ? WEAPONS_BY_ID[part.weaponId] : null;
   const hero    = weapon?.heroId ? HEROES_BY_ID[weapon.heroId] : null;
 
@@ -228,8 +260,15 @@ export default function RecipeTooltip({ recipeId, children }) {
           {slotLabel} · {weaponName} · {heroName}
         </span>
       )}
+      {itemObj && (
+        <span className="rtt-subtitle">
+          {slotLabel}
+          {itemObj.armorType && ` · ${ARMOR_TYPE_LABELS[itemObj.armorType]?.[lang] || itemObj.armorType}`}
+        </span>
+      )}
 
       {part && <PartDesc partId={itemId} lang={lang} />}
+      {itemObj && <ItemDesc itemObj={itemObj} itemId={itemId} lang={lang} />}
 
       {recipe.ingredients && (
         <span className="rtt-ingredients">
