@@ -3947,6 +3947,44 @@ export const WEAPON_PARTS = [
     ]
   },
   {
+    "id": "WEAPON_PART_B_DRAGONSBANE",
+    "slot": "B",
+    "weaponType": "POLEAXE",
+    "level": 1,
+    "names": {
+      "es": "Enemigo escogido",
+      "en": "Chosen Foe",
+      "fr": "Ennemi choisi",
+      "it": "Nemico Prescelto",
+      "pt": "Inimigo Escolhido"
+    },
+    "weaponId": null,
+    "image": null,
+    "buyPrice": null,
+    "sellPrice": null,
+    "damage": 0,
+    "traits": []
+  },
+  {
+    "id": "WEAPON_PART_C_DRAGONSBANE",
+    "slot": "C",
+    "weaponType": "POLEAXE",
+    "level": 1,
+    "names": {
+      "es": "Abrumación",
+      "en": "Overwhelm",
+      "fr": "Submerger",
+      "it": "Sopraffazione",
+      "pt": "Sobrecarga"
+    },
+    "weaponId": null,
+    "image": null,
+    "buyPrice": null,
+    "sellPrice": null,
+    "damage": 0,
+    "traits": []
+  },
+  {
     "id": "WEAPON_PART_A_LIGHTNING_STRIKE",
     "slot": "A",
     "weaponType": "RUNE",
@@ -4159,6 +4197,196 @@ export const WEAPON_PARTS = [
       8,
       9
     ]
+  },
+  {
+    "id": "WEAPON_PART_B_LIGHTNING_STRIKE",
+    "slot": "B",
+    "weaponType": "RUNE",
+    "level": 1,
+    "names": {
+      "es": "Tocado por el augurio",
+      "en": "Omen-Touched",
+      "fr": "Augural",
+      "it": "Toccato dal Destino",
+      "pt": "Toque de Augúrio"
+    },
+    "weaponId": null,
+    "image": null,
+    "buyPrice": null,
+    "sellPrice": null,
+    "damage": 0,
+    "traits": []
+  },
+  {
+    "id": "WEAPON_PART_B_ICE_STORM",
+    "slot": "B",
+    "weaponType": "RUNE",
+    "level": 2,
+    "names": {
+      "es": "Obstaculizar",
+      "en": "Impede",
+      "fr": "Gêne",
+      "it": "Impegno",
+      "pt": "Impedimento"
+    },
+    "weaponId": null,
+    "image": null,
+    "buyPrice": null,
+    "sellPrice": null,
+    "damage": 0,
+    "traits": []
+  },
+  {
+    "id": "WEAPON_PART_B_RUNE_OF_BLADES",
+    "slot": "B",
+    "weaponType": "RUNE",
+    "level": 3,
+    "names": {
+      "es": "Lacerar",
+      "en": "Lacerate",
+      "fr": "Lacération",
+      "it": "Lacerazione",
+      "pt": "Lacerar"
+    },
+    "weaponId": null,
+    "image": null,
+    "buyPrice": null,
+    "sellPrice": null,
+    "damage": 0,
+    "traits": []
+  },
+  {
+    "id": "WEAPON_PART_B_SUNBURST",
+    "slot": "B",
+    "weaponType": "RUNE",
+    "level": 4,
+    "names": {
+      "es": "Excoriación",
+      "en": "Excoriation",
+      "fr": "Condamnation",
+      "it": "Escoriazione",
+      "pt": "Escoriação"
+    },
+    "weaponId": null,
+    "image": null,
+    "buyPrice": null,
+    "sellPrice": null,
+    "damage": 0,
+    "traits": []
+  },
+  {
+    "id": "WEAPON_PART_B_FEAR",
+    "slot": "B",
+    "weaponType": "RUNE",
+    "level": 5,
+    "names": {
+      "es": "Enervación",
+      "en": "Enervation",
+      "fr": "Affaiblissement",
+      "it": "Infiacchimento",
+      "pt": "Enervação"
+    },
+    "weaponId": null,
+    "image": null,
+    "buyPrice": null,
+    "sellPrice": null,
+    "damage": 0,
+    "traits": []
+  },
+  {
+    "id": "WEAPON_PART_C_LIGHTNING_STRIKE",
+    "slot": "C",
+    "weaponType": "RUNE",
+    "level": 1,
+    "names": {
+      "es": "Sobrecarga",
+      "en": "Overcharge",
+      "fr": "Surcharge",
+      "it": "Sovraccarico",
+      "pt": "Sobrecarga"
+    },
+    "weaponId": null,
+    "image": null,
+    "buyPrice": null,
+    "sellPrice": null,
+    "damage": 0,
+    "traits": []
+  },
+  {
+    "id": "WEAPON_PART_C_ICE_STORM",
+    "slot": "C",
+    "weaponType": "RUNE",
+    "level": 2,
+    "names": {
+      "es": "Nevasca",
+      "en": "Whiteout",
+      "fr": "Blizzard",
+      "it": "Tormenta",
+      "pt": "Nevasca"
+    },
+    "weaponId": null,
+    "image": null,
+    "buyPrice": null,
+    "sellPrice": null,
+    "damage": 0,
+    "traits": []
+  },
+  {
+    "id": "WEAPON_PART_C_RUNE_OF_BLADES",
+    "slot": "C",
+    "weaponType": "RUNE",
+    "level": 3,
+    "names": {
+      "es": "Golpe en espiral",
+      "en": "Spiral Strike",
+      "fr": "Frappe vrillée",
+      "it": "Colpo a Spirale",
+      "pt": "Ataque em Espiral"
+    },
+    "weaponId": null,
+    "image": null,
+    "buyPrice": null,
+    "sellPrice": null,
+    "damage": 0,
+    "traits": []
+  },
+  {
+    "id": "WEAPON_PART_C_SUNBURST",
+    "slot": "C",
+    "weaponType": "RUNE",
+    "level": 4,
+    "names": {
+      "es": "Baliza",
+      "en": "Beacon",
+      "fr": "Balise",
+      "it": "Segnale",
+      "pt": "Baliza"
+    },
+    "weaponId": null,
+    "image": null,
+    "buyPrice": null,
+    "sellPrice": null,
+    "damage": 0,
+    "traits": []
+  },
+  {
+    "id": "WEAPON_PART_C_FEAR",
+    "slot": "C",
+    "weaponType": "RUNE",
+    "level": 5,
+    "names": {
+      "es": "Grito lastimero",
+      "en": "Wailing Cry",
+      "fr": "Cri gémissant",
+      "it": "Grido Lamentoso",
+      "pt": "Grito de Lamentação"
+    },
+    "weaponId": null,
+    "image": null,
+    "buyPrice": null,
+    "sellPrice": null,
+    "damage": 0,
+    "traits": []
   },
   {
     "id": "WEAPON_PART_A_SPEAR_0",

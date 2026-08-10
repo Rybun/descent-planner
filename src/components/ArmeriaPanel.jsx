@@ -2,7 +2,7 @@ import { useStore } from '../store';
 import { useT, useLang, getName } from '../i18n';
 import { HEROES, HEROES_BY_ID } from '../gamedata/heroes';
 import { WEAPONS_BY_ID } from '../gamedata/weapons';
-import { WEAPON_PARTS_BY_ID } from '../gamedata/weaponParts';
+import { WEAPON_PARTS, WEAPON_PARTS_BY_ID } from '../gamedata/weaponParts';
 import { DESCRIPTIONS } from '../gamedata/descriptions';
 import { WEAPON_ABILITY_DESCS } from '../gamedata/weaponAbilityDescs';
 import { ASSEMBLY_DISPLAY_H } from '../gamedata/weaponAssembly';
@@ -33,6 +33,31 @@ function renderPartName(part, lang) {
   );
 }
 
+// Armas rúnicas: piezas de slot A únicas, usables por cualquier héroe (no
+// asociadas a ningún WEAPON_* concreto). Cada una es una "familia" fija de
+// A+B+C sin mezcla posible entre familias (ver comentario en extract.py,
+// SPECIAL_WEAPON_PARTS): agrupamos aquí por nombre para poder recorrerlas.
+const RUNIC_FAMILIES = (() => {
+  const byName = {};
+  for (const p of WEAPON_PARTS) {
+    if (p.weaponType !== 'RUNE' || p.slot !== 'A' || p.id.endsWith('_UPGRADED')) continue;
+    const name = p.id.replace(/^WEAPON_PART_A_/, '');
+    byName[name] = {
+      name,
+      level:      p.level,
+      baseId:     p.id,
+      upgradedId: `${p.id}_UPGRADED`,
+      bId:        `WEAPON_PART_B_${name}`,
+      cId:        `WEAPON_PART_C_${name}`,
+    };
+  }
+  return Object.values(byName).sort((a, b) => a.level - b.level);
+})();
+
+function familyNameOfPartAId(partAId) {
+  return (partAId || '').replace(/^WEAPON_PART_A_/, '').replace(/_UPGRADED$/, '');
+}
+
 export default function ArmeriaPanel() {
   const t    = useT();
   const lang = useLang();
@@ -42,12 +67,14 @@ export default function ArmeriaPanel() {
   const equipPartA          = useStore(s => s.equipPartA);
   const equipPartB          = useStore(s => s.equipPartB);
   const equipPartC          = useStore(s => s.equipPartC);
+  const setHeroRunicSlot    = useStore(s => s.setHeroRunicSlot);
   const selectedHeroId      = useStore(s => s.selectedArmeriaHeroId);
   const setSelectedHeroId   = useStore(s => s.setSelectedArmeriaHeroId);
 
   const partASelections = gameState?.partASelections || {};
   const partBSelections = gameState?.partBSelections || {};
   const partCSelections = gameState?.partCSelections || {};
+  const heroRunicSlot   = gameState?.heroRunicSlot || {};
   const isAct2 = (saveMeta?.act ?? 0) >= 1;
 
   if (!gameState) return null;
@@ -55,6 +82,45 @@ export default function ArmeriaPanel() {
   const heroesFromSave = {};
   for (const h of (gameState.heroes || [])) {
     heroesFromSave[h.heroId] = h;
+  }
+
+  // Id sintético de arma para el hueco `slot` de un héroe cuando muestra una
+  // rúnica — reutiliza tal cual el mecanismo de partASelections/equipPartA
+  // que ya existe para elegir entre piezas A normales.
+  function runicSlotId(heroId, slot) {
+    return `RUNIC_${heroId}_${slot}`;
+  }
+
+  // Familias rúnicas que el grupo posee (base o mejorada) en el inventario.
+  const ownedRunicFamilies = RUNIC_FAMILIES.filter(f =>
+    (gameState.itemInventory || []).some(i => i.id === f.baseId || i.id === f.upgradedId)
+  );
+
+  // Familia actualmente elegida por un héroe en su hueco rúnico (si tiene
+  // uno activo), derivada de la misma selección de pieza A de siempre.
+  function currentRunicFamily(heroId) {
+    const slot = heroRunicSlot[heroId];
+    if (slot === undefined) return null;
+    const sid = runicSlotId(heroId, slot);
+    const defaultFamily = ownedRunicFamilies[0];
+    const aId = partASelections[sid]
+      ?? (defaultFamily ? (
+        (gameState.itemInventory || []).some(i => i.id === defaultFamily.upgradedId)
+          ? defaultFamily.upgradedId : defaultFamily.baseId
+      ) : null);
+    return aId ? familyNameOfPartAId(aId) : null;
+  }
+
+  // Familias ya en uso por OTROS héroes (exclusividad: solo un personaje
+  // puede llevar una rúnica concreta a la vez).
+  function familiesTakenByOthers(heroId) {
+    const taken = new Set();
+    for (const hid of Object.keys(heroRunicSlot)) {
+      if (hid === heroId) continue;
+      const fam = currentRunicFamily(hid);
+      if (fam) taken.add(fam);
+    }
+    return taken;
   }
 
   const selectedHero  = HEROES_BY_ID[selectedHeroId];
@@ -202,8 +268,37 @@ export default function ArmeriaPanel() {
 
         {heroSaveData?.equippedWeapons?.length > 0 ? (
           <div className="weapon-cards-row">
-            {heroSaveData.equippedWeapons.map(weaponData => {
-              const config = getWeaponConfig(weaponData);
+            {heroSaveData.equippedWeapons.map((weaponData, slotIndex) => {
+              const isRunicSlot = heroRunicSlot[selectedHeroId] === slotIndex;
+
+              // Familias disponibles para ALTERNAR a rúnica en este hueco:
+              // las que el grupo posee, menos las que ya lleva otro héroe y
+              // menos la que ya está en el OTRO hueco de este mismo héroe.
+              const takenElsewhere = familiesTakenByOthers(selectedHeroId);
+              const otherSlotFamily = heroRunicSlot[selectedHeroId] !== undefined && heroRunicSlot[selectedHeroId] !== slotIndex
+                ? currentRunicFamily(selectedHeroId) : null;
+              const selectableFamilies = ownedRunicFamilies.filter(f =>
+                !takenElsewhere.has(f.name) && f.name !== otherSlotFamily
+              );
+              const canToggleRunic = isRunicSlot || selectableFamilies.length > 0;
+
+              let effectiveWeaponData = weaponData;
+              let activeFamily = null;
+              if (isRunicSlot) {
+                const sid = runicSlotId(selectedHeroId, slotIndex);
+                const fallbackFamily = selectableFamilies[0] || ownedRunicFamilies.find(f => f.name === currentRunicFamily(selectedHeroId));
+                const defaultAId = fallbackFamily
+                  ? ((gameState.itemInventory || []).some(i => i.id === fallbackFamily.upgradedId) ? fallbackFamily.upgradedId : fallbackFamily.baseId)
+                  : null;
+                const effectiveAId = partASelections[sid] ?? defaultAId;
+                activeFamily = familyNameOfPartAId(effectiveAId);
+                const fam = RUNIC_FAMILIES.find(f => f.name === activeFamily);
+                if (fam && effectiveAId) {
+                  effectiveWeaponData = { id: sid, partA: effectiveAId, partB: fam.bId, partC: fam.cId };
+                }
+              }
+
+              const config = getWeaponConfig(effectiveWeaponData);
               if (!config) return (
                 <div key={weaponData.id} className="weapon-card weapon-card-unknown">
                   <span className="weapon-unknown-id">{weaponData.id}</span>
@@ -218,16 +313,45 @@ export default function ArmeriaPanel() {
               } = config;
 
               const slotLabels = getSlotLabels(weaponType);
-              const isEquipped = selectedPartA?.id === weaponData.partA;
+              const isEquipped = !isRunicSlot && selectedPartA?.id === weaponData.partA;
 
-              const weaponName = weapon ? getName(weapon, lang) : weaponData.id;
+              const weaponName = isRunicSlot
+                ? renderPartName(selectedPartA, lang)
+                : (weapon ? getName(weapon, lang) : weaponData.id);
+
+              function toggleRunic() {
+                if (isRunicSlot) {
+                  setHeroRunicSlot(selectedHeroId, null);
+                } else if (selectableFamilies.length > 0) {
+                  setHeroRunicSlot(selectedHeroId, slotIndex);
+                }
+              }
 
               return (
                 <div key={weaponData.id} className="weapon-card">
 
                   <div className="weapon-card-title">
-                    {weaponName}
+                    {ownedRunicFamilies.length > 0 && (
+                      <button
+                        className={`weapon-runic-toggle-btn ${isRunicSlot ? 'active' : ''}`}
+                        onClick={toggleRunic}
+                        disabled={!canToggleRunic}
+                        title={isRunicSlot ? t('armeria.runicRevert') : t('armeria.runicSwap')}
+                      >◄</button>
+                    )}
+                    <span className="weapon-card-title-text">{weaponName}</span>
+                    {ownedRunicFamilies.length > 0 && (
+                      <button
+                        className={`weapon-runic-toggle-btn ${isRunicSlot ? 'active' : ''}`}
+                        onClick={toggleRunic}
+                        disabled={!canToggleRunic}
+                        title={isRunicSlot ? t('armeria.runicRevert') : t('armeria.runicSwap')}
+                      >►</button>
+                    )}
                   </div>
+                  {isRunicSlot && (
+                    <div className="weapon-runic-badge">{t('armeria.runicBadge')}</div>
+                  )}
 
                   <div className="weapon-card-image-area">
                     <WeaponAssemblyView

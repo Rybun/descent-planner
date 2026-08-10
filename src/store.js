@@ -31,6 +31,10 @@ function cloneGameState(gs) {
     partASelections: { ...(gs.partASelections || {}) },
     partBSelections: { ...(gs.partBSelections || {}) },
     partCSelections: { ...(gs.partCSelections || {}) },
+    // Qué slot (0/1) de cada héroe muestra un arma rúnica en vez de su arma
+    // normal. Cuál rúnica en concreto se guarda con el mismo mecanismo que
+    // cualquier otra pieza A, bajo el id sintético `RUNIC_<heroId>_<slot>`.
+    heroRunicSlot: { ...(gs.heroRunicSlot || {}) },
   };
 }
 
@@ -343,6 +347,29 @@ export const useStore = create((set, get) => ({
 
     const action = createAction('EQUIP_PART_C', `Equipar pieza C: ${getItemName(partCId)}`, {
       weaponSaveId, partCId,
+    });
+
+    const newGs = applyAction(cloneGameState(gameState), action);
+    const newHistory = [...actionHistory, action].slice(-MAX_HISTORY);
+    set({ gameState: newGs, actionHistory: newHistory });
+  },
+
+  // === ARMERÍA: ALTERNAR ARMA RÚNICA EN UN SLOT ===
+  // Marca (o desmarca, con slot=null) que el hueco `slot` (0/1) del héroe
+  // `heroId` muestra un arma rúnica en vez de su arma normal. Solo un héroe
+  // de todo el grupo puede tener una rúnica concreta a la vez — eso lo
+  // gestiona la propia UI (ArmeriaPanel), que filtra qué rúnicas se ofrecen a
+  // cada héroe antes de llamar aquí, así que esta acción no repite esa
+  // comprobación.
+  setHeroRunicSlot: (heroId, slot) => {
+    const { gameState, actionHistory } = get();
+    if (!gameState) return;
+
+    const current = (gameState.heroRunicSlot || {})[heroId] ?? null;
+    if (current === slot) return;
+
+    const action = createAction('SET_HERO_RUNIC_SLOT', `Alternar arma rúnica: ${heroId}`, {
+      heroId, slot,
     });
 
     const newGs = applyAction(cloneGameState(gameState), action);
@@ -714,6 +741,17 @@ function applyAction(gs, action) {
           [weaponSaveId]: partCId,
         },
       };
+    }
+
+    case 'SET_HERO_RUNIC_SLOT': {
+      const { heroId, slot } = data;
+      const newMap = { ...(gs.heroRunicSlot || {}) };
+      if (slot === null) {
+        delete newMap[heroId];
+      } else {
+        newMap[heroId] = slot;
+      }
+      return { ...gs, heroRunicSlot: newMap };
     }
 
     default:

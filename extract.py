@@ -653,25 +653,58 @@ WEAPON_TYPE_TO_PREFIX = {
 }
 
 # ── Partes de arma "especiales" ──────────────────────────────────────────────
-# No siguen el patrón WEAPON_PART_<SLOT>_<TIPO>_<NIVEL>: son piezas únicas de
-# slot A, sin B/C, sin arma/héroe asociado (no aparecen en WEAPONS). Se listan
-# explícitamente porque son solo 7 y su BaseItemId no tiene sufijo numérico
-# (el regex estándar de parse_weapon_part_id no las reconoce).
+# No siguen el patrón WEAPON_PART_<SLOT>_<TIPO>_<NIVEL>: son piezas únicas
+# (armas rúnicas + Dragonsbane + Sword Ancestral), sin arma/héroe asociado
+# (no aparecen en WEAPONS). Se listan explícitamente porque son pocas y su
+# BaseItemId no tiene sufijo numérico (el regex estándar de
+# parse_weapon_part_id no las reconoce).
 # "level" se asigna según el orden a1..a5 real de los ficheros de imagen del
 # grupo RUNE (ver public/assets/weapon_parts/rune a*.png).
+#
+# IMPORTANTE: las 5 armas rúnicas (RUNE) y Dragonsbane (POLEAXE) SÍ tienen
+# piezas B y C reales en los assets del juego (confirmado con UnityPy: cada
+# una es un arma "fija" completa de 3 piezas, con habilidades nombradas
+# concretas en B/C — p.ej. WEAPON_PART_B_LIGHTNING_STRIKE = "Tocado por el
+# augurio" 50%, WEAPON_PART_C_LIGHTNING_STRIKE = "Sobrecarga" 5%). No tienen
+# versión "+"/mejorada en B/C (solo la pieza A es crafteable a nivel +1);
+# ver el bloque específico en generate_weapon_parts_js que las añade a partir
+# de base_item_defs, ya que no llegan por la vía normal de recetas (no tienen
+# receta propia, se craftean/mejoran solo por la pieza A).
+# Sword Ancestral es la única realmente A-only (no tiene B/C en los assets).
 SPECIAL_WEAPON_PARTS = {
     "WEAPON_PART_A_LIGHTNING_STRIKE": {"weaponType": "RUNE",    "level": 1},
+    "WEAPON_PART_B_LIGHTNING_STRIKE": {"weaponType": "RUNE",    "level": 1},
+    "WEAPON_PART_C_LIGHTNING_STRIKE": {"weaponType": "RUNE",    "level": 1},
     "WEAPON_PART_A_ICE_STORM":        {"weaponType": "RUNE",    "level": 2},
+    "WEAPON_PART_B_ICE_STORM":        {"weaponType": "RUNE",    "level": 2},
+    "WEAPON_PART_C_ICE_STORM":        {"weaponType": "RUNE",    "level": 2},
     "WEAPON_PART_A_RUNE_OF_BLADES":   {"weaponType": "RUNE",    "level": 3},
+    "WEAPON_PART_B_RUNE_OF_BLADES":   {"weaponType": "RUNE",    "level": 3},
+    "WEAPON_PART_C_RUNE_OF_BLADES":   {"weaponType": "RUNE",    "level": 3},
     "WEAPON_PART_A_SUNBURST":         {"weaponType": "RUNE",    "level": 4},
+    "WEAPON_PART_B_SUNBURST":         {"weaponType": "RUNE",    "level": 4},
+    "WEAPON_PART_C_SUNBURST":         {"weaponType": "RUNE",    "level": 4},
     "WEAPON_PART_A_FEAR":             {"weaponType": "RUNE",    "level": 5},
+    "WEAPON_PART_B_FEAR":             {"weaponType": "RUNE",    "level": 5},
+    "WEAPON_PART_C_FEAR":             {"weaponType": "RUNE",    "level": 5},
     "WEAPON_PART_A_DRAGONSBANE":      {"weaponType": "POLEAXE", "level": 1},
+    "WEAPON_PART_B_DRAGONSBANE":      {"weaponType": "POLEAXE", "level": 1},
+    "WEAPON_PART_C_DRAGONSBANE":      {"weaponType": "POLEAXE", "level": 1},
     # Sword Ancestral: su fichero en disco no lleva número de nivel
     # ("sword a - ancestral blade.png"), así que necesita ruta de imagen fija.
     "WEAPON_PART_A_SWORD_ANCESTRAL":  {
         "weaponType": "SWORD_ANCESTRAL", "level": 1,
         "image": "/assets/weapon_parts/sword a - ancestral blade.png",
     },
+}
+
+# Subconjunto de SPECIAL_WEAPON_PARTS que son piezas B/C fijas sin receta ni
+# versión "+": no aparecen en `recipes` (bucle principal de
+# generate_weapon_parts_js), así que se generan aparte a partir de
+# base_item_defs (ver ese bucle adicional más abajo).
+SPECIAL_FIXED_BC_PARTS = {
+    pid for pid in SPECIAL_WEAPON_PARTS
+    if pid.split("_")[2] in ("B", "C")  # "WEAPON_PART_<slot>_..." → slot
 }
 
 # Cache built once per run
@@ -884,6 +917,30 @@ def generate_weapon_parts_js(item_defs, base_item_defs, recipes, locs, planner_d
             upg_entry["isPromo"] = 1
         parts[uid] = upg_entry
 
+    # Piezas B/C fijas de armas rúnicas + Dragonsbane: no tienen receta propia
+    # (no llegan por el bucle de arriba, que itera `recipes`) ni versión "+".
+    # Se generan directamente desde base_item_defs (única definición real).
+    for pid in sorted(SPECIAL_FIXED_BC_PARTS):
+        base_def = base_item_defs.get(pid)
+        if not base_def:
+            continue
+        wtype = SPECIAL_WEAPON_PARTS[pid]["weaponType"]
+        slot  = pid.split("_")[2]
+        level = SPECIAL_WEAPON_PARTS[pid]["level"]
+        parts[pid] = {
+            "id":         pid,
+            "slot":       slot,
+            "weaponType": wtype,
+            "level":      level,
+            "names":      _make_names(locs, pid, es_fallback=pid),
+            "weaponId":   None,
+            "image":      _find_weapon_part_image(wtype, slot.lower(), level, planner_dir),
+            "buyPrice":   None,
+            "sellPrice":  None,
+            "damage":     base_def.get("damage", 0),
+            "traits":     base_def.get("traits", []),
+        }
+
     # Ordenar: por weaponType, slot, level
     sort_key = lambda p: (p["weaponType"], p["slot"], p["level"], p["id"].endswith("_UPGRADED"))
     sorted_parts = sorted(parts.values(), key=sort_key)
@@ -922,7 +979,7 @@ def _base_ability_key(full_key):
     return full_key
 
 
-def generate_weapon_ability_files(item_defs, ability_by_key, locs, planner_dir):
+def generate_weapon_ability_files(item_defs, base_item_defs, ability_by_key, locs, planner_dir):
     """
     Genera weaponPartDescs.js, weaponAbilities.js y weaponAbilityDescs.js a
     partir del PPtr `Ability` real de cada parte de arma (resuelto en
@@ -982,6 +1039,24 @@ def generate_weapon_ability_files(item_defs, ability_by_key, locs, planner_dir):
                 texts_up = _make_names(locs, full_desc)
                 if any(texts_up.values()):
                     ability_descs[f"{base_key}+"] = texts_up
+
+    # Piezas B/C fijas de armas rúnicas + Dragonsbane: habilidad nombrada sin
+    # "+" (no tienen versión mejorada), así que no aparecen en item_defs (solo
+    # contiene definiciones "+") y no llegan por el bucle de arriba. Se
+    # procesan aparte desde base_item_defs.
+    for pid in sorted(SPECIAL_FIXED_BC_PARTS):
+        base_def = base_item_defs.get(pid)
+        ability  = base_def.get("ability") if base_def else None
+        if not ability or not ability.get("keyName") or ability["isPartA"]:
+            continue
+        base_key = ability["keyName"]
+        part_ability_key[pid] = base_key
+        if ability["chance"] > 0:
+            ability_chance[base_key] = round(ability["chance"] * 100)
+        if ability.get("keyDesc"):
+            texts = _make_names(locs, ability["keyDesc"])
+            if any(texts.values()):
+                ability_descs[base_key] = texts
 
     # weaponPartDescs.js ---------------------------------------------------
     lines = [
@@ -1730,7 +1805,7 @@ def main():
     # ── 5. Generar JS ────────────────────────────────────────────────────────
     print("\n[5/7] Generando archivos JS...")
     generate_weapon_parts_js(item_defs, base_item_defs, recipes, locs, planner_dir)
-    generate_weapon_ability_files(item_defs, ability_by_key, locs, planner_dir)
+    generate_weapon_ability_files(item_defs, base_item_defs, ability_by_key, locs, planner_dir)
     generate_materials_js(env, locs, planner_dir)
     generate_items_js(env, locs, planner_dir)
     generate_recipes_js(recipes, base_recipes, planner_dir)

@@ -2619,5 +2619,89 @@ export const WEAPON_ABILITY_DESCS = {
     "fr": "Chaque Héros adjacent à l'Ennemi attaqué peut <style=Term><link=TERM_SHIFT>Glisser</link></style> de 1.",
     "it": "Ogni eroe adiacente al nemico attaccato può <style=Term><link=TERM_SHIFT>scattare</link></style> 1.",
     "pt": "Cada herói adjacente ao inimigo atacado pode <style=Term><link=TERM_SHIFT>Deslocar</link></style> 1."
+  },
+  "WEAPON_PART_B_DRAGONSBANE": {
+    "es": "Si el enemigo es de raza dragón, el <style=Term><link=TERM_DAMAGE></link></style> de tu arma aumenta en 1 y este ataque obtiene 1 <style=Term><link=TERM_SUCCESS></link></style>.",
+    "en": "If the enemy is dragonkind, your weapon's <style=Term><link=TERM_DAMAGE></link></style> is increased by 1 and this attack gains 1 <style=Term><link=TERM_SUCCESS></link></style>.",
+    "fr": "Si l'Ennemi est un Draconis, les <style=Term><link=TERM_DAMAGE></link></style> de votre arme augmentent de 1 et cette attaque gagne 1 <style=Term><link=TERM_SUCCESS></link></style>.",
+    "it": "Se il nemico è di stirpe draconica, il <style=Term><link=TERM_DAMAGE></link></style> della tua arma aumenta di 1 e questo attacco ottiene 1 <style=Term><link=TERM_SUCCESS></link></style>.",
+    "pt": "Se o inimigo for das espécies de dragões, o <style=Term><link=TERM_DAMAGE></link></style> da sua arma é aumentado em 1 e este ataque ganha 1 <style=Term><link=TERM_SUCCESS></link></style>."
+  },
+  "WEAPON_PART_B_FEAR": {
+    "es": "El enemigo queda <style=Term><link=TERM_AFFLICTED>afligido</link></style> y <style=Term><link=TERM_ENFEEBLED>debilitado</link></style>. Quita toda la <style=Term><link=TERM_FATIGUE></link></style> de 1 carta.",
+    "en": "The enemy is <style=Term><link=TERM_AFFLICTED>afflicted</link></style> and <style=Term><link=TERM_ENFEEBLED>enfeebled</link></style>. Remove all <style=Term><link=TERM_FATIGUE></link></style> from 1 card.",
+    "fr": "L'Ennemi devient <style=Term><link=TERM_AFFLICTED>accablé</link></style> et <style=Term><link=TERM_ENFEEBLED>affaibli</link></style>. Retirez toutes les <style=Term><link=TERM_FATIGUE></link></style> de 1 carte.",
+    "it": "Il nemico diventa <style=Term><link=TERM_AFFLICTED>afflitto</link></style> e <style=Term><link=TERM_ENFEEBLED>indebolito</link></style>. Scarta tutte le <style=Term><link=TERM_FATIGUE></link></style> da 1 carta.",
+    "pt": "O inimigo está <style=Term><link=TERM_AFFLICTED>atormentado</link></style> e <style=Term><link=TERM_ENFEEBLED>febril</link></style>. Remova todos os <style=Term><link=TERM_FATIGUE></link></style> de 1 carta."
+  },
+  "WEAPON_ABILITY_IMPEDE": {
+    "es": "El enemigo queda <style=Term><link=TERM_SLOWED>ralentizado</link></style>.",
+    "en": "The enemy is <style=Term><link=TERM_SLOWED>slowed</link></style>.",
+    "fr": "L’Ennemi devient <style=Term><link=TERM_SLOWED>ralenti</link></style>.",
+    "it": "Il nemico diventa <style=Term><link=TERM_SLOWED>rallentato</link></style>.",
+    "pt": "O inimigo fica <style=Term><link=TERM_SLOWED>atrasado</link></style>."
+  },
+  "WEAPON_ABILITY_OMEN_TOUCHED_LS": {
+    "es": "El enemigo queda <style=Term><link=TERM_DOOMED>condenado</link></style>.",
+    "en": "The enemy is <style=Term><link=TERM_DOOMED>doomed</link></style>.",
+    "fr": "L’Ennemi devient <style=Term><link=TERM_DOOMED>damné</link></style>.",
+    "it": "Il nemico diventa <style=Term><link=TERM_DOOMED>oppresso</link></style>.",
+    "pt": "Deixe o inimigo <style=Term><link=TERM_DOOMED>condenado</link></style>."
+  },
+  "WEAPON_ABILITY_BLEEDING_OUT_ROB": {
+    "es": "Si el enemigo es débil ante cualquiera de los tipos de daño de tu ataque, queda <style=Term><link=TERM_AFFLICTED>afligido</link></style>.",
+    "en": "If the enemy is weak to any of your attack's damage types, they are <style=Term><link=TERM_AFFLICTED>afflicted</link></style>.",
+    "fr": "L’Ennemi devient <style=Term><link=TERM_AFFLICTED>accablé</link></style>. Si l’Ennemi est vulnérable à n’importe quel type de dégâts de votre arme, il devient également <style=Term><link=TERM_DOOMED>damné</link></style>.",
+    "it": "Se il nemico è vulnerabile a un qualsiasi tipo di danno del tuo attacco, esso diventa <style=Term><link=TERM_AFFLICTED>afflitto</link></style>.",
+    "pt": "Deixe o inimigo <style=Term><link=TERM_AFFLICTED>atormentado</link></style>."
+  },
+  "WEAPON_PART_B_SUNBURST": {
+    "es": "El enemigo sufre daño adicional igual al 25% de su vida. <style=Term><link=TERM_SCARRED>Cicatriza</link></style> 1 carta.",
+    "en": "The enemy suffers extra damage equal to 25% of its health. <style=Term><link=TERM_SCARRED>Scar</link></style> 1 card.",
+    "fr": "L'Ennemi subit un nombre de dégâts supplémentaires égal à 25 % de sa Santé. <style=Term><link=TERM_SCARRED>Balafrez</link></style> 1 carte.",
+    "it": "Il nemico subisce un ammontare di <style=Term><link=TERM_DAMAGE></link></style> aggiuntivi pari al 25% della sua salute. \n<style=Term><link=TERM_SCARRED>Sfregia</link></style> 1 carta.",
+    "pt": "O inimigo sofre dano extra igual a 25% da própria vida. <style=Term><link=TERM_SCARRED>Marque</link></style> 1 carta."
+  },
+  "WEAPON_PART_C_DRAGONSBANE": {
+    "es": "Cada enemigo de raza dragón queda <style=Term><link=TERM_ENFEEBLED>debilitado</link></style> y <style=Term><link=TERM_EXPOSED>expuesto</link></style>.",
+    "en": "Each dragonkind enemy is <style=Term><link=TERM_ENFEEBLED>enfeebled</link></style> and <style=Term><link=TERM_EXPOSED>exposed</link></style>.",
+    "fr": "Chaque Ennemi Draconis devient <style=Term><link=TERM_ENFEEBLED>affaibli</link></style> et <style=Term><link=TERM_EXPOSED>exposé</link></style>.",
+    "it": "Ogni nemico di stirpe draconica diventa <style=Term><link=TERM_ENFEEBLED>indebolito</link></style> ed <style=Term><link=TERM_EXPOSED>esposto</link></style>.",
+    "pt": "Cada inimigo das espécies de dragões está <style=Term><link=TERM_ENFEEBLED>febril</link></style> e <style=Term><link=TERM_EXPOSED>exposto</link></style>."
+  },
+  "WEAPON_PART_C_FEAR": {
+    "es": "Cada héroe <style=Term><link=TERM_STRESSED>estresa</link></style> 1 carta. Después del ataque, mueve cada uno de los demás enemigos hasta 2 casillas alejándose de este enemigo.",
+    "en": "Each hero <style=Term><link=TERM_STRESSED>stresses</link></style> 1 card. After the attack, move each other enemy up to 2 spaces away from this enemy.",
+    "fr": "Chaque Héros <style=Term><link=TERM_STRESSED>stresse</link></style> 1 carte. Après l'attaque, déplacez chaque Ennemi de 2 cases au maximum à l'écart de cet Ennemi.",
+    "it": "Ogni eroe <style=Term><link=TERM_STRESSED>spossa</link></style> 1 carta. Dopo l'attacco, muovere ogni altro nemico di un massimo di 2 caselle allontanandolo da questo nemico.",
+    "pt": "Cada herói <style=Term><link=TERM_STRESSED>estressa</link></style> 1 carta. Depois do ataque, mova cada inimigo até 2 espaços deste inimigo."
+  },
+  "WEAPON_ABILITY_WHITEOUT": {
+    "es": "Cada enemigo queda <style=Term><link=TERM_ENFEEBLED>debilitado</link></style>.",
+    "en": "Each enemy is <style=Term><link=TERM_ENFEEBLED>enfeebled</link></style>.",
+    "fr": "Chaque Ennemi devient <style=Term><link=TERM_ENFEEBLED>affaibli</link></style>.",
+    "it": "Ogni nemico diventa <style=Term><link=TERM_ENFEEBLED>indebolito</link></style>.",
+    "pt": "Deixe cada inimigo <style=Term><link=TERM_ENFEEBLED>febril</link></style>."
+  },
+  "WEAPON_ABILITY_OVERCHARGE": {
+    "es": "Cada enemigo queda <style=Term><link=TERM_DAZED>conmocionado</link></style> y <style=Term><link=TERM_EXPOSED>expuesto</link></style>. Cada héroe sufre 3 <style=Term><link=TERM_FATIGUE></link></style>.",
+    "en": "Each enemy is <style=Term><link=TERM_DAZED>dazed</link></style> and <style=Term><link=TERM_EXPOSED>exposed</link></style>. Each hero suffers 3 <style=Term><link=TERM_FATIGUE></link></style>.",
+    "fr": "L’Ennemi devient <style=Term><link=TERM_DAZED>étourdi</link></style> et <style=Term><link=TERM_EXPOSED>exposé</link></style>. Chaque Héros subit 3 <style=Term><link=TERM_FATIGUE></link></style>.",
+    "it": "Ogni nemico diventa <style=Term><link=TERM_DAZED>frastornato</link></style> ed <style=Term><link=TERM_EXPOSED>esposto</link></style>. Ogni eroe subisce 3 <style=Term><link=TERM_FATIGUE></link></style>.",
+    "pt": "Deixe cada inimigo<style=Term><link=TERM_DAZED>confuso</link></style> e <style=Term><link=TERM_EXPOSED>exposto</link></style>. Cada herói sofre 3 <style=Term><link=TERM_FATIGUE></link></style>."
+  },
+  "WEAPON_ABILITY_SPIRAL_STRIKE_ROB": {
+    "es": "Después de este ataque, selecciona otro enemigo que esté a 2 o menos casillas de este enemigo para que sufra la misma cantidad de <style=Term><link=TERM_DAMAGE></link></style>.",
+    "en": "After this attack, select another enemy within 2 spaces of this enemy to suffer the same <style=Term><link=TERM_DAMAGE></link></style>.",
+    "fr": "Après cette attaque, choisissez un autre Ennemi dans un rayon de 2 cases autour de cet Ennemi ; il subit le même montant de <style=Term><link=TERM_DAMAGE></link></style>.",
+    "it": "Dopo il tuo attacco, seleziona 1 altro nemico entro 2 caselle da questo nemico per fargli subire un pari ammontare di <style=Term><link=TERM_DAMAGE></link></style>.",
+    "pt": "Depois deste ataque, escolha outro inimigo a até 2 espaços deste inimigo para sofrer o mesmo <style=Term><link=TERM_DAMAGE></link></style>."
+  },
+  "WEAPON_PART_C_SUNBURST": {
+    "es": "Después del ataque, los héroes pueden curarse de forma colectiva una cantidad de <style=Term><link=TERM_HEALTH_DIAL></link></style> no superior a los <style=Term><link=TERM_SUCCESS></link></style> del ataque.",
+    "en": "After the attack, the heroes may collectively heal <style=Term><link=TERM_HEALTH_DIAL></link></style> up to the attack's <style=Term><link=TERM_SUCCESS></link></style>.",
+    "fr": "Après l'attaque, les Héros peuvent se soigner collectivement d'un nombre de <style=Term><link=TERM_HEALTH_DIAL></link></style> inférieur ou égal au nombre de <style=Term><link=TERM_SUCCESS></link></style> de l'attaque.",
+    "it": "Dopo l'attacco, gli eroi possono curarsi collettivamente un totale di <style=Term><link=TERM_HEALTH_DIAL></link></style> pari al numero di <style=Term><link=TERM_SUCCESS></link></style> dell'attacco.",
+    "pt": "Depois do ataque, os heróis podem curar coletivamente <style=Term><link=TERM_HEALTH_DIAL></link></style> até o <style=Term><link=TERM_SUCCESS></link></style> do ataque."
   }
 };
