@@ -31,10 +31,15 @@ function cloneGameState(gs) {
     partASelections: { ...(gs.partASelections || {}) },
     partBSelections: { ...(gs.partBSelections || {}) },
     partCSelections: { ...(gs.partCSelections || {}) },
-    // Qué slot (0/1) de cada héroe muestra un arma rúnica en vez de su arma
-    // normal. Cuál rúnica en concreto se guarda con el mismo mecanismo que
-    // cualquier otra pieza A, bajo el id sintético `RUNIC_<heroId>_<slot>`.
-    heroRunicSlot: { ...(gs.heroRunicSlot || {}) },
+    // Qué arma muestra cada hueco (0/1) de cada héroe: 0/1 = su propia arma
+    // con ese índice (permite intercambiar cuál va a la izquierda/derecha),
+    // 'RUNE' = un arma rúnica. Sin entrada = por defecto, hueco N → arma N
+    // (igual que el save real). Cuál rúnica en concreto se guarda con el
+    // mismo mecanismo que cualquier otra pieza A, bajo el id sintético
+    // `RUNIC_<heroId>_<slot>`.
+    heroSlotChoice: Object.fromEntries(
+      Object.entries(gs.heroSlotChoice || {}).map(([hid, m]) => [hid, { ...m }])
+    ),
   };
 }
 
@@ -354,22 +359,21 @@ export const useStore = create((set, get) => ({
     set({ gameState: newGs, actionHistory: newHistory });
   },
 
-  // === ARMERÍA: ALTERNAR ARMA RÚNICA EN UN SLOT ===
-  // Marca (o desmarca, con slot=null) que el hueco `slot` (0/1) del héroe
-  // `heroId` muestra un arma rúnica en vez de su arma normal. Solo un héroe
-  // de todo el grupo puede tener una rúnica concreta a la vez — eso lo
-  // gestiona la propia UI (ArmeriaPanel), que filtra qué rúnicas se ofrecen a
-  // cada héroe antes de llamar aquí, así que esta acción no repite esa
-  // comprobación.
-  setHeroRunicSlot: (heroId, slot) => {
+  // === ARMERÍA: ELEGIR QUÉ ARMA VA EN UN HUECO ===
+  // `choice` es 0/1 (la propia arma del héroe con ese índice, para poder
+  // intercambiar cuál va en cada mano) o 'RUNE' (un arma rúnica). Solo un
+  // héroe de todo el grupo puede tener una rúnica concreta a la vez, y un
+  // héroe no puede repetir la misma arma en sus dos huecos — eso lo filtra
+  // la propia UI (ArmeriaPanel) antes de llamar aquí.
+  setHeroSlotChoice: (heroId, slot, choice) => {
     const { gameState, actionHistory } = get();
     if (!gameState) return;
 
-    const current = (gameState.heroRunicSlot || {})[heroId] ?? null;
-    if (current === slot) return;
+    const current = (gameState.heroSlotChoice || {})[heroId]?.[slot] ?? slot;
+    if (current === choice) return;
 
-    const action = createAction('SET_HERO_RUNIC_SLOT', `Alternar arma rúnica: ${heroId}`, {
-      heroId, slot,
+    const action = createAction('SET_HERO_SLOT_CHOICE', `Cambiar arma equipada: ${heroId}`, {
+      heroId, slot, choice,
     });
 
     const newGs = applyAction(cloneGameState(gameState), action);
@@ -743,15 +747,13 @@ function applyAction(gs, action) {
       };
     }
 
-    case 'SET_HERO_RUNIC_SLOT': {
-      const { heroId, slot } = data;
-      const newMap = { ...(gs.heroRunicSlot || {}) };
-      if (slot === null) {
-        delete newMap[heroId];
-      } else {
-        newMap[heroId] = slot;
-      }
-      return { ...gs, heroRunicSlot: newMap };
+    case 'SET_HERO_SLOT_CHOICE': {
+      const { heroId, slot, choice } = data;
+      const newMap = {
+        ...(gs.heroSlotChoice || {}),
+        [heroId]: { ...(gs.heroSlotChoice?.[heroId] || {}), [slot]: choice },
+      };
+      return { ...gs, heroSlotChoice: newMap };
     }
 
     default:

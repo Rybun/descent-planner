@@ -67,14 +67,14 @@ export default function ArmeriaPanel() {
   const equipPartA          = useStore(s => s.equipPartA);
   const equipPartB          = useStore(s => s.equipPartB);
   const equipPartC          = useStore(s => s.equipPartC);
-  const setHeroRunicSlot    = useStore(s => s.setHeroRunicSlot);
+  const setHeroSlotChoice   = useStore(s => s.setHeroSlotChoice);
   const selectedHeroId      = useStore(s => s.selectedArmeriaHeroId);
   const setSelectedHeroId   = useStore(s => s.setSelectedArmeriaHeroId);
 
   const partASelections = gameState?.partASelections || {};
   const partBSelections = gameState?.partBSelections || {};
   const partCSelections = gameState?.partCSelections || {};
-  const heroRunicSlot   = gameState?.heroRunicSlot || {};
+  const heroSlotChoice  = gameState?.heroSlotChoice || {};
   const isAct2 = (saveMeta?.act ?? 0) >= 1;
 
   if (!gameState) return null;
@@ -82,6 +82,14 @@ export default function ArmeriaPanel() {
   const heroesFromSave = {};
   for (const h of (gameState.heroes || [])) {
     heroesFromSave[h.heroId] = h;
+  }
+
+  // Qué muestra el hueco `slot` (0/1) de un héroe: 0/1 (su propia arma con
+  // ese índice) o 'RUNE'. Sin anulación guardada, hueco N → arma N, igual
+  // que en el save real.
+  function getSlotChoice(heroId, slot) {
+    const v = heroSlotChoice[heroId]?.[slot];
+    return v === undefined ? slot : v;
   }
 
   // Id sintético de arma para el hueco `slot` de un héroe cuando muestra una
@@ -96,11 +104,11 @@ export default function ArmeriaPanel() {
     (gameState.itemInventory || []).some(i => i.id === f.baseId || i.id === f.upgradedId)
   );
 
-  // Familia actualmente elegida por un héroe en su hueco rúnico (si tiene
-  // uno activo), derivada de la misma selección de pieza A de siempre.
-  function currentRunicFamily(heroId) {
-    const slot = heroRunicSlot[heroId];
-    if (slot === undefined) return null;
+  // Familia actualmente elegida por un héroe en el hueco `slot`, si ese
+  // hueco está en modo rúnica — derivada de la misma selección de pieza A
+  // de siempre.
+  function runicFamilyInSlot(heroId, slot) {
+    if (getSlotChoice(heroId, slot) !== 'RUNE') return null;
     const sid = runicSlotId(heroId, slot);
     const defaultFamily = ownedRunicFamilies[0];
     const aId = partASelections[sid]
@@ -115,10 +123,12 @@ export default function ArmeriaPanel() {
   // puede llevar una rúnica concreta a la vez).
   function familiesTakenByOthers(heroId) {
     const taken = new Set();
-    for (const hid of Object.keys(heroRunicSlot)) {
+    for (const hid of Object.keys(heroSlotChoice)) {
       if (hid === heroId) continue;
-      const fam = currentRunicFamily(hid);
-      if (fam) taken.add(fam);
+      for (const slot of [0, 1]) {
+        const fam = runicFamilyInSlot(hid, slot);
+        if (fam) taken.add(fam);
+      }
     }
     return taken;
   }
@@ -268,31 +278,39 @@ export default function ArmeriaPanel() {
 
         {heroSaveData?.equippedWeapons?.length > 0 ? (
           <div className="weapon-cards-row">
-            {heroSaveData.equippedWeapons.map((weaponData, slotIndex) => {
-              const isRunicSlot = heroRunicSlot[selectedHeroId] === slotIndex;
+            {[0, 1].map(slotIndex => {
+              const choice = getSlotChoice(selectedHeroId, slotIndex);
+              const isRunicSlot = choice === 'RUNE';
+              const otherChoice = getSlotChoice(selectedHeroId, 1 - slotIndex);
 
-              // Familias disponibles para ALTERNAR a rúnica en este hueco:
-              // las que el grupo posee, menos las que ya lleva otro héroe y
-              // menos la que ya está en el OTRO hueco de este mismo héroe.
+              // Candidatos a los que se puede cambiar este hueco: las otras
+              // armas propias del héroe que no estén ya en el OTRO hueco, más
+              // 'RUNE' si queda alguna familia rúnica disponible (del grupo,
+              // sin contar las que ya lleva otro héroe ni, si el otro hueco
+              // también es rúnico, la única familia que quedaría libre).
               const takenElsewhere = familiesTakenByOthers(selectedHeroId);
-              const otherSlotFamily = heroRunicSlot[selectedHeroId] !== undefined && heroRunicSlot[selectedHeroId] !== slotIndex
-                ? currentRunicFamily(selectedHeroId) : null;
-              const selectableFamilies = ownedRunicFamilies.filter(f =>
-                !takenElsewhere.has(f.name) && f.name !== otherSlotFamily
-              );
-              const canToggleRunic = isRunicSlot || selectableFamilies.length > 0;
+              const availableFamilies = ownedRunicFamilies.filter(f => !takenElsewhere.has(f.name));
+              const otherIsRuneAlone = otherChoice === 'RUNE' && availableFamilies.length <= 1;
+              const candidates = [0, 1].filter(i => otherChoice !== i);
+              if (availableFamilies.length > 0 && !otherIsRuneAlone) candidates.push('RUNE');
+              const canCycle = candidates.length > 1;
 
-              let effectiveWeaponData = weaponData;
-              let activeFamily = null;
+              function cycleSlot(direction) {
+                if (!canCycle) return;
+                const idx = candidates.indexOf(choice);
+                const newIdx = ((idx < 0 ? 0 : idx) + direction + candidates.length) % candidates.length;
+                setHeroSlotChoice(selectedHeroId, slotIndex, candidates[newIdx]);
+              }
+
+              let effectiveWeaponData = heroSaveData.equippedWeapons[choice];
               if (isRunicSlot) {
                 const sid = runicSlotId(selectedHeroId, slotIndex);
-                const fallbackFamily = selectableFamilies[0] || ownedRunicFamilies.find(f => f.name === currentRunicFamily(selectedHeroId));
+                const fallbackFamily = availableFamilies[0] || RUNIC_FAMILIES.find(f => f.name === runicFamilyInSlot(selectedHeroId, slotIndex));
                 const defaultAId = fallbackFamily
                   ? ((gameState.itemInventory || []).some(i => i.id === fallbackFamily.upgradedId) ? fallbackFamily.upgradedId : fallbackFamily.baseId)
                   : null;
                 const effectiveAId = partASelections[sid] ?? defaultAId;
-                activeFamily = familyNameOfPartAId(effectiveAId);
-                const fam = RUNIC_FAMILIES.find(f => f.name === activeFamily);
+                const fam = RUNIC_FAMILIES.find(f => f.name === familyNameOfPartAId(effectiveAId));
                 if (fam && effectiveAId) {
                   effectiveWeaponData = { id: sid, partA: effectiveAId, partB: fam.bId, partC: fam.cId };
                 }
@@ -300,8 +318,8 @@ export default function ArmeriaPanel() {
 
               const config = getWeaponConfig(effectiveWeaponData);
               if (!config) return (
-                <div key={weaponData.id} className="weapon-card weapon-card-unknown">
-                  <span className="weapon-unknown-id">{weaponData.id}</span>
+                <div key={slotIndex} className="weapon-card weapon-card-unknown">
+                  <span className="weapon-unknown-id">{effectiveWeaponData?.id}</span>
                 </div>
               );
 
@@ -313,45 +331,34 @@ export default function ArmeriaPanel() {
               } = config;
 
               const slotLabels = getSlotLabels(weaponType);
-              const isEquipped = !isRunicSlot && selectedPartA?.id === weaponData.partA;
+              const isEquipped = !isRunicSlot && selectedPartA?.id === effectiveWeaponData.partA;
 
               const weaponName = isRunicSlot
-                ? renderPartName(selectedPartA, lang)
-                : (weapon ? getName(weapon, lang) : weaponData.id);
-
-              function toggleRunic() {
-                if (isRunicSlot) {
-                  setHeroRunicSlot(selectedHeroId, null);
-                } else if (selectableFamilies.length > 0) {
-                  setHeroRunicSlot(selectedHeroId, slotIndex);
-                }
-              }
+                ? t('weaponType.RUNE')
+                : (weapon ? getName(weapon, lang) : effectiveWeaponData.id);
 
               return (
-                <div key={weaponData.id} className="weapon-card">
+                <div key={slotIndex} className="weapon-card">
 
                   <div className="weapon-card-title">
                     {ownedRunicFamilies.length > 0 && (
                       <button
-                        className={`weapon-runic-toggle-btn ${isRunicSlot ? 'active' : ''}`}
-                        onClick={toggleRunic}
-                        disabled={!canToggleRunic}
-                        title={isRunicSlot ? t('armeria.runicRevert') : t('armeria.runicSwap')}
+                        className="weapon-runic-toggle-btn"
+                        onClick={() => cycleSlot(-1)}
+                        disabled={!canCycle}
+                        title={t('armeria.swapWeapon')}
                       >◄</button>
                     )}
                     <span className="weapon-card-title-text">{weaponName}</span>
                     {ownedRunicFamilies.length > 0 && (
                       <button
-                        className={`weapon-runic-toggle-btn ${isRunicSlot ? 'active' : ''}`}
-                        onClick={toggleRunic}
-                        disabled={!canToggleRunic}
-                        title={isRunicSlot ? t('armeria.runicRevert') : t('armeria.runicSwap')}
+                        className="weapon-runic-toggle-btn"
+                        onClick={() => cycleSlot(1)}
+                        disabled={!canCycle}
+                        title={t('armeria.swapWeapon')}
                       >►</button>
                     )}
                   </div>
-                  {isRunicSlot && (
-                    <div className="weapon-runic-badge">{t('armeria.runicBadge')}</div>
-                  )}
 
                   <div className="weapon-card-image-area">
                     <WeaponAssemblyView
@@ -380,7 +387,7 @@ export default function ArmeriaPanel() {
                   <div className="part-a-selector">
                     <button
                       className="part-nav-btn"
-                      onClick={() => handlePartANav(weaponData.id, -1, config)}
+                      onClick={() => handlePartANav(effectiveWeaponData.id, -1, config)}
                       disabled={allPartAOptions.length <= 1}
                       title={t('armeria.prev')}
                     >◄</button>
@@ -391,7 +398,7 @@ export default function ArmeriaPanel() {
                     </Tooltip>
                     <button
                       className="part-nav-btn"
-                      onClick={() => handlePartANav(weaponData.id, 1, config)}
+                      onClick={() => handlePartANav(effectiveWeaponData.id, 1, config)}
                       disabled={allPartAOptions.length <= 1}
                       title={t('armeria.next')}
                     >►</button>
@@ -416,8 +423,8 @@ export default function ArmeriaPanel() {
                     options={allPartBOptions}
                     selectedPart={selectedPartB}
                     selectedIdx={selectedBIdx}
-                    equippedId={weaponData.partB}
-                    onNav={(dir) => handlePartBNav(weaponData.id, dir, config)}
+                    equippedId={effectiveWeaponData.partB}
+                    onNav={(dir) => handlePartBNav(effectiveWeaponData.id, dir, config)}
                     getDesc={getDesc}
                     noUpgradeLabel={t('armeria.noUpgrade')}
                     prevLabel={t('armeria.prev')}
@@ -431,8 +438,8 @@ export default function ArmeriaPanel() {
                     options={allPartCOptions}
                     selectedPart={selectedPartC}
                     selectedIdx={selectedCIdx}
-                    equippedId={weaponData.partC}
-                    onNav={(dir) => handlePartCNav(weaponData.id, dir, config)}
+                    equippedId={effectiveWeaponData.partC}
+                    onNav={(dir) => handlePartCNav(effectiveWeaponData.id, dir, config)}
                     getDesc={getDesc}
                     noUpgradeLabel={t('armeria.noUpgrade')}
                     prevLabel={t('armeria.prev')}
