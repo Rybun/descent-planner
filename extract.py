@@ -382,11 +382,19 @@ DMG_ICON_MAP = {
 # Sprites extraídos de Atlas_UI y GlossaryAtlas por nombre (m_Name).
 # Confirmados por hash match con las imágenes en public/assets/icons/.
 UI_SPRITE_MAP = {
-    # Tabs del planner → sprites City / Glossary del juego
-    "CityIcon_Shop":         "tab_tienda.png",
-    "CityIcon_Armory":       "tab_armeria.png",
-    "CityIcon_Crafting":     "tab_creacion.png",
-    "CityIcon_Person":       "tab_inventario.png",
+    # Tabs del planner → sprites City / Glossary del juego. Los nombres reales
+    # en los assets son "p28_<Nombre>_Icon" (glossaryterms/<shop|armory|
+    # crafthall>), no "CityIcon_*" — corregido tras comprobar que ese nombre
+    # ya no existe en los bundles actuales (0 coincidencias).
+    "p28_Shop_Icon":         "tab_tienda.png",
+    "p28_Armory_Icon":       "tab_armeria.png",
+    "p28_Crafthall_Icon":    "tab_creacion.png",
+    # No existe un icono de "tab de inventario" propio en el juego (no tiene
+    # ese concepto de UI); el fichero ya presente en disco resultó ser en
+    # realidad el arte del amuleto "Brew Basket" (cesta de pociones),
+    # reutilizado a propósito por su parecido visual — comprobado por hash
+    # idéntico. Mismo patrón que "Cloth" → tab_historial.png justo abajo.
+    "Brew Basket":           "tab_inventario.png",
     "Cloth":                 "tab_historial.png",     # material Tela = tab historial
     "p29_CampaignQuest_Icon":"tab_partida_act1.png",
     "p29_SideQuest_Icon":    "tab_partida_act2.png",
@@ -442,7 +450,13 @@ def extract_images(env, planner_dir, overwrite=False):
     skipped  = 0
 
     for container_path, obj in env.container.items():
-        if obj.type.name != "Texture2D":
+        try:
+            is_texture = obj.type.name == "Texture2D"
+        except Exception:
+            # Un puñado de entradas del container son escenas .unity con un
+            # PPtr roto (m_PathID == 0) — no son imágenes, se ignoran.
+            continue
+        if not is_texture:
             continue
         if not container_path.endswith(".png"):
             continue
@@ -490,7 +504,13 @@ def extract_ui_icons(env, planner_dir, overwrite=False):
     # ── Grupo 1: iconos de daño (container path matching) ────────────────────
     # Estos son objetos Sprite en el GlossaryAtlas, no Texture2D
     for container_path, obj in env.container.items():
-        if obj.type.name not in ("Texture2D", "Sprite"):
+        try:
+            is_wanted_type = obj.type.name in ("Texture2D", "Sprite")
+        except Exception:
+            # Ver comentario equivalente en extract_images: escenas .unity
+            # con PPtr roto, no son imágenes.
+            continue
+        if not is_wanted_type:
             continue
         if "glossaryterms" not in container_path:
             continue
