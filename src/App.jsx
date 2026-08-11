@@ -16,9 +16,11 @@ import './App.css';
 
 const TAB_KEYS = ['partida', 'armeria', 'tienda', 'crafteo', 'inventario', 'historial'];
 
-function getTabIcons(act) {
+function getTabIcons() {
   return {
-    partida:    act >= 1 ? '/assets/icons/tab_partida_act2.png' : '/assets/icons/tab_partida_act1.png',
+    // Mismo icono en los dos actos (a petición expresa: el de acto 1 gusta
+    // más y se usa también para acto 2; tab_partida_act2.png ya no se usa).
+    partida:    '/assets/icons/tab_partida_act1.png',
     tienda:     '/assets/icons/tab_tienda.png',
     crafteo:    '/assets/icons/tab_creacion.png',
     armeria:    '/assets/icons/tab_armeria.png',
@@ -207,7 +209,7 @@ function App() {
     })();
   }, []);
 
-  const TAB_ICONS = getTabIcons(saveMeta?.act ?? 0);
+  const TAB_ICONS = getTabIcons();
   const TABS = TAB_KEYS.map(id => ({ id, label: t(`tab.${id}`) }));
 
   if (!saveLoaded) {
@@ -284,7 +286,15 @@ function App() {
       {/* ======= TOPBAR ======= */}
       <header className="app-header">
         <div className="header-left">
-          <span className="app-logo">⚔️</span>
+          <span className="app-logo">
+            <img
+              src={(saveMeta?.act ?? 0) >= 1 ? '/assets/icons/app_logo_act2.png' : '/assets/icons/app_logo_act1.png'}
+              alt="Descent"
+              className="app-logo-img"
+              onError={e => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'inline'; }}
+            />
+            <span className="app-logo-fallback" style={{ display: 'none' }}>⚔️</span>
+          </span>
           <div className="header-meta">
             <span className="app-title">Descent</span>
             {saveMeta && (

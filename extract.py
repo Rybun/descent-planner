@@ -488,6 +488,117 @@ def extract_images(env, planner_dir, overwrite=False):
             print(f"      {folder}: {n}")
 
 
+# Slugs de héroe usados en src/gamedata/heroes.js (image/imageAct2) y en las
+# rutas de los bundles: assets/d3/heroes/<slug>/<acti|actii>/...
+HERO_SLUGS = ["brynn", "syrus", "galaden", "vaerix", "kehli", "chance"]
+
+
+def extract_hero_portraits(env, planner_dir, overwrite=False):
+    """Extrae los retratos circulares de héroe y sus versiones recortadas
+    para el pie de los tooltips.
+
+    Antes se habían recortado/compuesto a mano en algún momento anterior a
+    partir del arte de personaje — comprobado que en realidad NO hace falta
+    ningún recorte ni composición: el juego ya tiene el retrato circular
+    final, con marco incluido, como asset propio en
+    assets/d3/heroes/<slug>/<acti|actii>/<slug>.png (comprobado pixel a
+    pixel idéntico al fichero que había en disco, para los 6 héroes y los 2
+    actos). La versión para el pie del tooltip usa el mismo patrón con
+    "_crop" (una tira ancha, no circular); esa sí lleva márgenes
+    transparentes de sobra en el lienzo que hay que recortar con
+    Image.getbbox() para quedarnos solo con el contenido real.
+    """
+    assets_dir  = os.path.join(planner_dir, "public", "assets", "heroes")
+    tooltip_dir = os.path.join(assets_dir, "tooltip")
+    os.makedirs(assets_dir, exist_ok=True)
+    os.makedirs(tooltip_dir, exist_ok=True)
+
+    by_container = {}
+    for container_path, obj in env.container.items():
+        try:
+            if obj.type.name != "Texture2D":
+                continue
+        except Exception:
+            continue
+        by_container.setdefault(container_path.lower(), obj)
+
+    extracted = skipped = missing = 0
+    for slug in HERO_SLUGS:
+        for act, actdir in ((1, "acti"), (2, "actii")):
+            # Retrato circular principal — copia directa, sin procesar.
+            portrait_obj = by_container.get(f"assets/d3/heroes/{slug}/{actdir}/{slug}.png")
+            out_path = os.path.join(assets_dir, f"{slug}_act{act}.png")
+            if not portrait_obj:
+                print(f"    ⚠ Retrato no encontrado: {slug} acto {act}")
+                missing += 1
+            elif not overwrite and os.path.exists(out_path):
+                skipped += 1
+            else:
+                portrait_obj.read().image.save(out_path)
+                extracted += 1
+
+            # Versión recortada para el pie del tooltip — recortar el
+            # lienzo transparente sobrante alrededor del contenido real.
+            crop_obj = by_container.get(f"assets/d3/heroes/{slug}/{actdir}/{slug}_crop.png")
+            out_path_tt = os.path.join(tooltip_dir, f"{slug}_act{act}.png")
+            if not crop_obj:
+                print(f"    ⚠ Retrato de tooltip no encontrado: {slug} acto {act}")
+                missing += 1
+            elif not overwrite and os.path.exists(out_path_tt):
+                skipped += 1
+            else:
+                img = crop_obj.read().image.convert("RGBA")
+                bbox = img.getbbox()
+                if bbox:
+                    img = img.crop(bbox)
+                img.save(out_path_tt)
+                extracted += 1
+
+    print(f"  ✓ {extracted} retratos de héroe extraídos ({skipped} ya existían, {missing} no encontrados)")
+
+
+# Logo de cabecera de la app (arriba a la izquierda, junto a "Descent"):
+# la portada de la caja del juego, una por acto. No hay forma de
+# identificarlas por nombre/ruta de forma genérica (son ilustraciones
+# promocionales sueltas en assets/d3/products/), así que se fijan por
+# path_id, confirmado a mano y comprobado pixel a pixel contra las
+# imágenes que el usuario señaló:
+#   Acto 1 → assets/d3/products/dle_01/dle_01.png (portada base)
+#   Acto 2 → assets/d3/products/dle_04/dle_04.png (portada expansión
+#            "The Betrayer's War")
+# Se lee como Sprite (no Texture2D) porque el Sprite ya trae el recorte
+# real sin el lienzo transparente sobrante que tiene la textura completa.
+APP_LOGO_PATH_IDS = {
+    -6554762788023925205: "app_logo_act1.png",
+    6124596942987750978:  "app_logo_act2.png",
+}
+
+
+def extract_app_logo(env, planner_dir, overwrite=False):
+    """Extrae el logo de cabecera (portadas de caja) por path_id fijo."""
+    icons_dir = os.path.join(planner_dir, "public", "assets", "icons")
+    os.makedirs(icons_dir, exist_ok=True)
+
+    remaining = dict(APP_LOGO_PATH_IDS)
+    extracted = skipped = 0
+    for obj in env.objects:
+        if obj.path_id not in remaining:
+            continue
+        dest = remaining.pop(obj.path_id)
+        out_path = os.path.join(icons_dir, dest)
+        if not overwrite and os.path.exists(out_path):
+            skipped += 1
+        else:
+            obj.read().image.save(out_path)
+            extracted += 1
+        if not remaining:
+            break
+
+    print(f"  ✓ {extracted} logos de cabecera extraídos ({skipped} ya existían)")
+    for path_id, dest in remaining.items():
+        print(f"    ⚠ Logo no encontrado (path_id={path_id}): {dest}")
+
+
 def extract_ui_icons(env, planner_dir, overwrite=False):
     """Extrae TODOS los iconos UI del planner desde los bundles del juego.
 
@@ -1819,6 +1930,8 @@ def main():
     if not args.no_images:
         print("\n[4/7] Extrayendo imágenes...")
         extract_images(env, planner_dir, overwrite=args.overwrite)
+        extract_hero_portraits(env, planner_dir, overwrite=args.overwrite)
+        extract_app_logo(env, planner_dir, overwrite=args.overwrite)
     else:
         print("\n[4/7] Extracción de imágenes omitida (--no-images)")
 
