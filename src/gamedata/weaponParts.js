@@ -4003,7 +4003,8 @@ export const WEAPON_PARTS = [
     "damage": 2,
     "traits": [
       2
-    ]
+    ],
+    "range": 4
   },
   {
     "id": "WEAPON_PART_A_LIGHTNING_STRIKE_UPGRADED",
@@ -4025,7 +4026,8 @@ export const WEAPON_PARTS = [
     "traits": [
       2,
       3
-    ]
+    ],
+    "range": 4
   },
   {
     "id": "WEAPON_PART_A_ICE_STORM",
@@ -4046,7 +4048,8 @@ export const WEAPON_PARTS = [
     "damage": 2,
     "traits": [
       5
-    ]
+    ],
+    "range": 3
   },
   {
     "id": "WEAPON_PART_A_ICE_STORM_UPGRADED",
@@ -4068,7 +4071,8 @@ export const WEAPON_PARTS = [
     "traits": [
       5,
       4
-    ]
+    ],
+    "range": 4
   },
   {
     "id": "WEAPON_PART_A_RUNE_OF_BLADES",
@@ -4089,7 +4093,8 @@ export const WEAPON_PARTS = [
     "damage": 2,
     "traits": [
       1
-    ]
+    ],
+    "range": 3
   },
   {
     "id": "WEAPON_PART_A_RUNE_OF_BLADES_UPGRADED",
@@ -4110,7 +4115,8 @@ export const WEAPON_PARTS = [
     "damage": 3,
     "traits": [
       1
-    ]
+    ],
+    "range": 3
   },
   {
     "id": "WEAPON_PART_A_SUNBURST",
@@ -4131,7 +4137,8 @@ export const WEAPON_PARTS = [
     "damage": 2,
     "traits": [
       7
-    ]
+    ],
+    "range": null
   },
   {
     "id": "WEAPON_PART_A_SUNBURST_UPGRADED",
@@ -4153,7 +4160,8 @@ export const WEAPON_PARTS = [
     "traits": [
       7,
       3
-    ]
+    ],
+    "range": null
   },
   {
     "id": "WEAPON_PART_A_FEAR",
@@ -4174,7 +4182,8 @@ export const WEAPON_PARTS = [
     "damage": 4,
     "traits": [
       8
-    ]
+    ],
+    "range": null
   },
   {
     "id": "WEAPON_PART_A_FEAR_UPGRADED",
@@ -4196,7 +4205,8 @@ export const WEAPON_PARTS = [
     "traits": [
       8,
       9
-    ]
+    ],
+    "range": null
   },
   {
     "id": "WEAPON_PART_B_LIGHTNING_STRIKE",

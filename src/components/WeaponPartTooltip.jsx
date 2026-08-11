@@ -151,6 +151,11 @@ export default function WeaponPartTooltip({ partId, showUpgradeIcon = true, chil
   const weapon = part.weaponId ? WEAPONS_BY_ID[part.weaponId] : null;
   const hero   = weapon?.heroId ? HEROES_BY_ID[weapon.heroId] : null;
 
+  // Piezas especiales sin arma asociada (armas rúnicas) llevan su propio
+  // "range" en weaponParts.js — ver comentario igual en ArmeriaPanel.jsx.
+  const rangeUnknown = 'range' in part && part.range == null;
+  const range = 'range' in part ? part.range : (weapon?.range ?? 0);
+
   const heroSlug  = hero ? HERO_SLUGS[hero.id] : null;
   const actSuffix = act >= 1 ? 'act2' : 'act1';
   const avatarSrc = heroSlug ? `/assets/heroes/tooltip/${heroSlug}_${actSuffix}.png` : null;
@@ -238,15 +243,22 @@ export default function WeaponPartTooltip({ partId, showUpgradeIcon = true, chil
               <span>{part.damage}</span>
             </span>
           )}
-          {weapon?.range > 0 && (
+          {rangeUnknown && (
             <span className="wpt-chip">
-              {weapon.range === 2 ? (
+              <img src="/assets/icons/weapon_range.png" alt="" className="wpt-chip-icon"
+                onError={e => e.target.style.display = 'none'} />
+              <span>?</span>
+            </span>
+          )}
+          {range > 0 && (
+            <span className="wpt-chip">
+              {range === 2 ? (
                 <span>{LONG_RANGE_LABELS[lang] || 'Gran alcance'}</span>
               ) : (
                 <>
                   <img src="/assets/icons/weapon_range.png" alt="" className="wpt-chip-icon"
                     onError={e => e.target.style.display = 'none'} />
-                  <span>{weapon.range}</span>
+                  <span>{range}</span>
                 </>
               )}
             </span>

@@ -829,6 +829,22 @@ SPECIAL_WEAPON_PARTS = {
     },
 }
 
+# Alcance (en casillas) de las piezas A especiales, para la insignia de la
+# esquina del arma en la Armería. NO es extraíble de los assets del juego
+# (comprobado: el campo "Range" solo existe en las habilidades de
+# ENEMIGOS, nunca en las armas de héroe — ni siquiera las 12 armas
+# normales lo tienen ahí, weapons.js ya lo escribe a mano por el mismo
+# motivo) — valores confirmados a mano por el usuario. None = aún sin
+# confirmar (se muestra "?" en vez de un número inventado o un silencio
+# que parecería cuerpo a cuerpo).
+SPECIAL_WEAPON_RANGE = {
+    "WEAPON_PART_A_LIGHTNING_STRIKE": {"base": 4, "upgraded": 4},
+    "WEAPON_PART_A_ICE_STORM":        {"base": 3, "upgraded": 4},
+    "WEAPON_PART_A_RUNE_OF_BLADES":   {"base": 3, "upgraded": 3},
+    "WEAPON_PART_A_SUNBURST":         {"base": None, "upgraded": None},
+    "WEAPON_PART_A_FEAR":             {"base": None, "upgraded": None},
+}
+
 # Subconjunto de SPECIAL_WEAPON_PARTS que son piezas B/C fijas sin receta ni
 # versión "+": no aparecen en `recipes` (bucle principal de
 # generate_weapon_parts_js), así que se generan aparte a partir de
@@ -1025,6 +1041,9 @@ def generate_weapon_parts_js(item_defs, base_item_defs, recipes, locs, planner_d
             "damage":     base_damage,
             "traits":     traits,
         }
+        part_range = SPECIAL_WEAPON_RANGE.get(pid)
+        if part_range:
+            parts[pid]["range"] = part_range["base"]
 
         # También crear la versión UPGRADED (con el daño completo de los assets)
         uid = f"{pid}_UPGRADED"
@@ -1044,6 +1063,8 @@ def generate_weapon_parts_js(item_defs, base_item_defs, recipes, locs, planner_d
             "damage":     upgraded_damage,
             "traits":     upgraded_traits,
         }
+        if part_range:
+            upg_entry["range"] = part_range["upgraded"]
         if is_promo:
             upg_entry["isPromo"] = 1
         parts[uid] = upg_entry

@@ -5,6 +5,7 @@ import { WEAPONS_BY_ID } from '../gamedata/weapons';
 import { WEAPON_PARTS, WEAPON_PARTS_BY_ID } from '../gamedata/weaponParts';
 import { DESCRIPTIONS } from '../gamedata/descriptions';
 import { WEAPON_ABILITY_DESCS } from '../gamedata/weaponAbilityDescs';
+import { WEAPON_PART_DESCS } from '../gamedata/weaponPartDescs';
 import { ASSEMBLY_DISPLAY_H } from '../gamedata/weaponAssembly';
 import WeaponAssemblyView from './WeaponAssemblyView';
 import { DAMAGE_TYPE_BY_ID } from '../gamedata/damageTypes';
@@ -411,9 +412,7 @@ export default function ArmeriaPanel() {
                   )}
 
                   <WeaponAbilities
-                    weaponType={weaponType}
-                    level={selectedPartA?.level}
-                    isUpgraded={selectedPartA?.id?.endsWith('_UPGRADED') ?? false}
+                    partId={selectedPartA?.id}
                     lang={lang}
                   />
 
@@ -542,12 +541,14 @@ function AbilityDesc({ partId, lang }) {
 
 // ─── Habilidades intrínsecas del arma (WEAPON_ABILITY_{TYPE}_{1|2|3}) ────────
 
-function WeaponAbilities({ weaponType, level, isUpgraded, lang }) {
-  if (!weaponType || !level) return null;
+function WeaponAbilities({ partId, lang }) {
+  if (!partId) return null;
 
-  const base  = `WEAPON_ABILITY_${weaponType}_${level}`;
-  const key   = isUpgraded && WEAPON_ABILITY_DESCS[`${base}_UPGRADED`] ? `${base}_UPGRADED` : base;
-  const entry = WEAPON_ABILITY_DESCS[key];
+  // Búsqueda directa por id de pieza (incluye ya el sufijo "_UPGRADED" si
+  // toca): funciona igual para las armas normales (activación compartida
+  // por tipo+nivel) que para las piezas únicas sin tipo compartido (armas
+  // rúnicas, Dragonsbane), que antes se quedaban sin mostrar nada aquí.
+  const entry = WEAPON_PART_DESCS[partId];
   if (!entry) return null;
   const raw  = entry[lang] || entry.es || '';
   if (!raw) return null;
@@ -656,7 +657,12 @@ function DamageStats({ part, lang }) {
   const dmg    = part.damage || 0;
   const traits = part.traits || [];
   const weapon = WEAPONS_BY_ID[part.weaponId];
-  const range  = weapon?.range ?? 0;
+  // Piezas especiales sin arma asociada (armas rúnicas) llevan su propio
+  // "range" en weaponParts.js en vez de heredarlo de WEAPONS_BY_ID; null
+  // ahí significa "alcance real aún sin confirmar", a mostrar como "?" en
+  // vez de un número inventado o un silencio que parecería cuerpo a cuerpo.
+  const rangeUnknown = 'range' in part && part.range == null;
+  const range = 'range' in part ? part.range : (weapon?.range ?? 0);
 
   return (
     <div className="weapon-stats-overlay">
@@ -684,7 +690,19 @@ function DamageStats({ part, lang }) {
       {/* Esquina inferior derecha: rango (si existe) y daño siempre último */}
       <div className="weapon-stats-right">
 
-        {/* Rango: 2 = "GRAN ALCANCE" texto; ≥3 = número + icono */}
+        {/* Rango: 2 = "GRAN ALCANCE" texto; ≥3 = número + icono; sin
+            confirmar = "?" + icono */}
+        {rangeUnknown && (
+          <StatBadge className="stat-badge-inline" title="Alcance sin confirmar">
+            <span className="stat-badge-num">?</span>
+            <img
+              src="/assets/icons/weapon_range.png"
+              className="stat-badge-icon"
+              alt="range"
+              onError={e => e.target.style.display = 'none'}
+            />
+          </StatBadge>
+        )}
         {range === 2 && (
           <StatBadge className="stat-badge-type">
             <span className="stat-badge-text">{'GRAN\nALCANCE'}</span>
