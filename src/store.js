@@ -52,6 +52,39 @@ function replayHistory(originalState, history) {
   return gs;
 }
 
+// Metadatos "estáticos" del save (todo lo que no es inventario/oro/héroes
+// mutables, que va en gameState vía cloneGameState). Centralizado aquí para
+// que un campo nuevo de parseSave() solo haya que añadirlo una vez — antes
+// loadSave() tenía esta misma lista duplicada a mano y se quedó desincronizada
+// (partyXP llegó a faltar aquí durante un tiempo, mostrando siempre 0).
+function buildSaveMeta(parsed) {
+  return {
+    partyName: parsed.partyName,
+    act: parsed.act,
+    version: parsed.version,
+    timestamp: parsed.timestamp,
+    questId: parsed.questId,
+    gameDifficulty: parsed.gameDifficulty,
+    currentGamePhase: parsed.currentGamePhase,
+    currentObjectiveKey: parsed.currentObjectiveKey,
+    lastKnownLocation: parsed.lastKnownLocation,
+    totalPlayTimeSeconds: parsed.totalPlayTimeSeconds,
+    completedDestinations: parsed.completedDestinations,
+    activeDestinations: parsed.activeDestinations,
+    completedStoryQuestIds: parsed.completedStoryQuestIds,
+    activeStoryQuestIds: parsed.activeStoryQuestIds,
+    completedSideQuestIds: parsed.completedSideQuestIds,
+    activeSideQuestIds: parsed.activeSideQuestIds,
+    completedStoryQuestDates: parsed.completedStoryQuestDates,
+    completedSideQuestDates: parsed.completedSideQuestDates,
+    slotGUID: parsed.slotGUID,
+    roundNumber: parsed.roundNumber,
+    partyXP: parsed.partyXP,
+    unlockedSkills: parsed.unlockedSkills,
+    unavailableHeroes: parsed.unavailableHeroes,
+  };
+}
+
 function createAction(type, description, data) {
   return {
     id: Date.now() + Math.random(),
@@ -68,6 +101,12 @@ export const useStore = create((set, get) => ({
   saveLoaded: false,
   saveError: null,
   saveMeta: null, // { partyName, act, version, timestamp }
+  // Contenido tal cual del .SAV cargado (texto JSON) — se reenvía a
+  // /api/share para que un enlace compartido pueda reinterpretarse con el
+  // parser vigente en el momento de abrirlo, no con el de cuando se creó.
+  // null cuando la partida activa viene de un enlace compartido antiguo que
+  // no lo guardó (ver loadParsedState).
+  rawSaveContent: null,
 
   // === ESTADO DEL JUEGO (mutable durante la sesión) ===
   gameState: null,
@@ -100,33 +139,21 @@ export const useStore = create((set, get) => ({
       set({
         saveLoaded: true,
         saveError: null,
-        saveMeta: {
-          partyName: parsed.partyName,
-          act: parsed.act,
-          version: parsed.version,
-          timestamp: parsed.timestamp,
-          questId: parsed.questId,
-          gameDifficulty: parsed.gameDifficulty,
-          currentGamePhase: parsed.currentGamePhase,
-          currentObjectiveKey: parsed.currentObjectiveKey,
-          lastKnownLocation: parsed.lastKnownLocation,
-          totalPlayTimeSeconds: parsed.totalPlayTimeSeconds,
-          completedDestinations: parsed.completedDestinations,
-          activeDestinations: parsed.activeDestinations,
-          slotGUID: parsed.slotGUID,
-          roundNumber: parsed.roundNumber,
-        },
+        saveMeta: buildSaveMeta(parsed),
         gameState: gs,
         originalState: cloneGameState(parsed),
         actionHistory: [],
+        rawSaveContent: content,
       });
     } catch (e) {
       set({ saveError: e.message, saveLoaded: false });
     }
   },
 
-  // Cargar un save ya parseado (desde enlace compartido)
-  // originalState: estado pre-acciones (para que undo funcione correctamente)
+  // Cargar un save ya parseado (desde enlace compartido antiguo, antes de que
+  // el share guardara el .SAV en bruto — se conserva solo para no romper
+  // enlaces ya creados). Usa saveMeta/gameState congelados en el momento de
+  // compartir: si el parser ganó campos nuevos después, no aparecerán aquí.
   loadParsedState: (gameState, saveMeta, actionHistory = [], originalState = null) => {
     const gs   = cloneGameState(gameState);
     const orig = originalState ? cloneGameState(originalState) : cloneGameState(gameState);
@@ -137,7 +164,35 @@ export const useStore = create((set, get) => ({
       gameState:     gs,
       originalState: orig,
       actionHistory,
+      rawSaveContent: null,
     });
+  },
+
+  // Cargar un share a partir del .SAV en bruto que se guardó tal cual se
+  // subió: se reinterpreta con el parser ACTUAL (no con el que existía
+  // cuando se creó el enlace), así que cualquier campo añadido después de
+  // compartir (XP, misiones, habilidades...) aparece igualmente. Las
+  // acciones del historial se re-aplican encima para llegar al estado
+  // actual del share.
+  loadFromRawSave: (content, actionHistory = []) => {
+    try {
+      const parsed = parseSave(content);
+      const orig = cloneGameState(parsed);
+      const gs = replayHistory(parsed, actionHistory);
+      set({
+        saveLoaded: true,
+        saveError: null,
+        saveMeta: buildSaveMeta(parsed),
+        gameState: gs,
+        originalState: orig,
+        actionHistory,
+        rawSaveContent: content,
+      });
+      return true;
+    } catch (e) {
+      set({ saveError: e.message, saveLoaded: false });
+      return false;
+    }
   },
 
   // Resetear al estado original del save

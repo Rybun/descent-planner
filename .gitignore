@@ -31,3 +31,5 @@ public/candidates/
 
 # Backups generados por extract.py
 src/gamedata/*.bak
+
+__pycache__/

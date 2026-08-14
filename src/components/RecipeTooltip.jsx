@@ -11,9 +11,11 @@ import { WEAPONS_BY_ID } from '../gamedata/weapons';
 import { HEROES_BY_ID } from '../gamedata/heroes';
 import { MATERIALS_BY_ID } from '../gamedata/materials';
 import { ALL_ITEMS_BY_ID } from '../gamedata/items';
-import { CONSUMABLE_DESCS } from '../gamedata/consumableDescs';
+import { ArmorStatBadge } from './ItemTooltip';
 import { parseGameText, TERM_ICONS } from '../gamedata/gameText';
 import { useIsMobile } from '../hooks/useIsMobile';
+import { useTooltipPosition } from '../hooks/useTooltipPosition';
+import { useBodyScrollLock } from '../hooks/useBodyScrollLock';
 import './RecipeTooltip.css';
 
 const UPGRADE_ICON = '/assets/icons/Icon_Upgrade.png';
@@ -39,6 +41,11 @@ const ARMOR_TYPE_LABELS = {
   light:  { es: 'Ligera',  en: 'Light',  fr: 'Légère',  it: 'Leggera', pt: 'Leve'   },
   medium: { es: 'Mediana', en: 'Medium', fr: 'Moyenne', it: 'Media',   pt: 'Média'  },
   heavy:  { es: 'Pesada',  en: 'Heavy',  fr: 'Lourde',  it: 'Pesante', pt: 'Pesada' },
+};
+const CONSUMABLE_TYPE_LABELS = {
+  common:  { es: 'Común',    en: 'Common', fr: 'Ordinaire', it: 'Comune', pt: 'Comum'    },
+  limited: { es: 'Limitado', en: 'Limited', fr: 'Limitée',  it: 'Raro',   pt: 'Limitado' },
+  special: { es: 'Especial', en: 'Unique', fr: 'Unique',    it: 'Unico',  pt: 'Especial' },
 };
 
 const HERO_SLUGS = {
@@ -173,16 +180,9 @@ function PartDesc({ partId, lang }) {
 function ItemDesc({ itemObj, itemId, lang }) {
   if (!itemObj) return null;
   const isUpgrade = itemId?.endsWith('_PLUS');
-  const baseId    = itemId?.replace(/_PLUS$/, '');
 
-  let raw = '';
-  if (itemObj.type === 'consumable') {
-    const entry = CONSUMABLE_DESCS[itemId] || CONSUMABLE_DESCS[baseId];
-    raw = entry?.[lang] || entry?.es || '';
-  } else {
-    const descs = isUpgrade ? itemObj.abilityDescs : itemObj.baseAbilityDescs;
-    raw = descs?.[lang] || descs?.es || '';
-  }
+  const descs = isUpgrade ? itemObj.abilityDescs : itemObj.baseAbilityDescs;
+  const raw = descs?.[lang] || descs?.es || '';
   const clean = raw.replace(/^"+|"+$/g, '').trim();
   if (!clean) return null;
   return <span className="rtt-effect">{renderNodes(parseGameText(clean))}</span>;
@@ -198,6 +198,8 @@ export default function RecipeTooltip({ recipeId, children }) {
   const [visible, setVisible] = useState(false);
   const [coords,  setCoords]  = useState({ x: 0, y: 0 });
   const [modalOpen, setModalOpen] = useState(false);
+  const { ref: bubbleRef, style: bubbleStyle } = useTooltipPosition(coords, visible && !isMobile);
+  useBodyScrollLock(modalOpen);
 
   const recipe = RECIPES_BY_ID[recipeId];
   if (!recipe) return <>{children}</>;
@@ -235,8 +237,6 @@ export default function RecipeTooltip({ recipeId, children }) {
   const craftingMaterials = gameState?.craftingMaterials ?? {};
 
   function move(e) { setCoords({ x: e.clientX, y: e.clientY }); }
-  const offsetX = coords.x + 16 + 280 > window.innerWidth ? coords.x - 296 : coords.x + 16;
-  const offsetY = Math.min(coords.y - 8, window.innerHeight - 420);
 
   function handleClick(e) {
     if (!isMobile) return;
@@ -264,6 +264,9 @@ export default function RecipeTooltip({ recipeId, children }) {
         <span className="rtt-subtitle">
           {slotLabel}
           {itemObj.armorType && ` · ${ARMOR_TYPE_LABELS[itemObj.armorType]?.[lang] || itemObj.armorType}`}
+          {itemObj.consumableType && ` · ${CONSUMABLE_TYPE_LABELS[itemObj.consumableType]?.[lang] || itemObj.consumableType}`}
+          {itemObj.limitedHeroIds?.length > 0 && ` · ${itemObj.limitedHeroIds.map(hid => getName(HEROES_BY_ID[hid], lang)).join(' / ')}`}
+          <ArmorStatBadge item={itemObj} upgraded={isPlus} className="rtt-armor-heroes-stat" />
         </span>
       )}
 
@@ -318,7 +321,7 @@ export default function RecipeTooltip({ recipeId, children }) {
     >
       {children}
       {!isMobile && visible && (
-        <span className="rtt-bubble" style={{ left: offsetX, top: offsetY }}>
+        <span ref={bubbleRef} className="rtt-bubble" style={bubbleStyle}>
           {bubbleContent}
         </span>
       )}

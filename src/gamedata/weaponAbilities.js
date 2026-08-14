@@ -176,7 +176,7 @@ export const WEAPON_ABILITIES = {
   "WEAPON_ABILITY_BOW_3_UPGRADED": {
     "es": "Después de tu ataque, cada héroe que esté a 2 o menos casillas del enemigo puede <style=Term><link=TERM_FOCUSED>concentrar</link></style> 1 carta y realizar <style=Term><link=TERM_SHIFT>Desplazamiento</link></style> 1.\n  \n  2 <style=Term><link=TERM_FATIGUE></link></style>: Durante tu ataque, si tienes un <style=Term><link=TERM_SURGE></link></style>, añade 1 <style=Term><link=TERM_SUCCESS></link></style>.",
     "en": "After your attack, each hero within 2 spaces of the enemy may <style=Term><link=TERM_FOCUSED>focus</link></style> 1 card and <style=Term><link=TERM_SHIFT>shift</link></style> 1.\n\n2 <style=Term><link=TERM_FATIGUE></link></style>: During your attack, if you have a <style=Term><link=TERM_SURGE></link></style>, add 1 <style=Term><link=TERM_SUCCESS></link></style>.",
-    "fr": "Après votre attaque, chaque Héros dans un rayon de 2 cases autour de l’Ennemi peut <style=Term><link=TERM_FOCUSED>canaliser</link></style> 1 carte et <b><style=Term><link=TERM_SHIFT>Glisser</link></style> de 1</b>.\n  \n  2 <style=Term><link=TERM_FATIGUE></link></style> : Si vous obtenez une <style=Term><link=TERM_SURGE></link></style> pendant votre attaque, ajoutez 1 <style=Term><link=TERM_SUCCESS></link></style>.",
+    "fr": "Après votre attaque, chaque Héros dans un rayon de 2 cases autour de l’Ennemi peut <style=Term><link=TERM_FOCUSED>canaliser</link></style> 1 carte et <style=Term><link=TERM_SHIFT>Glisser</link></style> de 1.\n  \n  2 <style=Term><link=TERM_FATIGUE></link></style> : Si vous obtenez une <style=Term><link=TERM_SURGE></link></style> pendant votre attaque, ajoutez 1 <style=Term><link=TERM_SUCCESS></link></style>.",
     "it": "Dopo il tuo attacco, ogni eroe entro 2 caselle dal nemico può focalizzare 1 carta e <style=Term><link=TERM_SHIFT>scattare</link></style> 1.\n\n2 <style=Term><link=TERM_FATIGUE></link></style>: Durante il tuo attacco, se possiedi un <style=Term><link=TERM_SURGE></link></style>, aggiungi 1 <style=Term><link=TERM_SUCCESS></link></style>.",
     "pt": "Depois do seu ataque, cada herói a até 2 espaços do inimigo pode focar 1 carta e <style=Term><link=TERM_SHIFT>deslocar</link></style> 1.\n \n2 <style=Term><link=TERM_FATIGUE></link></style>: durante seu ataque, se você rolou um <style=Term><link=TERM_SURGE></link></style>, some 1 <style=Term><link=TERM_SUCCESS></link></style>."
   },
@@ -377,18 +377,18 @@ export const WEAPON_ABILITIES = {
     "pt": "X <style=Term><link=TERM_FATIGUE></link></style>: Durante seu ataque ou sua defesa, some X <style=Term><link=TERM_SUCCESS></link></style>. Depois da sua rolagem, mova o inimigo até X espaços.\n Custa 1 <style=Term><link=TERM_EXPERIENCE>XP</link></style> para equipar."
   },
   "WEAPON_ABILITY_GAUNTLET_1": {
-    "es": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante tu ataque, si tienes una carta <i>Sombra</i>, añade 1 <style=Term><link=TERM_SUCCESS></link></style>.",
-    "en": "2 <style=Term><link=TERM_FATIGUE></link></style>: During your attack, if you have a <i>Shadow</i> card, add 1 <style=Term><link=TERM_SUCCESS></link></style>.",
-    "fr": "2 <style=Term><link=TERM_FATIGUE></link></style> : Si vous détenez une carte <i>Ombre</i>, ajoutez 1 <style=Term><link=TERM_SUCCESS></link></style> pendant votre attaque.",
-    "it": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante il tuo attacco, se possiedi carte <i>Ombra</i>, aggiungi 1 <style=Term><link=TERM_SUCCESS></link></style>.",
-    "pt": "2 <style=Term><link=TERM_FATIGUE></link></style>: durante seu ataque, se você tiver uma carta de <i>Sombra</i>, some 1 <style=Term><link=TERM_SUCCESS></link></style>."
+    "es": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante tu ataque, si tienes una carta Sombra, añade 1 <style=Term><link=TERM_SUCCESS></link></style>.",
+    "en": "2 <style=Term><link=TERM_FATIGUE></link></style>: During your attack, if you have a Shadow card, add 1 <style=Term><link=TERM_SUCCESS></link></style>.",
+    "fr": "2 <style=Term><link=TERM_FATIGUE></link></style> : Si vous détenez une carte Ombre, ajoutez 1 <style=Term><link=TERM_SUCCESS></link></style> pendant votre attaque.",
+    "it": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante il tuo attacco, se possiedi carte Ombra, aggiungi 1 <style=Term><link=TERM_SUCCESS></link></style>.",
+    "pt": "2 <style=Term><link=TERM_FATIGUE></link></style>: durante seu ataque, se você tiver uma carta de Sombra, some 1 <style=Term><link=TERM_SUCCESS></link></style>."
   },
   "WEAPON_ABILITY_GAUNTLET_1_UPGRADED": {
-    "es": "1 <style=Term><link=TERM_FATIGUE></link></style>: Durante tu ataque, si tienes una carta <i>Sombra</i>, añade 1 <style=Term><link=TERM_SUCCESS></link></style>.",
-    "en": "1 <style=Term><link=TERM_FATIGUE></link></style>: During your attack, if you have a <i>Shadow</i> card, add 1 <style=Term><link=TERM_SUCCESS></link></style>.",
-    "fr": "1 <style=Term><link=TERM_FATIGUE></link></style> : Si vous détenez une carte <i>Ombre</i>, ajoutez 1 <style=Term><link=TERM_SUCCESS></link></style> pendant votre attaque.",
-    "it": "1 <style=Term><link=TERM_FATIGUE></link></style>: Durante il tuo attacco, se possiedi carte <i>Ombra</i>, aggiungi 1 <style=Term><link=TERM_SUCCESS></link></style>.",
-    "pt": "1 <style=Term><link=TERM_FATIGUE></link></style>: durante seu ataque, se você tiver uma carta de <i>Sombra</i>, some 1 <style=Term><link=TERM_SUCCESS></link></style>."
+    "es": "1 <style=Term><link=TERM_FATIGUE></link></style>: Durante tu ataque, si tienes una carta Sombra, añade 1 <style=Term><link=TERM_SUCCESS></link></style>.",
+    "en": "1 <style=Term><link=TERM_FATIGUE></link></style>: During your attack, if you have a Shadow card, add 1 <style=Term><link=TERM_SUCCESS></link></style>.",
+    "fr": "1 <style=Term><link=TERM_FATIGUE></link></style> : Si vous détenez une carte Ombre, ajoutez 1 <style=Term><link=TERM_SUCCESS></link></style> pendant votre attaque.",
+    "it": "1 <style=Term><link=TERM_FATIGUE></link></style>: Durante il tuo attacco, se possiedi carte Ombra, aggiungi 1 <style=Term><link=TERM_SUCCESS></link></style>.",
+    "pt": "1 <style=Term><link=TERM_FATIGUE></link></style>: durante seu ataque, se você tiver uma carta de Sombra, some 1 <style=Term><link=TERM_SUCCESS></link></style>."
   },
   "WEAPON_ABILITY_GAUNTLET_2": {
     "es": "1 <style=Term><link=TERM_FATIGUE></link></style>: Después de tu ataque, si el enemigo es pequeño, muévelo 2 casillas. Cada enemigo que atraviese sufre 2 <style=Term><link=TERM_DAMAGE></link></style>.",
@@ -405,32 +405,32 @@ export const WEAPON_ABILITIES = {
     "pt": "1 <style=Term><link=TERM_FATIGUE></link></style>: depois do seu ataque, se o inimigo for pequeno, mova-o 4 espaços. Cada inimigo pelo qual ele passar sofre 3 <style=Term><link=TERM_DAMAGE></link></style>."
   },
   "WEAPON_ABILITY_GAUNTLET_3": {
-    "es": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante el ataque de un enemigo adyacente, añade 1 <style=Term><link=TERM_SUCCESS></link></style> a la defensa. si tienes una carta <i>Sombra</i>, reduce el coste de esta capacidad en 1 <style=Term><link=TERM_FATIGUE></link></style>.",
-    "en": "2 <style=Term><link=TERM_FATIGUE></link></style>: During an adjacent enemy's attack, add 1 <style=Term><link=TERM_SUCCESS></link></style> to the defense. If you have a <i>Shadow</i> card, reduce this ability's cost by 1 <style=Term><link=TERM_FATIGUE></link></style>.",
-    "fr": "2 <style=Term><link=TERM_FATIGUE></link></style> : Ajoutez 1 <style=Term><link=TERM_SUCCESS></link></style> à la défense pendant l’attaque d’un Ennemi adjacent. Si vous détenez une carte <i>Ombre</i>, réduisez de 1 <style=Term><link=TERM_FATIGUE></link></style> le coût de cette capacité.",
-    "it": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante l'attacco di un nemico adiacente, aggiungi 1 <style=Term><link=TERM_SUCCESS></link></style> alla difesa. Se possiedi carte <i>Ombra</i>, riduci di 1 <style=Term><link=TERM_FATIGUE></link></style> il costo di questa capacità.",
-    "pt": "2 <style=Term><link=TERM_FATIGUE></link></style>: durante o ataque de um inimigo adjacente, some 1 <style=Term><link=TERM_SUCCESS></link></style> à defesa. Se você tiver uma carta de <i>Sombra</i>, reduza o custo desta habilidade em 1 <style=Term><link=TERM_FATIGUE></link></style>."
+    "es": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante el ataque de un enemigo adyacente, añade 1 <style=Term><link=TERM_SUCCESS></link></style> a la defensa. si tienes una carta Sombra, reduce el coste de esta capacidad en 1 <style=Term><link=TERM_FATIGUE></link></style>.",
+    "en": "2 <style=Term><link=TERM_FATIGUE></link></style>: During an adjacent enemy's attack, add 1 <style=Term><link=TERM_SUCCESS></link></style> to the defense. If you have a Shadow card, reduce this ability's cost by 1 <style=Term><link=TERM_FATIGUE></link></style>.",
+    "fr": "2 <style=Term><link=TERM_FATIGUE></link></style> : Ajoutez 1 <style=Term><link=TERM_SUCCESS></link></style> à la défense pendant l’attaque d’un Ennemi adjacent. Si vous détenez une carte Ombre, réduisez de 1 <style=Term><link=TERM_FATIGUE></link></style> le coût de cette capacité.",
+    "it": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante l'attacco di un nemico adiacente, aggiungi 1 <style=Term><link=TERM_SUCCESS></link></style> alla difesa. Se possiedi carte Ombra, riduci di 1 <style=Term><link=TERM_FATIGUE></link></style> il costo di questa capacità.",
+    "pt": "2 <style=Term><link=TERM_FATIGUE></link></style>: durante o ataque de um inimigo adjacente, some 1 <style=Term><link=TERM_SUCCESS></link></style> à defesa. Se você tiver uma carta de Sombra, reduza o custo desta habilidade em 1 <style=Term><link=TERM_FATIGUE></link></style>."
   },
   "WEAPON_ABILITY_GAUNTLET_3_UPGRADED": {
-    "es": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante el ataque de un enemigo adyacente, añade 1 <style=Term><link=TERM_SUCCESS></link></style> a la defensa. si tienes una carta <i>Sombra</i>, reduce el coste de esta capacidad en 1 <style=Term><link=TERM_FATIGUE></link></style>.",
-    "en": "2 <style=Term><link=TERM_FATIGUE></link></style>: During an adjacent enemy's attack, add 1 <style=Term><link=TERM_SUCCESS></link></style> to the defense. If you have a <i>Shadow</i> card, reduce this ability's cost by 1 <style=Term><link=TERM_FATIGUE></link></style>.",
-    "fr": "2 <style=Term><link=TERM_FATIGUE></link></style> : Ajoutez 1 <style=Term><link=TERM_SUCCESS></link></style> à la défense pendant l’attaque d’un Ennemi adjacent. Si vous détenez une carte <i>Ombre</i>, réduisez de 1 <style=Term><link=TERM_FATIGUE></link></style> le coût de cette capacité.",
-    "it": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante l'attacco di un nemico adiacente, aggiungi 1 <style=Term><link=TERM_SUCCESS></link></style> alla difesa. Se possiedi carte <i>Ombra</i>, riduci di 1 <style=Term><link=TERM_FATIGUE></link></style> il costo di questa capacità.",
-    "pt": "2 <style=Term><link=TERM_FATIGUE></link></style>: durante o ataque de um inimigo adjacente, some 1 <style=Term><link=TERM_SUCCESS></link></style> à defesa. Se você tiver uma carta de <i>Sombra</i>, reduza o custo desta habilidade em 1 <style=Term><link=TERM_FATIGUE></link></style>."
+    "es": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante el ataque de un enemigo adyacente, añade 1 <style=Term><link=TERM_SUCCESS></link></style> a la defensa. si tienes una carta Sombra, reduce el coste de esta capacidad en 1 <style=Term><link=TERM_FATIGUE></link></style>.",
+    "en": "2 <style=Term><link=TERM_FATIGUE></link></style>: During an adjacent enemy's attack, add 1 <style=Term><link=TERM_SUCCESS></link></style> to the defense. If you have a Shadow card, reduce this ability's cost by 1 <style=Term><link=TERM_FATIGUE></link></style>.",
+    "fr": "2 <style=Term><link=TERM_FATIGUE></link></style> : Ajoutez 1 <style=Term><link=TERM_SUCCESS></link></style> à la défense pendant l’attaque d’un Ennemi adjacent. Si vous détenez une carte Ombre, réduisez de 1 <style=Term><link=TERM_FATIGUE></link></style> le coût de cette capacité.",
+    "it": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante l'attacco di un nemico adiacente, aggiungi 1 <style=Term><link=TERM_SUCCESS></link></style> alla difesa. Se possiedi carte Ombra, riduci di 1 <style=Term><link=TERM_FATIGUE></link></style> il costo di questa capacità.",
+    "pt": "2 <style=Term><link=TERM_FATIGUE></link></style>: durante o ataque de um inimigo adjacente, some 1 <style=Term><link=TERM_SUCCESS></link></style> à defesa. Se você tiver uma carta de Sombra, reduza o custo desta habilidade em 1 <style=Term><link=TERM_FATIGUE></link></style>."
   },
   "WEAPON_PART_A_GAUNTLET_4": {
-    "es": "1 <style=Term><link=TERM_SURGE></link></style>: Durante tu ataque, añade 2 <style=Term><link=TERM_SUCCESS></link></style> y descarta 1 <style=Term><link=TERM_FATIGUE></link></style> de una carta <i>Sombra</i>.",
-    "en": "1 <style=Term><link=TERM_SURGE></link></style>: During your attack, add 2 <style=Term><link=TERM_SUCCESS></link></style> and discard 1 <style=Term><link=TERM_FATIGUE></link></style> from a <i>Shadow</i> card.",
-    "fr": "1 <style=Term><link=TERM_SURGE></link></style> : Pendant votre attaque, ajoutez 2 <style=Term><link=TERM_SUCCESS></link></style> et défaussez 1 <style=Term><link=TERM_FATIGUE></link></style> d'une carte <i>Ombre</i>.",
-    "it": "1 <style=Term><link=TERM_SURGE></link></style>: Durante il tuo attacco, aggiungi 2 <style=Term><link=TERM_SUCCESS></link></style> e scarta 1 <style=Term><link=TERM_FATIGUE></link></style> da una carta <i>Ombra</i>.",
-    "pt": "1 <style=Term><link=TERM_SURGE></link></style>: Durante seu ataque, some 2 <style=Term><link=TERM_SUCCESS></link></style> e descarte 1 <style=Term><link=TERM_FATIGUE></link></style> de uma carta <i>Sombra</i>."
+    "es": "1 <style=Term><link=TERM_SURGE></link></style>: Durante tu ataque, añade 2 <style=Term><link=TERM_SUCCESS></link></style> y descarta 1 <style=Term><link=TERM_FATIGUE></link></style> de una carta Sombra.",
+    "en": "1 <style=Term><link=TERM_SURGE></link></style>: During your attack, add 2 <style=Term><link=TERM_SUCCESS></link></style> and discard 1 <style=Term><link=TERM_FATIGUE></link></style> from a Shadow card.",
+    "fr": "1 <style=Term><link=TERM_SURGE></link></style> : Pendant votre attaque, ajoutez 2 <style=Term><link=TERM_SUCCESS></link></style> et défaussez 1 <style=Term><link=TERM_FATIGUE></link></style> d'une carte Ombre.",
+    "it": "1 <style=Term><link=TERM_SURGE></link></style>: Durante il tuo attacco, aggiungi 2 <style=Term><link=TERM_SUCCESS></link></style> e scarta 1 <style=Term><link=TERM_FATIGUE></link></style> da una carta Ombra.",
+    "pt": "1 <style=Term><link=TERM_SURGE></link></style>: Durante seu ataque, some 2 <style=Term><link=TERM_SUCCESS></link></style> e descarte 1 <style=Term><link=TERM_FATIGUE></link></style> de uma carta Sombra."
   },
   "WEAPON_PART_A_GAUNTLET_4_UPGRADED": {
-    "es": "1 <style=Term><link=TERM_SURGE></link></style>: Durante tu ataque, añade 2 <style=Term><link=TERM_SUCCESS></link></style> y descarta 1 <style=Term><link=TERM_FATIGUE></link></style> de cada carta <i>Sombra</i>.",
-    "en": "1 <style=Term><link=TERM_SURGE></link></style>: During your attack, add 2 <style=Term><link=TERM_SUCCESS></link></style> and discard 1 <style=Term><link=TERM_FATIGUE></link></style> from each <i>Shadow</i> card.",
-    "fr": "1 <style=Term><link=TERM_SURGE></link></style> : Pendant votre attaque, ajoutez 2 <style=Term><link=TERM_SUCCESS></link></style> et défaussez 1 <style=Term><link=TERM_FATIGUE></link></style> de chaque carte <i>Ombre</i>.",
-    "it": "1 <style=Term><link=TERM_SURGE></link></style>: Durante il tuo attacco, aggiungi 2 <style=Term><link=TERM_SUCCESS></link></style> e scarta 1 <style=Term><link=TERM_FATIGUE></link></style> da ogni carta <i>Ombra</i>.",
-    "pt": "1 <style=Term><link=TERM_SURGE></link></style>: Durante seu ataque, some 2 <style=Term><link=TERM_SUCCESS></link></style> e descarte 1 <style=Term><link=TERM_FATIGUE></link></style> de cada carta <i>Sombra</i>."
+    "es": "1 <style=Term><link=TERM_SURGE></link></style>: Durante tu ataque, añade 2 <style=Term><link=TERM_SUCCESS></link></style> y descarta 1 <style=Term><link=TERM_FATIGUE></link></style> de cada carta Sombra.",
+    "en": "1 <style=Term><link=TERM_SURGE></link></style>: During your attack, add 2 <style=Term><link=TERM_SUCCESS></link></style> and discard 1 <style=Term><link=TERM_FATIGUE></link></style> from each Shadow card.",
+    "fr": "1 <style=Term><link=TERM_SURGE></link></style> : Pendant votre attaque, ajoutez 2 <style=Term><link=TERM_SUCCESS></link></style> et défaussez 1 <style=Term><link=TERM_FATIGUE></link></style> de chaque carte Ombre.",
+    "it": "1 <style=Term><link=TERM_SURGE></link></style>: Durante il tuo attacco, aggiungi 2 <style=Term><link=TERM_SUCCESS></link></style> e scarta 1 <style=Term><link=TERM_FATIGUE></link></style> da ogni carta Ombra.",
+    "pt": "1 <style=Term><link=TERM_SURGE></link></style>: Durante seu ataque, some 2 <style=Term><link=TERM_SUCCESS></link></style> e descarte 1 <style=Term><link=TERM_FATIGUE></link></style> de cada carta Sombra."
   },
   "WEAPON_PART_A_GAUNTLET_5": {
     "es": "Durante tu ataque, puedes sufrir 2 <style=Term><link=TERM_DAMAGE></link></style> para añadir 1 dado azul.",
@@ -489,18 +489,18 @@ export const WEAPON_ABILITIES = {
     "pt": "Depois do grupo ganhar materiais para construção ou receitas, descarte 1 <style=Term><link=TERM_FATIGUE></link></style> e prepare 1 carta."
   },
   "WEAPON_PART_A_HAMMER_4": {
-    "es": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante tu ataque, <style=Term><link=TERM_PREPARED>apresta</link></style> una habilidad <i>Inspiración</i>.",
-    "en": "2 <style=Term><link=TERM_FATIGUE></link></style>: During your attack, <style=Term><link=TERM_PREPARED>prepare</link></style> an <i>Inspiration</i> skill.",
-    "fr": "2 <style=Term><link=TERM_FATIGUE></link></style> : Pendant votre attaque, <style=Term><link=TERM_PREPARED>préparez</link></style> une compétence <i>Inspiration</i>.",
-    "it": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante il tuo attacco, <style=Term><link=TERM_PREPARED>prepara</link></style> 1 abilità <i>Ispirazione</i>.",
-    "pt": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante seu ataque, <style=Term><link=TERM_PREPARED>prepare</link></style> uma perícia de <i>Inspiração</i>."
+    "es": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante tu ataque, <style=Term><link=TERM_PREPARED>apresta</link></style> una habilidad Inspiración.",
+    "en": "2 <style=Term><link=TERM_FATIGUE></link></style>: During your attack, <style=Term><link=TERM_PREPARED>prepare</link></style> an Inspiration skill.",
+    "fr": "2 <style=Term><link=TERM_FATIGUE></link></style> : Pendant votre attaque, <style=Term><link=TERM_PREPARED>préparez</link></style> une compétence Inspiration.",
+    "it": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante il tuo attacco, <style=Term><link=TERM_PREPARED>prepara</link></style> 1 abilità Ispirazione.",
+    "pt": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante seu ataque, <style=Term><link=TERM_PREPARED>prepare</link></style> uma perícia de Inspiração."
   },
   "WEAPON_PART_A_HAMMER_4_UPGRADED": {
-    "es": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante tu ataque, añade 1 <style=Term><link=TERM_SUCCESS></link></style> y <style=Term><link=TERM_PREPARED>apresta</link></style> una habilidad <i>Inspiración</i>.",
-    "en": "2 <style=Term><link=TERM_FATIGUE></link></style>: During your attack, add 1 <style=Term><link=TERM_SUCCESS></link></style> and <style=Term><link=TERM_PREPARED>prepare</link></style> an <i>Inspiration</i> skill.",
-    "fr": "2 <style=Term><link=TERM_FATIGUE></link></style> : Pendant votre attaque, ajoutez 1 <style=Term><link=TERM_SUCCESS></link></style> et <style=Term><link=TERM_PREPARED>préparez</link></style> une compétence <i>Inspiration</i>.",
-    "it": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante il tuo attacco, aggiungi 1 <style=Term><link=TERM_SUCCESS></link></style> e <style=Term><link=TERM_PREPARED>prepara</link></style> 1 abilità <i>Ispirazione</i>.",
-    "pt": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante seu ataque, some 1 <style=Term><link=TERM_SUCCESS></link></style> e <style=Term><link=TERM_PREPARED>prepare</link></style> uma perícia de <i>Inspiração</i>."
+    "es": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante tu ataque, añade 1 <style=Term><link=TERM_SUCCESS></link></style> y <style=Term><link=TERM_PREPARED>apresta</link></style> una habilidad Inspiración.",
+    "en": "2 <style=Term><link=TERM_FATIGUE></link></style>: During your attack, add 1 <style=Term><link=TERM_SUCCESS></link></style> and <style=Term><link=TERM_PREPARED>prepare</link></style> an Inspiration skill.",
+    "fr": "2 <style=Term><link=TERM_FATIGUE></link></style> : Pendant votre attaque, ajoutez 1 <style=Term><link=TERM_SUCCESS></link></style> et <style=Term><link=TERM_PREPARED>préparez</link></style> une compétence Inspiration.",
+    "it": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante il tuo attacco, aggiungi 1 <style=Term><link=TERM_SUCCESS></link></style> e <style=Term><link=TERM_PREPARED>prepara</link></style> 1 abilità Ispirazione.",
+    "pt": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante seu ataque, some 1 <style=Term><link=TERM_SUCCESS></link></style> e <style=Term><link=TERM_PREPARED>prepare</link></style> uma perícia de Inspiração."
   },
   "WEAPON_PART_A_HAMMER_5": {
     "es": "1 <style=Term><link=TERM_SURGE></link></style>: Durante tu ataque o defensa, añade 1 dado negro y <style=Term><link=TERM_STRESSED>estresa</link></style> una carta.",
@@ -825,18 +825,18 @@ export const WEAPON_ABILITIES = {
     "pt": "No começo do seu turno, você pode descartar qualquer número de condições desta carta e da carta de ataque de outro herói."
   },
   "WEAPON_PART_A_SWORD_4": {
-    "es": "2 <style=Term><link=TERM_FATIGUE></link></style>: Antes de tu ataque, esta arma obtiene <b><style=Term><link=TERM_REACH>Gran alcance</link></style></b>. Si tienes una carta <i>Técnica</i>, reduce el coste de esta capacidad en 1 <style=Term><link=TERM_FATIGUE></link></style>.",
-    "en": "2 <style=Term><link=TERM_FATIGUE></link></style>: Before your attack, this weapon gains <b><style=Term><link=TERM_REACH>Reach</link></style></b>. If you have a <i>Technique</i> card, reduce this ability's cost by 1 <style=Term><link=TERM_FATIGUE></link></style>.",
-    "fr": "2 <style=Term><link=TERM_FATIGUE></link></style> : Avant votre attaque, cette arme gagne <b><style=Term><link=TERM_REACH>Allonge</link></style></b>. Si vous possédez une carte <i>Technique</i>, réduisez de 1 <style=Term><link=TERM_FATIGUE></link></style> le coût de cette capacité.",
-    "it": "2 <style=Term><link=TERM_FATIGUE></link></style>: Prima del tuo attacco, quest'arma ottiene <b><style=Term><link=TERM_REACH>Portata</link></style></b>. Se possiedi carte <i>Tecnica</i>, riduci di 1 <style=Term><link=TERM_FATIGUE></link></style> il costo di questa capacità.",
-    "pt": "2 <style=Term><link=TERM_FATIGUE></link></style>: Antes de seu ataque, esta arma ganha <b><style=Term><link=TERM_REACH>Alcance</link></style></b>. Se você tiver uma carta de <i>Técnica</i>, reduza em 1 <style=Term><link=TERM_FATIGUE></link></style> o custo desta habilidade."
+    "es": "2 <style=Term><link=TERM_FATIGUE></link></style>: Antes de tu ataque, esta arma obtiene <style=Term><link=TERM_REACH>Gran alcance</link></style>. Si tienes una carta Técnica, reduce el coste de esta capacidad en 1 <style=Term><link=TERM_FATIGUE></link></style>.",
+    "en": "2 <style=Term><link=TERM_FATIGUE></link></style>: Before your attack, this weapon gains <style=Term><link=TERM_REACH>Reach</link></style>. If you have a Technique card, reduce this ability's cost by 1 <style=Term><link=TERM_FATIGUE></link></style>.",
+    "fr": "2 <style=Term><link=TERM_FATIGUE></link></style> : Avant votre attaque, cette arme gagne <style=Term><link=TERM_REACH>Allonge</link></style>. Si vous possédez une carte Technique, réduisez de 1 <style=Term><link=TERM_FATIGUE></link></style> le coût de cette capacité.",
+    "it": "2 <style=Term><link=TERM_FATIGUE></link></style>: Prima del tuo attacco, quest'arma ottiene <style=Term><link=TERM_REACH>Portata</link></style>. Se possiedi carte Tecnica, riduci di 1 <style=Term><link=TERM_FATIGUE></link></style> il costo di questa capacità.",
+    "pt": "2 <style=Term><link=TERM_FATIGUE></link></style>: Antes de seu ataque, esta arma ganha <style=Term><link=TERM_REACH>Alcance</link></style>. Se você tiver uma carta de Técnica, reduza em 1 <style=Term><link=TERM_FATIGUE></link></style> o custo desta habilidade."
   },
   "WEAPON_PART_A_SWORD_4_UPGRADED": {
-    "es": "2 <style=Term><link=TERM_FATIGUE></link></style>: Antes de tu ataque, esta arma obtiene <b><style=Term><link=TERM_REACH>Gran alcance</link></style></b>. Si tienes una carta <i>Técnica</i>, reduce el coste de esta capacidad en 1 <style=Term><link=TERM_FATIGUE></link></style>.",
-    "en": "2 <style=Term><link=TERM_FATIGUE></link></style>: Before your attack, this weapon gains <b><style=Term><link=TERM_REACH>Reach</link></style></b>. If you have a <i>Technique</i> card, reduce this ability's cost by 1 <style=Term><link=TERM_FATIGUE></link></style>.",
-    "fr": "2 <style=Term><link=TERM_FATIGUE></link></style> : Avant votre attaque, cette arme gagne <b><style=Term><link=TERM_REACH>Allonge</link></style></b>. Si vous possédez une carte <i>Technique</i>, réduisez de 1 <style=Term><link=TERM_FATIGUE></link></style> le coût de cette capacité.",
-    "it": "2 <style=Term><link=TERM_FATIGUE></link></style>: Prima del tuo attacco, quest'arma ottiene <b><style=Term><link=TERM_REACH>Portata</link></style></b>. Se possiedi carte <i>Tecnica</i>, riduci di 1 <style=Term><link=TERM_FATIGUE></link></style> il costo di questa capacità.",
-    "pt": "2 <style=Term><link=TERM_FATIGUE></link></style>: Antes de seu ataque, esta arma ganha <b><style=Term><link=TERM_REACH>Alcance</link></style></b>. Se você tiver uma carta de <i>Técnica</i>, reduza em 1 <style=Term><link=TERM_FATIGUE></link></style> o custo desta habilidade."
+    "es": "2 <style=Term><link=TERM_FATIGUE></link></style>: Antes de tu ataque, esta arma obtiene <style=Term><link=TERM_REACH>Gran alcance</link></style>. Si tienes una carta Técnica, reduce el coste de esta capacidad en 1 <style=Term><link=TERM_FATIGUE></link></style>.",
+    "en": "2 <style=Term><link=TERM_FATIGUE></link></style>: Before your attack, this weapon gains <style=Term><link=TERM_REACH>Reach</link></style>. If you have a Technique card, reduce this ability's cost by 1 <style=Term><link=TERM_FATIGUE></link></style>.",
+    "fr": "2 <style=Term><link=TERM_FATIGUE></link></style> : Avant votre attaque, cette arme gagne <style=Term><link=TERM_REACH>Allonge</link></style>. Si vous possédez une carte Technique, réduisez de 1 <style=Term><link=TERM_FATIGUE></link></style> le coût de cette capacité.",
+    "it": "2 <style=Term><link=TERM_FATIGUE></link></style>: Prima del tuo attacco, quest'arma ottiene <style=Term><link=TERM_REACH>Portata</link></style>. Se possiedi carte Tecnica, riduci di 1 <style=Term><link=TERM_FATIGUE></link></style> il costo di questa capacità.",
+    "pt": "2 <style=Term><link=TERM_FATIGUE></link></style>: Antes de seu ataque, esta arma ganha <style=Term><link=TERM_REACH>Alcance</link></style>. Se você tiver uma carta de Técnica, reduza em 1 <style=Term><link=TERM_FATIGUE></link></style> o custo desta habilidade."
   },
   "WEAPON_PART_A_SWORD_5": {
     "es": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante el ataque o defensa de un héroe contra un enemigo que esté adyacente a ti, ese héroe añade 1 <style=Term><link=TERM_SUCCESS></link></style>.",
@@ -853,30 +853,30 @@ export const WEAPON_ABILITIES = {
     "pt": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante o ataque ou defesa de um herói contra um inimigo adjacente a você, esse herói soma 2 <style=Term><link=TERM_SUCCESS></link></style>."
   },
   "WEAPON_ABILITY_SWORD_ANCESTRAL": {
-    "es": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante tu ataque, añade 1 <style=Term><link=TERM_SUCCESS></link></style> por cada una de tus cartas <i>Liderazgo</i>.",
-    "en": "2 <style=Term><link=TERM_FATIGUE></link></style>: During your attack, add 1 <style=Term><link=TERM_SUCCESS></link></style> for each of your <i>Leadership</i> cards.",
-    "fr": "2 <style=Term><link=TERM_FATIGUE></link></style> : Pendant votre attaque, ajoutez 1 <style=Term><link=TERM_SUCCESS></link></style> par carte <i>Commandement</i> que vous détenez.",
-    "it": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante il tuo attacco, aggiungi 1 <style=Term><link=TERM_SUCCESS></link></style> per ogni tua carta <i>Autorità</i>.",
+    "es": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante tu ataque, añade 1 <style=Term><link=TERM_SUCCESS></link></style> por cada una de tus cartas Liderazgo.",
+    "en": "2 <style=Term><link=TERM_FATIGUE></link></style>: During your attack, add 1 <style=Term><link=TERM_SUCCESS></link></style> for each of your Leadership cards.",
+    "fr": "2 <style=Term><link=TERM_FATIGUE></link></style> : Pendant votre attaque, ajoutez 1 <style=Term><link=TERM_SUCCESS></link></style> par carte Commandement que vous détenez.",
+    "it": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante il tuo attacco, aggiungi 1 <style=Term><link=TERM_SUCCESS></link></style> per ogni tua carta Autorità.",
     "pt": "2 <style=Term><link=TERM_FATIGUE></link></style>: durante seu ataque, some 1 <style=Term><link=TERM_SUCCESS></link></style> para cada uma das suas cartas de <I>Liderança</I>."
   },
   "WEAPON_ABILITY_SWORD_ANCESTRAL_UPGRADED": {
-    "es": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante tu ataque o defensa, añade 1 <style=Term><link=TERM_SUCCESS></link></style> por cada una de tus cartas <i>Liderazgo</i>.",
-    "en": "2 <style=Term><link=TERM_FATIGUE></link></style>: During your attack or defense, add 1 <style=Term><link=TERM_SUCCESS></link></style> for each of your <i>Leadership</i> cards.",
-    "fr": "2 <style=Term><link=TERM_FATIGUE></link></style> : Pendant votre attaque ou votre défense, ajoutez 1 <style=Term><link=TERM_SUCCESS></link></style> par carte <i>Commandement</i> que vous détenez.",
-    "it": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante il tuo attacco o la tua difesa, aggiungi 1 <style=Term><link=TERM_SUCCESS></link></style> per ogni tua carta <i>Autorità</i>.",
+    "es": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante tu ataque o defensa, añade 1 <style=Term><link=TERM_SUCCESS></link></style> por cada una de tus cartas Liderazgo.",
+    "en": "2 <style=Term><link=TERM_FATIGUE></link></style>: During your attack or defense, add 1 <style=Term><link=TERM_SUCCESS></link></style> for each of your Leadership cards.",
+    "fr": "2 <style=Term><link=TERM_FATIGUE></link></style> : Pendant votre attaque ou votre défense, ajoutez 1 <style=Term><link=TERM_SUCCESS></link></style> par carte Commandement que vous détenez.",
+    "it": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante il tuo attacco o la tua difesa, aggiungi 1 <style=Term><link=TERM_SUCCESS></link></style> per ogni tua carta Autorità.",
     "pt": "2 <style=Term><link=TERM_FATIGUE></link></style>: durante seu ataque ou sua defesa, some 1 <style=Term><link=TERM_SUCCESS></link></style> para cada uma das suas cartas de <I>Liderança</I>."
   },
   "WEAPON_ABILITY_WAND_1": {
     "es": "2 <style=Term><link=TERM_FATIGUE></link></style>: Después de tu ataque, un héroe puede realizar <style=Term><link=TERM_SHIFT>Desplazamiento</link></style> 2.",
     "en": "2 <style=Term><link=TERM_FATIGUE></link></style>: After your attack, a hero may <style=Term><link=TERM_SHIFT>shift</link></style> 2.",
-    "fr": "2 <style=Term><link=TERM_FATIGUE></link></style> : Après votre attaque, un Héros peut <b><style=Term><link=TERM_SHIFT>Glisser</link></style> de 2</b>.",
+    "fr": "2 <style=Term><link=TERM_FATIGUE></link></style> : Après votre attaque, un Héros peut <style=Term><link=TERM_SHIFT>Glisser</link></style> de 2.",
     "it": "2 <style=Term><link=TERM_FATIGUE></link></style>: Dopo il tuo attacco, un eroe può <style=Term><link=TERM_SHIFT>scattare</link></style> 2.",
     "pt": "2 <style=Term><link=TERM_FATIGUE></link></style>: depois do seu ataque, um herói pode <style=Term><link=TERM_SHIFT>deslocar</link></style> 2."
   },
   "WEAPON_ABILITY_WAND_1_UPGRADED": {
     "es": "2 <style=Term><link=TERM_FATIGUE></link></style>: Después de tu ataque, un héroe puede realizar <style=Term><link=TERM_SHIFT>Desplazamiento</link></style> 3.",
     "en": "2 <style=Term><link=TERM_FATIGUE></link></style>: After your attack, a hero may <style=Term><link=TERM_SHIFT>shift</link></style> 3.",
-    "fr": "2 <style=Term><link=TERM_FATIGUE></link></style> : Après votre attaque, un Héros peut <b><style=Term><link=TERM_SHIFT>Glisser</link></style> de 3</b>.",
+    "fr": "2 <style=Term><link=TERM_FATIGUE></link></style> : Après votre attaque, un Héros peut <style=Term><link=TERM_SHIFT>Glisser</link></style> de 3.",
     "it": "2 <style=Term><link=TERM_FATIGUE></link></style>: Dopo il tuo attacco, un eroe può <style=Term><link=TERM_SHIFT>scattare</link></style> 3.",
     "pt": "2 <style=Term><link=TERM_FATIGUE></link></style>: depois do seu ataque, um herói pode <style=Term><link=TERM_SHIFT>deslocar</link></style> 3."
   },
@@ -993,18 +993,18 @@ export const WEAPON_ABILITIES = {
     "pt": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante seu ataque, cada herói a até 2 espaços do inimigo pode descartar 1 <style=Term><link=TERM_CONDITIONS>condição</link></style>."
   },
   "WEAPON_PART_A_WARBELL_5": {
-    "es": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante tu ataque o defensa, añade 1 <style=Term><link=TERM_SUCCESS></link></style>. Si tienes una carta <i>Juramento</i>, reduce el coste de esta capacidad en 1 <style=Term><link=TERM_FATIGUE></link></style>.",
-    "en": "2 <style=Term><link=TERM_FATIGUE></link></style>: During your attack or defense, add 1 <style=Term><link=TERM_SUCCESS></link></style>. If you have an <i>Oath</i> card, reduce this ability's cost by 1 <style=Term><link=TERM_FATIGUE></link></style>.",
-    "fr": "2 <style=Term><link=TERM_FATIGUE></link></style> : Pendant votre attaque ou votre défense, ajoutez 1 <style=Term><link=TERM_SUCCESS></link></style>. Si vous possédez une carte <i>Serment</i>, réduisez de 1 <style=Term><link=TERM_FATIGUE></link></style> le coût de cette capacité.",
-    "it": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante il tuo attacco o la tua difesa, aggiungi 1 <style=Term><link=TERM_SUCCESS></link></style>. Se possiedi carte <i>Giuramento</i>, riduci di 1 <style=Term><link=TERM_FATIGUE></link></style> il costo di questa capacità.",
-    "pt": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante seu ataque ou defesa, some 1 <style=Term><link=TERM_SUCCESS></link></style>. Se você tiver uma carta de <i>Juramento</i>, reduza em 1 <style=Term><link=TERM_FATIGUE></link></style> o custo desta habilidade."
+    "es": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante tu ataque o defensa, añade 1 <style=Term><link=TERM_SUCCESS></link></style>. Si tienes una carta Juramento, reduce el coste de esta capacidad en 1 <style=Term><link=TERM_FATIGUE></link></style>.",
+    "en": "2 <style=Term><link=TERM_FATIGUE></link></style>: During your attack or defense, add 1 <style=Term><link=TERM_SUCCESS></link></style>. If you have an Oath card, reduce this ability's cost by 1 <style=Term><link=TERM_FATIGUE></link></style>.",
+    "fr": "2 <style=Term><link=TERM_FATIGUE></link></style> : Pendant votre attaque ou votre défense, ajoutez 1 <style=Term><link=TERM_SUCCESS></link></style>. Si vous possédez une carte Serment, réduisez de 1 <style=Term><link=TERM_FATIGUE></link></style> le coût de cette capacité.",
+    "it": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante il tuo attacco o la tua difesa, aggiungi 1 <style=Term><link=TERM_SUCCESS></link></style>. Se possiedi carte Giuramento, riduci di 1 <style=Term><link=TERM_FATIGUE></link></style> il costo di questa capacità.",
+    "pt": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante seu ataque ou defesa, some 1 <style=Term><link=TERM_SUCCESS></link></style>. Se você tiver uma carta de Juramento, reduza em 1 <style=Term><link=TERM_FATIGUE></link></style> o custo desta habilidade."
   },
   "WEAPON_PART_A_WARBELL_5_UPGRADED": {
-    "es": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante tu ataque o defensa, añade 1 <style=Term><link=TERM_SUCCESS></link></style>. Si tienes una carta <i>Juramento</i>, reduce el coste de esta capacidad en 1 <style=Term><link=TERM_FATIGUE></link></style>. Si tienes una carta <i>Palabra</i>, añade 1 <style=Term><link=TERM_SUCCESS></link></style> adicional.",
-    "en": "2 <style=Term><link=TERM_FATIGUE></link></style>: During your attack or defense, add 1 <style=Term><link=TERM_SUCCESS></link></style>. If you have an <i>Oath</i> card, reduce this ability's cost by 1 <style=Term><link=TERM_FATIGUE></link></style>. If you have a <i>Word</i> card, add 1 additional <style=Term><link=TERM_SUCCESS></link></style>.",
-    "fr": "2 <style=Term><link=TERM_FATIGUE></link></style> : Pendant votre attaque ou votre défense, ajoutez 1 <style=Term><link=TERM_SUCCESS></link></style>. Si vous possédez une carte <i>Serment</i>, réduisez de 1 <style=Term><link=TERM_FATIGUE></link></style> le coût de cette capacité. Si vous possédez une carte <i>Mot</i>, ajoutez 1 <style=Term><link=TERM_SUCCESS></link></style> supplémentaire.",
-    "it": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante il tuo attacco o la tua difesa, aggiungi 1 <style=Term><link=TERM_SUCCESS></link></style>. Se possiedi carte <i>Giuramento</i>, riduci di 1 <style=Term><link=TERM_FATIGUE></link></style> il costo di questa capacità. Se possiedi carte <i>Parola</i>, aggiungi 1 <style=Term><link=TERM_SUCCESS></link></style> aggiuntivo.",
-    "pt": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante seu ataque ou sua defesa, some 1 <style=Term><link=TERM_SUCCESS></link></style>. Se você tiver uma carta de <i>Juramento</i>, reduza em 1 <style=Term><link=TERM_FATIGUE></link></style> o custo desta habilidade. Se você tiver uma carta de <i>Palavra</i>, some 1 <style=Term><link=TERM_SUCCESS></link></style> adicional."
+    "es": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante tu ataque o defensa, añade 1 <style=Term><link=TERM_SUCCESS></link></style>. Si tienes una carta Juramento, reduce el coste de esta capacidad en 1 <style=Term><link=TERM_FATIGUE></link></style>. Si tienes una carta Palabra, añade 1 <style=Term><link=TERM_SUCCESS></link></style> adicional.",
+    "en": "2 <style=Term><link=TERM_FATIGUE></link></style>: During your attack or defense, add 1 <style=Term><link=TERM_SUCCESS></link></style>. If you have an Oath card, reduce this ability's cost by 1 <style=Term><link=TERM_FATIGUE></link></style>. If you have a Word card, add 1 additional <style=Term><link=TERM_SUCCESS></link></style>.",
+    "fr": "2 <style=Term><link=TERM_FATIGUE></link></style> : Pendant votre attaque ou votre défense, ajoutez 1 <style=Term><link=TERM_SUCCESS></link></style>. Si vous possédez une carte Serment, réduisez de 1 <style=Term><link=TERM_FATIGUE></link></style> le coût de cette capacité. Si vous possédez une carte Mot, ajoutez 1 <style=Term><link=TERM_SUCCESS></link></style> supplémentaire.",
+    "it": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante il tuo attacco o la tua difesa, aggiungi 1 <style=Term><link=TERM_SUCCESS></link></style>. Se possiedi carte Giuramento, riduci di 1 <style=Term><link=TERM_FATIGUE></link></style> il costo di questa capacità. Se possiedi carte Parola, aggiungi 1 <style=Term><link=TERM_SUCCESS></link></style> aggiuntivo.",
+    "pt": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante seu ataque ou sua defesa, some 1 <style=Term><link=TERM_SUCCESS></link></style>. Se você tiver uma carta de Juramento, reduza em 1 <style=Term><link=TERM_FATIGUE></link></style> o custo desta habilidade. Se você tiver uma carta de Palavra, some 1 <style=Term><link=TERM_SUCCESS></link></style> adicional."
   },
   "WEAPON_ABILITY_WARHAMMER_1": {
     "es": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante tu ataque, añade 1 <style=Term><link=TERM_SUCCESS></link></style>. Después de este ataque, puedes mover el enemigo 1 casilla alejándose de ti.",
@@ -1049,18 +1049,18 @@ export const WEAPON_ABILITIES = {
     "pt": "1 <style=Term><link=TERM_FATIGUE></link></style>: durante seu ataque, some 1 <style=Term><link=TERM_SUCCESS></link></style> e deixe o inimigo confuso e febril."
   },
   "WEAPON_PART_A_WARHAMMER_4": {
-    "es": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante tu ataque, <style=Term><link=TERM_EXPOSED>expón</link></style> al enemigo. Si tienes una carta <i>Técnica</i>, reduce el coste de esta capacidad en 1 <style=Term><link=TERM_FATIGUE></link></style>.",
-    "en": "2 <style=Term><link=TERM_FATIGUE></link></style>: During your attack, <style=Term><link=TERM_EXPOSED>expose</link></style> the enemy. If you have a <i>Technique</i> card, reduce this ability's cost by 1 <style=Term><link=TERM_FATIGUE></link></style>.",
-    "fr": "2 <style=Term><link=TERM_FATIGUE></link></style> : Pendant votre attaque, <style=Term><link=TERM_EXPOSED>exposez</link></style> l'Ennemi. Si vous possédez une carte <i>Technique</i>, réduisez de 1 <style=Term><link=TERM_FATIGUE></link></style> le coût de cette capacité.",
-    "it": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante il tuo attacco, <style=Term><link=TERM_EXPOSED>esponi</link></style> il nemico. Se possiedi carte <i>Tecnica</i>, riduci di 1 <style=Term><link=TERM_FATIGUE></link></style> il costo di questa capacità.",
-    "pt": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante seu ataque, deixe o inimigo <style=Term><link=TERM_EXPOSED>exposto</link></style>. Se você tiver uma carta de <i>Técnica</i>, reduza em 1 <style=Term><link=TERM_FATIGUE></link></style> o custo desta habilidade."
+    "es": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante tu ataque, <style=Term><link=TERM_EXPOSED>expón</link></style> al enemigo. Si tienes una carta Técnica, reduce el coste de esta capacidad en 1 <style=Term><link=TERM_FATIGUE></link></style>.",
+    "en": "2 <style=Term><link=TERM_FATIGUE></link></style>: During your attack, <style=Term><link=TERM_EXPOSED>expose</link></style> the enemy. If you have a Technique card, reduce this ability's cost by 1 <style=Term><link=TERM_FATIGUE></link></style>.",
+    "fr": "2 <style=Term><link=TERM_FATIGUE></link></style> : Pendant votre attaque, <style=Term><link=TERM_EXPOSED>exposez</link></style> l'Ennemi. Si vous possédez une carte Technique, réduisez de 1 <style=Term><link=TERM_FATIGUE></link></style> le coût de cette capacité.",
+    "it": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante il tuo attacco, <style=Term><link=TERM_EXPOSED>esponi</link></style> il nemico. Se possiedi carte Tecnica, riduci di 1 <style=Term><link=TERM_FATIGUE></link></style> il costo di questa capacità.",
+    "pt": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante seu ataque, deixe o inimigo <style=Term><link=TERM_EXPOSED>exposto</link></style>. Se você tiver uma carta de Técnica, reduza em 1 <style=Term><link=TERM_FATIGUE></link></style> o custo desta habilidade."
   },
   "WEAPON_PART_A_WARHAMMER_4_UPGRADED": {
-    "es": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante tu ataque, <style=Term><link=TERM_DAZED>conmociona</link></style> y <style=Term><link=TERM_EXPOSED>expón</link></style> al enemigo. Si tienes una carta <i>Técnica</i>, reduce el coste de esta capacidad en 1 <style=Term><link=TERM_FATIGUE></link></style>.",
-    "en": "2 <style=Term><link=TERM_FATIGUE></link></style>: During your attack, <style=Term><link=TERM_DAZED>daze</link></style> and <style=Term><link=TERM_EXPOSED>expose</link></style> the enemy. If you have a <i>Technique</i> card, reduce this ability's cost by 1 <style=Term><link=TERM_FATIGUE></link></style>.",
-    "fr": "2 <style=Term><link=TERM_FATIGUE></link></style> : Pendant votre attaque, <style=Term><link=TERM_DAZED>étourdissez</link></style> et <style=Term><link=TERM_EXPOSED>exposez</link></style> l'Ennemi. Si vous possédez une carte <i>Technique</i>, réduisez de 1 <style=Term><link=TERM_FATIGUE></link></style> le coût de cette capacité.",
-    "it": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante il tuo attacco, <style=Term><link=TERM_DAZED>frastorna</link></style> ed <style=Term><link=TERM_EXPOSED>esponi</link></style> il nemico. Se possiedi carte <i>Tecnica</i>, riduci di 1 <style=Term><link=TERM_FATIGUE></link></style> il costo di questa capacità.",
-    "pt": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante o seu ataque, deixe o inimigo <style=Term><link=TERM_DAZED>confuso</link></style> e <style=Term><link=TERM_EXPOSED>exposto</link></style>. Se você tiver uma carta de <i>Técnica</i>, reduza em 1 <style=Term><link=TERM_FATIGUE></link></style> o custo desta habilidade."
+    "es": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante tu ataque, <style=Term><link=TERM_DAZED>conmociona</link></style> y <style=Term><link=TERM_EXPOSED>expón</link></style> al enemigo. Si tienes una carta Técnica, reduce el coste de esta capacidad en 1 <style=Term><link=TERM_FATIGUE></link></style>.",
+    "en": "2 <style=Term><link=TERM_FATIGUE></link></style>: During your attack, <style=Term><link=TERM_DAZED>daze</link></style> and <style=Term><link=TERM_EXPOSED>expose</link></style> the enemy. If you have a Technique card, reduce this ability's cost by 1 <style=Term><link=TERM_FATIGUE></link></style>.",
+    "fr": "2 <style=Term><link=TERM_FATIGUE></link></style> : Pendant votre attaque, <style=Term><link=TERM_DAZED>étourdissez</link></style> et <style=Term><link=TERM_EXPOSED>exposez</link></style> l'Ennemi. Si vous possédez une carte Technique, réduisez de 1 <style=Term><link=TERM_FATIGUE></link></style> le coût de cette capacité.",
+    "it": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante il tuo attacco, <style=Term><link=TERM_DAZED>frastorna</link></style> ed <style=Term><link=TERM_EXPOSED>esponi</link></style> il nemico. Se possiedi carte Tecnica, riduci di 1 <style=Term><link=TERM_FATIGUE></link></style> il costo di questa capacità.",
+    "pt": "2 <style=Term><link=TERM_FATIGUE></link></style>: Durante o seu ataque, deixe o inimigo <style=Term><link=TERM_DAZED>confuso</link></style> e <style=Term><link=TERM_EXPOSED>exposto</link></style>. Se você tiver uma carta de Técnica, reduza em 1 <style=Term><link=TERM_FATIGUE></link></style> o custo desta habilidade."
   },
   "WEAPON_PART_A_WARHAMMER_5": {
     "es": "4 <style=Term><link=TERM_FATIGUE></link></style>: Después de tu ataque, realiza una <style=Term><link=TERM_TESTS>prueba</link></style> de fuerza. Por cada <style=Term><link=TERM_SUCCESS></link></style>, inflige 1 <style=Term><link=TERM_DAMAGE></link></style> a cada enemigo adyacente a ti.",
@@ -1112,11 +1112,11 @@ export const WEAPON_ABILITIES = {
     "pt": "Se este inimigo não for derrotado por este ataque, um outro inimigo aleatório ganha um dos status deste inimigo."
   },
   "WEAPON_ABILITY_FEATHERLIGHT": {
-    "es": "Después del ataque, realiza <style=Term><link=TERM_SHIFT>Desplazamiento</link></style> 1 y puedes realizar 1 <style=Term><link=TERM_ACTIONS></link></style> de una carta <i>Inspiración</i>.",
-    "en": "After the attack, <style=Term><link=TERM_SHIFT>shift</link></style> 1 and you may perform 1 <style=Term><link=TERM_ACTIONS></link></style> on an <i>Inspiration</i> card.",
-    "fr": "Après l’attaque, <b><style=Term><link=TERM_SHIFT>Glissez</link></style> de 1</b> et vous pouvez effectuer 1 <style=Term><link=TERM_ACTIONS></link></style> sur une carte <i>Inspiration</i>.",
-    "it": "Dopo il tuo attacco, <style=Term><link=TERM_SHIFT>scatta</link></style> 1 e puoi effettuare 1 <style=Term><link=TERM_ACTIONS></link></style> su una carta <i>Ispirazione</i>.",
-    "pt": "Depois do ataque, <style=Term><link=TERM_SHIFT>desloque</link></style> 1 e você pode realizar 1 <style=Term><link=TERM_ACTIONS></link></style> em uma carta de <i>Inspiração</i>."
+    "es": "Después del ataque, realiza <style=Term><link=TERM_SHIFT>Desplazamiento</link></style> 1 y puedes realizar 1 <style=Term><link=TERM_ACTIONS></link></style> de una carta Inspiración.",
+    "en": "After the attack, <style=Term><link=TERM_SHIFT>shift</link></style> 1 and you may perform 1 <style=Term><link=TERM_ACTIONS></link></style> on an Inspiration card.",
+    "fr": "Après l’attaque, <style=Term><link=TERM_SHIFT>Glissez</link></style> de 1 et vous pouvez effectuer 1 <style=Term><link=TERM_ACTIONS></link></style> sur une carte Inspiration.",
+    "it": "Dopo il tuo attacco, <style=Term><link=TERM_SHIFT>scatta</link></style> 1 e puoi effettuare 1 <style=Term><link=TERM_ACTIONS></link></style> su una carta Ispirazione.",
+    "pt": "Depois do ataque, <style=Term><link=TERM_SHIFT>desloque</link></style> 1 e você pode realizar 1 <style=Term><link=TERM_ACTIONS></link></style> em uma carta de Inspiração."
   },
   "WEAPON_ABILITY_UNREASONABLE_SIZE": {
     "es": "El <style=Term><link=TERM_DAMAGE></link></style> de tu arma aumenta en 1. Si el enemigo es grande, añade 1 <style=Term><link=TERM_SUCCESS></link></style>.",
@@ -1149,7 +1149,7 @@ export const WEAPON_ABILITIES = {
   "WEAPON_ABILITY_THROUGH_THE_REFLECTION": {
     "es": "Cada héroe puede realizar <style=Term><link=TERM_SHIFT>Desplazamiento</link></style> 1 y <style=Term><link=TERM_PREPARED>aprestar</link></style> 1 carta.",
     "en": "Each hero may <style=Term><link=TERM_SHIFT>shift</link></style> 1 and <style=Term><link=TERM_PREPARED>prepare</link></style> 1 card.",
-    "fr": "Chaque Héros peut<b> <style=Term><link=TERM_SHIFT>Glisser</link></style> de 1</b> et <style=Term><link=TERM_PREPARED>préparer</link></style> 1 carte.",
+    "fr": "Chaque Héros peut <style=Term><link=TERM_SHIFT>Glisser</link></style> de 1 et <style=Term><link=TERM_PREPARED>préparer</link></style> 1 carte.",
     "it": "Ogni eroe può <style=Term><link=TERM_SHIFT>scattare</link></style> 1 e <style=Term><link=TERM_PREPARED>preparare</link></style> 1 carta.",
     "pt": "Cada herói pode <style=Term><link=TERM_SHIFT>deslocar</link></style> 1 e <style=Term><link=TERM_PREPARED>preparar</link></style> 1 carta."
   },
@@ -1238,11 +1238,11 @@ export const WEAPON_ABILITIES = {
     "pt": "Copie o efeito de outra parte de sua arma."
   },
   "WEAPON_PART_B_HAMMER_4": {
-    "es": "Resuelve la palabra clave <b><style=Term><link=TERM_CHARGE>Carga</link></style></b> de cualquier <style=Term><link=TERM_SKILLS>carta de Habilidad</link></style> como si se acabase de dar la vuelta a la carta.",
-    "en": "Resolve the <b><style=Term><link=TERM_CHARGE>Charge</link></style></b> keyword on any <style=Term><link=TERM_SKILLS>skill card</link></style> as though the card just flipped.",
-    "fr": "Résolvez le mot-clef <b><style=Term><link=TERM_CHARGE>Charge</link></style></b> sur n'importe quelle <style=Term><link=TERM_SKILLS>carte Compétence</link></style> comme si la carte venait d'être retournée.",
-    "it": "Risolvi la parola chiave <b><style=Term><link=TERM_CHARGE>Carica</link></style></b> su una qualsiasi <style=Term><link=TERM_SKILLS>carta abilità</link></style> come se la carta fosse appena stata girata.",
-    "pt": "Resolva a palavra-chave <b><style=Term><link=TERM_CHARGE>Carregar</link></style></b> em qualquer <style=Term><link=TERM_SKILLS>carta de perícia</link></style> como se a carta tivesse acabado de ser virada."
+    "es": "Resuelve la palabra clave <style=Term><link=TERM_CHARGE>Carga</link></style> de cualquier <style=Term><link=TERM_SKILLS>carta de Habilidad</link></style> como si se acabase de dar la vuelta a la carta.",
+    "en": "Resolve the <style=Term><link=TERM_CHARGE>Charge</link></style> keyword on any <style=Term><link=TERM_SKILLS>skill card</link></style> as though the card just flipped.",
+    "fr": "Résolvez le mot-clef <style=Term><link=TERM_CHARGE>Charge</link></style> sur n'importe quelle <style=Term><link=TERM_SKILLS>carte Compétence</link></style> comme si la carte venait d'être retournée.",
+    "it": "Risolvi la parola chiave <style=Term><link=TERM_CHARGE>Carica</link></style> su una qualsiasi <style=Term><link=TERM_SKILLS>carta abilità</link></style> come se la carta fosse appena stata girata.",
+    "pt": "Resolva a palavra-chave <style=Term><link=TERM_CHARGE>Carregar</link></style> em qualquer <style=Term><link=TERM_SKILLS>carta de perícia</link></style> como se a carta tivesse acabado de ser virada."
   },
   "WEAPON_PART_B_HAMMER_5": {
     "es": "Si el enemigo es derrotado, obtén más botín.",
@@ -1366,7 +1366,7 @@ export const WEAPON_ABILITIES = {
   "WEAPON_ABILITY_PATHLESS_WARRIOR": {
     "es": "Después de este ataque, realiza <style=Term><link=TERM_SHIFT>Desplazamiento</link></style> una cantidad de casillas igual a tus <style=Term><link=TERM_SUCCESS></link></style>.",
     "en": "After this attack, <style=Term><link=TERM_SHIFT>shift</link></style> a number of spaces equal to your <style=Term><link=TERM_SUCCESS></link></style>.",
-    "fr": "Après cette attaque, <b><style=Term><link=TERM_SHIFT>Glissez</link></style></b> d’autant de cases que le nombre de <style=Term><link=TERM_SUCCESS></link></style> obtenus.",
+    "fr": "Après cette attaque, <style=Term><link=TERM_SHIFT>Glissez</link></style> d’autant de cases que le nombre de <style=Term><link=TERM_SUCCESS></link></style> obtenus.",
     "it": "Dopo il tuo attacco, <style=Term><link=TERM_SHIFT>scatta</link></style> di un numero di caselle pari ai tuoi <style=Term><link=TERM_SUCCESS></link></style>.",
     "pt": "Depois deste ataque, <style=Term><link=TERM_SHIFT>desloque</link></style> um número de espaços igual aos seus <style=Term><link=TERM_SUCCESS></link></style>."
   },
@@ -1868,11 +1868,11 @@ export const WEAPON_ABILITIES = {
     "pt": "Cada outro inimigo sofre <style=Term><link=TERM_DAMAGE></link></style> igual aos seus <style=Term><link=TERM_SUCCESS></link></style>."
   },
   "WEAPON_PART_C_WARBELL_4": {
-    "es": "Cúrate 1 <style=Term><link=TERM_HEALTH_DIAL></link></style> por cada habilidad <i>Palabra</i>. Descarta 1 <style=Term><link=TERM_FATIGUE></link></style> de cada habilidad <i>Juramento</i>.",
-    "en": "Heal 1 <style=Term><link=TERM_HEALTH_DIAL></link></style> for each <i>Word</i> skill. Discard 1 <style=Term><link=TERM_FATIGUE></link></style> from each <i>Oath</i> skill.",
-    "fr": "Soignez-vous de 1 <style=Term><link=TERM_HEALTH_DIAL></link></style> pour chaque compétence <i>Mot</i>. Défaussez 1 <style=Term><link=TERM_FATIGUE></link></style> pour chaque compétence <i>Serment</i>.",
-    "it": "Curati 1 <style=Term><link=TERM_HEALTH_DIAL></link></style> per ogni abilità <i>Parola</i>. Scarta 1 <style=Term><link=TERM_FATIGUE></link></style> da ogni abilità <i>Giuramento</i>.",
-    "pt": "Cure 1 <style=Term><link=TERM_HEALTH_DIAL></link></style> para cada perícia de <i>Palavra</i>. Descarte 1 <style=Term><link=TERM_FATIGUE></link></style> de cada perícia de <i>Juramento</i>."
+    "es": "Cúrate 1 <style=Term><link=TERM_HEALTH_DIAL></link></style> por cada habilidad Palabra. Descarta 1 <style=Term><link=TERM_FATIGUE></link></style> de cada habilidad Juramento.",
+    "en": "Heal 1 <style=Term><link=TERM_HEALTH_DIAL></link></style> for each Word skill. Discard 1 <style=Term><link=TERM_FATIGUE></link></style> from each Oath skill.",
+    "fr": "Soignez-vous de 1 <style=Term><link=TERM_HEALTH_DIAL></link></style> pour chaque compétence Mot. Défaussez 1 <style=Term><link=TERM_FATIGUE></link></style> pour chaque compétence Serment.",
+    "it": "Curati 1 <style=Term><link=TERM_HEALTH_DIAL></link></style> per ogni abilità Parola. Scarta 1 <style=Term><link=TERM_FATIGUE></link></style> da ogni abilità Giuramento.",
+    "pt": "Cure 1 <style=Term><link=TERM_HEALTH_DIAL></link></style> para cada perícia de Palavra. Descarte 1 <style=Term><link=TERM_FATIGUE></link></style> de cada perícia de Juramento."
   },
   "WEAPON_PART_C_WARBELL_5": {
     "es": "Después del ataque, puedes darle la vuelta a tu <style=Term><link=TERM_ATTACK_CARDS>carta de Ataque</link></style> sin descartar ninguna cantidad de <style=Term><link=TERM_CONDITIONS>estados</link></style> de ella.",

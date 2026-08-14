@@ -170,6 +170,7 @@ function App() {
   const setActiveTab     = useStore(s => s.setActiveTab);
   const resetToSave      = useStore(s => s.resetToSave);
   const loadParsedState  = useStore(s => s.loadParsedState);
+  const loadFromRawSave  = useStore(s => s.loadFromRawSave);
   const netCount = countNetChanges(originalState, gameState, actionHistory);
 
   const [showAbout,       setShowAbout]       = useState(false);
@@ -179,6 +180,18 @@ function App() {
   const [fromShare,       setFromShare]       = useState(null);
 
   const { getSnapshot, getMeta } = useShare();
+
+  // Si el snapshot guarda el .SAV en bruto (enlaces creados después de esta
+  // función), se reinterpreta con el parser actual. Si no (enlaces
+  // anteriores), se cae al saveMeta/gameState congelados que ya traía.
+  function loadSnapshot(snap) {
+    if (snap.rawSaveContent) {
+      const ok = loadFromRawSave(snap.rawSaveContent, snap.actionHistory || []);
+      if (ok) return true;
+    }
+    loadParsedState(snap.save, snap.saveMeta || {}, snap.actionHistory || [], snap.originalState || null);
+    return true;
+  }
 
   // Cargar save desde enlace compartido al inicio
   // Formatos aceptados: /{id}, /{id}/{n}, ?share={id}&snap={n}
@@ -203,7 +216,7 @@ function App() {
           getMeta(shareId),
         ]);
         if (!snap?.save) return;
-        loadParsedState(snap.save, snap.saveMeta || {}, snap.actionHistory || [], snap.originalState || null);
+        loadSnapshot(snap);
         setFromShare({ id: shareId, currentSnap: parseInt(snapN), meta });
       } catch {}
     })();
@@ -263,7 +276,7 @@ function App() {
     try {
       const snap = await getSnapshot(fromShare.id, n);
       if (!snap?.save) return;
-      loadParsedState(snap.save, snap.saveMeta || {}, snap.actionHistory || [], snap.originalState || null);
+      loadSnapshot(snap);
       setFromShare(prev => ({ ...prev, currentSnap: n }));
       const newPath = n === 0 ? `/${fromShare.id}` : `/${fromShare.id}/${n}`;
       window.history.pushState({}, '', newPath);
@@ -271,7 +284,7 @@ function App() {
   }
 
   function handleLoadShare({ snap, meta, id }) {
-    loadParsedState(snap.save, snap.saveMeta || {}, snap.actionHistory || [], snap.originalState || null);
+    loadSnapshot(snap);
     setFromShare({ id, currentSnap: 0, meta });
     window.history.pushState({}, '', `/${id}`);
   }

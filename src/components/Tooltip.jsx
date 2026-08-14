@@ -1,4 +1,5 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
+import { useTooltipPosition } from '../hooks/useTooltipPosition';
 import './Tooltip.css';
 
 function renderText(raw) {
@@ -16,7 +17,7 @@ function renderText(raw) {
 export default function Tooltip({ children, text, content, position = 'top' }) {
   const [visible, setVisible] = useState(false);
   const [coords, setCoords] = useState({ x: 0, y: 0 });
-  const wrapRef = useRef(null);
+  const { ref: bubbleRef, style: bubbleStyle } = useTooltipPosition(coords, visible);
 
   if (!text && !content) return <>{children}</>;
 
@@ -24,7 +25,6 @@ export default function Tooltip({ children, text, content, position = 'top' }) {
 
   return (
     <span
-      ref={wrapRef}
       className="tooltip-wrap"
       onMouseEnter={e => { setVisible(true); updatePosition(e); }}
       onMouseMove={updatePosition}
@@ -33,8 +33,9 @@ export default function Tooltip({ children, text, content, position = 'top' }) {
       {children}
       {visible && (
         <span
+          ref={bubbleRef}
           className="tooltip-bubble"
-          style={{ left: coords.x + 12, top: coords.y - 8 }}
+          style={bubbleStyle}
         >
           {content ?? renderText(text)}
         </span>

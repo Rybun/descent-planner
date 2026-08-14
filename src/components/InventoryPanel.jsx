@@ -104,7 +104,12 @@ function WeaponSlotATile({ id, qty, lang }) {
       </div>
     </div>
   );
-  return <WeaponPartTooltip partId={id}>{tile}</WeaponPartTooltip>;
+  // Las armas rúnicas (weaponType RUNE) son objetos completos y únicos, no
+  // piezas intercambiables entre sí — mostrar su habilidad completa (coste
+  // de activación, efecto, coste en XP para equipar) en el inventario no
+  // aporta nada útil aquí; solo tiene sentido al decidir equiparla en la
+  // Armería/Sala de creación, que sigue mostrándola sin cambios.
+  return <WeaponPartTooltip partId={id} hideAbility={part.weaponType === 'RUNE'}>{tile}</WeaponPartTooltip>;
 }
 
 function ItemTile({ id, qty, lang }) {
@@ -136,7 +141,7 @@ function ItemTile({ id, qty, lang }) {
     </div>
   );
 
-  if (part) return <WeaponPartTooltip partId={id}>{tile}</WeaponPartTooltip>;
+  if (part) return <WeaponPartTooltip partId={id} hideAbility={part.weaponType === 'RUNE'}>{tile}</WeaponPartTooltip>;
   if (item) return <ItemTooltip id={id} item={item} lang={lang}>{tile}</ItemTooltip>;
   return tile;
 }

@@ -4,6 +4,8 @@ import { getName } from '../i18n';
 import { DESCRIPTIONS } from '../gamedata/descriptions';
 import { parseGameText, TERM_ICONS } from '../gamedata/gameText';
 import { useIsMobile } from '../hooks/useIsMobile';
+import { useTooltipPosition } from '../hooks/useTooltipPosition';
+import { useBodyScrollLock } from '../hooks/useBodyScrollLock';
 
 const MATERIAL_LABEL = {
   es: 'Material', en: 'Material', fr: 'Matériau', it: 'Materiale', pt: 'Material',
@@ -32,6 +34,8 @@ export default function MaterialTooltip({ mat, lang, children }) {
   const [coords, setCoords] = useState({ x: 0, y: 0 });
   const [modalOpen, setModalOpen] = useState(false);
   const isMobile = useIsMobile();
+  const { ref: bubbleRef, style: bubbleStyle } = useTooltipPosition(coords, visible && !isMobile);
+  useBodyScrollLock(modalOpen);
 
   if (!mat) return <>{children}</>;
 
@@ -41,8 +45,6 @@ export default function MaterialTooltip({ mat, lang, children }) {
   const descNodes = renderDescNodes(raw);
 
   function move(e) { setCoords({ x: e.clientX, y: e.clientY }); }
-  const offsetX = coords.x + 16 + 280 > window.innerWidth ? coords.x - 296 : coords.x + 16;
-  const offsetY = Math.min(coords.y - 8, window.innerHeight - 400);
 
   function handleClick(e) {
     if (!isMobile) return;
@@ -82,7 +84,7 @@ export default function MaterialTooltip({ mat, lang, children }) {
     >
       {children}
       {!isMobile && visible && createPortal(
-        <span className="rtt-bubble" style={{ left: offsetX, top: offsetY }}>
+        <span ref={bubbleRef} className="rtt-bubble" style={bubbleStyle}>
           {bubbleContent}
         </span>
       , document.body)}

@@ -5,30 +5,38 @@ import { useStore } from '../store';
 export const SHARE_API = import.meta.env.VITE_SHARE_API_URL || '';
 
 export function useShare() {
-  const gameState     = useStore(s => s.gameState);
-  const saveMeta      = useStore(s => s.saveMeta);
-  const actionHistory = useStore(s => s.actionHistory);
-  const originalState = useStore(s => s.originalState);
+  const gameState      = useStore(s => s.gameState);
+  const saveMeta       = useStore(s => s.saveMeta);
+  const actionHistory  = useStore(s => s.actionHistory);
+  const originalState  = useStore(s => s.originalState);
+  const rawSaveContent = useStore(s => s.rawSaveContent);
 
+  // rawSaveContent es el .SAV tal cual se subió: el servidor lo guarda para
+  // que, al abrir el enlace, se reinterprete con el parser vigente EN ESE
+  // MOMENTO en vez de con el que existía cuando se compartió — así un enlace
+  // no se queda "congelado" sin los campos que se añadan más adelante (XP,
+  // misiones, habilidades...). save/saveMeta se siguen mandando igual, solo
+  // para que el feed público pueda mostrar una vista previa sin tener que
+  // reinterpretar cada .SAV.
   const createShare = useCallback(async (label, isPrivate) => {
     const res = await fetch(`${SHARE_API}/api/share`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ save: gameState, saveMeta, actionHistory, originalState, label, private: isPrivate || false }),
+      body: JSON.stringify({ save: gameState, saveMeta, actionHistory, originalState, rawSaveContent, label, private: isPrivate || false }),
     });
     if (!res.ok) throw new Error(`${res.status} ${await res.text()}`);
     return res.json();
-  }, [gameState, saveMeta, actionHistory, originalState]);
+  }, [gameState, saveMeta, actionHistory, originalState, rawSaveContent]);
 
   const addSnapshot = useCallback(async (id, label) => {
     const res = await fetch(`${SHARE_API}/api/share/${id}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ save: gameState, saveMeta, actionHistory, originalState, label }),
+      body: JSON.stringify({ save: gameState, saveMeta, actionHistory, originalState, rawSaveContent, label }),
     });
     if (!res.ok) throw new Error(`${res.status} ${await res.text()}`);
     return res.json();
-  }, [gameState, saveMeta, actionHistory, originalState]);
+  }, [gameState, saveMeta, actionHistory, originalState, rawSaveContent]);
 
   const getMeta = useCallback(async (id) => {
     const res = await fetch(`${SHARE_API}/api/share/${id}`);

@@ -65,7 +65,10 @@ WEAPON_TYPE_TO_ID = {
     "BOW":         "WEAPON_BOW",
     "CROSSBOW":    "WEAPON_CROSSBOW",
     "DUAL_BLADES": "WEAPON_DUAL_BLADES",
-    "GAUNTLET":    "WEAPON_GAUNTLET",
+    # El arma de tipo GAUNTLET es el Kukri de Chance — weapons.js la
+    # identifica como "WEAPON_KUKRI" (nombre legible), no "WEAPON_GAUNTLET"
+    # (que seguiría la convención pero no existe como id real).
+    "GAUNTLET":    "WEAPON_KUKRI",
     "HAMMER":      "WEAPON_HAMMER",
     "KNIVES":      "WEAPON_THROWING_KNIVES",
     "SPEAR":       "WEAPON_SPEAR",
@@ -151,13 +154,21 @@ def parse_localization(bundle_path):
     # habilidades nombradas mejoradas usan el sufijo literal "+" (p.ej.
     # WEAPON_ABILITY_FROM_THE_DARKNESS+_DESC); sin él, esas filas del CSV se
     # descartaban en silencio y el texto mejorado nunca se resolvía.
-    pattern = r'^([A-Z0-9_+]+),Text,,("(?:[^"]|\n)*?"|[^\n\r]*)'
+    # NOTA 2: el CSV escapa las comillas literales dentro de un valor
+    # duplicandolas (""el emisario"" = comillas literales), como marca el
+    # propio formato CSV. El patron anterior usaba (?:[^"]|\n)*? (no-greedy),
+    # que cerraba el valor en la PRIMERA comilla que encontraba -- es decir,
+    # en la primera comilla doble literal -- cortando el texto en seco ahi
+    # mismo. Con (?:[^"]|"")* (greedy) las comillas dobles se consumen como
+    # unidad y solo se cierra el valor en una comilla suelta real.
+    pattern = r'^([A-Z0-9_+]+),Text,,("(?:[^"]|"")*"|[^\n\r]*)'
     for m in re.finditer(pattern, text, re.MULTILINE):
         key = m.group(1)
         val = m.group(2).strip()
         # Eliminar comillas CSV externas si las hay
         if val.startswith('"') and val.endswith('"') and len(val) >= 2:
             val = val[1:-1].strip()
+            val = val.replace('""', '"')  # comillas literales escapadas
         # Eliminar carácter de "+" especial () que indica versión mejorada
         val = val.replace('', '+').replace('', '').strip()
         if key:
@@ -413,7 +424,9 @@ UI_SPRITE_MAP = {
     "Icon_Range":            "Icon_Range.png",
     "Icon_Action_Combat":    "Icon_Action_Combat.png",
     "Icon_Action_Generic":   "Icon_Action_Generic.png",
-    "Icon_Action_Interact":  "Icon_Action.png",
+    # Antes escribía a "Icon_Action.png" y pisaba el icono de término TERM_ACTIONS
+    # (generado dorado a partir de Icon_Action_Generic, ver extract_action_term_icon).
+    "Icon_Action_Interact":  "Icon_Action_Interact.png",
     "Icon_Resistance":       "Icon_Resistance.png",
     "Icon_Weakness":         "Icon_Weakness.png",
     "Icon_Coins":            "Icon_Coins.png",
@@ -894,6 +907,23 @@ def _find_weapon_part_image(wtype, slot, level, planner_dir):
 # Generación de weaponParts.js
 # ──────────────────────────────────────────────────────────────────────────────
 
+# NOTA: <style=...><link=TERM_FATIGUE>...</link></style> NO está en esta
+# lista a propósito — ese es el marcado que usa el propio juego para incrustar
+# iconos (fatiga, éxito, daño...) y que gameText.js (parseGameText/TERM_ICONS)
+# reconoce para sustituirlo por un <img>. Quitarlo a ciegas (como hacía la
+# versión anterior de este stripper, con una regex que pillaba CUALQUIER
+# etiqueta) dejaba las descripciones de habilidades sin sus símbolos.
+_HTML_TAG_RE = re.compile(r"</?(?:b|i|u|color|size|allcaps|smallcaps|indent)(?:=[^>]*)?>")
+
+
+def _strip_tags(text):
+    """El juego usa a veces etiquetas de formato tipo rich-text (<i>, <b>...)
+    en textos de localización, pero la app las muestra como texto plano (no
+    hay ningún dangerouslySetInnerHTML) — sin quitarlas se ven literalmente
+    en pantalla."""
+    return _HTML_TAG_RE.sub("", text) if text else text
+
+
 def _make_names(locs, *keys, es_fallback=""):
     """Construye el dict names para todos los idiomas probando las claves en orden."""
     result = {}
@@ -908,7 +938,7 @@ def _make_names(locs, *keys, es_fallback=""):
                     break
         if not val and lang == "es" and es_fallback:
             val = es_fallback
-        result[lang] = val
+        result[lang] = _strip_tags(val)
     return result
 
 
@@ -1319,8 +1349,10 @@ def generate_materials_js(env, locs, planner_dir):
 # Generación de items.js (armaduras, consumibles, amuletos)
 # ──────────────────────────────────────────────────────────────────────────────
 
-def _strip_armor_header(raw):
-    """Elimina la línea de cabecera <b>Carta de Armadura—...</b> del desc de armadura."""
+def _strip_card_header(raw):
+    """Elimina la línea de cabecera <b>Carta de Armadura/Consumible—...</b> del
+    desc de armadura/consumible (esa info va aparte, en campos estructurados
+    como armorType/consumableType, no como texto suelto en el cuerpo)."""
     if not raw:
         return ''
     lines = raw.split('\n')
@@ -1334,6 +1366,35 @@ def _strip_armor_header(raw):
         if s:
             result.append(s)
     return ' '.join(result).strip()
+
+# Vida extra (corazón rojo) y éxitos automáticos al defenderse (escudo
+# plateado + estrella) de cada armadura. NO es extraíble de los assets del
+# juego (comprobado con read_typetree sobre el MonoBehaviour de armadura:
+# solo trae KeyName/Value/Rarity/XPRequiredForDrop/etc., ningún campo de
+# estadística de vida o escudo) — leído a mano de fotos de las cartas
+# físicas por el usuario. Solo cubre ARMOR_1..18 (las fotografiadas); el
+# resto (ARMOR_19..27) se completará más adelante — se dejan sin entrada
+# aquí, lo que significa "sin insignia" en vez de un valor inventado.
+ARMOR_CARD_STATS = {
+    "ARMOR_1":  {"shieldSuccess": {"base": 1, "upgraded": 1}},
+    "ARMOR_2":  {"shieldSuccess": {"base": 1, "upgraded": 1}},
+    "ARMOR_3":  {"shieldSuccess": {"base": None, "upgraded": 1}},
+    "ARMOR_4":  {"shieldSuccess": {"base": None, "upgraded": 1}},
+    "ARMOR_5":  {"shieldSuccess": {"base": 1, "upgraded": 1}},
+    "ARMOR_6":  {"extraLife": {"base": 1, "upgraded": 1}},
+    "ARMOR_7":  {"extraLife": {"base": 1, "upgraded": 2}},
+    "ARMOR_8":  {"extraLife": {"base": 1, "upgraded": 1}},
+    "ARMOR_9":  {"extraLife": {"base": 2, "upgraded": 2}},
+    "ARMOR_10": {"extraLife": {"base": 1, "upgraded": 2}},
+    "ARMOR_11": {"extraLife": {"base": 1, "upgraded": 2}},
+    "ARMOR_12": {"extraLife": {"base": 1, "upgraded": 2}},
+    "ARMOR_13": {},
+    "ARMOR_14": {"shieldSuccess": {"base": None, "upgraded": 1}},
+    "ARMOR_15": {"extraLife": {"base": None, "upgraded": 1}},
+    "ARMOR_16": {"extraLife": {"base": 1, "upgraded": 1}},
+    "ARMOR_17": {"extraLife": {"base": 1, "upgraded": 2}},
+    "ARMOR_18": {"extraLife": {"base": 1, "upgraded": 1}},
+}
 
 def generate_items_js(env, locs, planner_dir):
     """Genera src/gamedata/items.js"""
@@ -1396,6 +1457,14 @@ def generate_items_js(env, locs, planner_dir):
                     "buyPrice":  buy_price,
                     "sellPrice": sell_price,
                 }
+
+                # Consumibles "Limitado": solo 2 héroes concretos pueden
+                # usarlos (p.ej. Poción carmesí → Vaerix/Galaden). Viene
+                # directo del campo LimitedHeroesId del objeto base.
+                if item_type == "consumable":
+                    limited_heroes = [str(x) for x in (getattr(d, "LimitedHeroesId", None) or []) if x]
+                    if limited_heroes:
+                        target_dict[bid]["limitedHeroIds"] = limited_heroes
             except Exception:
                 pass
             break
@@ -1418,19 +1487,47 @@ def generate_items_js(env, locs, planner_dir):
         up_descs   = {}
         for lang in LANGS:
             loc = locs.get(lang, {})
-            b = _strip_armor_header(loc.get(base_key, ""))
-            u = _strip_armor_header(loc.get(up_key, ""))
+            b = _strip_card_header(loc.get(base_key, ""))
+            u = _strip_card_header(loc.get(up_key, ""))
             if b: base_descs[lang] = b
             if u: up_descs[lang]   = u
         if base_descs:
             armor["baseAbilityDescs"] = base_descs
         if up_descs:
             armor["abilityDescs"] = up_descs
+        # Vida extra / éxitos automáticos de escudo (ver ARMOR_CARD_STATS)
+        card_stats = ARMOR_CARD_STATS.get(aid, {})
+        extra_life = card_stats.get("extraLife")
+        if extra_life:
+            armor["extraLife"] = extra_life["base"]
+            armor["extraLifeUpgraded"] = extra_life["upgraded"]
+        shield = card_stats.get("shieldSuccess")
+        if shield:
+            armor["shieldSuccess"] = shield["base"]
+            armor["shieldSuccessUpgraded"] = shield["upgraded"]
 
     for csm in consumables.values():
-        desc = loc_es.get(f"{csm['id']}_UPGRADED_DESC", "") or loc_es.get(f"{csm['id']}_DESC", "")
-        m = re.search(r'Consumible—(\w+)', desc)
+        cid = csm["id"]
+        base_key = f"{cid}_DESC"
+        up_key   = f"{cid}_UPGRADED_DESC"
+        # Rareza (Común/Limitado/Especial) desde la cabecera ES — igual que
+        # armorType, es dato estructurado; el texto de cabecera en si se
+        # descarta (ya no se muestra suelto en el cuerpo del tooltip).
+        desc_es = loc_es.get(up_key, "") or loc_es.get(base_key, "")
+        m = re.search(r'Consumible—(\w+)', desc_es)
         csm["consumableType"] = csm_type_map.get(m.group(1) if m else "", None)
+        base_descs = {}
+        up_descs   = {}
+        for lang in LANGS:
+            loc = locs.get(lang, {})
+            b = _strip_card_header(loc.get(base_key, ""))
+            u = _strip_card_header(loc.get(up_key, ""))
+            if b: base_descs[lang] = b
+            if u: up_descs[lang]   = u
+        if base_descs:
+            csm["baseAbilityDescs"] = base_descs
+        if up_descs:
+            csm["abilityDescs"] = up_descs
 
     for trinket in trinkets.values():
         base = trinket["id"].replace("_ID", "")  # TRINKET1_ID → TRINKET1
@@ -1733,6 +1830,246 @@ def generate_recipes_js(recipes, base_recipes, planner_dir):
     print(f"  ✓ recipes.js → {len(weapon_recipes)} recetas de armas, {len(csm_recipes)} consumibles")
 
 # ──────────────────────────────────────────────────────────────────────────────
+# Generación de skills.js (habilidades de héroe, desbloqueables con XP de grupo)
+# ──────────────────────────────────────────────────────────────────────────────
+
+# KeyName de habilidad: SKILL_<HERO>_<N> → id de héroe real
+SKILL_HERO_MAP = {
+    "BRYNN":   "HERO_BRYNN",
+    "CHANCE":  "HERO_CHANCE",
+    "GALADEN": "HERO_GALADEN",
+    "KEHLI":   "HERO_KEHLI",
+    "SYRUS":   "HERO_SYRUS",
+    "VAERIX":  "HERO_VAERIX",
+}
+
+
+def generate_skills_js(env, locs, planner_dir):
+    """Genera src/gamedata/skills.js: las habilidades desbloqueables de cada
+    héroe (11 por héroe) con su coste en XP de grupo. El nombre de cada
+    habilidad en localización combina sus dos caras ("Grito de apoyo / Grito
+    de combate") porque cada carta física tiene dos habilidades distintas
+    utilizables indistintamente una vez desbloqueada la carta."""
+    skills = []
+
+    for container_path, obj in env.container.items():
+        if not (container_path.startswith("assets/d3/skills/") and
+                container_path.endswith(".asset") and
+                obj.type.name == "MonoBehaviour"):
+            continue
+        try:
+            d = obj.read()
+            key = str(getattr(d, "KeyName", "") or "")
+            m = re.match(r"^SKILL_([A-Z]+)_(\d+)$", key)
+            if not m:
+                continue
+            hero_key, num = m.group(1), int(m.group(2))
+            hero_id = SKILL_HERO_MAP.get(hero_key)
+            if not hero_id:
+                continue
+            xp_cost = int(getattr(d, "XPCost", 0) or 0)
+            skills.append({
+                "id":      key,
+                "heroId":  hero_id,
+                "order":   num,
+                "xpCost":  xp_cost,
+                "names":   _make_names(locs, key, es_fallback=key),
+            })
+        except Exception:
+            pass
+
+    skills.sort(key=lambda s: (s["heroId"], s["order"]))
+
+    lines = [
+        "// Habilidades de héroe desbloqueables con XP de grupo",
+        "// Generado automáticamente por extract.py — no editar manualmente",
+        "",
+        "export const SKILLS = " + json.dumps(skills, ensure_ascii=False, indent=2) + ";",
+        "",
+        "export const SKILLS_BY_ID = Object.fromEntries(SKILLS.map(s => [s.id, s]));",
+    ]
+
+    out_path = os.path.join(planner_dir, "src", "gamedata", "skills.js")
+    with open(out_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines) + "\n")
+    print(f"  ✓ skills.js → {len(skills)} habilidades")
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Generación de quests.js (misiones de historia del Acto 1)
+# ──────────────────────────────────────────────────────────────────────────────
+
+def _scan_quest_required_heroes(env, folder, letter):
+    """Escanea assets/d3/quests/act1/<folder>/ buscando el campo
+    RequiredHeroes de cada misión (héroe cuya historia personal es esa
+    misión — casi siempre 0 o 1 héroe). folder: "story"/"side", letter:
+    "q"/"s" (el prefijo de la carpeta de cada misión, p.ej.
+    "q3 - chance 1/"). Devuelve {numero: [hero_ids]}."""
+    prefix = f"assets/d3/quests/act1/{folder}/"
+    pattern = re.compile(rf"^{re.escape(prefix)}{letter}(\d+)", re.IGNORECASE)
+    result = {}
+    for container_path, obj in env.container.items():
+        if not (container_path.startswith(prefix) and obj.type.name == "MonoBehaviour"):
+            continue
+        m = pattern.match(container_path)
+        if not m:
+            continue
+        try:
+            d = obj.read()
+            heroes = [str(h) for h in (getattr(d, "RequiredHeroes", None) or [])]
+        except Exception:
+            continue
+        if heroes:
+            result[int(m.group(1))] = heroes
+    return result
+
+
+def _extract_quest_detail_keys(locs, log_key_base):
+    """Bullets con datos adicionales del desenlace de una misión (los que el
+    propio juego muestra bajo el resumen en el registro de campaña), keys
+    LOG_<base>_OTHER_1, _OTHER_2... — comprobado que son independientes de
+    qué rama narrativa se tomara (son hechos que ya eran ciertos antes de
+    resolver la misión). Una única misión opcional (SIDE_QUEST_1) usa el
+    mismo rol pero con sufijo bare _1/_2/_3 en vez de _OTHER_N. Si ninguno de
+    los dos patrones tiene entradas (p.ej. STORY_QUEST_9, cuyos "extras" son
+    en realidad ramas alternativas —FOCUS/POWER/SACRIFICE— que si dependen
+    de qué decisión tomara el grupo y el save no registra cuál fue) se
+    devuelve una lista vacía en vez de adivinar.
+    """
+    loc_es = locs.get("es", {})
+    for infix in ("_OTHER_", "_"):
+        keys = []
+        i = 1
+        while True:
+            key = f"{log_key_base}{infix}{i}"
+            if key in loc_es:
+                keys.append(key)
+                i += 1
+            else:
+                break
+        if keys:
+            return keys
+    return []
+
+
+def _extract_quest_list(locs, prefix, required_heroes_by_num, log_prefix):
+    """log_prefix: "A1Q" o "A1S" — el resumen de cada misión vive en
+    LOG_<log_prefix><NN>_WON (NN con dos cifras). El juego guarda un resumen
+    distinto según cómo se resolviera la misión (WON/LOST/OTHER_N y variantes
+    de decisiones concretas de cada una) pero el save no registra cuál se
+    dio — se usa WON (el desenlace de éxito estándar) como resumen
+    representativo; puede no coincidir al 100% con partidas que perdieran o
+    tomaran una rama alternativa.
+    """
+    loc_es = locs.get("es", {})
+    pattern = re.compile(rf"^{prefix}_(\d+)$")
+    nums = sorted(
+        int(m.group(1)) for k in loc_es
+        if (m := pattern.match(k))
+    )
+    result = []
+    for n in nums:
+        key = f"{prefix}_{n}"
+        heroes = required_heroes_by_num.get(n) or []
+        log_key_base = f"LOG_{log_prefix}{n:02d}"
+        detail_keys = _extract_quest_detail_keys(locs, log_key_base)
+        result.append({
+            "id":             key,
+            "order":          n,
+            "names":          _make_names(locs, key, es_fallback=key),
+            "descriptions":   _make_names(locs, f"{key}_DESC", es_fallback=""),
+            "summaries":      _make_names(locs, f"{log_key_base}_WON", es_fallback=""),
+            "details":        [_make_names(locs, k, es_fallback="") for k in detail_keys],
+            # Casi siempre 0 o 1 héroe (misión de la historia personal de
+            # ese héroe) — se guarda el primero si acaso hubiera más de uno.
+            "requiredHeroId": heroes[0] if heroes else None,
+        })
+    return result
+
+
+def generate_quests_js(env, locs, planner_dir):
+    """Genera src/gamedata/quests.js: misiones de historia (STORY_QUEST_N) y
+    misiones opcionales (SIDE_QUEST_N) del Acto 1.
+
+    Comprobado en la localización: existen exactamente STORY_QUEST_1..14 (sin
+    huecos, sin ninguna por encima de 14) y SIDE_QUEST_1..2 — son todas las
+    misiones del Acto 1. El Acto 2 usa un sistema de misiones totalmente
+    distinto (escenas "a2q01..a2q11" con texto embebido por escena, no en la
+    localización global), así que esta lista no necesita filtrar por acto.
+    """
+    story_heroes = _scan_quest_required_heroes(env, "story", "q")
+    side_heroes  = _scan_quest_required_heroes(env, "side", "s")
+    quests     = _extract_quest_list(locs, "STORY_QUEST", story_heroes, "A1Q")
+    sideQuests = _extract_quest_list(locs, "SIDE_QUEST", side_heroes, "A1S")
+
+    lines = [
+        "// Misiones del Acto 1: historia (STORY_QUEST_N) y opcionales (SIDE_QUEST_N)",
+        "// Generado automáticamente por extract.py — no editar manualmente",
+        "",
+        "export const QUESTS = " + json.dumps(quests, ensure_ascii=False, indent=2) + ";",
+        "",
+        "export const QUESTS_BY_ID = Object.fromEntries(QUESTS.map(q => [q.id, q]));",
+        "",
+        "export const SIDE_QUESTS = " + json.dumps(sideQuests, ensure_ascii=False, indent=2) + ";",
+        "",
+        "export const SIDE_QUESTS_BY_ID = Object.fromEntries(SIDE_QUESTS.map(q => [q.id, q]));",
+    ]
+
+    out_path = os.path.join(planner_dir, "src", "gamedata", "quests.js")
+    with open(out_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines) + "\n")
+    print(f"  ✓ quests.js → {len(quests)} misiones, {len(sideQuests)} opcionales")
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Generación de virtues.js (las 2 virtudes de cada héroe)
+# ──────────────────────────────────────────────────────────────────────────────
+
+def generate_virtues_js(env, locs, planner_dir):
+    """Genera src/gamedata/virtues.js: las 2 virtudes de cada héroe, en orden
+    (VirtueOneKey/VirtueTwoKey vienen del propio MonoBehaviour del héroe, así
+    que el orden es el mismo que usan VirtueOneValue/VirtueTwoValue en el
+    save)."""
+    virtues = {}
+
+    for container_path, obj in env.container.items():
+        if not (container_path.startswith("assets/d3/heroes/") and
+                container_path.endswith(".asset") and
+                obj.type.name == "MonoBehaviour"):
+            continue
+        parts = container_path.split("/")
+        if len(parts) < 4 or parts[3] not in HERO_SLUGS:
+            continue
+        try:
+            d = obj.read()
+            v1_key = str(getattr(d, "VirtueOneKey", "") or "")
+            v2_key = str(getattr(d, "VirtueTwoKey", "") or "")
+            if not v1_key or not v2_key:
+                continue
+            hero_id = f"HERO_{parts[3].upper()}"
+            virtues[hero_id] = {
+                "heroId": hero_id,
+                "virtueOne": _make_names(locs, v1_key, es_fallback=v1_key),
+                "virtueTwo": _make_names(locs, v2_key, es_fallback=v2_key),
+            }
+        except Exception:
+            pass
+
+    sorted_virtues = [virtues[hid] for hid in sorted(virtues)]
+
+    lines = [
+        "// Las 2 virtudes de cada héroe (VirtueOneKey/VirtueTwoKey)",
+        "// Generado automáticamente por extract.py — no editar manualmente",
+        "",
+        "export const HERO_VIRTUES = " + json.dumps(sorted_virtues, ensure_ascii=False, indent=2) + ";",
+        "",
+        "export const HERO_VIRTUES_BY_ID = Object.fromEntries(HERO_VIRTUES.map(v => [v.heroId, v]));",
+    ]
+
+    out_path = os.path.join(planner_dir, "src", "gamedata", "virtues.js")
+    with open(out_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines) + "\n")
+    print(f"  ✓ virtues.js → {len(sorted_virtues)} héroes")
+
+# ──────────────────────────────────────────────────────────────────────────────
 # Generación de descriptions.js
 # ──────────────────────────────────────────────────────────────────────────────
 
@@ -1783,7 +2120,10 @@ SDF_ICON_BOXES = {
     "Icon_Surge":     (340, 675,  372, 712),   # U+F5E1 — Incremento
     "Icon_Upgrade":   (905, 937,  942, 970),   # U+F5E2 — Mejora (objeto mejorado)
     "Icon_Fatigue":   (823,  94,  846, 130),   # U+F5E3 — Fatiga
-    "Icon_Action":    (428, 590,  460, 625),   # U+F5E4 — Acción especial
+    # Icon_Action (U+F5E4) NO se extrae de aquí: ese glifo del atlas es el
+    # símbolo de "interactuar con objeto", no el de "acción" genérica del
+    # juego. Icon_Action.png (TERM_ACTIONS) se genera en su lugar a partir
+    # del sprite Icon_Action_Generic, ver extract_action_term_icon().
     "Icon_Damage":    (935, 878,  971, 913),   # U+F5E5 — Daño
     "Icon_Success":   (567, 935,  604, 970),   # U+F5E8 — Éxito
 }
@@ -1880,6 +2220,22 @@ def extract_sdf_icons(planner_dir, overwrite=False):
         except Exception as e:
             print(f"    ✗ Error extrayendo {name}: {e}")
 
+    # Icon_ExtraLife: mismo glifo que Icon_Health (corazón) pero en rojo
+    # (--color-danger), para la insignia de "vida extra" de las cartas de
+    # armadura — en las cartas físicas es un corazón rojo, distinto del
+    # corazón dorado que usa el resto de la UI para el término genérico de
+    # vida.
+    extra_life_path = os.path.join(icons_dir, "Icon_ExtraLife.png")
+    if overwrite or not os.path.isfile(extra_life_path):
+        try:
+            icon = _sdf_to_icon(atlas, SDF_ICON_BOXES["Icon_Health"], color=(192, 57, 43))
+            icon.save(extra_life_path)
+            extracted += 1
+        except Exception as e:
+            print(f"    ✗ Error extrayendo Icon_ExtraLife: {e}")
+    else:
+        skipped += 1
+
     print(f"  ✓ Iconos SDF: {extracted} extraídos, {skipped} ya existían")
     # También copiar a game-resources/raw/icons/ para revisión
     review_dir = os.path.join(planner_dir, "..", "game-resources", "raw", "icons")
@@ -1889,6 +2245,55 @@ def extract_sdf_icons(planner_dir, overwrite=False):
             if os.path.isfile(src):
                 import shutil as _shutil
                 _shutil.copy2(src, os.path.join(review_dir, f"{name}.png"))
+
+
+def _recolor_icon_to_square(img, size=SDF_OUTPUT_SIZE, color=SDF_ICON_COLOR, fill=0.90):
+    """Recolorea un icono (con canal alfa) a un color sólido, centrado en un
+    canvas cuadrado transparente. Preserva la forma/aspect-ratio original;
+    replica el encaje visual de _sdf_to_icon() para que ambos tipos de
+    iconos de término midan igual dentro de .ability-term-icon."""
+    from PIL import Image
+
+    src = img.convert("RGBA")
+    bbox = src.getbbox()
+    if bbox:
+        src = src.crop(bbox)
+    w, h = src.size
+    scale = min(size / w, size / h) * fill
+    new_w, new_h = max(1, int(w * scale)), max(1, int(h * scale))
+    resized = src.resize((new_w, new_h), Image.LANCZOS)
+
+    _, _, _, a = resized.split()
+    solid = Image.new("RGBA", (new_w, new_h), (color[0], color[1], color[2], 0))
+    solid.putalpha(a)
+
+    canvas = Image.new("RGBA", (size, size), (0, 0, 0, 0))
+    canvas.paste(solid, ((size - new_w) // 2, (size - new_h) // 2))
+    return canvas
+
+
+def extract_action_term_icon(planner_dir, overwrite=False):
+    """Genera Icon_Action.png (icono inline de TERM_ACTIONS) recoloreando el
+    sprite Icon_Action_Generic al mismo dorado que Icon_Fatigue.png /
+    Icon_Success.png, para que encaje con el resto de iconos de término
+    incrustados en los textos de habilidad (p.ej. Relámpago). Requiere que
+    extract_ui_icons() se haya ejecutado antes (fuente: Icon_Action_Generic.png)."""
+    from PIL import Image
+
+    icons_dir = os.path.join(planner_dir, "public", "assets", "icons")
+    src_path  = os.path.join(icons_dir, "Icon_Action_Generic.png")
+    out_path  = os.path.join(icons_dir, "Icon_Action.png")
+
+    if not overwrite and os.path.isfile(out_path):
+        print("  ⏭ Icon_Action.png ya existe (usa --overwrite para regenerar)")
+        return
+    if not os.path.isfile(src_path):
+        print("  ✗ Icon_Action_Generic.png no encontrado — no se puede generar Icon_Action.png")
+        return
+
+    icon = _recolor_icon_to_square(Image.open(src_path))
+    icon.save(out_path)
+    print("  ✓ Icon_Action.png ← Icon_Action_Generic.png recoloreado a dorado")
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -1964,6 +2369,9 @@ def main():
     generate_items_js(env, locs, planner_dir)
     generate_recipes_js(recipes, base_recipes, planner_dir)
     generate_descriptions_js(locs, planner_dir)
+    generate_skills_js(env, locs, planner_dir)
+    generate_quests_js(env, locs, planner_dir)
+    generate_virtues_js(env, locs, planner_dir)
 
     # ── 6. Iconos SDF ────────────────────────────────────────────────────────
     if not args.no_sdf_icons:
@@ -1975,6 +2383,7 @@ def main():
     # ── 7. Iconos adicionales (UI + daño + label frame) ─────────────────────
     print("\n[7/7] Extrayendo iconos adicionales...")
     extract_ui_icons(env, planner_dir, overwrite=args.overwrite)
+    extract_action_term_icon(planner_dir, overwrite=args.overwrite)
 
     print(f"\n{'='*60}")
     print("  ¡Extracción completada!")

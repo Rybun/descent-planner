@@ -85,6 +85,51 @@ export function parseSave(jsonContent) {
     .filter(s => s.id.startsWith('RECIPE_'))
     .map(s => s.id);
 
+  // Misiones completadas/disponibles, de historia (STORY_QUEST_N) y
+  // opcionales (SIDE_QUEST_N). El registro de campaña guarda una entrada por
+  // cada hito conseguido (misión, evento narrativo, evento de ciudad...) —
+  // no hace falta filtrar por EntryType, basta con quedarse con los ids que
+  // empiezan por el prefijo buscado. El EntryId a veces lleva un sufijo de
+  // variante (p.ej. "STORY_QUEST_4_S") que no existe como tal en quests.js —
+  // solo importa el número, así que se normaliza. Las disponibles-pero-no-
+  // completadas son las que el grupo ya puede emprender; el resto (ni
+  // completada ni disponible) es spoiler de la campaña y la UI debe
+  // ocultarlas por defecto. Se contemplan ambos esquemas de campo (PC
+  // "EntryId" / variante en minúsculas) por si acaso, igual que con ShopData
+  // más abajo.
+  function extractQuestIds(prefix) {
+    const completed = [];
+    const completedDates = {};
+    for (const entry of (gs.CampaignLogEntries || gs.campaignLogEntries || [])) {
+      const entryId = entry.EntryId ?? entry.entryId ?? '';
+      const m = new RegExp(`^${prefix}_(\\d+)`).exec(entryId);
+      if (m) {
+        const id = `${prefix}_${m[1]}`;
+        completed.push(id);
+        const date = entry.DateCompleted ?? entry.dateCompleted;
+        if (date) completedDates[id] = date;
+      }
+    }
+    const active = [];
+    for (const destId of (gs.ActiveDestinationIds || gs.activeDestinationIds || [])) {
+      const m = new RegExp(`^${prefix}_(\\d+)`).exec(destId || '');
+      if (m) active.push(`${prefix}_${m[1]}`);
+    }
+    return { completed, active, completedDates };
+  }
+
+  const storyQuestIds = extractQuestIds('STORY_QUEST');
+  const sideQuestIds  = extractQuestIds('SIDE_QUEST');
+  const completedStoryQuestIds = storyQuestIds.completed;
+  const activeStoryQuestIds    = storyQuestIds.active;
+  const completedSideQuestIds  = sideQuestIds.completed;
+  const activeSideQuestIds     = sideQuestIds.active;
+  const completedStoryQuestDates = storyQuestIds.completedDates;
+  const completedSideQuestDates  = sideQuestIds.completedDates;
+
+  // Habilidades de héroe desbloqueadas (compradas con XP de grupo)
+  const unlockedSkills = gs.UnlockedSkills || gs.unlockedSkills || [];
+
   // Extraer datos de héroes
   const heroes = [];
   for (const player of (gs.AllPlayers || [])) {
@@ -128,10 +173,21 @@ export function parseSave(jsonContent) {
     totalPlayTimeSeconds: raw.StorySlot?.TotalSlotTime ?? null,
     completedDestinations: gs.CompletedDestinationIds || [],
     activeDestinations: gs.ActiveDestinationIds || [],
+    completedStoryQuestIds,
+    activeStoryQuestIds,
+    completedSideQuestIds,
+    activeSideQuestIds,
+    completedStoryQuestDates,
+    completedSideQuestDates,
 
     // Recursos
     gold: gs.Gold || 0,
+    // XP de grupo. Según el propio glosario del juego (TERM_EXPERIENCE_DESC)
+    // la XP nunca se pierde ni se gasta de forma permanente — todos los
+    // héroes la ganan al mismo ritmo. Se muestra tal cual, sin restar el
+    // coste de las habilidades ya desbloqueadas.
     partyXP: gs.PartyXP || 0,
+    unlockedSkills,
 
     // Inventario y materiales
     craftingMaterials,

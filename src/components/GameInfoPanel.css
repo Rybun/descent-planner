@@ -91,6 +91,39 @@
   color: var(--color-text-muted);
 }
 
+/* Etiqueta spoiler dentro de una fila de dato (ej. "Destinos restantes") */
+.gi-inline-spoiler-tag {
+  margin-left: 6px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #e8a020;
+  background: rgba(232, 160, 32, 0.12);
+  border: 1px solid rgba(232, 160, 32, 0.35);
+  border-radius: 99px;
+  padding: 1px 6px;
+  vertical-align: middle;
+}
+
+/* Botón para revelar un valor marcado como spoiler, bajo el propio riesgo
+   del usuario — mismo hueco que ocuparía el valor una vez revelado. */
+.gi-reveal-btn {
+  background: none;
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-muted);
+  font-size: 0.68rem;
+  padding: 2px 8px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.gi-reveal-btn:hover {
+  border-color: var(--color-border-hover);
+  color: var(--color-text);
+}
+
 /* Dificultad con color */
 .gi-difficulty {
   font-weight: 700;
@@ -118,23 +151,266 @@
   border-bottom: 1px solid var(--color-border);
 }
 
+/* 3 héroes por fila (2 filas para los 6) en vez de ajustar tantos como
+   quepan — con más ancho por tarjeta las habilidades más largas tienen
+   sitio y no se cortan tanto. */
 .gi-heroes-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: var(--spacing-sm);
+}
+
+@media (max-width: 900px) {
+  .gi-heroes-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .gi-heroes-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ─── Aviso de enlace compartido antiguo ─────────────── */
+
+.gi-legacy-notice {
+  font-size: 0.78rem;
+  color: #e8a020;
+  background: rgba(232, 160, 32, 0.1);
+  border: 1px solid rgba(232, 160, 32, 0.35);
+  border-radius: var(--radius-md);
+  padding: 8px 12px;
+}
+
+/* ─── Misiones del Acto 1 ────────────────────────────── */
+
+.gi-quests-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.gi-quests-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 6px;
+}
+
+.gi-quests-header .gi-section-title {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.gi-quests-toggle {
+  background: none;
+  border: 1px solid var(--color-border);
+  border-radius: 99px;
+  color: var(--color-text-muted);
+  font-size: 0.7rem;
+  padding: 3px 10px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.gi-quests-toggle:hover {
+  border-color: var(--color-border-hover);
+  color: var(--color-text);
+}
+
+/* Lista en una sola columna, de la 1ª a la última misión de arriba a abajo
+   — sin columnas que puedan confundir el orden de lectura. */
+.gi-quests-list {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 4px 10px;
+}
+
+.gi-quest-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 4px;
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  border-radius: var(--radius-sm);
+}
+
+.gi-quest-row:hover {
+  background: var(--color-surface-raised);
+}
+
+.gi-quest-row:last-child {
+  border-bottom: none;
+}
+
+.gi-quest-num {
+  flex-shrink: 0;
+  width: 18px;
+  text-align: right;
+  color: var(--color-text-disabled);
+  font-variant-numeric: tabular-nums;
+}
+
+.gi-quest-check {
+  flex-shrink: 0;
+  width: 16px;
+  text-align: center;
+  color: var(--color-text-disabled);
+}
+
+.gi-quest-done {
+  color: var(--color-text);
+}
+
+.gi-quest-done .gi-quest-check {
+  color: var(--color-success);
+  font-weight: 700;
+}
+
+.gi-quest-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.gi-quest-locked {
+  opacity: 0.6;
+}
+
+.gi-quest-spoiler-tag {
+  flex-shrink: 0;
+  margin-left: auto;
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #e8a020;
+  background: rgba(232, 160, 32, 0.12);
+  border: 1px solid rgba(232, 160, 32, 0.35);
+  border-radius: 99px;
+  padding: 1px 7px;
+}
+
+/* Héroe cuya historia personal es esta misión, alineado a la derecha */
+.gi-quest-hero-tag {
+  flex-shrink: 0;
+  margin-left: auto;
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--color-gold-light);
+  background: rgba(var(--color-gold-rgb), 0.1);
+  border: 1px solid rgba(var(--color-gold-rgb), 0.3);
+  border-radius: 99px;
+  padding: 1px 8px;
+}
+
+/* Avatar redondo del héroe cuya historia personal es esta misión, al final
+   del todo de la fila. */
+.gi-quest-hero-avatar {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-left: 5px;
+  border: 1px solid rgba(var(--color-gold-rgb), 0.4);
+  vertical-align: middle;
+}
+
+.gi-quest-tooltip-wrap {
+  display: contents;
+}
+
+.gi-quest-tooltip-bubble {
+  padding: 10px 12px;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--color-text);
+  width: 400px;
+}
+
+.gi-quest-tooltip-name {
+  display: block;
+  text-align: center;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-gold);
+  margin-bottom: 8px;
+}
+
+.gi-quest-tooltip-desc {
+  display: block;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--color-text);
+}
+
+/* Separador entre la descripción (introducción) y el resumen del desenlace
+   — solo aparece en misiones completadas. */
+.gi-quest-tooltip-divider {
+  display: block;
+  height: 1px;
+  background: var(--color-border);
+  margin: 8px 0;
+}
+
+.gi-quest-tooltip-date {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-gold-light);
+  margin-bottom: 4px;
+}
+
+.gi-quest-tooltip-summary {
+  display: block;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+/* Viñetas con datos adicionales del desenlace, igual que el registro de
+   campaña del propio juego. */
+.gi-quest-tooltip-details {
+  margin: 8px 0 0;
+  padding-left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.gi-quest-tooltip-details li {
+  color: var(--color-text-muted);
+  font-size: 0.74rem;
 }
 
 /* ─── Tarjeta de héroe ───────────────────────────────── */
 
 .gi-hero-card {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   gap: var(--spacing-sm);
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   padding: var(--spacing-sm) var(--spacing-md);
   overflow: hidden;
+}
+
+.gi-hero-card-top {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
 }
 
 .gi-hero-portrait {
@@ -205,4 +481,68 @@
   padding: 1px 5px;
   border-radius: 99px;
   border: 1px solid var(--color-border);
+}
+
+/* ─── Habilidades desbloqueadas ──────────────────────── */
+
+.gi-hero-skills {
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--spacing-xs);
+}
+
+.gi-hero-skills-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+  margin-bottom: 3px;
+}
+
+.gi-hero-skills-empty {
+  font-size: 0.72rem;
+  color: var(--color-text-disabled);
+  font-style: italic;
+}
+
+.gi-hero-skills-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Cada habilidad es una "píldora": las 2 caras de la carta apiladas (una
+   encima de otra) en vez de "Nombre A / Nombre B" en una sola línea, que se
+   cortaba con "..." antes de llegar a ver la segunda cara. */
+.gi-hero-skill-pill {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 4px 8px;
+}
+
+.gi-hero-skill-names {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.3;
+}
+
+.gi-hero-skill-name {
+  font-size: 0.72rem;
+  color: var(--color-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.gi-hero-skill-cost {
+  flex-shrink: 0;
+  color: var(--color-gold);
+  font-weight: 700;
+  font-size: 0.72rem;
 }

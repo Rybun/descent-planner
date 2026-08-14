@@ -11,6 +11,8 @@ import { HEROES_BY_ID } from '../gamedata/heroes';
 import { DAMAGE_TYPE_BY_ID } from '../gamedata/damageTypes';
 import { parseGameText, TERM_ICONS } from '../gamedata/gameText';
 import { useIsMobile } from '../hooks/useIsMobile';
+import { useTooltipPosition } from '../hooks/useTooltipPosition';
+import { useBodyScrollLock } from '../hooks/useBodyScrollLock';
 import WeaponAssemblyView from './WeaponAssemblyView';
 import './RecipeTooltip.css';
 
@@ -135,7 +137,7 @@ function getPartDescNodes(pid, lang) {
   return { activationNodes, passiveNodes, chance, isAccessory: isAcc };
 }
 
-export default function WeaponPartTooltip({ partId, showUpgradeIcon = true, children }) {
+export default function WeaponPartTooltip({ partId, showUpgradeIcon = true, hideAbility = false, children }) {
   const t        = useT();
   const lang     = useLang();
   const gameState = useStore(s => s.gameState);
@@ -144,6 +146,8 @@ export default function WeaponPartTooltip({ partId, showUpgradeIcon = true, chil
   const [visible, setVisible] = useState(false);
   const [coords,  setCoords]  = useState({ x: 0, y: 0 });
   const [modalOpen, setModalOpen] = useState(false);
+  const { ref: bubbleRef, style: bubbleStyle } = useTooltipPosition(coords, visible && !isMobile);
+  useBodyScrollLock(modalOpen);
 
   const part = WEAPON_PARTS_BY_ID[partId];
   if (!part) return <>{children}</>;
@@ -194,8 +198,6 @@ export default function WeaponPartTooltip({ partId, showUpgradeIcon = true, chil
   const asmOverrides = ASSEMBLY_OVERRIDES[part.weaponType] || {};
 
   function move(e) { setCoords({ x: e.clientX, y: e.clientY }); }
-  const offsetX = coords.x + 16 + 280 > window.innerWidth ? coords.x - 296 : coords.x + 16;
-  const offsetY = Math.min(coords.y - 8, window.innerHeight - 360);
 
   function handleClick(e) {
     if (!isMobile) return;
@@ -266,20 +268,20 @@ export default function WeaponPartTooltip({ partId, showUpgradeIcon = true, chil
         </span>
       )}
 
-      {activationNodes && (
+      {!hideAbility && activationNodes && (
         <span className="rtt-effect">
           {activationNodes}
         </span>
       )}
 
-      {passiveNodes && (
+      {!hideAbility && passiveNodes && (
         <span className={`rtt-effect${isAccessory ? '' : ' rtt-passive'}`}>
           {isAccessory && chance != null && <span className="rtt-chance-chip">{chance}%</span>}
           {passiveNodes}
         </span>
       )}
 
-      {conflictId && (
+      {!hideAbility && conflictId && (
         <span className="rtt-conflict">
           <span className="rtt-conflict-label">{t('shop.slotConflict')}</span>
           <span className="rtt-conflict-name">{conflictName}</span>
@@ -333,7 +335,7 @@ export default function WeaponPartTooltip({ partId, showUpgradeIcon = true, chil
     >
       {children}
       {!isMobile && visible && createPortal(
-        <span className="rtt-bubble" style={{ left: offsetX, top: offsetY }}>
+        <span ref={bubbleRef} className="rtt-bubble" style={bubbleStyle}>
           {bubbleContent}
         </span>
       , document.body)}

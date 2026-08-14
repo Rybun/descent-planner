@@ -250,6 +250,7 @@
 
 .rtt-hero-footer--item {
   height: 110px;
+  position: relative;
 }
 
 .rtt-item-footer-img {
@@ -300,6 +301,48 @@
 .rtt-armor-sep {
   color: var(--color-gold);
   opacity: 0.6;
+}
+
+/* Vida extra / éxitos automáticos de escudo (dato de la carta física) */
+.armor-stat-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  vertical-align: middle;
+}
+
+.rtt-armor-heroes-stat {
+  margin-left: 6px;
+}
+
+.armor-stat-badge-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+.armor-stat-badge-num {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.armor-stat-badge-star {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+
+/* Superpuesta sobre la imagen del objeto en el tooltip (no en la miniatura) */
+.armor-stat-badge--overlay {
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  background: rgba(0, 0, 0, 0.85);
+  border: 1px solid var(--color-border);
+  border-radius: 99px;
+  padding: 3px 6px;
+  gap: 3px;
 }
 
 /* ── Mobile bottom-sheet modal (shared by all tooltip components) ── */

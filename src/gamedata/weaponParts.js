@@ -1962,7 +1962,7 @@ export const WEAPON_PARTS = [
       "it": "Guanto Semplice",
       "pt": "Manopla Básica"
     },
-    "weaponId": "WEAPON_GAUNTLET",
+    "weaponId": "WEAPON_KUKRI",
     "image": null,
     "buyPrice": null,
     "sellPrice": null,
@@ -1981,7 +1981,7 @@ export const WEAPON_PARTS = [
       "it": "Guanto Ombrartiglio",
       "pt": "Manopla das Garras de Sombra"
     },
-    "weaponId": "WEAPON_GAUNTLET",
+    "weaponId": "WEAPON_KUKRI",
     "image": "/assets/weapon_parts/gauntlet a1 - shadowstone.png",
     "buyPrice": null,
     "sellPrice": null,
@@ -2002,7 +2002,7 @@ export const WEAPON_PARTS = [
       "it": "Guanto Ombrartiglio + ✦",
       "pt": "Manopla das Garras de Sombra + ✦"
     },
-    "weaponId": "WEAPON_GAUNTLET",
+    "weaponId": "WEAPON_KUKRI",
     "image": "/assets/weapon_parts/gauntlet a1 - shadowstone.png",
     "buyPrice": null,
     "sellPrice": null,
@@ -2025,7 +2025,7 @@ export const WEAPON_PARTS = [
       "it": "Guanto Zannuto",
       "pt": "Manopla com Presas"
     },
-    "weaponId": "WEAPON_GAUNTLET",
+    "weaponId": "WEAPON_KUKRI",
     "image": "/assets/weapon_parts/gauntlet a2 - fanged.png",
     "buyPrice": 200,
     "sellPrice": null,
@@ -2046,7 +2046,7 @@ export const WEAPON_PARTS = [
       "it": "Guanto Zannuto + ✦",
       "pt": "Manopla com Presas + ✦"
     },
-    "weaponId": "WEAPON_GAUNTLET",
+    "weaponId": "WEAPON_KUKRI",
     "image": "/assets/weapon_parts/gauntlet a2 - fanged.png",
     "buyPrice": null,
     "sellPrice": null,
@@ -2067,7 +2067,7 @@ export const WEAPON_PARTS = [
       "it": "Guanto Distorcente",
       "pt": "Manopla Corruptora"
     },
-    "weaponId": "WEAPON_GAUNTLET",
+    "weaponId": "WEAPON_KUKRI",
     "image": "/assets/weapon_parts/gauntlet a3 - disrupter.png",
     "buyPrice": 200,
     "sellPrice": null,
@@ -2088,7 +2088,7 @@ export const WEAPON_PARTS = [
       "it": "Guanto Distorcente + ✦",
       "pt": "Manopla Corruptora + ✦"
     },
-    "weaponId": "WEAPON_GAUNTLET",
+    "weaponId": "WEAPON_KUKRI",
     "image": "/assets/weapon_parts/gauntlet a3 - disrupter.png",
     "buyPrice": null,
     "sellPrice": null,
@@ -2110,7 +2110,7 @@ export const WEAPON_PARTS = [
       "it": "Guanto Implacabile",
       "pt": "Manopla Implacável"
     },
-    "weaponId": "WEAPON_GAUNTLET",
+    "weaponId": "WEAPON_KUKRI",
     "image": "/assets/weapon_parts/gauntlet a4 - relentless.png",
     "buyPrice": 300,
     "sellPrice": null,
@@ -2131,7 +2131,7 @@ export const WEAPON_PARTS = [
       "it": "Guanto Implacabile + ✦",
       "pt": "Manopla Implacável + ✦"
     },
-    "weaponId": "WEAPON_GAUNTLET",
+    "weaponId": "WEAPON_KUKRI",
     "image": "/assets/weapon_parts/gauntlet a4 - relentless.png",
     "buyPrice": null,
     "sellPrice": null,
@@ -2154,7 +2154,7 @@ export const WEAPON_PARTS = [
       "it": "Guanto Risucchia Vita",
       "pt": "Manopla Sorvedora de Vida"
     },
-    "weaponId": "WEAPON_GAUNTLET",
+    "weaponId": "WEAPON_KUKRI",
     "image": "/assets/weapon_parts/gauntlet a5 - life drinking.png",
     "buyPrice": 200,
     "sellPrice": null,
@@ -2175,7 +2175,7 @@ export const WEAPON_PARTS = [
       "it": "Guanto Risucchia Vita + ✦",
       "pt": "Manopla Sorvedora de Vida + ✦"
     },
-    "weaponId": "WEAPON_GAUNTLET",
+    "weaponId": "WEAPON_KUKRI",
     "image": "/assets/weapon_parts/gauntlet a5 - life drinking.png",
     "buyPrice": null,
     "sellPrice": null,
@@ -2197,7 +2197,7 @@ export const WEAPON_PARTS = [
       "it": "Guantone",
       "pt": "Luva"
     },
-    "weaponId": "WEAPON_GAUNTLET",
+    "weaponId": "WEAPON_KUKRI",
     "image": "/assets/weapon_parts/gauntlet b0 - starter.png",
     "buyPrice": null,
     "sellPrice": null,
@@ -2216,7 +2216,7 @@ export const WEAPON_PARTS = [
       "it": "Guantoni di Trama d'Ombra",
       "pt": "Luvas de Trama das Sombras"
     },
-    "weaponId": "WEAPON_GAUNTLET",
+    "weaponId": "WEAPON_KUKRI",
     "image": "/assets/weapon_parts/gauntlet b1 - shadow-weave gloves.png",
     "buyPrice": null,
     "sellPrice": null,
@@ -2235,7 +2235,7 @@ export const WEAPON_PARTS = [
       "it": "Guantoni di Trama d'Ombra + ✦",
       "pt": "Luvas de Trama das Sombras + ✦"
     },
-    "weaponId": "WEAPON_GAUNTLET",
+    "weaponId": "WEAPON_KUKRI",
     "image": "/assets/weapon_parts/gauntlet b1 - shadow-weave gloves.png",
     "buyPrice": null,
     "sellPrice": null,
@@ -2254,7 +2254,7 @@ export const WEAPON_PARTS = [
       "it": "Guantoni Artigliati",
       "pt": "Luvas com Garras"
     },
-    "weaponId": "WEAPON_GAUNTLET",
+    "weaponId": "WEAPON_KUKRI",
     "image": "/assets/weapon_parts/gauntlet b2 - clawed gloves.png",
     "buyPrice": null,
     "sellPrice": null,
@@ -2273,7 +2273,7 @@ export const WEAPON_PARTS = [
       "it": "Guantoni Artigliati + ✦",
       "pt": "Luvas com Garras + ✦"
     },
-    "weaponId": "WEAPON_GAUNTLET",
+    "weaponId": "WEAPON_KUKRI",
     "image": "/assets/weapon_parts/gauntlet b2 - clawed gloves.png",
     "buyPrice": null,
     "sellPrice": null,
@@ -2292,7 +2292,7 @@ export const WEAPON_PARTS = [
       "it": "Guantoni Sanguinari",
       "pt": "Luvas Sedentas de Sangue"
     },
-    "weaponId": "WEAPON_GAUNTLET",
+    "weaponId": "WEAPON_KUKRI",
     "image": "/assets/weapon_parts/gauntlet b3 - bloodthirsty gloves.png",
     "buyPrice": null,
     "sellPrice": null,
@@ -2311,7 +2311,7 @@ export const WEAPON_PARTS = [
       "it": "Guantoni Sanguinari + ✦",
       "pt": "Luvas Sedentas de Sangue + ✦"
     },
-    "weaponId": "WEAPON_GAUNTLET",
+    "weaponId": "WEAPON_KUKRI",
     "image": "/assets/weapon_parts/gauntlet b3 - bloodthirsty gloves.png",
     "buyPrice": null,
     "sellPrice": null,
@@ -2330,7 +2330,7 @@ export const WEAPON_PARTS = [
       "it": "Guantoni dei Sussurri",
       "pt": "Luvas Sussurrantes"
     },
-    "weaponId": "WEAPON_GAUNTLET",
+    "weaponId": "WEAPON_KUKRI",
     "image": "/assets/weapon_parts/gauntlet b4 - whisper gloves.png",
     "buyPrice": null,
     "sellPrice": null,
@@ -2349,7 +2349,7 @@ export const WEAPON_PARTS = [
       "it": "Guantoni dei Sussurri + ✦",
       "pt": "Luvas Sussurrantes + ✦"
     },
-    "weaponId": "WEAPON_GAUNTLET",
+    "weaponId": "WEAPON_KUKRI",
     "image": "/assets/weapon_parts/gauntlet b4 - whisper gloves.png",
     "buyPrice": null,
     "sellPrice": null,
@@ -2368,7 +2368,7 @@ export const WEAPON_PARTS = [
       "it": "Guantoni Aladrago",
       "pt": "Luva Asas de Dragão"
     },
-    "weaponId": "WEAPON_GAUNTLET",
+    "weaponId": "WEAPON_KUKRI",
     "image": "/assets/weapon_parts/gauntlet b5 - drakewing gloves.png",
     "buyPrice": null,
     "sellPrice": null,
@@ -2387,7 +2387,7 @@ export const WEAPON_PARTS = [
       "it": "Guantoni Aladrago + ✦",
       "pt": "Luva Asas de Dragão + ✦"
     },
-    "weaponId": "WEAPON_GAUNTLET",
+    "weaponId": "WEAPON_KUKRI",
     "image": "/assets/weapon_parts/gauntlet b5 - drakewing gloves.png",
     "buyPrice": null,
     "sellPrice": null,
@@ -2406,7 +2406,7 @@ export const WEAPON_PARTS = [
       "it": "Bracciale",
       "pt": "Braçadeira"
     },
-    "weaponId": "WEAPON_GAUNTLET",
+    "weaponId": "WEAPON_KUKRI",
     "image": "/assets/weapon_parts/gauntlet c0 - starter.png",
     "buyPrice": null,
     "sellPrice": null,
@@ -2425,7 +2425,7 @@ export const WEAPON_PARTS = [
       "it": "Bracciali di Pietra d'Ombra",
       "pt": "Braçadeiras de Pedra Sombria"
     },
-    "weaponId": "WEAPON_GAUNTLET",
+    "weaponId": "WEAPON_KUKRI",
     "image": "/assets/weapon_parts/gauntlet c1 - shadowstone bracers.png",
     "buyPrice": null,
     "sellPrice": null,
@@ -2444,7 +2444,7 @@ export const WEAPON_PARTS = [
       "it": "Bracciali di Pietra d'Ombra + ✦",
       "pt": "Braçadeiras de Pedra Sombria + ✦"
     },
-    "weaponId": "WEAPON_GAUNTLET",
+    "weaponId": "WEAPON_KUKRI",
     "image": "/assets/weapon_parts/gauntlet c1 - shadowstone bracers.png",
     "buyPrice": null,
     "sellPrice": null,
@@ -2463,7 +2463,7 @@ export const WEAPON_PARTS = [
       "it": "Bracciali Pesanti",
       "pt": "Braçadeiras Pesadas"
     },
-    "weaponId": "WEAPON_GAUNTLET",
+    "weaponId": "WEAPON_KUKRI",
     "image": "/assets/weapon_parts/gauntlet c2 - heavy bracers.png",
     "buyPrice": null,
     "sellPrice": null,
@@ -2482,7 +2482,7 @@ export const WEAPON_PARTS = [
       "it": "Bracciali Pesanti + ✦",
       "pt": "Braçadeiras Pesadas + ✦"
     },
-    "weaponId": "WEAPON_GAUNTLET",
+    "weaponId": "WEAPON_KUKRI",
     "image": "/assets/weapon_parts/gauntlet c2 - heavy bracers.png",
     "buyPrice": null,
     "sellPrice": null,
@@ -2501,7 +2501,7 @@ export const WEAPON_PARTS = [
       "it": "Bracciali della Crudeltà",
       "pt": "Braçadeiras Cruéis"
     },
-    "weaponId": "WEAPON_GAUNTLET",
+    "weaponId": "WEAPON_KUKRI",
     "image": "/assets/weapon_parts/gauntlet c3 - cruel bracers.png",
     "buyPrice": null,
     "sellPrice": null,
@@ -2520,7 +2520,7 @@ export const WEAPON_PARTS = [
       "it": "Bracciali della Crudeltà + ✦",
       "pt": "Braçadeiras Cruéis + ✦"
     },
-    "weaponId": "WEAPON_GAUNTLET",
+    "weaponId": "WEAPON_KUKRI",
     "image": "/assets/weapon_parts/gauntlet c3 - cruel bracers.png",
     "buyPrice": null,
     "sellPrice": null,
@@ -2539,7 +2539,7 @@ export const WEAPON_PARTS = [
       "it": "Bracciali Mordaci",
       "pt": "Braçadeiras Mordedoras"
     },
-    "weaponId": "WEAPON_GAUNTLET",
+    "weaponId": "WEAPON_KUKRI",
     "image": "/assets/weapon_parts/gauntlet c4 - biting bracers.png",
     "buyPrice": null,
     "sellPrice": null,
@@ -2558,7 +2558,7 @@ export const WEAPON_PARTS = [
       "it": "Bracciali Mordaci + ✦",
       "pt": "Braçadeiras Mordedoras + ✦"
     },
-    "weaponId": "WEAPON_GAUNTLET",
+    "weaponId": "WEAPON_KUKRI",
     "image": "/assets/weapon_parts/gauntlet c4 - biting bracers.png",
     "buyPrice": null,
     "sellPrice": null,
@@ -2577,7 +2577,7 @@ export const WEAPON_PARTS = [
       "it": "Bracciali da Presa",
       "pt": "Braçadeira de Agarrar"
     },
-    "weaponId": "WEAPON_GAUNTLET",
+    "weaponId": "WEAPON_KUKRI",
     "image": "/assets/weapon_parts/gauntlet c5 - grasping bracers.png",
     "buyPrice": null,
     "sellPrice": null,
@@ -2596,7 +2596,7 @@ export const WEAPON_PARTS = [
       "it": "Bracciali da Presa + ✦",
       "pt": "Braçadeira de Agarrar + ✦"
     },
-    "weaponId": "WEAPON_GAUNTLET",
+    "weaponId": "WEAPON_KUKRI",
     "image": "/assets/weapon_parts/gauntlet c5 - grasping bracers.png",
     "buyPrice": null,
     "sellPrice": null,

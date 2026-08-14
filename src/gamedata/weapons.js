@@ -109,7 +109,7 @@ export const WEAPONS = [
     name: 'Kukri',
     nameEn: 'Kukri',
     heroId: 'HERO_CHANCE',
-    weaponType: 'KNIVES',
+    weaponType: 'GAUNTLET',
     attackType: 'MELEE',
     range: 0,
     image: null,

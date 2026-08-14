@@ -30,7 +30,9 @@ export const ARMORS = [
       "fr": "Pendant votre défense ou celle d’un Héros adjacent, ajoutez 2 <style=Term><link=TERM_ADVANTAGE></link></style>.",
       "it": "Durante la tua difesa o quella di un eroe adiacente, aggiungi 2 <style=Term><link=TERM_ADVANTAGE></link></style>.",
       "pt": "Durante uma defesa sua ou de um herói adjacente, some 2 <style=Term><link=TERM_ADVANTAGE></link></style>."
-    }
+    },
+    "shieldSuccess": 1,
+    "shieldSuccessUpgraded": 1
   },
   {
     "id": "ARMOR_2",
@@ -59,7 +61,9 @@ export const ARMORS = [
       "fr": "Pendant votre tour, vous pouvez <style=Term><link=TERM_SCARRED>balafrer</link></style> 1 carte pour <b><style=Term><link=TERM_SHIFT>Glisser</link></style> de 1</b> et défausser 2 <style=Term><link=TERM_FATIGUE></link></style>.",
       "it": "Durante il tuo turno, puoi <style=Term><link=TERM_SCARRED>sfregiare</link></style> 1 carta per <style=Term><link=TERM_SHIFT>scattare</link></style> 1 e scartare 2 <style=Term><link=TERM_FATIGUE></link></style>.",
       "pt": "Durante seu turno, você pode <style=Term><link=TERM_SCARRED>marcar</link></style> uma carta para <b><style=Term><link=TERM_SHIFT>Deslocar</link></style> 1</b> e descartar 2 <style=Term><link=TERM_FATIGUE></link></style>."
-    }
+    },
+    "shieldSuccess": 1,
+    "shieldSuccessUpgraded": 1
   },
   {
     "id": "ARMOR_3",
@@ -88,7 +92,9 @@ export const ARMORS = [
       "fr": "Avant la défense d’un autre Héros dans un rayon de 3 cases autour de vous, vous pouvez intervertir vos figurines pour devenir la cible de l’attaque.",
       "it": "Prima della difesa di un altro eroe, se quell'eroe si trova entro 3 caselle da te, puoi scambiarti di casella con lui e diventare tu il bersaglio.",
       "pt": "Antes da defesa de outro herói, se ele estiver a até 3 espaços de você, você pode trocar de espaço com ele e tornar-se o alvo."
-    }
+    },
+    "shieldSuccess": null,
+    "shieldSuccessUpgraded": 1
   },
   {
     "id": "ARMOR_4",
@@ -117,7 +123,9 @@ export const ARMORS = [
       "fr": "Tant que vous êtes <style=Term><link=TERM_INJURIES>blessé</link></style>, votre <style=Term><link=TERM_SPEED>vitesse</link></style> augmente de 1 et vous pouvez ignorer l’effet de l’état <style=Term><link=TERM_TERRIFIED>terrifié</link></style> sur vos cartes <style=Term><link=TERM_ATTACK_CARDS>Attaque</link></style> et <style=Term><link=TERM_HERO_CARD>Héros</link></style>.",
       "it": "Mentre possiedi una <style=Term><link=TERM_INJURIES>ferita</link></style>, aumenta di 1 la tua <style=Term><link=TERM_SPEED>velocità</link></style> e puoi ignorare l'effetto del <style=Term><link=TERM_TERRIFIED>terrore</link></style> sulla tua <style=Term><link=TERM_ATTACK_CARDS>carta attacco</link></style> e sulla tua <style=Term><link=TERM_HERO_CARD>carta eroe</link></style>.",
       "pt": "Enquanto você tiver um <style=Term><link=TERM_INJURIES>ferimento</link></style>, aumente seu <style=Term><link=TERM_SPEED>deslocamento</link></style> em 1 e você pode ignorar o efeito de <style=Term><link=TERM_TERRIFIED>terror</link></style> na sua <style=Term><link=TERM_ATTACK_CARDS>carta de ataque</link></style> e na sua <style=Term><link=TERM_HERO_CARD>carta de herói</link></style>."
-    }
+    },
+    "shieldSuccess": null,
+    "shieldSuccessUpgraded": 1
   },
   {
     "id": "ARMOR_5",
@@ -146,7 +154,9 @@ export const ARMORS = [
       "fr": "1 <style=Term><link=TERM_SURGE></link></style> : Pendant votre défense, ajoutez 1 <style=Term><link=TERM_SUCCESS></link></style>, <style=Term><link=TERM_FOCUSED>canalisez</link></style> 1 carte et défaussez 2 <style=Term><link=TERM_FATIGUE></link></style>.",
       "it": "1 <style=Term><link=TERM_SURGE></link></style>: Durante la tua difesa, aggiungi 1 <style=Term><link=TERM_SUCCESS></link></style>, <style=Term><link=TERM_FOCUSED>focalizza</link></style> 1 carta e scarta 2 <style=Term><link=TERM_FATIGUE></link></style>.",
       "pt": "1 <style=Term><link=TERM_SURGE></link></style>: Durante sua defesa, some 1 <style=Term><link=TERM_SUCCESS></link></style>, <style=Term><link=TERM_FOCUSED>foque</link></style> 1 carta e descarte 2 <style=Term><link=TERM_FATIGUE></link></style>."
-    }
+    },
+    "shieldSuccess": 1,
+    "shieldSuccessUpgraded": 1
   },
   {
     "id": "ARMOR_6",
@@ -175,7 +185,9 @@ export const ARMORS = [
       "fr": "Votre <style=Term><link=TERM_SPEED>vitesse</link></style> augmente de 1. Pendant votre tour, vous pouvez intervertir votre figurine et celle d’un petit Ennemi adjacent.",
       "it": "Aumenta di 1 la tua <style=Term><link=TERM_SPEED>velocità</link></style>. Durante il tuo turno, puoi scambiarti di casella con un nemico piccolo adiacente.",
       "pt": "Aumente seu <style=Term><link=TERM_SPEED>deslocamento</link></style> em 1. Durante seu turno, você pode trocar de espaço com um inimigo pequeno adjacente."
-    }
+    },
+    "extraLife": 1,
+    "extraLifeUpgraded": 1
   },
   {
     "id": "ARMOR_7",
@@ -204,7 +216,9 @@ export const ARMORS = [
       "fr": "1 <style=Term><link=TERM_SURGE></link></style> : Pendant votre défense, ajoutez 1 <style=Term><link=TERM_SUCCESS></link></style> et défaussez 2 <style=Term><link=TERM_FATIGUE></link></style>.",
       "it": "1 <style=Term><link=TERM_SURGE></link></style>: Durante la tua difesa, aggiungi 1 <style=Term><link=TERM_SUCCESS></link></style> e scarta 2 <style=Term><link=TERM_FATIGUE></link></style>.",
       "pt": "1 <style=Term><link=TERM_SURGE></link></style>: Durante sua defesa, some 1 <style=Term><link=TERM_SUCCESS></link></style> e descarte 2 <style=Term><link=TERM_FATIGUE></link></style>."
-    }
+    },
+    "extraLife": 1,
+    "extraLifeUpgraded": 2
   },
   {
     "id": "ARMOR_8",
@@ -233,7 +247,9 @@ export const ARMORS = [
       "fr": "Après que vous avez vaincu un Ennemi, résolvez 2 effets au choix : • <b><style=Term><link=TERM_SHIFT>Glisser</link></style> de 3</b> • Défausser 2 <style=Term><link=TERM_FATIGUE></link></style> • <style=Term><link=TERM_FOCUSED>Canaliser</link></style> 1 carte",
       "it": "Dopo che hai sconfitto un nemico, scegli 1 effetto: • <style=Term><link=TERM_SHIFT>Scatta</link></style> 3 • Scarta 2 <style=Term><link=TERM_FATIGUE></link></style> • <style=Term><link=TERM_FOCUSED>Focalizza</link></style> 1 carta",
       "pt": "Depois de derrotar um inimigo, escolha 2: •<b><style=Term><link=TERM_SHIFT>Deslocar</link></style> 3</b> •Descartar 2 <style=Term><link=TERM_FATIGUE></link></style> •<style=Term><link=TERM_FOCUSED>Focar</link></style> 1 carta"
-    }
+    },
+    "extraLife": 1,
+    "extraLifeUpgraded": 1
   },
   {
     "id": "ARMOR_9",
@@ -262,7 +278,9 @@ export const ARMORS = [
       "fr": "Après que vous avez attaqué et vaincu un Ennemi, vous pouvez subir 2 <style=Term><link=TERM_FATIGUE></link></style> pour attaquer de nouveau.",
       "it": "Dopo il tuo attacco, se il nemico è sconfitto, puoi subire 2 <style=Term><link=TERM_FATIGUE></link></style> per attaccare di nuovo.",
       "pt": "Depois do seu ataque, se o inimigo for derrotado, você pode sofrer 2 <style=Term><link=TERM_FATIGUE></link></style> para atacar de novo."
-    }
+    },
+    "extraLife": 2,
+    "extraLifeUpgraded": 2
   },
   {
     "id": "ARMOR_10",
@@ -291,7 +309,9 @@ export const ARMORS = [
       "fr": "Pendant l’activation des Ennemis, vous pouvez ignorer les capacités qui vous déplacent.",
       "it": "Durante l'attivazione di un nemico, puoi ignorare le capacità che ti muovono.",
       "pt": "Durante a ativação de um inimigo, você pode ignorar habilidades que movam você."
-    }
+    },
+    "extraLife": 1,
+    "extraLifeUpgraded": 2
   },
   {
     "id": "ARMOR_11",
@@ -320,7 +340,9 @@ export const ARMORS = [
       "fr": "Au début de chaque quête, réglez votre cadran sur votre Santé maximale plus 4.",
       "it": "All'inizio di ogni impresa, regola la tua salute a 4 punti in più del suo massimo.",
       "pt": "No começo de cada missão, ajuste seu mostrador de vida para 4 pontos acima de sua vida máxima."
-    }
+    },
+    "extraLife": 1,
+    "extraLifeUpgraded": 2
   },
   {
     "id": "ARMOR_12",
@@ -349,7 +371,9 @@ export const ARMORS = [
       "fr": "Après que vous avez subi des <style=Term><link=TERM_DAMAGE></link></style>, vous pouvez défausser 2 <style=Term><link=TERM_FATIGUE></link></style>.",
       "it": "Dopo che hai subito <style=Term><link=TERM_DAMAGE></link></style>, puoi scartare 2 <style=Term><link=TERM_FATIGUE></link></style>.",
       "pt": "Depois de sofrer <style=Term><link=TERM_DAMAGE></link></style>, você pode descartar 2 <style=Term><link=TERM_FATIGUE></link></style>."
-    }
+    },
+    "extraLife": 1,
+    "extraLifeUpgraded": 2
   },
   {
     "id": "ARMOR_13",
@@ -407,7 +431,9 @@ export const ARMORS = [
       "fr": "Avant votre défense, <style=Term><link=TERM_FOCUSED>canalisez</link></style> 1 carte.",
       "it": "Prima della tua difesa, <style=Term><link=TERM_FOCUSED>focalizza</link></style> 1 carta.",
       "pt": "Antes de sua defesa, <style=Term><link=TERM_FOCUSED>foque</link></style> 1 carta."
-    }
+    },
+    "shieldSuccess": null,
+    "shieldSuccessUpgraded": 1
   },
   {
     "id": "ARMOR_15",
@@ -436,7 +462,9 @@ export const ARMORS = [
       "fr": "Avant votre défense, vous pouvez assigner 2 <style=Term><link=TERM_FATIGUE></link></style> pour ajouter 1 dé bleu.",
       "it": "Prima della tua difesa, puoi collocare 2 <style=Term><link=TERM_FATIGUE></link></style> per aggiungere 1 dado blu.",
       "pt": "Antes de sua defesa, você pode colocar 2 <style=Term><link=TERM_FATIGUE></link></style> para somar 1 dado azul."
-    }
+    },
+    "extraLife": null,
+    "extraLifeUpgraded": 1
   },
   {
     "id": "ARMOR_16",
@@ -465,7 +493,9 @@ export const ARMORS = [
       "fr": "Après avoir gagné un <style=Term><link=TERM_CONDITIONS>état</link></style>, vous pouvez subir 1 <style=Term><link=TERM_FATIGUE></link></style>. Si vous le faites, un autre Héros dans un rayon de 3 cases autour de vous gagne lui aussi cet <style=Term><link=TERM_CONDITIONS>état</link></style>.",
       "it": "Dopo che hai ottenuto una <style=Term><link=TERM_CONDITIONS>condizione</link></style>, puoi subire 1 <style=Term><link=TERM_FATIGUE></link></style>. Se lo fai, anche un altro eroe entro 3 caselle da te ottiene quella <style=Term><link=TERM_CONDITIONS>condizione</link></style>.",
       "pt": "Depois de ganhar uma <style=Term><link=TERM_CONDITIONS>condição</link></style>, você pode sofrer 1 <style=Term><link=TERM_FATIGUE></link></style>. Se o fizer, outro herói a até 3 espaços de você também ganha essa <style=Term><link=TERM_CONDITIONS>condição</link></style>."
-    }
+    },
+    "extraLife": 1,
+    "extraLifeUpgraded": 1
   },
   {
     "id": "ARMOR_17",
@@ -494,7 +524,9 @@ export const ARMORS = [
       "fr": "Ignorez les effets de l’eau et du poison.",
       "it": "Ignora gli effetti dell'acqua e del veleno.",
       "pt": "Ignore os efeitos de água e veneno."
-    }
+    },
+    "extraLife": 1,
+    "extraLifeUpgraded": 2
   },
   {
     "id": "ARMOR_18",
@@ -523,7 +555,9 @@ export const ARMORS = [
       "fr": "Au début de votre tour, vous pouvez échanger 1 <style=Term><link=TERM_CONDITIONS>état</link></style> contre 1 autre.",
       "it": "All'inizio del tuo turno, puoi sostituire 1 <style=Term><link=TERM_CONDITIONS>condizione</link></style> con 1 altra <style=Term><link=TERM_CONDITIONS>condizione</link></style>.",
       "pt": "No começo do seu turno, você pode substituir 1 <style=Term><link=TERM_CONDITIONS>condição</link></style> por 1 outra <style=Term><link=TERM_CONDITIONS>condição</link></style>."
-    }
+    },
+    "extraLife": 1,
+    "extraLifeUpgraded": 1
   },
   {
     "id": "ARMOR_19",
@@ -805,7 +839,19 @@ export const CONSUMABLES = [
     "image": "/assets/consumables/antidote potion.png",
     "buyPrice": null,
     "sellPrice": null,
-    "consumableType": "common"
+    "consumableType": "common",
+    "baseAbilityDescs": {
+      "es": "Durante tu turno, tú o un héroe adyacente descartáis hasta 3 <style=Term><link=TERM_CONDITIONS>estados</link></style>.",
+      "en": "During your turn, you or an adjacent hero discards up to 3 <style=Term><link=TERM_CONDITIONS>conditions</link></style>.",
+      "fr": "Pendant votre tour, vous ou un Héros adjacent défaussez jusqu’à 3 <style=Term><link=TERM_CONDITIONS>états</link></style>.",
+      "it": "Durante il tuo turno, tu oppure un eroe adiacente scartate fino a 3 <style=Term><link=TERM_CONDITIONS>condizioni</link></style>."
+    },
+    "abilityDescs": {
+      "es": "Durante tu turno, tú o un héroe adyacente descartáis hasta 3 <style=Term><link=TERM_CONDITIONS>estados</link></style> y os curáis 2 <style=Term><link=TERM_HEALTH_DIAL></link></style>.",
+      "en": "During your turn, you or an adjacent hero discards up to 3 <style=Term><link=TERM_CONDITIONS>conditions</link></style> and heals 2 <style=Term><link=TERM_HEALTH_DIAL></link></style>.",
+      "fr": "Pendant votre tour, vous ou un Héros adjacent défaussez jusqu’à 4 <style=Term><link=TERM_CONDITIONS>états</link></style> et vous soignez de 2 <style=Term><link=TERM_HEALTH_DIAL></link></style>.",
+      "it": "Durante il tuo turno, tu oppure un eroe adiacente scartate fino a 4 <style=Term><link=TERM_CONDITIONS>condizioni</link></style> e vi curate 2 <style=Term><link=TERM_HEALTH_DIAL></link></style>."
+    }
   },
   {
     "id": "CSM_CAUTION",
@@ -820,7 +866,21 @@ export const CONSUMABLES = [
     "image": "/assets/consumables/caution serum.png",
     "buyPrice": null,
     "sellPrice": null,
-    "consumableType": "special"
+    "consumableType": "special",
+    "baseAbilityDescs": {
+      "es": "Después de que aparezca un enemigo, elige 2 opciones: • <style=Term><link=TERM_PREPARED>Apresta</link></style> 1 carta • Descarta hasta 2 <style=Term><link=TERM_FATIGUE></link></style> • Realiza<style=Term><link=TERM_SHIFT>Desplazamiento</link></style> 3</b>",
+      "en": "After an enemy spawns, choose 2: • <style=Term><link=TERM_PREPARED>Prepare</link></style> 1 card • discard up to 2 <style=Term><link=TERM_FATIGUE></link></style> • <style=Term><link=TERM_SHIFT>Shift</link></style> 3",
+      "fr": "Après qu’un Ennemi a été généré, résolvez 2 effets au choix : • <style=Term><link=TERM_PREPARED>Préparer</link></style> 1 carte • Défausser jusqu'à 2 <style=Term><link=TERM_FATIGUE></link></style> • <style=Term><link=TERM_SHIFT>Glisser</link></style> de 3",
+      "it": "Dopo che un nemico è stato generato, scegli 2 effetti: - • <style=Term><link=TERM_PREPARED>Prepara</link></style> 1 carta • Scarta fino a 2 <style=Term><link=TERM_FATIGUE></link></style> • <style=Term><link=TERM_SHIFT>Scatta</link></style> 3",
+      "pt": "Depois que um inimigo surgir, escolha 2: • <style=Term><link=TERM_PREPARED>Prepare</link></style> 1 carta • Descarte até 2 <style=Term><link=TERM_FATIGUE></link></style> • <style=Term><link=TERM_SHIFT>Desloque</link></style> 3"
+    },
+    "abilityDescs": {
+      "es": "Después de que aparezca un enemigo, elige 2 opciones: • <style=Term><link=TERM_PREPARED>Apresta</link></style> 2 cartas • Descarta hasta 4 <style=Term><link=TERM_FATIGUE></link></style> • Realiza<style=Term><link=TERM_SHIFT>Desplazamiento</link></style> 4</b>",
+      "en": "After an enemy spawns, choose 2: • <style=Term><link=TERM_PREPARED>Prepare</link></style> 2 cards • discard up to 4 <style=Term><link=TERM_FATIGUE></link></style> • <style=Term><link=TERM_SHIFT>Shift</link></style> 4",
+      "fr": "Après qu’un Ennemi a été généré, résolvez 2 effets au choix : • <style=Term><link=TERM_PREPARED>Préparer</link></style> 2 cartes • Défausser jusqu'à 4 <style=Term><link=TERM_FATIGUE></link></style> • <style=Term><link=TERM_SHIFT>Glisser</link></style> de 4",
+      "it": "Dopo che un nemico è stato generato, scegli 2 effetti: - • <style=Term><link=TERM_PREPARED>Prepara</link></style> 2 carta • Scarta fino a 4 <style=Term><link=TERM_FATIGUE></link></style> • <style=Term><link=TERM_SHIFT>Scatta</link></style> 4",
+      "pt": "Depois que um inimigo surgir, escolha 2: • <style=Term><link=TERM_PREPARED>Prepare</link></style> 2 cartas • Descarte até 4 <style=Term><link=TERM_FATIGUE></link></style> • <style=Term><link=TERM_SHIFT>Desloque</link></style> 4"
+    }
   },
   {
     "id": "CSM_CRIMSON_POTION",
@@ -835,7 +895,23 @@ export const CONSUMABLES = [
     "image": "/assets/consumables/crimson potion.png",
     "buyPrice": null,
     "sellPrice": null,
-    "consumableType": "limited"
+    "limitedHeroIds": [
+      "HERO_VAERIX",
+      "HERO_GALADEN"
+    ],
+    "consumableType": "limited",
+    "baseAbilityDescs": {
+      "es": "Durante tu turno, realiza 1 acción adicional. A continuación, sufre 4 <style=Term><link=TERM_DAMAGE></link></style>.",
+      "en": "During your turn, perform 1 additional action. Then suffer 4 <style=Term><link=TERM_DAMAGE></link></style>.",
+      "fr": "Pendant votre tour, effectuez 1 action supplémentaire puis subissez 4 <style=Term><link=TERM_DAMAGE></link></style>.",
+      "it": "Durante il tuo turno, effettua 1 azione aggiuntiva. Poi subisci 4 <style=Term><link=TERM_DAMAGE></link></style>."
+    },
+    "abilityDescs": {
+      "es": "Durante tu turno, realiza 1 acción adicional. A continuación, sufre 3 <style=Term><link=TERM_DAMAGE></link></style>. Puedes sufrir 3 <style=Term><link=TERM_DAMAGE></link></style> adicionales para no descartar esta carta.",
+      "en": "During your turn, perform 1 additional action. Then suffer 3 <style=Term><link=TERM_DAMAGE></link></style>. You may suffer an additional 3 <style=Term><link=TERM_DAMAGE></link></style> to not discard this card.",
+      "fr": "Pendant votre tour, effectuez 1 action supplémentaire puis subissez 3 <style=Term><link=TERM_DAMAGE></link></style>. Vous pouvez subir 3 <style=Term><link=TERM_DAMAGE></link></style> supplémentaires pour ne pas défausser cette carte.",
+      "it": "Durante il tuo turno, effettua 1 azione aggiuntiva. Poi subisci 3 <style=Term><link=TERM_DAMAGE></link></style>. Puoi subire 3 <style=Term><link=TERM_DAMAGE></link></style> aggiuntivi per non scartare questa carta."
+    }
   },
   {
     "id": "CSM_EFFICACIOUS",
@@ -850,7 +926,25 @@ export const CONSUMABLES = [
     "image": "/assets/consumables/efficacious elixir.png",
     "buyPrice": null,
     "sellPrice": null,
-    "consumableType": "limited"
+    "limitedHeroIds": [
+      "HERO_SYRUS",
+      "HERO_KEHLI"
+    ],
+    "consumableType": "limited",
+    "baseAbilityDescs": {
+      "es": "1 <style=Term><link=TERM_ACTIONS></link></style>: Interactúa. Interactúa de nuevo.",
+      "en": "1 <style=Term><link=TERM_ACTIONS></link></style>: Interact. Interact again.",
+      "fr": "1 <style=Term><link=TERM_ACTIONS></link></style> : Interagissez. Interagissez de nouveau.",
+      "it": "1 <style=Term><link=TERM_ACTIONS></link></style>: Interagisci. Interagisci di nuovo.",
+      "pt": "1 <style=Term><link=TERM_ACTIONS></link></style>: interaja. Interaja mais uma vez."
+    },
+    "abilityDescs": {
+      "es": "1 <style=Term><link=TERM_ACTIONS></link></style>: Interactúa. Interactúa de nuevo. Interactúa por tercera vez.",
+      "en": "1 <style=Term><link=TERM_ACTIONS></link></style>: Interact. Interact again. Interact a third time.",
+      "fr": "1 <style=Term><link=TERM_ACTIONS></link></style> : Interagissez. Interagissez de nouveau. Interagissez une troisième fois.",
+      "it": "1 <style=Term><link=TERM_ACTIONS></link></style>: Interagisci. Interagisci di nuovo. Interagisci una terza volta.",
+      "pt": "1 <style=Term><link=TERM_ACTIONS></link></style>: interaja. Interaja mais uma vez. Interaja uma terceira vez."
+    }
   },
   {
     "id": "CSM_ENDURANCE_POTION",
@@ -865,7 +959,19 @@ export const CONSUMABLES = [
     "image": "/assets/consumables/endurance potion.png",
     "buyPrice": null,
     "sellPrice": null,
-    "consumableType": "special"
+    "consumableType": "special",
+    "baseAbilityDescs": {
+      "es": "Después de que tú o un héroe adyacente quedéis <style=Term><link=TERM_WOUNDS>heridos</link></style>, el héroe herido fija su vida en 2 puntos por encima de su valor máximo, descarta 2 <style=Term><link=TERM_FATIGUE></link></style> y <style=Term><link=TERM_PREPARED>apresta</link></style> 1 carta.",
+      "en": "After you or an adjacent hero is <style=Term><link=TERM_WOUNDS>wounded</link></style>, they set their health dial to 2 greater than their maximum health, discard 2 <style=Term><link=TERM_FATIGUE></link></style>, and <style=Term><link=TERM_PREPARED>prepare</link></style> 1 card.",
+      "fr": "Après que vous ou un Héros adjacent êtes devenu <style=Term><link=TERM_WOUNDS>infirme</link></style>, le Héros infirme règle son cadran sur sa Santé maximale plus 2, défausse 2 <style=Term><link=TERM_FATIGUE></link></style> et <style=Term><link=TERM_PREPARED>prépare</link></style> 1 carte.",
+      "it": "Dopo che tu oppure un eroe adiacente siete diventati <style=Term><link=TERM_WOUNDS>feriti</link></style>, regolate la vostra salute a 2 punti in più del suo massimo, scartate 2 <style=Term><link=TERM_FATIGUE></link></style>, e <style=Term><link=TERM_PREPARED>preparate</link></style> 1 carta."
+    },
+    "abilityDescs": {
+      "es": "Después de que tú o un héroe adyacente quedéis <style=Term><link=TERM_WOUNDS>heridos</link></style>, el héroe herido fija su vida en 4 puntos por encima de su valor máximo, descarta 4 <style=Term><link=TERM_FATIGUE></link></style> y <style=Term><link=TERM_PREPARED>apresta</link></style> 1 carta.",
+      "en": "After you or an adjacent hero is <style=Term><link=TERM_WOUNDS>wounded</link></style>, they set their health dial to 4 greater than their maximum health, discard 4 <style=Term><link=TERM_FATIGUE></link></style>, and <style=Term><link=TERM_PREPARED>prepare</link></style> 1 card.",
+      "fr": "Après que vous ou un Héros adjacent êtes devenu <style=Term><link=TERM_WOUNDS>infirme</link></style>, le Héros infirme règle son cadran sur sa Santé maximale plus 4, défausse 4 <style=Term><link=TERM_FATIGUE></link></style> et <style=Term><link=TERM_PREPARED>prépare</link></style> 1 carte.",
+      "it": "Dopo che tu oppure un eroe adiacente siete diventati <style=Term><link=TERM_WOUNDS>feriti</link></style>, regolate la vostra salute a 4 punti in più del suo massimo, scartate 4 <style=Term><link=TERM_FATIGUE></link></style> e <style=Term><link=TERM_PREPARED>preparate</link></style> 1 carta."
+    }
   },
   {
     "id": "CSM_FIRE_GRENADE",
@@ -880,7 +986,19 @@ export const CONSUMABLES = [
     "image": "/assets/consumables/fire grenade.png",
     "buyPrice": null,
     "sellPrice": null,
-    "consumableType": "common"
+    "consumableType": "common",
+    "baseAbilityDescs": {
+      "es": "Durante tu turno, <style=Term><link=TERM_AFFLICTED>aflige</link></style> a un enemigo que esté a 4 o menos casillas de ti. A continuación, el enemigo sufre 2 <style=Term><link=TERM_DAMAGE></link></style>.",
+      "en": "During your turn, <style=Term><link=TERM_AFFLICTED>afflict</link></style> an enemy within 4 spaces of you. Then it suffers 2 <style=Term><link=TERM_DAMAGE></link></style>.",
+      "fr": "Pendant votre tour, <style=Term><link=TERM_AFFLICTED>accablez</link></style> un Ennemi dans un rayon de 4 cases autour de vous. Il subit ensuite 2 <style=Term><link=TERM_DAMAGE></link></style>.",
+      "it": "Durante il tuo turno, <style=Term><link=TERM_AFFLICTED>affliggi</link></style> 1 nemico entro 4 caselle da te. Poi quel nemico subisce 2 <style=Term><link=TERM_DAMAGE></link></style>."
+    },
+    "abilityDescs": {
+      "es": "Durante tu turno, <style=Term><link=TERM_AFFLICTED>aflige</link></style> a un enemigo que esté a 4 o menos casillas de ti y aflige a cada enemigo adyacente a él. A continuación, cada uno de esos enemigos sufre 3 <style=Term><link=TERM_DAMAGE></link></style>.",
+      "en": "During your turn, <style=Term><link=TERM_AFFLICTED>afflict</link></style> an enemy within 4 spaces of you, and afflict each enemy adjacent to it. Then each of those enemies suffers 3 <style=Term><link=TERM_DAMAGE></link></style>.",
+      "fr": "Pendant votre tour, <style=Term><link=TERM_AFFLICTED>accablez</link></style> un Ennemi dans un rayon de 4 cases autour de vous et chaque Ennemi adjacent à lui. Ils subissent ensuite 3 <style=Term><link=TERM_DAMAGE></link></style> chacun.",
+      "it": "Durante il tuo turno, <style=Term><link=TERM_AFFLICTED>affliggi</link></style> 1 nemico entro 4 caselle da te e ogni nemico adiacente ad esso. Poi ognuno di quei nemici subisce 3 <style=Term><link=TERM_DAMAGE></link></style>."
+    }
   },
   {
     "id": "CSM_FOCUS_POTION",
@@ -895,7 +1013,19 @@ export const CONSUMABLES = [
     "image": "/assets/consumables/focus potion.png",
     "buyPrice": null,
     "sellPrice": null,
-    "consumableType": "common"
+    "consumableType": "common",
+    "baseAbilityDescs": {
+      "es": "Durante tu turno, <style=Term><link=TERM_FOCUSED>concentra</link></style> cualquier cantidad de cartas y sufre 1 <style=Term><link=TERM_FATIGUE></link></style> sobre cada una de esas cartas.",
+      "en": "During your turn, <style=Term><link=TERM_FOCUSED>focus</link></style> any number of cards and suffer 1 <style=Term><link=TERM_FATIGUE></link></style> on each of those cards.",
+      "fr": "Pendant votre tour, <style=Term><link=TERM_FOCUSED>canalisez</link></style> n’importe quel nombre de cartes et subissez 1 <style=Term><link=TERM_FATIGUE></link></style> sur chacune d’elles.",
+      "it": "Durante il tuo turno, <style=Term><link=TERM_FOCUSED>focalizza</link></style> un qualsiasi numero di carte e subisci 1 <style=Term><link=TERM_FATIGUE></link></style> su ciascuna di quelle carte."
+    },
+    "abilityDescs": {
+      "es": "Durante tu turno, <style=Term><link=TERM_FOCUSED>concentra</link></style> cualquier cantidad de cartas y descarta 1 <style=Term><link=TERM_FATIGUE></link></style> de cada una de esas cartas.",
+      "en": "During your turn, <style=Term><link=TERM_FOCUSED>focus</link></style> any number of cards and discard 1 <style=Term><link=TERM_FATIGUE></link></style> from each of those cards.",
+      "fr": "Pendant votre tour, <style=Term><link=TERM_FOCUSED>canalisez</link></style> n’importe quel nombre de cartes et défaussez 1 <style=Term><link=TERM_FATIGUE></link></style> de chacune d’elles.",
+      "it": "Durante il tuo turno, <style=Term><link=TERM_FOCUSED>focalizza</link></style> un qualsiasi numero di carte e scarta 1 <style=Term><link=TERM_FATIGUE></link></style> da ciascuna di quelle carte."
+    }
   },
   {
     "id": "CSM_GLITTERDUST",
@@ -910,7 +1040,21 @@ export const CONSUMABLES = [
     "image": "/assets/consumables/glitterdust bomb.png",
     "buyPrice": null,
     "sellPrice": null,
-    "consumableType": "common"
+    "consumableType": "common",
+    "baseAbilityDescs": {
+      "es": "Durante tu turno, <style=Term><link=TERM_CONFUSED>confunde</link></style> a un enemigo que esté a 4 o menos casillas de ti.",
+      "en": "During your turn, <style=Term><link=TERM_CONFUSED>confuse</link></style> an enemy within 4 spaces of you.",
+      "fr": "Pendant votre tour, <style=Term><link=TERM_CONFUSED>désorientez</link></style> un Ennemi dans un rayon de 4 cases autour de vous.",
+      "it": "Durante il tuo turno, <style=Term><link=TERM_CONFUSED>confondi</link></style> 1 nemico entro 4 caselle da te.",
+      "pt": "Durante seu turno, deixe <style=Term><link=TERM_CONFUSED>desorientado</link></style> um inimigo a até 4 espaços de você."
+    },
+    "abilityDescs": {
+      "es": "Durante tu turno, <style=Term><link=TERM_CONFUSED>confunde</link></style> y <style=Term><link=TERM_DOOMED>condena</link></style> a un enemigo que esté a 4 casillas o menos de ti.",
+      "en": "During your turn, <style=Term><link=TERM_CONFUSED>confuse</link></style> and <style=Term><link=TERM_DOOMED>doom</link></style> an enemy within 4 spaces of you.",
+      "fr": "Pendant votre tour, <style=Term><link=TERM_CONFUSED>désorientez</link></style> et <style=Term><link=TERM_DOOMED>damnez</link></style> un Ennemi dans un rayon de 4 cases autour de vous.",
+      "it": "Durante il tuo turno, <style=Term><link=TERM_CONFUSED>confondi</link></style> e <style=Term><link=TERM_DOOMED>opprimi</link></style> 1 nemico entro 4 caselle da te.",
+      "pt": "Durante seu turno, deixe <style=Term><link=TERM_CONFUSED>desorientado</link></style> e <style=Term><link=TERM_DOOMED>condenado</link></style> um inimigo a até 4 espaços de você."
+    }
   },
   {
     "id": "CSM_GUARDIAN_POTION",
@@ -925,7 +1069,23 @@ export const CONSUMABLES = [
     "image": "/assets/consumables/guardian potion.png",
     "buyPrice": null,
     "sellPrice": null,
-    "consumableType": "limited"
+    "limitedHeroIds": [
+      "HERO_KEHLI",
+      "HERO_BRYNN"
+    ],
+    "consumableType": "limited",
+    "baseAbilityDescs": {
+      "es": "Antes de tu defensa o de la de un héroe adyacente, ignora el ataque.",
+      "en": "Before your or an adjacent hero's defense, ignore the attack.",
+      "fr": "Avant votre défense ou celle d’un Héros adjacent, ignorez l’attaque.",
+      "it": "Prima della tua difesa o di quella di un eroe adiacente, ignora l'attacco."
+    },
+    "abilityDescs": {
+      "es": "Antes de tu defensa o de la de un héroe adyacente, ignora el ataque. A continuación, <style=Term><link=TERM_DAZED>conmociona</link></style> al enemigo y también atácalo si es posible.",
+      "en": "Before your or an adjacent hero's defense, ignore the attack. Then <style=Term><link=TERM_DAZED>daze</link></style> the enemy and attack it if possible.",
+      "fr": "Avant votre défense ou celle d’un Héros adjacent, ignorez l’attaque. <style=Term><link=TERM_DAZED>Étourdissez</link></style> et attaquez ensuite l’Ennemi (si possible).",
+      "it": "Prima della tua difesa o di quella di un eroe adiacente, ignora l'attacco. Poi <style=Term><link=TERM_DAZED>frastorna</link></style> il nemico e attaccalo, se possibile."
+    }
   },
   {
     "id": "CSM_INVISIBILITY_POTION",
@@ -940,7 +1100,19 @@ export const CONSUMABLES = [
     "image": "/assets/consumables/invisibility potion.png",
     "buyPrice": null,
     "sellPrice": null,
-    "consumableType": "special"
+    "consumableType": "special",
+    "baseAbilityDescs": {
+      "es": "Durante tu turno, realiza <b><style=Term><link=TERM_SHIFT>Desplazamiento</link></style> 2</b>. Hasta el final de esta ronda, no puedes ser objetivo de activaciones de enemigos.",
+      "en": "During your turn, <b><style=Term><link=TERM_SHIFT>Shift</link></style> 2</b>. Until the end of this round, you cannot be the target of enemy activations.",
+      "fr": "Pendant votre tour, <b><style=Term><link=TERM_SHIFT>Glissez</link></style> de 2</b>. Jusqu’à la fin de ce round, les Ennemis ne peuvent pas vous prendre pour cible pendant leur activation.",
+      "it": "Durante il tuo turno, <style=Term><link=TERM_SHIFT>scatta</link></style> 2. Fino alla fine di questo round, non puoi essere il bersaglio delle attivazioni dei nemici."
+    },
+    "abilityDescs": {
+      "es": "Durante tu turno, realiza <b><style=Term><link=TERM_SHIFT>Desplazamiento</link></style> 3</b>. Hasta el final de esta ronda, los enemigos no pueden <style=Term><link=TERM_IMPEDE>obstaculizarte</link></style> y no puedes ser objetivo de activaciones de enemigos",
+      "en": "During your turn, <b><style=Term><link=TERM_SHIFT>Shift</link></style> 3</b>. Until the end of this round, enemies cannot <style=Term><link=TERM_IMPEDE>impede</link></style> you, and you cannot be the target of enemy activations.",
+      "fr": "Pendant votre tour, <b><style=Term><link=TERM_SHIFT>Glissez</link></style> de 3</b>. Jusqu’à la fin de ce round, les Ennemis ne peuvent pas vous <style=Term><link=TERM_IMPEDE>gêner</link></style>, ni vous prendre pour cible pendant leur activation.",
+      "it": "Durante il tuo turno, <style=Term><link=TERM_SHIFT>scatta</link></style> 3. Fino alla fine di questo round, i nemici non possono farti diventare <style=Term><link=TERM_IMPEDE>impegnato</link></style> e non puoi essere il bersaglio delle attivazioni dei nemici."
+    }
   },
   {
     "id": "CSM_KNACK",
@@ -955,7 +1127,21 @@ export const CONSUMABLES = [
     "image": "/assets/consumables/knack juice.png",
     "buyPrice": null,
     "sellPrice": null,
-    "consumableType": "special"
+    "consumableType": "special",
+    "baseAbilityDescs": {
+      "es": "Durante tu <style=Term><link=TERM_TESTS>prueba</link></style>, añade 1 dado negro.",
+      "en": "During your <style=Term><link=TERM_TESTS>test</link></style>, add 1 black die.",
+      "fr": "Pendant votre <style=Term><link=TERM_TESTS>test</link></style>, ajoutez 1 dé noir.",
+      "it": "Durante la tua <style=Term><link=TERM_TESTS>prova</link></style>, aggiungi 1 dado nero.",
+      "pt": "Durante seu <style=Term><link=TERM_TESTS>teste</link></style>, some 1 dado preto."
+    },
+    "abilityDescs": {
+      "es": "Durante tu <style=Term><link=TERM_TESTS>prueba</link></style>, añade 1 dado de cualquier color.",
+      "en": "During your <style=Term><link=TERM_TESTS>test</link></style>, add 1 die of any color.",
+      "fr": "Pendant votre <style=Term><link=TERM_TESTS>test</link></style>, ajoutez 1 dé de n'importe quelle couleur.",
+      "it": "Durante la tua <style=Term><link=TERM_TESTS>prova</link></style>, aggiungi 1 dado di un qualsiasi colore.",
+      "pt": "Durante seu <style=Term><link=TERM_TESTS>teste</link></style>, some 1 dado de qualquer cor."
+    }
   },
   {
     "id": "CSM_MAGE_DUST",
@@ -970,7 +1156,23 @@ export const CONSUMABLES = [
     "image": "/assets/consumables/mage dust.png",
     "buyPrice": null,
     "sellPrice": null,
-    "consumableType": "limited"
+    "limitedHeroIds": [
+      "HERO_SYRUS",
+      "HERO_VAERIX"
+    ],
+    "consumableType": "limited",
+    "baseAbilityDescs": {
+      "es": "Durante tu turno, <style=Term><link=TERM_PREPARED>apresta</link></style> 1 carta y descarta toda la <style=Term><link=TERM_FATIGUE></link></style> de 1 carta.",
+      "en": "During your turn, <style=Term><link=TERM_PREPARED>prepare</link></style> 1 card and discard all <style=Term><link=TERM_FATIGUE></link></style> from 1 card.",
+      "fr": "Pendant votre tour, <style=Term><link=TERM_PREPARED>préparez</link></style> 1 carte et défaussez toute la <style=Term><link=TERM_FATIGUE></link></style> posée sur 1 carte.",
+      "it": "Durante il tuo turno, <style=Term><link=TERM_PREPARED>prepara</link></style> 1 carta e scarta tutte le <style=Term><link=TERM_FATIGUE></link></style> da 1 carta."
+    },
+    "abilityDescs": {
+      "es": "Durante tu turno, <style=Term><link=TERM_PREPARED>apresta</link></style> 2 cartas y descarta toda la <style=Term><link=TERM_FATIGUE></link></style> de 2 cartas.",
+      "en": "During your turn, <style=Term><link=TERM_PREPARED>prepare</link></style> 2 cards and discard all <style=Term><link=TERM_FATIGUE></link></style> from 2 cards.",
+      "fr": "Pendant votre tour, <style=Term><link=TERM_PREPARED>préparez</link></style> 2 cartes et défaussez toute la <style=Term><link=TERM_FATIGUE></link></style> posée sur 2 cartes.",
+      "it": "Durante il tuo turno, <style=Term><link=TERM_PREPARED>prepara</link></style> 2 carte e scarta tutte le <style=Term><link=TERM_FATIGUE></link></style> da 2 carte."
+    }
   },
   {
     "id": "CSM_MIASMA_GRENADE",
@@ -985,7 +1187,19 @@ export const CONSUMABLES = [
     "image": "/assets/consumables/miasma grenade.png",
     "buyPrice": null,
     "sellPrice": null,
-    "consumableType": "common"
+    "consumableType": "common",
+    "baseAbilityDescs": {
+      "es": "Durante tu turno, <style=Term><link=TERM_DAZED>conmociona</link></style> y <style=Term><link=TERM_DOOMED>condena</link></style> a un enemigo que esté a 4 casillas o menos de ti.",
+      "en": "During your turn, <style=Term><link=TERM_DAZED>daze</link></style> and <style=Term><link=TERM_DOOMED>doom</link></style> an enemy within 4 spaces of you.",
+      "fr": "Pendant votre tour, <style=Term><link=TERM_DAZED>étourdissez</link></style> et <style=Term><link=TERM_DOOMED>damnez</link></style> un Ennemi dans un rayon de 4 cases autour de vous.",
+      "it": "Durante il tuo turno, <style=Term><link=TERM_DAZED>frastorna</link></style> e <style=Term><link=TERM_DOOMED>opprimi</link></style> 1 nemico entro 4 caselle da te."
+    },
+    "abilityDescs": {
+      "es": "Durante tu turno, <style=Term><link=TERM_DAZED>conmociona</link></style> y <style=Term><link=TERM_DOOMED>condena</link></style> a un enemigo que esté a 4 casillas o menos de ti y a cada enemigo adyacente a él.",
+      "en": "During your turn, <style=Term><link=TERM_DAZED>daze</link></style> and <style=Term><link=TERM_DOOMED>doom</link></style> an enemy within 4 spaces of you and each enemy adjacent to it.",
+      "fr": "Pendant votre tour, <style=Term><link=TERM_DAZED>étourdissez</link></style> et <style=Term><link=TERM_DOOMED>damnez</link></style> un Ennemi dans un rayon de 4 cases autour de vous et chaque Ennemi adjacent à lui.",
+      "it": "Durante il tuo turno, <style=Term><link=TERM_DAZED>frastorna</link></style> e <style=Term><link=TERM_DOOMED>opprimi</link></style> 1 nemico entro 4 caselle da te e ogni nemico adiacente ad esso."
+    }
   },
   {
     "id": "CSM_MUD_POTION",
@@ -1000,7 +1214,19 @@ export const CONSUMABLES = [
     "image": "/assets/consumables/mud potion.png",
     "buyPrice": null,
     "sellPrice": null,
-    "consumableType": "special"
+    "consumableType": "special",
+    "baseAbilityDescs": {
+      "es": "Durante tu turno, <style=Term><link=TERM_INFECTED>infecta</link></style> cualquier cantidad de cartas y cúrate 3 <style=Term><link=TERM_HEALTH_DIAL></link></style> por cada una de esas cartas.",
+      "en": "During your turn, <style=Term><link=TERM_INFECTED>infect</link></style> any cards and heal 3 <style=Term><link=TERM_HEALTH_DIAL></link></style> for each of those cards.",
+      "fr": "Pendant votre tour, <style=Term><link=TERM_INFECTED>infectez</link></style> n’importe quel nombre de cartes et soignez-vous de 3 <style=Term><link=TERM_HEALTH_DIAL></link></style> pour chacune d’elles.",
+      "it": "Durante il tuo turno, <style=Term><link=TERM_INFECTED>infetta</link></style> un qualsiasi numero di carte e curati 3 <style=Term><link=TERM_HEALTH_DIAL></link></style> per ogni carta infettata in questo modo."
+    },
+    "abilityDescs": {
+      "es": "Durante tu turno, <style=Term><link=TERM_INFECTED>infecta</link></style> cualquier cantidad de cartas y cúrate 4 <style=Term><link=TERM_HEALTH_DIAL></link></style> por cada una de esas cartas.",
+      "en": "During your turn, <style=Term><link=TERM_INFECTED>infect</link></style> any cards and heal 4 <style=Term><link=TERM_HEALTH_DIAL></link></style> for each of those cards.",
+      "fr": "Pendant votre tour, <style=Term><link=TERM_INFECTED>infectez</link></style> n’importe quel nombre de cartes et soignez-vous de 4 <style=Term><link=TERM_HEALTH_DIAL></link></style> pour chacune d’elles.",
+      "it": "Durante il tuo turno, <style=Term><link=TERM_INFECTED>infetta</link></style> un qualsiasi numero di carte e curati 4 <style=Term><link=TERM_HEALTH_DIAL></link></style> per ogni carta infettata in questo modo."
+    }
   },
   {
     "id": "CSM_MUTATION_POTION",
@@ -1015,7 +1241,19 @@ export const CONSUMABLES = [
     "image": "/assets/consumables/mutation potion.png",
     "buyPrice": null,
     "sellPrice": null,
-    "consumableType": "special"
+    "consumableType": "special",
+    "baseAbilityDescs": {
+      "es": "Durante tu ataque, descarta hasta 3 <style=Term><link=TERM_CONDITIONS>estados</link></style>. Añade 1 <style=Term><link=TERM_SUCCESS></link></style> por cada <style=Term><link=TERM_CONDITIONS>estado</link></style> descartado. Después del ataque, quedas <style=Term><link=TERM_WOUNDS>herido</link></style>.",
+      "en": "During your attack, discard up to 3 <style=Term><link=TERM_CONDITIONS>conditions</link></style>. Add 1 <style=Term><link=TERM_SUCCESS></link></style> for each <style=Term><link=TERM_CONDITIONS>condition</link></style> discarded. After the attack, you are <style=Term><link=TERM_WOUNDS>wounded</link></style>.",
+      "fr": "Pendant votre attaque, défaussez jusqu’à 3 <style=Term><link=TERM_CONDITIONS>états</link></style> et ajoutez 1 <style=Term><link=TERM_SUCCESS></link></style> pour chacun d’eux. Après l’attaque, vous devenez <style=Term><link=TERM_WOUNDS>infirme</link></style>.",
+      "it": "Durante il tuo attacco, scarta fino a 3 <style=Term><link=TERM_CONDITIONS>condizioni</link></style>. Aggiungi 1 <style=Term><link=TERM_SUCCESS></link></style> per ogni <style=Term><link=TERM_CONDITIONS>condizione</link></style> scartata. Dopo l'attacco, diventa <style=Term><link=TERM_WOUNDS>ferito</link></style>."
+    },
+    "abilityDescs": {
+      "es": "Durante tu ataque, descarta hasta 4 <style=Term><link=TERM_CONDITIONS>estados</link></style>. Añade 1 <style=Term><link=TERM_SUCCESS></link></style> por cada <style=Term><link=TERM_CONDITIONS>estado</link></style> descartado. Después del ataque, quedas <style=Term><link=TERM_WOUNDS>herido</link></style>.",
+      "en": "During your attack, discard up to 4 <style=Term><link=TERM_CONDITIONS>conditions</link></style>. Add 1 <style=Term><link=TERM_SUCCESS></link></style> for each <style=Term><link=TERM_CONDITIONS>condition</link></style> discarded. After the attack, you are <style=Term><link=TERM_WOUNDS>wounded</link></style>.",
+      "fr": "Pendant votre attaque, défaussez jusqu’à 4 <style=Term><link=TERM_CONDITIONS>états</link></style> et ajoutez 1 <style=Term><link=TERM_SUCCESS></link></style> pour chacun d’eux. Après l’attaque, vous devenez <style=Term><link=TERM_WOUNDS>infirme</link></style>.",
+      "it": "Durante il tuo attacco, scarta fino a 4 <style=Term><link=TERM_CONDITIONS>condizioni</link></style>. Aggiungi 1 <style=Term><link=TERM_SUCCESS></link></style> per ogni <style=Term><link=TERM_CONDITIONS>condizione</link></style> scartata. Dopo l'attacco, diventa <style=Term><link=TERM_WOUNDS>ferito</link></style>."
+    }
   },
   {
     "id": "CSM_PHOENIX_ASH_POTION",
@@ -1030,7 +1268,19 @@ export const CONSUMABLES = [
     "image": "/assets/consumables/phoenix ash potion.png",
     "buyPrice": null,
     "sellPrice": null,
-    "consumableType": "special"
+    "consumableType": "special",
+    "baseAbilityDescs": {
+      "es": "Antes de que quedes <style=Term><link=TERM_WOUNDS>herido</link></style>, en vez de eso fija tu vida en 4.",
+      "en": "Before you are <style=Term><link=TERM_WOUNDS>wounded</link></style>, set your health dial to 4 instead.",
+      "fr": "Avant de devenir <style=Term><link=TERM_WOUNDS>infirme</link></style>, réglez votre cadran de Santé sur 4 à la place.",
+      "it": "Prima di diventare <style=Term><link=TERM_WOUNDS>ferito</link></style>, regola invece la tua salute a 4."
+    },
+    "abilityDescs": {
+      "es": "Antes de que quedes <style=Term><link=TERM_WOUNDS>herido</link></style>, en vez de eso fija tu vida en 7.",
+      "en": "Before you are <style=Term><link=TERM_WOUNDS>wounded</link></style>, set your health dial to 7 instead.",
+      "fr": "Avant de devenir <style=Term><link=TERM_WOUNDS>infirme</link></style>, réglez votre cadran de Santé sur 7 à la place.",
+      "it": "Prima di diventare <style=Term><link=TERM_WOUNDS>ferito</link></style>, regola invece la tua salute a 7."
+    }
   },
   {
     "id": "CSM_RABBITFOOT_POTION",
@@ -1045,7 +1295,19 @@ export const CONSUMABLES = [
     "image": "/assets/consumables/rabbitfoot potion.png",
     "buyPrice": null,
     "sellPrice": null,
-    "consumableType": "common"
+    "consumableType": "common",
+    "baseAbilityDescs": {
+      "es": "Durante tu turno, realiza <b><style=Term><link=TERM_SHIFT>Desplazamiento</link></style> 2</b> y <style=Term><link=TERM_PREPARED>apresta</link></style> 1 carta.",
+      "en": "During your turn, <b><style=Term><link=TERM_SHIFT>Shift</link></style> 2</b> and <style=Term><link=TERM_PREPARED>prepare</link></style> 1 card.",
+      "fr": "Pendant votre tour, <b><style=Term><link=TERM_SHIFT>Glissez</link></style> de 2</b> et <style=Term><link=TERM_PREPARED>préparez</link></style> 1 carte.",
+      "it": "Durante il tuo turno, <style=Term><link=TERM_SHIFT>scatta</link></style> 2 e <style=Term><link=TERM_PREPARED>prepara</link></style> 1 carta."
+    },
+    "abilityDescs": {
+      "es": "Durante tu turno, realiza <b><style=Term><link=TERM_SHIFT>Desplazamiento</link></style> 4</b> y <style=Term><link=TERM_PREPARED>apresta</link></style> 1 carta.",
+      "en": "During your turn, <b><style=Term><link=TERM_SHIFT>Shift</link></style> 4</b> and <style=Term><link=TERM_PREPARED>prepare</link></style> 1 card.",
+      "fr": "Pendant votre tour, <b><style=Term><link=TERM_SHIFT>Glissez</link></style> de 4</b> et <style=Term><link=TERM_PREPARED>préparez</link></style> 1 carte.",
+      "it": "Durante il tuo turno, <style=Term><link=TERM_SHIFT>scatta</link></style> 4 e <style=Term><link=TERM_PREPARED>prepara</link></style> 1 carta."
+    }
   },
   {
     "id": "CSM_ROGUE_SWEAT",
@@ -1060,7 +1322,23 @@ export const CONSUMABLES = [
     "image": "/assets/consumables/rogue sweat.png",
     "buyPrice": null,
     "sellPrice": null,
-    "consumableType": "limited"
+    "limitedHeroIds": [
+      "HERO_CHANCE",
+      "HERO_KEHLI"
+    ],
+    "consumableType": "limited",
+    "baseAbilityDescs": {
+      "es": "1 <style=Term><link=TERM_ACTIONS></link></style>: Coloca tu héroe adyacente a otro héroe y dales la vuelta a hasta 2 cartas.",
+      "en": "1 <style=Term><link=TERM_ACTIONS></link></style>: Place your hero adjacent to another hero and flip up to 2 cards.",
+      "fr": "1 <style=Term><link=TERM_ACTIONS></link></style> : Placez votre figurine sur une case adjacente à un autre Héros et retournez jusqu’à 2 cartes.",
+      "it": "1 <style=Term><link=TERM_ACTIONS></link></style>: Colloca il tuo eroe adiacente a un altro eroe e gira fino a 2 carte."
+    },
+    "abilityDescs": {
+      "es": "1 <style=Term><link=TERM_ACTIONS></link></style>: Coloca tu héroe adyacente a otro héroe. Tú y ese héroe les dais la vuelta a hasta 2 cartas cada uno.",
+      "en": "1 <style=Term><link=TERM_ACTIONS></link></style>: Place your hero adjacent to another hero. You and that hero each flip up to 2 cards.",
+      "fr": "1 <style=Term><link=TERM_ACTIONS></link></style> : Placez votre figurine sur une case adjacente à un autre Héros et retournez jusqu’à 2 cartes chacun.",
+      "it": "1 <style=Term><link=TERM_ACTIONS></link></style>: Colloca il tuo eroe adiacente a un altro eroe. Tu e quell'eroe girate fino a 2 carte a testa."
+    }
   },
   {
     "id": "CSM_SLAYER_POTION",
@@ -1075,7 +1353,19 @@ export const CONSUMABLES = [
     "image": "/assets/consumables/slayer potion.png",
     "buyPrice": null,
     "sellPrice": null,
-    "consumableType": "special"
+    "consumableType": "special",
+    "baseAbilityDescs": {
+      "es": "1 <style=Term><link=TERM_ACTIONS></link></style>: Ataca a un enemigo. Ataca a otro enemigo. Ataca a un tercer enemigo.",
+      "en": "1 <style=Term><link=TERM_ACTIONS></link></style>: Attack an enemy. Attack another enemy. Attack a third enemy.",
+      "fr": "1 <style=Term><link=TERM_ACTIONS></link></style> : Attaquez un Ennemi. Attaquez-en un autre. Attaquez-en un troisième.",
+      "it": "1 <style=Term><link=TERM_ACTIONS></link></style>: Attacca 1 nemico. Attacca 1 altro nemico. Attacca 1 terzo nemico."
+    },
+    "abilityDescs": {
+      "es": "1 <style=Term><link=TERM_ACTIONS></link></style>: Ataca a un enemigo. Ataca a un enemigo. Ataca a un enemigo.",
+      "en": "1 <style=Term><link=TERM_ACTIONS></link></style>: Attack an enemy. Attack an enemy. Attack an enemy.",
+      "fr": "1 <style=Term><link=TERM_ACTIONS></link></style> : Attaquez un Ennemi. Attaquez un Ennemi. Attaquez un Ennemi.",
+      "it": "1 <style=Term><link=TERM_ACTIONS></link></style>: Attacca 1 nemico. Attacca 1 nemico. Attacca 1 nemico."
+    }
   },
   {
     "id": "CSM_SMOKE_BOMB",
@@ -1090,7 +1380,23 @@ export const CONSUMABLES = [
     "image": "/assets/consumables/smoke bomb.png",
     "buyPrice": null,
     "sellPrice": null,
-    "consumableType": "limited"
+    "limitedHeroIds": [
+      "HERO_CHANCE",
+      "HERO_SYRUS"
+    ],
+    "consumableType": "limited",
+    "baseAbilityDescs": {
+      "es": "Durante tu turno, tú y un héroe adyacente realizáis <b><style=Term><link=TERM_SHIFT>Desplazamiento</link></style> 3</b> cada uno.",
+      "en": "During your turn, you and an adjacent hero each <b><style=Term><link=TERM_SHIFT>Shift</link></style> 3</b>.",
+      "fr": "Pendant votre tour, vous et un Héros adjacent <b><style=Term><link=TERM_SHIFT>Glissez</link></style> de 3</b> chacun.",
+      "it": "Durante il tuo turno, tu e un eroe adiacente <style=Term><link=TERM_SHIFT>scattate</link></style> 3."
+    },
+    "abilityDescs": {
+      "es": "Durante tu turno, tú y un héroe adyacente podéis curaros 2 <style=Term><link=TERM_HEALTH_DIAL></link></style> y realizáis <b><style=Term><link=TERM_SHIFT>Desplazamiento</link></style> 3</b> cada uno.",
+      "en": "During your turn, you and an adjacent hero each may heal 2 <style=Term><link=TERM_HEALTH_DIAL></link></style> and <b><style=Term><link=TERM_SHIFT>Shift</link></style> 3</b>.",
+      "fr": "Pendant votre tour, vous et un Héros adjacent pouvez vous soigner de 2 <style=Term><link=TERM_HEALTH_DIAL></link></style> et <b><style=Term><link=TERM_SHIFT>Glisser</link></style> de 3</b> chacun.",
+      "it": "Durante il tuo turno, tu e un eroe adiacente potete curarvi 2 <style=Term><link=TERM_HEALTH_DIAL></link></style> a testa e <style=Term><link=TERM_SHIFT>scattare</link></style> 3."
+    }
   },
   {
     "id": "CSM_STALWART",
@@ -1105,7 +1411,25 @@ export const CONSUMABLES = [
     "image": "/assets/consumables/stalwart incense.png",
     "buyPrice": null,
     "sellPrice": null,
-    "consumableType": "limited"
+    "limitedHeroIds": [
+      "HERO_BRYNN",
+      "HERO_VAERIX"
+    ],
+    "consumableType": "limited",
+    "baseAbilityDescs": {
+      "es": "Durante tu defensa o la de un héroe adyacente, descarta hasta 2 <style=Term><link=TERM_CONDITIONS>estados</link></style> para añadir 1 <style=Term><link=TERM_SUCCESS></link></style> por cada <style=Term><link=TERM_CONDITIONS>estado</link></style> descartado de esta forma.",
+      "en": "During your or an adjacent hero's defense, discard up to 2 <style=Term><link=TERM_CONDITIONS>conditions</link></style> to add 1 <style=Term><link=TERM_SUCCESS></link></style> for each <style=Term><link=TERM_CONDITIONS>condition</link></style> discarded in this way.",
+      "fr": "Pendant votre défense ou celle d'un Héros adjacent, défaussez jusqu'à 2 <style=Term><link=TERM_CONDITIONS>états</link></style> pour ajouter 1 <style=Term><link=TERM_SUCCESS></link></style> par <style=Term><link=TERM_CONDITIONS>état</link></style> défaussé de la sorte.",
+      "it": "Durante la tua difesa o quella di un eroe adiacente, scarta fino a 2 <style=Term><link=TERM_CONDITIONS>condizioni</link></style> per aggiungere 1 <style=Term><link=TERM_SUCCESS></link></style> per ogni <style=Term><link=TERM_CONDITIONS>condizione</link></style> scartata in questo modo.",
+      "pt": "Durante uma defesa sua ou de um herói adjacente, descarte até 2 <style=Term><link=TERM_CONDITIONS>condições</link></style> para somar 1 <style=Term><link=TERM_SUCCESS></link></style> para cada <style=Term><link=TERM_CONDITIONS>condição</link></style> descartada dessa maneira."
+    },
+    "abilityDescs": {
+      "es": "Durante tu defensa o la de un héroe adyacente, descarta hasta 4 <style=Term><link=TERM_CONDITIONS>estados</link></style> para añadir 1 <style=Term><link=TERM_SUCCESS></link></style> por cada <style=Term><link=TERM_CONDITIONS>estado</link></style> descartado de esta forma.",
+      "en": "During your or an adjacent hero's defense, discard up to 4 <style=Term><link=TERM_CONDITIONS>conditions</link></style> to add 1 <style=Term><link=TERM_SUCCESS></link></style> for each <style=Term><link=TERM_CONDITIONS>condition</link></style> discarded in this way.",
+      "fr": "Pendant votre défense ou celle d'un Héros adjacent, défaussez jusqu'à 4 <style=Term><link=TERM_CONDITIONS>états</link></style> pour ajouter 1 <style=Term><link=TERM_SUCCESS></link></style> par <style=Term><link=TERM_CONDITIONS>état</link></style> défaussé de la sorte.",
+      "it": "Durante la tua difesa o quella di un eroe adiacente, scarta fino a 4 <style=Term><link=TERM_CONDITIONS>condizioni</link></style> per aggiungere 1 <style=Term><link=TERM_SUCCESS></link></style> per ogni <style=Term><link=TERM_CONDITIONS>condizione</link></style> scartata in questo modo.",
+      "pt": "Durante uma defesa sua ou de um herói adjacente, descarte até 4 <style=Term><link=TERM_CONDITIONS>condições</link></style> para somar 1 <style=Term><link=TERM_SUCCESS></link></style> para cada <style=Term><link=TERM_CONDITIONS>condição</link></style> descartada dessa maneira."
+    }
   },
   {
     "id": "CSM_VIGOR_POTION",
@@ -1120,7 +1444,19 @@ export const CONSUMABLES = [
     "image": "/assets/consumables/vigor potion.png",
     "buyPrice": null,
     "sellPrice": null,
-    "consumableType": "common"
+    "consumableType": "common",
+    "baseAbilityDescs": {
+      "es": "Durante tu turno, tú o un héroe adyacente os curáis 3 <style=Term><link=TERM_HEALTH_DIAL></link></style> o bien descartáis 3 <style=Term><link=TERM_FATIGUE></link></style>.",
+      "en": "During your turn, you or an adjacent hero either heals 3 <style=Term><link=TERM_HEALTH_DIAL></link></style> or discards 3 <style=Term><link=TERM_FATIGUE></link></style>.",
+      "fr": "Pendant votre tour, vous ou un Héros adjacent vous soignez de 3 <style=Term><link=TERM_HEALTH_DIAL></link></style> ou défaussez 3 <style=Term><link=TERM_FATIGUE></link></style>.",
+      "it": "Durante il tuo turno, tu oppure un eroe adiacente vi curate 3 <style=Term><link=TERM_HEALTH_DIAL></link></style> oppure scartate 3 <style=Term><link=TERM_FATIGUE></link></style>."
+    },
+    "abilityDescs": {
+      "es": "Durante tu turno, tú o un héroe adyacente os curáis 3 <style=Term><link=TERM_HEALTH_DIAL></link></style> y descartáis 3 <style=Term><link=TERM_FATIGUE></link></style>.",
+      "en": "During your turn, you or an adjacent hero heals 3 <style=Term><link=TERM_HEALTH_DIAL></link></style> and discards 3 <style=Term><link=TERM_FATIGUE></link></style>.",
+      "fr": "Pendant votre tour, vous ou un Héros adjacent vous soignez de 3 <style=Term><link=TERM_HEALTH_DIAL></link></style> et défaussez 3 <style=Term><link=TERM_FATIGUE></link></style>.",
+      "it": "Durante il tuo turno, tu oppure un eroe adiacente vi curate 3 <style=Term><link=TERM_HEALTH_DIAL></link></style> e scartate 3 <style=Term><link=TERM_FATIGUE></link></style>."
+    }
   },
   {
     "id": "CSM_WARRIOR_BREATH",
@@ -1135,7 +1471,23 @@ export const CONSUMABLES = [
     "image": "/assets/consumables/warrior breath.png",
     "buyPrice": null,
     "sellPrice": null,
-    "consumableType": "limited"
+    "limitedHeroIds": [
+      "HERO_BRYNN",
+      "HERO_GALADEN"
+    ],
+    "consumableType": "limited",
+    "baseAbilityDescs": {
+      "es": "1 <style=Term><link=TERM_ACTIONS></link></style>: <style=Term><link=TERM_FOCUSED>Concentra</link></style> o <style=Term><link=TERM_PREPARED>apresta</link></style> 1 carta y cúrate 1 <style=Term><link=TERM_HEALTH_DIAL></link></style> por cada <style=Term><link=TERM_FATIGUE></link></style> que haya sobre ella. A continuación, descarta toda la <style=Term><link=TERM_FATIGUE></link></style> de ella.",
+      "en": "1 <style=Term><link=TERM_ACTIONS></link></style>: <style=Term><link=TERM_FOCUSED>Focus</link></style> or <style=Term><link=TERM_PREPARED>prepare</link></style> 1 card, and heal 1 <style=Term><link=TERM_HEALTH_DIAL></link></style> for each <style=Term><link=TERM_FATIGUE></link></style> on it. Then discard all <style=Term><link=TERM_FATIGUE></link></style> from it.",
+      "fr": "1 <style=Term><link=TERM_ACTIONS></link></style> : <style=Term><link=TERM_FOCUSED>Canalisez</link></style> ou <style=Term><link=TERM_PREPARED>préparez</link></style> 1 carte et soignez-vous de 1 <style=Term><link=TERM_HEALTH_DIAL></link></style> par <style=Term><link=TERM_FATIGUE></link></style> qu’elle contient. Défaussez ensuite toute la <style=Term><link=TERM_FATIGUE></link></style> posée dessus.",
+      "it": "1 <style=Term><link=TERM_ACTIONS></link></style>: <style=Term><link=TERM_FOCUSED>Focalizza</link></style> oppure <style=Term><link=TERM_PREPARED>prepara</link></style> 1 carta e curati 1 <style=Term><link=TERM_HEALTH_DIAL></link></style> per ogni <style=Term><link=TERM_FATIGUE></link></style> su di essa. Poi scarta tutte le <style=Term><link=TERM_FATIGUE></link></style> da essa."
+    },
+    "abilityDescs": {
+      "es": "1 <style=Term><link=TERM_ACTIONS></link></style>: <style=Term><link=TERM_FOCUSED>Concentra</link></style> o <style=Term><link=TERM_PREPARED>apresta</link></style> 2 cartas y cúrate 1 <style=Term><link=TERM_HEALTH_DIAL></link></style> por cada <style=Term><link=TERM_FATIGUE></link></style> que haya sobre ellas. A continuación, descarta toda la <style=Term><link=TERM_FATIGUE></link></style> de ellas.",
+      "en": "1 <style=Term><link=TERM_ACTIONS></link></style>: <style=Term><link=TERM_FOCUSED>Focus</link></style> or <style=Term><link=TERM_PREPARED>prepare</link></style> 2 cards, and heal 1 <style=Term><link=TERM_HEALTH_DIAL></link></style> for each <style=Term><link=TERM_FATIGUE></link></style> on them. Then discard all <style=Term><link=TERM_FATIGUE></link></style> from them.",
+      "fr": "1 <style=Term><link=TERM_ACTIONS></link></style> : <style=Term><link=TERM_FOCUSED>Canalisez</link></style> ou <style=Term><link=TERM_PREPARED>préparez</link></style> 2 cartes et soignez-vous de 1 <style=Term><link=TERM_HEALTH_DIAL></link></style> par <style=Term><link=TERM_FATIGUE></link></style> qu’elles contiennent. Défaussez ensuite toute la <style=Term><link=TERM_FATIGUE></link></style> posée dessus.",
+      "it": "1 <style=Term><link=TERM_ACTIONS></link></style>: <style=Term><link=TERM_FOCUSED>Focalizza</link></style> o <style=Term><link=TERM_PREPARED>prepara</link></style> 2 carte e curati 1 <style=Term><link=TERM_HEALTH_DIAL></link></style> per ogni <style=Term><link=TERM_FATIGUE></link></style> su di esse. Poi scarta tutte le <style=Term><link=TERM_FATIGUE></link></style> da esse."
+    }
   },
   {
     "id": "CSM_WHIRLWIND",
@@ -1150,7 +1502,25 @@ export const CONSUMABLES = [
     "image": "/assets/consumables/whirlwind grenade.png",
     "buyPrice": null,
     "sellPrice": null,
-    "consumableType": "limited"
+    "limitedHeroIds": [
+      "HERO_CHANCE",
+      "HERO_GALADEN"
+    ],
+    "consumableType": "limited",
+    "baseAbilityDescs": {
+      "es": "Durante tu turno, elige un enemigo pequeño que esté a 4 casillas o menos de ti. Mueve ese enemigo hasta 3 casillas.",
+      "en": "During your turn, choose a small enemy within 4 spaces of you. Move that enemy up to 3 spaces.",
+      "fr": "Pendant votre tour, choisissez un petit Ennemi dans un rayon de 4 cases autour de vous. Déplacez-le jusqu'à 3 cases.",
+      "it": "Durante il tuo turno, scegli 1 nemico piccolo entro 4 caselle da te. Muovi quel nemico di un massimo di 3 caselle.",
+      "pt": "Durante seu turno, escolha um inimigo pequeno a até 4 espaços de você. Mova esse inimigo até 3 espaços."
+    },
+    "abilityDescs": {
+      "es": "Durante tu turno, elige una casilla que esté a 4 casillas o menos de ti. Mueve hasta 3 casillas cada miniatura pequeña que esté en esa casilla o adyacente a ella.",
+      "en": "During your turn, choose a space within 4 spaces of you. Move each small figure in or adjacent to that space up to 3 spaces.",
+      "fr": "Pendant votre tour, choisissez une case dans un rayon de 4 cases autour de vous. Déplacez jusqu'à 3 cases chaque petite figurine sur ou adjacente à la case choisie.",
+      "it": "Durante il tuo turno, scegli 1 casella entro 4 caselle da te. Muovi ogni miniatura piccola in quella casella o adiacente ad essa di un massimo di 3 caselle.",
+      "pt": "Durante seu turno, escolha um espaço a até 4 espaços de você. Mova cada miniatura pequena nesse ou em espaços adjacentes até 3 espaços."
+    }
   }
 ];
 

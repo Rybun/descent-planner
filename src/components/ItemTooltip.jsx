@@ -4,8 +4,9 @@ import { useStore } from '../store';
 import { useT, getName } from '../i18n';
 import { HEROES } from '../gamedata/heroes';
 import { parseGameText, TERM_ICONS } from '../gamedata/gameText';
-import { CONSUMABLE_DESCS } from '../gamedata/consumableDescs';
 import { useIsMobile } from '../hooks/useIsMobile';
+import { useTooltipPosition } from '../hooks/useTooltipPosition';
+import { useBodyScrollLock } from '../hooks/useBodyScrollLock';
 
 const UPGRADE_ICON = '/assets/icons/Icon_Upgrade.png';
 
@@ -19,10 +20,47 @@ const ARMOR_TYPE_LABELS = {
   heavy:  { es: 'Pesada',  en: 'Heavy',  fr: 'Lourde',  it: 'Pesante', pt: 'Pesada' },
 };
 
+const CONSUMABLE_TYPE_LABELS = {
+  common:  { es: 'Común',    en: 'Common', fr: 'Ordinaire', it: 'Comune', pt: 'Comum'    },
+  limited: { es: 'Limitado', en: 'Limited', fr: 'Limitée',  it: 'Raro',   pt: 'Limitado' },
+  special: { es: 'Especial', en: 'Unique', fr: 'Unique',    it: 'Unico',  pt: 'Especial' },
+};
+
 const ITEM_TYPE_LABELS = {
   trinket:    { es: 'Accesorio',  en: 'Trinket',    fr: 'Accessoire',  it: 'Accessorio',  pt: 'Acessório'  },
   consumable: { es: 'Consumible', en: 'Consumable',  fr: 'Consommable', it: 'Consumabile', pt: 'Consumível' },
 };
+
+const EXTRA_LIFE_ICON = '/assets/icons/Icon_ExtraLife.png';
+const SHIELD_ICON      = '/assets/icons/Icon_Defense.png';
+const SUCCESS_ICON     = '/assets/icons/Icon_Success.png';
+
+// Vida extra (corazón rojo) / éxitos automáticos al defenderse (escudo +
+// número + estrella) de una armadura — dato de la carta física, no viene en
+// la descripción de habilidad. Un mismo objeto solo tiene uno de los dos.
+export function ArmorStatBadge({ item, upgraded, className = '' }) {
+  if (!item || item.type !== 'armor') return null;
+  const extraLife = upgraded ? item.extraLifeUpgraded : item.extraLife;
+  const shield    = upgraded ? item.shieldSuccessUpgraded : item.shieldSuccess;
+  if (extraLife) {
+    return (
+      <span className={`armor-stat-badge ${className}`}>
+        <img src={EXTRA_LIFE_ICON} alt="" className="armor-stat-badge-icon" onError={e => e.target.style.display = 'none'} />
+        <span className="armor-stat-badge-num">{extraLife}</span>
+      </span>
+    );
+  }
+  if (shield) {
+    return (
+      <span className={`armor-stat-badge ${className}`}>
+        <img src={SHIELD_ICON} alt="" className="armor-stat-badge-icon" onError={e => e.target.style.display = 'none'} />
+        <span className="armor-stat-badge-num">{shield}</span>
+        <img src={SUCCESS_ICON} alt="" className="armor-stat-badge-star" onError={e => e.target.style.display = 'none'} />
+      </span>
+    );
+  }
+  return null;
+}
 
 export function renderItemName(id, name) {
   if (!id?.endsWith('_PLUS')) return name || id || '';
@@ -63,6 +101,8 @@ export default function ItemTooltip({ id, item, lang, children }) {
   const saveMeta  = useStore(s => s.saveMeta);
   const gameState = useStore(s => s.gameState);
   const isAct2   = (saveMeta?.act ?? 0) >= 1;
+  const { ref: bubbleRef, style: bubbleStyle } = useTooltipPosition(coords, visible && !isMobile);
+  useBodyScrollLock(modalOpen);
 
   if (!item) return <>{children}</>;
 
@@ -77,26 +117,27 @@ export default function ItemTooltip({ id, item, lang, children }) {
   );
 
   let label = ITEM_TYPE_LABELS[item.type]?.[lang] || item.type || '';
-  let armorTypeLabel = null;
+  let subTypeLabel = null;
   let compatibleHeroes = null;
   if (item.type === 'armor') {
     label = ARMOR_CARD_LABEL[lang] || ARMOR_CARD_LABEL.es;
-    armorTypeLabel = ARMOR_TYPE_LABELS[item.armorType]?.[lang] || item.armorType || '';
+    subTypeLabel = ARMOR_TYPE_LABELS[item.armorType]?.[lang] || item.armorType || '';
     compatibleHeroes = HEROES.filter(h => h.armorTypes?.includes(item.armorType));
+  }
+  if (item.type === 'consumable') {
+    subTypeLabel = CONSUMABLE_TYPE_LABELS[item.consumableType]?.[lang] || item.consumableType || '';
+    if (item.limitedHeroIds?.length) {
+      compatibleHeroes = HEROES.filter(h => item.limitedHeroIds.includes(h.id));
+    }
   }
 
   const isUpgraded = id?.endsWith('_PLUS');
 
-  const consumableDesc = item.type === 'consumable'
-    ? (CONSUMABLE_DESCS[id] || CONSUMABLE_DESCS[id?.replace(/_PLUS$/, '')])
-    : null;
-  const descs = consumableDesc || (isUpgraded ? item.abilityDescs : item.baseAbilityDescs);
+  const descs = isUpgraded ? item.abilityDescs : item.baseAbilityDescs;
   const rawAbility = descs?.[lang] || descs?.es || descs?.en || '';
   const abilityNodes = rawAbility ? renderAbilityNodes(rawAbility) : null;
 
   function move(e) { setCoords({ x: e.clientX, y: e.clientY }); }
-  const offsetX = coords.x + 16 + 280 > window.innerWidth ? coords.x - 296 : coords.x + 16;
-  const offsetY = Math.min(coords.y - 8, window.innerHeight - 400);
 
   function handleClick(e) {
     if (!isMobile) return;
@@ -110,10 +151,10 @@ export default function ItemTooltip({ id, item, lang, children }) {
         <span className="rtt-title">
           {label && <span className="rtt-label">{label}</span>}
           {renderItemName(id, name)}
-          {compatibleHeroes && (
+          {(subTypeLabel || compatibleHeroes) && (
             <span className="rtt-armor-heroes">
-              {armorTypeLabel}
-              {compatibleHeroes.map(h => (
+              {subTypeLabel}
+              {compatibleHeroes?.map(h => (
                 <span key={h.id}>
                   <span className="rtt-armor-sep"> · </span>
                   {getName(h, lang)}
@@ -145,6 +186,7 @@ export default function ItemTooltip({ id, item, lang, children }) {
         <span className="rtt-hero-footer rtt-hero-footer--item">
           <img src={item.image} alt={name} className="rtt-item-footer-img"
             onError={e => e.target.style.display = 'none'} />
+          <ArmorStatBadge item={item} upgraded={isUpgraded} className="armor-stat-badge--overlay" />
         </span>
       )}
     </>
@@ -160,7 +202,7 @@ export default function ItemTooltip({ id, item, lang, children }) {
     >
       {children}
       {!isMobile && visible && createPortal(
-        <span className="rtt-bubble" style={{ left: offsetX, top: offsetY }}>
+        <span ref={bubbleRef} className="rtt-bubble" style={bubbleStyle}>
           {bubbleContent}
         </span>
       , document.body)}
