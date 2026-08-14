@@ -10,6 +10,7 @@ export function useShare() {
   const actionHistory  = useStore(s => s.actionHistory);
   const originalState  = useStore(s => s.originalState);
   const rawSaveContent = useStore(s => s.rawSaveContent);
+  const heroLoadouts   = useStore(s => s.heroLoadouts);
 
   // rawSaveContent es el .SAV tal cual se subió: el servidor lo guarda para
   // que, al abrir el enlace, se reinterprete con el parser vigente EN ESE
@@ -22,21 +23,21 @@ export function useShare() {
     const res = await fetch(`${SHARE_API}/api/share`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ save: gameState, saveMeta, actionHistory, originalState, rawSaveContent, label, private: isPrivate || false }),
+      body: JSON.stringify({ save: gameState, saveMeta, actionHistory, originalState, rawSaveContent, heroLoadouts, label, private: isPrivate || false }),
     });
     if (!res.ok) throw new Error(`${res.status} ${await res.text()}`);
     return res.json();
-  }, [gameState, saveMeta, actionHistory, originalState, rawSaveContent]);
+  }, [gameState, saveMeta, actionHistory, originalState, rawSaveContent, heroLoadouts]);
 
   const addSnapshot = useCallback(async (id, label) => {
     const res = await fetch(`${SHARE_API}/api/share/${id}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ save: gameState, saveMeta, actionHistory, originalState, rawSaveContent, label }),
+      body: JSON.stringify({ save: gameState, saveMeta, actionHistory, originalState, rawSaveContent, heroLoadouts, label }),
     });
     if (!res.ok) throw new Error(`${res.status} ${await res.text()}`);
     return res.json();
-  }, [gameState, saveMeta, actionHistory, originalState, rawSaveContent]);
+  }, [gameState, saveMeta, actionHistory, originalState, rawSaveContent, heroLoadouts]);
 
   const getMeta = useCallback(async (id) => {
     const res = await fetch(`${SHARE_API}/api/share/${id}`);

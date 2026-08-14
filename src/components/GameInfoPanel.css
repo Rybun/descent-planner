@@ -556,3 +556,190 @@
   font-weight: 700;
   font-size: 0.72rem;
 }
+
+/* ─── Aprestar héroe ─────────────────────────────────── */
+
+.gi-prepare-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.gi-prepare-btn {
+  background: rgba(var(--color-gold-rgb), 0.1);
+  border: 1px solid rgba(var(--color-gold-rgb), 0.4);
+  color: var(--color-gold-light);
+  border-radius: var(--radius-sm);
+  padding: 4px 10px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.gi-prepare-btn:hover {
+  background: rgba(var(--color-gold-rgb), 0.18);
+}
+
+.gi-prepared-badge {
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-success);
+  background: rgba(var(--color-success-rgb), 0.12);
+  border: 1px solid rgba(var(--color-success-rgb), 0.35);
+  border-radius: 99px;
+  padding: 2px 8px;
+}
+
+/* Mismo amarillo de aviso que el resto de la app (spoiler tags, dificultad
+   media...) — dos héroes han elegido el mismo accesorio o arma rúnica, que
+   solo hay uno en el inventario del grupo. */
+.gi-prepared-badge-conflict {
+  color: #e8a020;
+  background: rgba(232, 160, 32, 0.12);
+  border-color: rgba(232, 160, 32, 0.35);
+}
+
+.gi-prepare-link-btn {
+  background: none;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  border-radius: var(--radius-sm);
+  padding: 3px 8px;
+  font-size: 0.68rem;
+  cursor: pointer;
+}
+
+.gi-prepare-link-btn:hover {
+  border-color: var(--color-border-hover);
+  color: var(--color-text);
+}
+
+/* ─── Resumen de aprestado (sustituye a la lista de habilidades) ──── */
+
+.gi-loadout {
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--spacing-xs);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.gi-loadout-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--spacing-sm);
+}
+
+.gi-loadout-label {
+  font-size: 0.68rem;
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+}
+
+.gi-loadout-value {
+  font-size: 0.74rem;
+  color: var(--color-text);
+  text-align: right;
+}
+
+.gi-loadout-skills-label {
+  margin-top: 4px;
+}
+
+.gi-loadout-xp {
+  text-transform: none;
+  letter-spacing: normal;
+  color: var(--color-gold-light);
+  font-weight: 700;
+}
+
+.gi-loadout-conflict {
+  color: #e8a020;
+  font-weight: 700;
+}
+
+/* ─── Tooltip de habilidad (etiquetas/efecto/fatiga máxima/XP) ───────── */
+
+.gi-skill-tooltip-bubble {
+  padding: 10px 12px;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--color-text);
+  width: 360px;
+}
+
+.gi-skill-tooltip {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.gi-skill-tooltip-face-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+}
+
+.gi-skill-tooltip-face-name {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--color-gold-light);
+}
+
+.gi-skill-tooltip-tags {
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
+  margin-bottom: 2px;
+}
+
+.gi-skill-tooltip-effect {
+  font-size: 0.78rem;
+  line-height: 1.4;
+  color: var(--color-text);
+}
+
+.gi-skill-tooltip-divider {
+  height: 1px;
+  background: var(--color-border);
+}
+
+.gi-skill-tooltip-xp {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--color-gold-light);
+  border-top: 1px solid var(--color-border);
+  padding-top: 6px;
+}
+
+/* Solo el número + el símbolo de fatiga, sin etiqueta de texto — mismo
+   estilo de píldora negra que el badge de vida extra/escudo de armadura
+   (armor-stat-badge--overlay). Cada CARA tiene su propia fatiga máxima (en
+   casi todos los casos distinta entre las dos caras de una misma carta),
+   así que va junto al título de cada cara, no una sola vez para toda la
+   habilidad. */
+.gi-skill-fatigue-pill {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  background: rgba(0, 0, 0, 0.85);
+  border: 1px solid var(--color-border);
+  border-radius: 99px;
+  padding: 2px 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--color-gold-light);
+}
+
+.gi-skill-fatigue-pill-icon {
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+}

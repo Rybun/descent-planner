@@ -1850,6 +1850,87 @@ SKILL_HERO_MAP = {
 }
 
 
+# Etiqueta(s) bajo el nombre, efecto de cada cara y fatiga máxima que puede
+# acumular la carta. NO es extraíble de los assets del juego (comprobado con
+# read_typetree sobre el MonoBehaviour de habilidad: solo trae KeyName/
+# XPCost/Hero/_act, ningún campo de etiqueta/texto/fatiga; tampoco hay
+# ninguna clave SKILL_*_DESC en la localización) — leído a mano de fotos de
+# las cartas físicas por el usuario (IMG_3288/IMG_3289). Mismo criterio que
+# ARMOR_CARD_STATS más abajo: solo cubre las habilidades 1-7 de cada héroe
+# (las fotografiadas); las 8-11 se dejan sin entrada aquí en vez de un valor
+# inventado.
+#
+# faceA/faceB seleccionan la cara según el orden del nombre combinado en
+# localización ("Nombre A / Nombre B"). El icono de fatiga (gota naranja)
+# dentro del texto de efecto y el símbolo de éxito/ventaja/aumento/daño/
+# curación/acción se representan con el mismo marcado <style=Term><link=...>
+# que ya usa el resto de texto de partidas del juego (parseGameText lo
+# reconoce y sustituye por el icono).
+#
+# NOTA: la carta física de SKILL_KEHLI_5 dice "Forja magistral" en la foto,
+# pero la localización del juego combina el nombre como "Forjacertera /
+# Saquillo de polvo estelar" — se deja tal cual está en juego (no se toca el
+# campo "names", que sí viene de datos reales) y se documenta aquí la
+# discrepancia en vez de alterar silenciosamente uno de los dos.
+_FAT     = "<style=Term><link=TERM_FATIGUE></link></style>"
+_SUC     = "<style=Term><link=TERM_SUCCESS></link></style>"
+_ADV     = "<style=Term><link=TERM_ADVANTAGE></link></style>"
+_SUR     = "<style=Term><link=TERM_SURGE></link></style>"
+_HP      = "<style=Term><link=TERM_HEALTH_DIAL></link></style>"
+_DMG     = "<style=Term><link=TERM_DAMAGE></link></style>"
+_ACT     = "<style=Term><link=TERM_ACTIONS></link></style>"
+
+SKILL_CARD_DETAILS = {
+    "SKILL_BRYNN_1": {"faceA": {"tags": ["Liderazgo"], "effect": f"1{_ACT}: Dos héroes que estén a 3 o menos casillas de ti pueden aprestar 1 carta cada uno.", "maxFatigue": 2}, "faceB": {"tags": ["Liderazgo"], "effect": f"1{_ACT}: Dos héroes que estén a 3 o menos casillas de ti pueden concentrar 2 cartas cada uno.", "maxFatigue": 2}},
+    "SKILL_BRYNN_2": {"faceA": {"tags": ["Compañerismo", "Guardián"], "effect": f"2{_FAT}: Durante la activación de un enemigo, si está adyacente a ti, te conviertes en el objetivo. Durante tu defensa, añade 1{_SUC}.", "maxFatigue": 3}, "faceB": {"tags": ["Mariscal"], "effect": f"2{_FAT}: Después de que derrotes a un enemigo, tú o un héroe adyacente podéis curaros 2{_HP}.", "maxFatigue": 2}},
+    "SKILL_BRYNN_3": {"faceA": {"tags": ["Compañerismo", "Liderazgo"], "effect": f"Durante el ataque o la defensa de otro héroe, si el enemigo está adyacente a ti, ese héroe puede convertir 1{_ADV} en 1{_SUC}.", "maxFatigue": 2}, "faceB": {"tags": ["Desafiante", "Mariscal", "Venganza"], "effect": "2" + _FAT + ": Después de que otro héroe quede herido, puedes darle la vuelta a tu carta de Ataque. A continuación, puedes mover hasta 3 casillas y atacar.", "maxFatigue": 2}},
+    "SKILL_BRYNN_4": {"faceA": {"tags": ["Mariscal"], "effect": f"Después de que derrotes a un enemigo, tú o un héroe adyacente podéis descartar 2{_FAT}.", "maxFatigue": 2}, "faceB": {"tags": ["Agresión", "Desafiante", "Mariscal"], "effect": f"1{_FAT}: Durante tu ataque, si tu vida es 5 o menos, añade 1{_SUC}. 1{_FAT}: Durante tu ataque, si tienes una dolencia, añade 1{_SUC}.", "maxFatigue": 2}},
+    "SKILL_BRYNN_5": {"faceA": {"tags": ["Prisa"], "effect": f"1{_ACT}: Ataca a un enemigo. Ataca a otro enemigo. A continuación, dale la vuelta a esta carta.", "maxFatigue": 1}, "faceB": {"tags": ["Táctico"], "effect": f"3{_FAT}: Durante tu turno, dale la vuelta a otra carta.", "maxFatigue": 3}},
+    "SKILL_BRYNN_6": {"faceA": {"tags": ["Compañerismo", "Liderazgo", "Táctico"], "effect": f"2{_FAT}: Antes de tu ataque, otro héroe que esté a 3 o menos casillas de ti puede darle la vuelta a 1 carta.", "maxFatigue": 3}, "faceB": {"tags": ["Mariscal", "Venganza"], "effect": f"2{_FAT}: Antes de la activación de un enemigo, atácalo.", "maxFatigue": 3}},
+    "SKILL_BRYNN_7": {"faceA": {"tags": ["Compañerismo", "Liderazgo", "Movilidad"], "effect": f"1{_FAT}: Antes de que realices una maniobra, otro héroe puede realizar Desplazamiento 2.", "maxFatigue": 2}, "faceB": {"tags": ["Agresión"], "effect": f"2{_FAT}: Durante tu turno, realiza Desplazamiento 1 hacia un enemigo que no esté adyacente a ti. A continuación, atácalo.", "maxFatigue": 2}},
+
+    "SKILL_CHANCE_1": {"faceA": {"tags": ["Sombra"], "effect": "1" + _ACT + ": Intercambia casillas con otro héroe que esté a 5 o menos casillas de ti. A continuación, dale la vuelta a esta carta.", "maxFatigue": 1}, "faceB": {"tags": [], "effect": f"2{_FAT}: Durante tu defensa, añade 1{_SUC}. Después de esta defensa, realiza Desplazamiento 1.", "maxFatigue": 2}},
+    "SKILL_CHANCE_2": {"faceA": {"tags": ["Agresión", "Sombra"], "effect": f"1{_FAT}: Durante tu ataque, si el enemigo es el único enemigo a 3 o menos casillas, añade 1{_SUC}.", "maxFatigue": 2}, "faceB": {"tags": ["Agresión"], "effect": f"Durante tu ataque, puedes convertir 1{_ADV} en 1{_SUC}.", "maxFatigue": 3}},
+    "SKILL_CHANCE_3": {"faceA": {"tags": ["Sombra"], "effect": f"2{_FAT}: Después de tu tirada, repite la tirada de 1 dado.", "maxFatigue": 3}, "faceB": {"tags": ["Movilidad"], "effect": f"2{_FAT}: Durante tu turno, realiza Desplazamiento 1. 2{_FAT}: Durante tu turno, realiza Desplazamiento 1.", "maxFatigue": 4}},
+    "SKILL_CHANCE_4": {"faceA": {"tags": ["Compañerismo", "Movilidad"], "effect": f"2{_FAT}: Durante tu turno o el de otro héroe, si estás adyacente a un enemigo, otro héroe puede realizar Desplazamiento 2 hacia ese enemigo.", "maxFatigue": 2}, "faceB": {"tags": ["Sombra", "Táctico"], "effect": f"2{_FAT}: Al final de tu turno, si no hay enemigos a 3 o menos casillas de ti, dale la vuelta a 1 carta.", "maxFatigue": 2}},
+    "SKILL_CHANCE_5": {"faceA": {"tags": ["Agresión", "Sombra"], "effect": f"2{_FAT}: Antes de tu ataque, añade 1 dado naranja. Después de este ataque, si tienes 2 o más cartas Sombra, descarta 1{_FAT}.", "maxFatigue": 3}, "faceB": {"tags": ["Movilidad"], "effect": "1" + _ACT + ": Desplazamiento 2. Si tienes una carta Sombra, Desplazamiento 4 en su lugar. A continuación, interactúa.", "maxFatigue": 1}},
+    "SKILL_CHANCE_6": {"faceA": {"tags": ["Agresión", "Venganza"], "effect": f"2{_FAT}: Después de la activación de un enemigo, atácalo. Si tienes una carta Sombra, reduce el coste de esta capacidad en 1{_FAT}.", "maxFatigue": 2}, "faceB": {"tags": ["Movilidad", "Sombra"], "effect": f"Cuando obtengas puntos de movimiento, ignora la obstaculización. 1{_FAT}: Antes de que quedes obstaculizado, no quedas obstaculizado.", "maxFatigue": 3}},
+    "SKILL_CHANCE_7": {"faceA": {"tags": ["Sombra", "Táctico"], "effect": f"2{_FAT}: Durante tu turno, dale la vuelta a tu carta de Ataque. A continuación, concéntrala.", "maxFatigue": 3}, "faceB": {"tags": [], "effect": f"2{_FAT}: Durante tu turno, si no tienes cartas Sombra, apresta 1 carta.", "maxFatigue": 3}},
+
+    "SKILL_GALADEN_1": {"faceA": {"tags": ["Agresión"], "effect": f"2{_FAT}: Durante tu ataque, aflige o conmociona al enemigo. Si has sacado un{_SUR}, aplica ambos estados.", "maxFatigue": 3}, "faceB": {"tags": ["Agresión"], "effect": f"1{_FAT}: Durante tu ataque, ignora la capacidad del enemigo si es posible.", "maxFatigue": 2}},
+    "SKILL_GALADEN_2": {"faceA": {"tags": [], "effect": f"1{_FAT}: Después de tu tirada, si has sacado un{_SUR}, añade 1{_SUC}.", "maxFatigue": 1}, "faceB": {"tags": [], "effect": f"1{_FAT}: Después de que le des la vuelta a una carta, concéntrala.", "maxFatigue": 3}},
+    "SKILL_GALADEN_3": {"faceA": {"tags": ["Agresión", "Veneno"], "effect": f"3{_FAT}: Durante tu ataque, debilita o ralentiza al enemigo. Si has sacado un{_SUR}, aplica ambos estados.", "maxFatigue": 4}, "faceB": {"tags": ["Guardián", "Táctico"], "effect": f"2{_FAT}: Durante tu defensa, añade 1{_SUC} e ignora la capacidad del enemigo si es posible. Después de esta defensa, muévete 1 casilla alejándote del enemigo y dale la vuelta a 1 carta.", "maxFatigue": 3}},
+    "SKILL_GALADEN_4": {"faceA": {"tags": ["Compañerismo"], "effect": "1" + _ACT + ": Tú y un héroe adyacente podéis aprestar 1 carta cada uno.", "maxFatigue": 0}, "faceB": {"tags": [], "effect": f"1{_FAT}: Después de tu tirada, si no has sacado un{_SUR}, añade 1{_SUR}.", "maxFatigue": 2}},
+    "SKILL_GALADEN_5": {"faceA": {"tags": ["Agresión", "Prisa"], "effect": f"3{_FAT}: Después de tu ataque, dale la vuelta a tu carta de Ataque. A continuación, ataca a otro enemigo.", "maxFatigue": 3}, "faceB": {"tags": ["Compañerismo"], "effect": f"2{_FAT}: Antes del ataque de otro héroe, si el enemigo está al alcance de tu arma, ese héroe puede añadir 1 dado azul.", "maxFatigue": 3}},
+    "SKILL_GALADEN_6": {"faceA": {"tags": ["Agresión"], "effect": f"Durante tu ataque, puedes añadir 1{_SUC} por cada una de tus cartas aprestadas. Si lo haces, después del ataque, dale la vuelta a cada una de tus cartas aprestadas.", "maxFatigue": 0}, "faceB": {"tags": [], "effect": "Durante tu turno, puedes gastar 1 punto de movimiento para concentrar 1 carta o bien gastar 3 puntos de movimiento para aprestar 1 carta.", "maxFatigue": 0}},
+    "SKILL_GALADEN_7": {"faceA": {"tags": ["Agresión"], "effect": f"1{_ACT}: Ataca a un enemigo. Añade 1{_SUC} por cada estado que tenga el enemigo. Después de este ataque, dale la vuelta a esta carta.", "maxFatigue": 1}, "faceB": {"tags": ["Agresión", "Sombra"], "effect": f"Durante tu ataque, si el enemigo tiene un estado, añade 1{_SUR}. 1{_SUR}: Durante tu ataque, condena al enemigo.", "maxFatigue": 0}},
+
+    "SKILL_KEHLI_1": {"faceA": {"tags": ["Innovación"], "effect": f"CARGA: Apresta 2. Antes de tu prueba, debes descartar 1 ficha de Presteza de esta carta para añadir 2{_SUC}.", "maxFatigue": 0}, "faceB": {"tags": ["Inspiración"], "effect": "REVELACIÓN: Dale esta carta a Kehli. 1" + _ACT + ": Puedes darle esta carta a un héroe adyacente. A continuación, dale la vuelta a esta carta.", "maxFatigue": 2}},
+    "SKILL_KEHLI_2": {"faceA": {"tags": ["Agresión", "Innovación"], "effect": f"CARGA: Concentra 3. Antes de tu ataque, debes descartar 1 ficha de Concentración de esta carta para añadir 1{_SUC}.", "maxFatigue": 0}, "faceB": {"tags": ["Inspiración"], "effect": "REVELACIÓN: Dale esta carta a Kehli. 1" + _ACT + ": Puedes darle esta carta a un héroe adyacente. A continuación, dale la vuelta a esta carta.", "maxFatigue": 2}},
+    "SKILL_KEHLI_3": {"faceA": {"tags": [], "effect": f"1{_FAT}: Durante tu prueba, añade 1{_SUC} por cada{_FAT} que haya sobre esta carta.", "maxFatigue": 2}, "faceB": {"tags": [], "effect": f"2{_FAT}: Antes de que un héroe interactúe, si está a 3 o menos casillas de ti, puede concentrar 1 carta.", "maxFatigue": 1}},
+    "SKILL_KEHLI_4": {"faceA": {"tags": [], "effect": f"1{_FAT}: Después de que interactúes, descarta 2{_FAT} de otra carta.", "maxFatigue": 1}, "faceB": {"tags": ["Restablecimiento"], "effect": f"1{_FAT}: Antes de que interactúes, cúrate 1{_HP}.", "maxFatigue": 2}},
+    "SKILL_KEHLI_5": {"faceA": {"tags": ["Agresión", "Maestría"], "effect": f"Durante tu ataque, puedes descartar 4{_FAT} de esta carta. Si lo haces, añade 1{_SUC}. 1{_FAT}: Descarta toda la{_FAT} de tu carta de Ataque. Sufre esa cantidad de{_FAT} sobre esta carta.", "maxFatigue": 4}, "faceB": {"tags": ["Explosivo"], "effect": "1" + _ACT + ": Elige 1 casilla que esté a 5 o menos casillas de ti y a la que tengas línea de visión. Conmociona, debilita, expón y ralentiza a cada enemigo que esté en esa casilla o adyacente a ella. A continuación, dale la vuelta a esta carta.", "maxFatigue": 1}},
+    "SKILL_KEHLI_6": {"faceA": {"tags": ["Explosivo"], "effect": f"4{_FAT}: Durante tu turno, descarta hasta 1 de cada tipo de estado. Un enemigo que esté a 3 o menos casillas de ti sufre 6{_DMG}. Reduce el coste de esta capacidad en 1{_FAT} por cada estado descartado.", "maxFatigue": 4}, "faceB": {"tags": ["Prisa"], "effect": f"1{_FAT}: Durante tu turno, después de tu ataque, interactúa.", "maxFatigue": 1}},
+    "SKILL_KEHLI_7": {"faceA": {"tags": ["Explosivo", "Innovación"], "effect": f"CARGA: Apresta 3. Antes de tu ataque, debes descartar 1 ficha de Presteza de esta carta para añadir un dado de tu elección. Cuando gastes resultados, si ese dado no sacó ningún{_SUR}, sufre 1{_DMG} y dale la vuelta a esta carta.", "maxFatigue": 0}, "faceB": {"tags": ["Inspiración"], "effect": "REVELACIÓN: Dale esta carta a Kehli. 1" + _ACT + ": Puedes darle esta carta a un héroe adyacente. A continuación, dale la vuelta a esta carta.", "maxFatigue": 2}},
+
+    "SKILL_SYRUS_1": {"faceA": {"tags": ["Fénix", "Restablecimiento"], "effect": f"1{_SUR}: Cúrate 1{_HP} por cada{_FAT} que haya sobre esta carta. A continuación, dale la vuelta a esta carta.", "maxFatigue": 2}, "faceB": {"tags": ["Fénix"], "effect": "1" + _ACT + f": Concentra 1 carta por cada{_FAT} que haya sobre esta carta. A continuación, dale la vuelta a esta carta.", "maxFatigue": 2}},
+    "SKILL_SYRUS_2": {"faceA": {"tags": ["Origen celestial"], "effect": f"3{_FAT}: Al final de tu turno, ralentiza a un enemigo al que tengas línea de visión.", "maxFatigue": 3}, "faceB": {"tags": ["Origen celestial"], "effect": "1" + _ACT + f": Mueve un enemigo u otro héroe alejándolo 1 casilla de ti por cada{_FAT} que haya sobre esta carta. A continuación, descarta toda la{_FAT} de esta carta.", "maxFatigue": 1}},
+    "SKILL_SYRUS_3": {"faceA": {"tags": ["Restablecimiento"], "effect": f"1{_FAT}: Después de que interactúes, descarta 1{_FAT} de otra carta.", "maxFatigue": 2}, "faceB": {"tags": ["Restablecimiento"], "effect": f"2{_FAT}: Después de que interactúes, cúrate 1{_HP} y concentra 1 carta.", "maxFatigue": 1}},
+    "SKILL_SYRUS_4": {"faceA": {"tags": ["Origen llameante", "Fénix"], "effect": f"2{_FAT}: Durante tu turno, un enemigo al que tengas línea de visión sufre 1{_DMG} por cada una de tus cartas Fénix. A continuación, aflige a ese enemigo.", "maxFatigue": 3}, "faceB": {"tags": ["Origen llameante", "Fénix"], "effect": f"1{_SUR}: Durante tu ataque o tu defensa, añade 1{_SUC} por cada una de tus cartas Fénix. A continuación, dale la vuelta a esta carta.", "maxFatigue": 3}},
+    "SKILL_SYRUS_5": {"faceA": {"tags": ["Fénix"], "effect": "2" + _FAT + ": Antes de tu ataque o de tu defensa, añade 1 dado naranja.", "maxFatigue": 3}, "faceB": {"tags": ["Fénix"], "effect": "2" + _FAT + ": Antes de tu ataque o de tu defensa, añade 1 dado azul.", "maxFatigue": 3}},
+    "SKILL_SYRUS_6": {"faceA": {"tags": ["Fénix"], "effect": f"3{_FAT}: Durante tu turno, interactúa.", "maxFatigue": 3}, "faceB": {"tags": ["Origen mortal", "Desafiante", "Fénix"], "effect": f"3{_FAT}: Antes de que quedes herido, en vez de eso fija tu vida en 3.", "maxFatigue": 3}},
+    "SKILL_SYRUS_7": {"faceA": {"tags": ["Origen celestial"], "effect": f"3{_FAT}: Elige una casilla a la que tengas línea de visión. Cada enemigo en esa casilla o adyacente a ella sufre 3{_DMG}. Si tienes otra carta Origen celestial, conmociona a cada uno de esos enemigos.", "maxFatigue": 3}, "faceB": {"tags": ["Origen mortal", "Sombra"], "effect": f"3{_FAT}: Antes de la activación de un enemigo, si está en línea de visión, reduce su velocidad, alcance y daño en 2.", "maxFatigue": 3}},
+
+    "SKILL_VAERIX_1": {"faceA": {"tags": ["Agresión", "Juramento", "Sombra"], "effect": f"1{_FAT}: Durante tu ataque o el de otro héroe, condena al enemigo.", "maxFatigue": 2}, "faceB": {"tags": ["Agresión", "Sombra"], "effect": f"1{_ACT}: Ataca a un enemigo. Durante el ataque, añade 2{_SUC}. Después de este ataque, dale la vuelta a esta carta.", "maxFatigue": 1}},
+    "SKILL_VAERIX_2": {"faceA": {"tags": ["Restablecimiento"], "effect": f"1{_FAT}: Después de que un héroe descarte un estado, se cura 1{_HP}.", "maxFatigue": 2}, "faceB": {"tags": ["Compañerismo"], "effect": "3" + _FAT + ": Durante tu turno, tú o un héroe adyacente descartáis todos los estados de 1 mismo tipo.", "maxFatigue": 3}},
+    "SKILL_VAERIX_3": {"faceA": {"tags": ["Compañerismo", "Juramento"], "effect": f"1{_SUR}: Añade 2{_SUC}. Otro héroe puede mover 1 estado de 1 de sus cartas a otra de sus cartas.", "maxFatigue": 2}, "faceB": {"tags": ["Compañerismo"], "effect": f"1{_SUR}: Añade 2{_SUC}. Otro héroe puede descartar 1{_FAT}.", "maxFatigue": 2}},
+    "SKILL_VAERIX_4": {"faceA": {"tags": ["Compañerismo"], "effect": f"2{_FAT}: Durante la prueba de otro héroe, si está a 3 o menos casillas de ti, puede añadir 1{_SUC}.", "maxFatigue": 2}, "faceB": {"tags": ["Compañerismo"], "effect": f"2{_FAT}: Antes del ataque de otro héroe, si está a 3 o menos casillas de ti, puede concentrar 1 carta.", "maxFatigue": 3}},
+    "SKILL_VAERIX_5": {"faceA": {"tags": ["Restablecimiento"], "effect": f"Los héroes que estén a 3 o menos casillas de ti tienen: 1{_SUR}: Añade 2{_SUC} y cúrate 1{_HP}.", "maxFatigue": 1}, "faceB": {"tags": ["Desafiante"], "effect": f"2{_FAT}: Después de que un héroe que esté a 3 o menos casillas de ti sufra{_DMG}, puede concentrar y aprestar 1 carta. 2{_FAT}: Antes de que un héroe que esté a 3 o menos casillas de ti quede herido, puede concentrar y aprestar 3 cartas.", "maxFatigue": 3}},
+    "SKILL_VAERIX_6": {"faceA": {"tags": [], "effect": f"2{_FAT}: Después de que uses una capacidad de una carta Restablecimiento, un héroe que se haya curado{_HP} se cura 2{_HP} adicionales.", "maxFatigue": 3}, "faceB": {"tags": [], "effect": f"1{_FAT}: Después de que uses una capacidad de una carta Restablecimiento, un héroe que se haya curado{_HP} descarta 2{_FAT}.", "maxFatigue": 2}},
+    "SKILL_VAERIX_7": {"faceA": {"tags": ["Agresión", "Juramento"], "effect": "2" + _FAT + ": Antes de tu ataque, añade 1 dado azul.", "maxFatigue": 4}, "faceB": {"tags": ["Fuego"], "effect": f"3{_FAT}: Durante tu turno, elige 4 casillas consecutivas, empezando por una casilla adyacente. Cada enemigo que esté en cualquiera de esas casillas sufre 3{_DMG}. A continuación, aflige y conmociona a esos enemigos.", "maxFatigue": 3}},
+}
+
+
 def generate_skills_js(env, locs, planner_dir):
     """Genera src/gamedata/skills.js: las habilidades desbloqueables de cada
     héroe (11 por héroe) con su coste en XP de grupo. El nombre de cada
@@ -1874,13 +1955,20 @@ def generate_skills_js(env, locs, planner_dir):
             if not hero_id:
                 continue
             xp_cost = int(getattr(d, "XPCost", 0) or 0)
-            skills.append({
+            skill = {
                 "id":      key,
                 "heroId":  hero_id,
                 "order":   num,
                 "xpCost":  xp_cost,
                 "names":   _make_names(locs, key, es_fallback=key),
-            })
+            }
+            # Etiqueta(s)/efecto/fatiga máxima de cartas 1-7 (ver
+            # SKILL_CARD_DETAILS) — solo en español, leído a mano de fotos de
+            # las cartas físicas; no existe en los assets del juego.
+            details = SKILL_CARD_DETAILS.get(key)
+            if details:
+                skill["cardDetails"] = details
+            skills.append(skill)
         except Exception:
             pass
 

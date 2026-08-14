@@ -33,7 +33,7 @@ const HERO_SLUGS = {
   HERO_CHANCE:  'chance',
 };
 
-const LONG_RANGE_LABELS = { es: 'Gran alcance', en: 'Long range', fr: 'Longue portée', it: 'Lunga gittata', pt: 'Longo alcance' };
+export const LONG_RANGE_LABELS = { es: 'Gran alcance', en: 'Long range', fr: 'Longue portée', it: 'Lunga gittata', pt: 'Longo alcance' };
 
 function isPartEquipped(itemId, gameState) {
   if (!gameState || !itemId) return false;
@@ -115,7 +115,9 @@ function getPassiveDesc(partId, lang) {
 
 // Activación + pasiva de una pieza cualquiera (se usa tanto para la pieza
 // mostrada como para la pieza en conflicto, que puede ser otra distinta).
-function getPartDescNodes(pid, lang) {
+// Exportada para que otros sitios (p.ej. el editor de piezas de Aprestar)
+// puedan mostrar el mismo texto de efecto en línea, sin tooltip.
+export function getPartDescNodes(pid, lang) {
   if (!pid) return { activationNodes: null, passiveNodes: null, chance: null, isAccessory: false };
   const p = WEAPON_PARTS_BY_ID[pid];
   if (!p) return { activationNodes: null, passiveNodes: null, chance: null, isAccessory: false };
@@ -137,7 +139,10 @@ function getPartDescNodes(pid, lang) {
   return { activationNodes, passiveNodes, chance, isAccessory: isAcc };
 }
 
-export default function WeaponPartTooltip({ partId, showUpgradeIcon = true, hideAbility = false, children }) {
+// otherPartIds: ids de las OTRAS piezas del arma (normalmente B y C) cuyo
+// efecto también se quiere ver en este mismo tooltip — p.ej. al pasar el
+// ratón por el arma completa en Aprestar, no solo por la pieza A.
+export default function WeaponPartTooltip({ partId, showUpgradeIcon = true, hideAbility = false, otherPartIds = [], children }) {
   const t        = useT();
   const lang     = useLang();
   const gameState = useStore(s => s.gameState);
@@ -187,6 +192,22 @@ export default function WeaponPartTooltip({ partId, showUpgradeIcon = true, hide
   const isAccessory = part.slot === 'B' || part.slot === 'C';
 
   const { activationNodes, passiveNodes, chance } = getPartDescNodes(partId, lang);
+
+  const otherPartsInfo = otherPartIds
+    .filter(id => id && id !== partId)
+    .map(id => {
+      const p = WEAPON_PARTS_BY_ID[id];
+      if (!p) return null;
+      const descs = getPartDescNodes(id, lang);
+      if (!descs.activationNodes && !descs.passiveNodes) return null;
+      return {
+        id,
+        slotLabel: p.slot === 'A' ? (SLOT_A_LABELS[lang] || 'Arma') : t(`slot.${p.weaponType}.${p.slot}`),
+        name: cleanName(getName(p, lang)),
+        descs,
+      };
+    })
+    .filter(Boolean);
 
   function defaultPart(slot) {
     return WEAPON_PARTS_BY_ID[`WEAPON_PART_${slot}_${part.weaponType}_0`] ?? null;
@@ -298,6 +319,25 @@ export default function WeaponPartTooltip({ partId, showUpgradeIcon = true, hide
           )}
         </span>
       )}
+
+      {!hideAbility && otherPartsInfo.map(info => (
+        <span className="wpt-other-part" key={info.id}>
+          <span className="wpt-other-part-header">
+            <span className="rtt-label">{info.slotLabel}</span> {info.name}
+          </span>
+          {info.descs.activationNodes && (
+            <span className="rtt-effect">{info.descs.activationNodes}</span>
+          )}
+          {info.descs.passiveNodes && (
+            <span className={`rtt-effect${info.descs.isAccessory ? '' : ' rtt-passive'}`}>
+              {info.descs.isAccessory && info.descs.chance != null && (
+                <span className="rtt-chance-chip">{info.descs.chance}%</span>
+              )}
+              {info.descs.passiveNodes}
+            </span>
+          )}
+        </span>
+      ))}
 
       {part.slot === 'A' ? (
         <span className="rtt-hero-footer wpt-assembly-footer">

@@ -129,6 +129,14 @@ export const useStore = create((set, get) => ({
   // === PRECIOS EDITADOS (localStorage) ===
   customPrices: JSON.parse(localStorage.getItem('descent_prices') || '{}'),
 
+  // === APRESTADO POR HÉROE ===
+  // { [heroId]: { weaponIds: [...], skillIds: [...], armorId, trinketId, consumableIds: [...] } }
+  // No es un concepto del save del juego — se inventa en la app para que el
+  // grupo anote qué se lleva a la siguiente partida. Por eso viaja aparte de
+  // rawSaveContent (que se reinterpreta desde cero al cargar un share): se
+  // guarda tal cual en el snapshot y se restaura explícitamente.
+  heroLoadouts: {},
+
   // ===================== ACCIONES =====================
 
   // Cargar fichero .SAV
@@ -144,6 +152,7 @@ export const useStore = create((set, get) => ({
         originalState: cloneGameState(parsed),
         actionHistory: [],
         rawSaveContent: content,
+        heroLoadouts: {},
       });
     } catch (e) {
       set({ saveError: e.message, saveLoaded: false });
@@ -154,7 +163,7 @@ export const useStore = create((set, get) => ({
   // el share guardara el .SAV en bruto — se conserva solo para no romper
   // enlaces ya creados). Usa saveMeta/gameState congelados en el momento de
   // compartir: si el parser ganó campos nuevos después, no aparecerán aquí.
-  loadParsedState: (gameState, saveMeta, actionHistory = [], originalState = null) => {
+  loadParsedState: (gameState, saveMeta, actionHistory = [], originalState = null, heroLoadouts = {}) => {
     const gs   = cloneGameState(gameState);
     const orig = originalState ? cloneGameState(originalState) : cloneGameState(gameState);
     set({
@@ -165,6 +174,7 @@ export const useStore = create((set, get) => ({
       originalState: orig,
       actionHistory,
       rawSaveContent: null,
+      heroLoadouts: heroLoadouts || {},
     });
   },
 
@@ -174,7 +184,7 @@ export const useStore = create((set, get) => ({
   // compartir (XP, misiones, habilidades...) aparece igualmente. Las
   // acciones del historial se re-aplican encima para llegar al estado
   // actual del share.
-  loadFromRawSave: (content, actionHistory = []) => {
+  loadFromRawSave: (content, actionHistory = [], heroLoadouts = {}) => {
     try {
       const parsed = parseSave(content);
       const orig = cloneGameState(parsed);
@@ -187,6 +197,7 @@ export const useStore = create((set, get) => ({
         originalState: orig,
         actionHistory,
         rawSaveContent: content,
+        heroLoadouts: heroLoadouts || {},
       });
       return true;
     } catch (e) {
@@ -471,6 +482,18 @@ export const useStore = create((set, get) => ({
     const newPrices = { ...customPrices, [key]: price };
     localStorage.setItem('descent_prices', JSON.stringify(newPrices));
     set({ customPrices: newPrices });
+  },
+
+  // === APRESTADO POR HÉROE ===
+  setHeroLoadout: (heroId, loadout) => {
+    const { heroLoadouts } = get();
+    set({ heroLoadouts: { ...heroLoadouts, [heroId]: loadout } });
+  },
+  clearHeroLoadout: (heroId) => {
+    const { heroLoadouts } = get();
+    const next = { ...heroLoadouts };
+    delete next[heroId];
+    set({ heroLoadouts: next });
   },
 
   // === UI ===

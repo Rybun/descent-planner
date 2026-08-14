@@ -88,7 +88,7 @@ function LangSelector() {
 }
 
 function MobileMenu({ tabs, tabIcons, netCount, activeTab, onSelectTab, onClose,
-  onReset, onLoadNew, onAbout, onShareWindow, canReset }) {
+  onReset, onLoadNew, onAbout, onShareWindow, canReset, onDownloadSave, canDownloadSave }) {
   const t    = useT();
   const lang = useStore(s => s.lang);
   const setLang = useStore(s => s.setLang);
@@ -147,6 +147,11 @@ function MobileMenu({ tabs, tabIcons, netCount, activeTab, onSelectTab, onClose,
               {t('app.reset')}
             </button>
           )}
+          {canDownloadSave && (
+            <button className="mobile-nav-action-btn" onClick={onDownloadSave}>
+              {t('app.downloadSave')}
+            </button>
+          )}
           <button className="mobile-nav-action-btn" onClick={onLoadNew}>
             {t('app.loadOther')}
           </button>
@@ -171,6 +176,7 @@ function App() {
   const resetToSave      = useStore(s => s.resetToSave);
   const loadParsedState  = useStore(s => s.loadParsedState);
   const loadFromRawSave  = useStore(s => s.loadFromRawSave);
+  const rawSaveContent   = useStore(s => s.rawSaveContent);
   const netCount = countNetChanges(originalState, gameState, actionHistory);
 
   const [showAbout,       setShowAbout]       = useState(false);
@@ -186,10 +192,10 @@ function App() {
   // anteriores), se cae al saveMeta/gameState congelados que ya traía.
   function loadSnapshot(snap) {
     if (snap.rawSaveContent) {
-      const ok = loadFromRawSave(snap.rawSaveContent, snap.actionHistory || []);
+      const ok = loadFromRawSave(snap.rawSaveContent, snap.actionHistory || [], snap.heroLoadouts || {});
       if (ok) return true;
     }
-    loadParsedState(snap.save, snap.saveMeta || {}, snap.actionHistory || [], snap.originalState || null);
+    loadParsedState(snap.save, snap.saveMeta || {}, snap.actionHistory || [], snap.originalState || null, snap.heroLoadouts || {});
     return true;
   }
 
@@ -254,6 +260,25 @@ function App() {
 
   function handleLoadNew() {
     setShowDropZone(true);
+  }
+
+  // Descarga el .sav TAL CUAL se cargó (rawSaveContent), no una reconstrucción
+  // desde gameState — la app nunca modifica el save real (ver CLAUDE.md), así
+  // que esto es una copia de seguridad del original, no un "guardar cambios".
+  // Solo disponible si rawSaveContent existe: los enlaces compartidos creados
+  // antes de que el servidor guardara el .sav en bruto no lo tienen.
+  function handleDownloadSave() {
+    if (!rawSaveContent) return;
+    const blob = new Blob([rawSaveContent], { type: 'application/octet-stream' });
+    const url  = URL.createObjectURL(blob);
+    const safeName = (saveMeta?.partyName || 'save').trim().replace(/[^a-z0-9_-]+/gi, '_') || 'save';
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${safeName}.sav`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
   }
 
   function handleMenuSelectTab(id) {
@@ -343,6 +368,11 @@ function App() {
           {actionHistory.length > 0 && (
             <button className="btn btn-sm" onClick={handleReset} title={t('log.resetTitle')}>
               {t('app.reset')}
+            </button>
+          )}
+          {rawSaveContent && (
+            <button className="btn btn-sm" onClick={handleDownloadSave} title={t('app.downloadSave')}>
+              {t('app.downloadSave')}
             </button>
           )}
           <button className="btn btn-sm" onClick={handleLoadNew}>
@@ -447,6 +477,8 @@ function App() {
           onAbout={handleMenuAbout}
           onShareWindow={() => { setShowMenu(false); setShowShareWindow(true); }}
           canReset={actionHistory.length > 0}
+          onDownloadSave={() => { setShowMenu(false); handleDownloadSave(); }}
+          canDownloadSave={!!rawSaveContent}
         />
       )}
 

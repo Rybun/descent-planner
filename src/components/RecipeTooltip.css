@@ -4,7 +4,11 @@
 
 .rtt-bubble {
   position: fixed;
-  z-index: 9999;
+  /* Por encima de cualquier overlay a pantalla completa (p.ej.
+     HeroPrepareModal, z-index 10000) — un tooltip debe verse siempre
+     encima de lo que sea, incluida otra pantalla completa desde la que se
+     abra (habilidades dentro de "Aprestar"). */
+  z-index: 10001;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -203,6 +207,25 @@
   line-height: 1.4;
 }
 
+/* Efecto de OTRA pieza del mismo arma (B/C) mostrado en el mismo tooltip
+   que la pieza A, para ver el arma completa de un vistazo */
+.wpt-other-part {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-top: 6px;
+  border-top: 1px dashed var(--color-border);
+}
+
+.wpt-other-part-header {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--color-text);
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+}
+
 /* Stats de arma (WeaponPartTooltip) */
 .wpt-stats {
   display: flex;
@@ -350,7 +373,10 @@
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.7);
-  z-index: 9998;
+  /* Mismo motivo que .rtt-bubble: debe quedar por encima de cualquier
+     pantalla completa desde la que se abra (p.ej. habilidades dentro de
+     HeroPrepareModal, z-index 10000). */
+  z-index: 10001;
   display: flex;
   align-items: flex-end;
   justify-content: center;

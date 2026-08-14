@@ -1,13 +1,19 @@
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useStore } from '../store';
-import { useT, useLang } from '../i18n';
+import { useT, useLang, getName } from '../i18n';
 import { QUESTS, SIDE_QUESTS } from '../gamedata/quests';
-import { SKILLS } from '../gamedata/skills';
+import { SKILLS, SKILLS_BY_ID } from '../gamedata/skills';
 import { HERO_VIRTUES_BY_ID } from '../gamedata/virtues';
+import { HEROES_BY_ID } from '../gamedata/heroes';
+import { WEAPONS_BY_ID } from '../gamedata/weapons';
+import { WEAPON_PARTS_BY_ID } from '../gamedata/weaponParts';
+import { ARMORS_BY_ID, TRINKETS_BY_ID, CONSUMABLES_BY_ID } from '../gamedata/items';
 import { useTooltipPosition } from '../hooks/useTooltipPosition';
 import { useIsMobile } from '../hooks/useIsMobile';
 import { useBodyScrollLock } from '../hooks/useBodyScrollLock';
+import HeroPrepareModal from './HeroPrepareModal';
+import SkillTooltip from './SkillTooltip';
 import './RecipeTooltip.css';
 import './GameInfoPanel.css';
 
@@ -54,6 +60,46 @@ const SKILLS_BY_HERO = SKILLS.reduce((acc, s) => {
 // Misiones del Acto 1 en orden estricto de la 1ª a la última
 const ORDERED_QUESTS = [...QUESTS].sort((a, b) => a.order - b.order);
 const ORDERED_SIDE_QUESTS = [...SIDE_QUESTS].sort((a, b) => a.order - b.order);
+
+// Un arma "aprestada" puede ser una de las 2 propias del héroe (WEAPONS_BY_ID)
+// o un arma rúnica (pieza de slot A compartida, vive en WEAPON_PARTS_BY_ID) —
+// se resuelve contra las dos fuentes para poder mostrar/comparar cualquiera.
+function isRunicWeaponId(id) {
+  return WEAPON_PARTS_BY_ID[id]?.weaponType === 'RUNE';
+}
+function resolveWeaponName(id, lang) {
+  const w = WEAPONS_BY_ID[id] || WEAPON_PARTS_BY_ID[id];
+  if (!w) return id;
+  return getName(w, lang).replace(/\s*\+?\s*✦.*$/, '');
+}
+
+// Varios héroes no pueden llevar a la vez el mismo accesorio o la misma
+// arma rúnica (solo hay un ejemplar en el inventario del grupo) — se marca
+// como conflicto a TODOS los héroes implicados, no solo al segundo. Devuelve
+// {[heroId]: { trinketConflict: bool, weaponConflicts: Set }} para poder
+// resaltar exactamente qué objeto es el que choca, no solo que hay lío.
+function computeConflicts(heroLoadouts) {
+  const ownersByItem = {};
+  for (const [heroId, loadout] of Object.entries(heroLoadouts || {})) {
+    if (loadout.trinketId) {
+      (ownersByItem[`trinket:${loadout.trinketId}`] ??= []).push(heroId);
+    }
+    for (const wid of (loadout.weaponIds || [])) {
+      if (isRunicWeaponId(wid)) (ownersByItem[`weapon:${wid}`] ??= []).push(heroId);
+    }
+  }
+  const result = {};
+  for (const [key, owners] of Object.entries(ownersByItem)) {
+    if (owners.length < 2) continue;
+    const [kind, itemId] = key.split(':');
+    for (const heroId of owners) {
+      const entry = (result[heroId] ??= { trinketConflict: false, weaponConflicts: new Set() });
+      if (kind === 'trinket') entry.trinketConflict = true;
+      else entry.weaponConflicts.add(itemId);
+    }
+  }
+  return result;
+}
 
 // Tooltip de la descripción de la misión — en escritorio, burbuja flotante
 // que sigue al ratón (portal + medición real, igual que el resto de
@@ -201,6 +247,8 @@ export default function GameInfoPanel() {
   const lang     = useLang();
   const saveMeta  = useStore(s => s.saveMeta);
   const gameState = useStore(s => s.gameState);
+  const heroLoadouts  = useStore(s => s.heroLoadouts);
+  const setHeroLoadout = useStore(s => s.setHeroLoadout);
   const [showLocked, setShowLocked] = useState(false);
   const [revealRemaining, setRevealRemaining] = useState(false);
 
@@ -258,6 +306,8 @@ export default function GameInfoPanel() {
   // detectamos para avisar en vez de aparentar silenciosamente que no hay
   // datos.
   const isLegacyShareData = saveMeta.unlockedSkills === undefined;
+
+  const conflicts = computeConflicts(heroLoadouts);
 
   return (
     <div className="gameinfo-panel">
@@ -402,7 +452,17 @@ export default function GameInfoPanel() {
           {(gameState.heroes || [])
             .filter(hero => !unavailableHeroIds.has(hero.heroId))
             .map(hero => (
-            <HeroStatusCard key={hero.heroId} hero={hero} t={t} lang={lang} unlockedSkillIdSet={unlockedSkillIdSet} />
+            <HeroStatusCard
+              key={hero.heroId}
+              hero={hero}
+              t={t} lang={lang}
+              unlockedSkillIdSet={unlockedSkillIdSet}
+              loadout={heroLoadouts?.[hero.heroId] || null}
+              itemInventory={gameState.itemInventory}
+              partyXP={totalPartyXP}
+              conflict={conflicts[hero.heroId] || null}
+              onSaveLoadout={loadout => setHeroLoadout(hero.heroId, loadout)}
+            />
           ))}
         </div>
       </div>
@@ -411,8 +471,93 @@ export default function GameInfoPanel() {
   );
 }
 
-function HeroStatusCard({ hero, t, lang, unlockedSkillIdSet }) {
+function SkillPill({ skill, lang }) {
+  const name = skill.names?.[lang] || skill.names?.es || skill.id;
+  // Cada carta de habilidad tiene 2 caras usables ("Nombre A / Nombre B");
+  // una encima de otra en vez de en una sola línea para que no se corten
+  // con "...".
+  const [nameA, nameB] = name.split(' / ');
+
+  return (
+    <SkillTooltip skill={skill} lang={lang}>
+      <div className="gi-hero-skill-pill">
+        <span className="gi-hero-skill-names">
+          <span className="gi-hero-skill-name">{nameA}</span>
+          {nameB && <span className="gi-hero-skill-name">{nameB}</span>}
+        </span>
+        <span className="gi-hero-skill-cost">{skill.xpCost} XP</span>
+      </div>
+    </SkillTooltip>
+  );
+}
+
+// Resumen de lo que el grupo decidió llevar a la partida (ver
+// HeroPrepareModal) — sustituye a la lista de habilidades desbloqueadas
+// mientras esa vista esté activa.
+function LoadoutSummary({ loadout, heroId, lang, t, partyXP, conflictedTrinketId, conflictedWeaponIds }) {
+  const weaponIds = loadout.weaponIds || [];
+  const skills  = (loadout.skillIds || []).map(id => SKILLS_BY_ID[id]).filter(Boolean);
+  const armor   = loadout.armorId ? ARMORS_BY_ID[loadout.armorId] : null;
+  const trinket = loadout.trinketId ? TRINKETS_BY_ID[loadout.trinketId] : null;
+  const consumables = (loadout.consumableIds || []).map(id => CONSUMABLES_BY_ID[id]).filter(Boolean);
+
+  // Misma XP que exige HeroPrepareModal para poder equipar: coste de cada
+  // habilidad + 1 XP fijo por cada arma rúnica llevada.
+  const spentXP = skills.reduce((sum, s) => sum + (s.xpCost || 0), 0)
+    + weaponIds.filter(isRunicWeaponId).length;
+
+  return (
+    <div className="gi-loadout">
+      <div className="gi-loadout-row">
+        <span className="gi-loadout-label">{t('prepare.weapons')}</span>
+        <span className="gi-loadout-value">
+          {weaponIds.length > 0 ? weaponIds.map(id => (
+            <span key={id} className={conflictedWeaponIds?.has(id) ? 'gi-loadout-conflict' : ''}>
+              {resolveWeaponName(id, lang)}
+            </span>
+          )).reduce((acc, el, i) => i === 0 ? [el] : [...acc, ' · ', el], []) : t('prepare.none')}
+        </span>
+      </div>
+      <div className="gi-loadout-row">
+        <span className="gi-loadout-label">{t('prepare.armor')}</span>
+        <span className="gi-loadout-value">{armor ? getName(armor, lang) : t('prepare.none')}</span>
+      </div>
+      <div className="gi-loadout-row">
+        <span className="gi-loadout-label">{t('prepare.trinket')}</span>
+        <span className={`gi-loadout-value ${conflictedTrinketId ? 'gi-loadout-conflict' : ''}`}>
+          {trinket ? getName(trinket, lang) : t('prepare.none')}
+        </span>
+      </div>
+      <div className="gi-loadout-row">
+        <span className="gi-loadout-label">{t('prepare.consumables')}</span>
+        <span className="gi-loadout-value">
+          {consumables.length > 0 ? consumables.map(c => getName(c, lang)).join(' · ') : t('prepare.none')}
+        </span>
+      </div>
+      <div className="gi-hero-skills-label gi-loadout-skills-label">
+        {t('prepare.skills')}
+        <span className="gi-loadout-xp"> · {spentXP}/{partyXP || 0} XP</span>
+      </div>
+      {skills.length === 0 ? (
+        <div className="gi-hero-skills-empty">{t('prepare.none')}</div>
+      ) : (
+        <div className="gi-hero-skills-list">
+          {skills.map(skill => <SkillPill key={skill.id} skill={skill} lang={lang} />)}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function HeroStatusCard({ hero, t, lang, unlockedSkillIdSet, loadout, itemInventory, partyXP, conflict, onSaveLoadout }) {
   const heroData = getHeroData(hero.heroId);
+  const heroDef  = HEROES_BY_ID[hero.heroId];
+  const [modalOpen, setModalOpen] = useState(false);
+  // null = sin preferencia manual todavía → se decide según haya o no
+  // aprestado (en cuanto se apresta por primera vez, salta automáticamente
+  // a esa vista). Un toggle manual fija la preferencia el resto de la sesión.
+  const [manualView, setManualView] = useState(null);
+  const viewMode = manualView ?? (loadout ? 'loadout' : 'skills');
 
   const heroName = t(`hero.${hero.heroId}`);
   const displayName = heroName.startsWith('hero.') ? (heroData?.name || hero.heroId) : heroName;
@@ -454,31 +599,69 @@ function HeroStatusCard({ hero, t, lang, unlockedSkillIdSet }) {
           </div>
         </div>
       </div>
-      <div className="gi-hero-skills">
-        <div className="gi-hero-skills-label">{t('gameinfo.skillsLabel')}</div>
-        {unlockedSkills.length === 0 ? (
-          <div className="gi-hero-skills-empty">{t('gameinfo.noSkills')}</div>
+
+      <div className="gi-prepare-actions">
+        {loadout ? (
+          <>
+            <span className={`gi-prepared-badge ${conflict ? 'gi-prepared-badge-conflict' : ''}`}>
+              {conflict ? t('prepare.conflictLabel') : t('prepare.preparedLabel')}
+            </span>
+            <button
+              type="button"
+              className="gi-prepare-link-btn"
+              onClick={() => setManualView(viewMode === 'loadout' ? 'skills' : 'loadout')}
+            >
+              {viewMode === 'loadout' ? t('prepare.viewSkills') : t('prepare.viewPrepared')}
+            </button>
+            <button type="button" className="gi-prepare-link-btn" onClick={() => setModalOpen(true)}>
+              {t('prepare.reprepare')}
+            </button>
+          </>
         ) : (
-          <div className="gi-hero-skills-list">
-            {unlockedSkills.map(skill => {
-              const name = skill.names?.[lang] || skill.names?.es || skill.id;
-              // Cada carta de habilidad tiene 2 caras usables ("Nombre A /
-              // Nombre B"); una encima de otra en vez de en una sola línea
-              // para que no se corten con "...".
-              const [nameA, nameB] = name.split(' / ');
-              return (
-                <div key={skill.id} className="gi-hero-skill-pill">
-                  <span className="gi-hero-skill-names">
-                    <span className="gi-hero-skill-name">{nameA}</span>
-                    {nameB && <span className="gi-hero-skill-name">{nameB}</span>}
-                  </span>
-                  <span className="gi-hero-skill-cost">{skill.xpCost} XP</span>
-                </div>
-              );
-            })}
-          </div>
+          <button type="button" className="gi-prepare-btn" onClick={() => setModalOpen(true)}>
+            {t('prepare.prepareBtn')}
+          </button>
         )}
       </div>
+
+      {viewMode === 'loadout' && loadout ? (
+        <LoadoutSummary
+          loadout={loadout} heroId={hero.heroId} lang={lang} t={t} partyXP={partyXP}
+          conflictedTrinketId={conflict?.trinketConflict}
+          conflictedWeaponIds={conflict?.weaponConflicts}
+        />
+      ) : (
+        <div className="gi-hero-skills">
+          <div className="gi-hero-skills-label">{t('gameinfo.skillsLabel')}</div>
+          {unlockedSkills.length === 0 ? (
+            <div className="gi-hero-skills-empty">{t('gameinfo.noSkills')}</div>
+          ) : (
+            <div className="gi-hero-skills-list">
+              {unlockedSkills.map(skill => <SkillPill key={skill.id} skill={skill} lang={lang} />)}
+            </div>
+          )}
+        </div>
+      )}
+
+      {modalOpen && (
+        <HeroPrepareModal
+          heroId={hero.heroId}
+          heroDef={heroDef}
+          displayName={displayName}
+          unlockedSkills={unlockedSkills}
+          itemInventory={itemInventory}
+          partyXP={partyXP}
+          initialLoadout={loadout}
+          lang={lang}
+          t={t}
+          onClose={() => setModalOpen(false)}
+          onSave={next => {
+            onSaveLoadout(next);
+            setManualView('loadout');
+            setModalOpen(false);
+          }}
+        />
+      )}
     </div>
   );
 }
