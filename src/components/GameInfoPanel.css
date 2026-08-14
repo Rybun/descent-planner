@@ -81,8 +81,18 @@
 }
 
 .gi-value.gi-gold {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
   color: var(--color-gold);
   font-weight: 700;
+}
+
+.gi-gold-icon {
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
 }
 
 .gi-value.gi-small {

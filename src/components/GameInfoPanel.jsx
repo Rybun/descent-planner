@@ -333,7 +333,11 @@ export default function GameInfoPanel() {
           <div className="gi-rows">
             <div className="gi-row">
               <span className="gi-label">{t('gameinfo.gold')}</span>
-              <span className="gi-value gi-gold">🪙 {gameState.gold}</span>
+              <span className="gi-value gi-gold">
+                <img src="/assets/icons/currency.png" className="gi-gold-icon" alt=""
+                  onError={e => e.target.style.display = 'none'} />
+                {gameState.gold}
+              </span>
             </div>
             <div className="gi-row">
               <span className="gi-label">{t('gameinfo.partyXP')}</span>

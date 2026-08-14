@@ -363,7 +363,13 @@ def scan_items(env):
 
 ASSET_RULES = [
     # (patrón en container path, carpeta destino, filtro extra)
-    ("assets/d3/weapon parts/", "weapon_parts", lambda p: not p.endswith(" icon.png")),
+    # " icon.png": variante en miniatura que no se usa (se muestra la base).
+    # " promo.png": arte alternativo/promocional de piezas que también
+    # existen en su versión normal — _build_weapon_disk_map() más abajo ya
+    # descarta estos ficheros al elegir qué imagen usar por pieza, así que
+    # nunca se referencian desde ningún sitio; sacarlos de aquí evita
+    # extraerlos (y pesar en disco) para nada.
+    ("assets/d3/weapon parts/", "weapon_parts", lambda p: not p.endswith(" icon.png") and " promo.png" not in p),
     ("assets/d3/crafting materials/", "materials",    lambda p: True),
     ("assets/d3/armor/",        "armor",        lambda p: True),
     ("assets/d3/consumables/",  "consumables",  lambda p: True),
@@ -2247,6 +2253,81 @@ def extract_sdf_icons(planner_dir, overwrite=False):
                 _shutil.copy2(src, os.path.join(review_dir, f"{name}.png"))
 
 
+def optimize_images(planner_dir):
+    """Paso extra tras la extracción: recomprime sin pérdida todos los PNG
+    de public/assets/. Los PNG que exporta UnityPy no vienen comprimidos al
+    máximo (ni con los filtros de fila óptimos, ni reducidos a paleta
+    indexada cuando podrían) — con la misma app sirviendo más de 400
+    ficheros, esto se nota tanto en el peso del repo como en lo que tarda
+    en cargar cada imagen.
+
+    Dos pasadas, ambas 100% sin pérdida (mismos píxeles exactos):
+      1. Recomprimir con optimize=True y el nivel de compresión máximo —
+         Pillow prueba varias estrategias de filtrado por fila y se queda
+         con la más pequeña, sin tocar ni un canal de color.
+      2. Si la imagen no tiene más de 256 colores distintos (icono/carta
+         con pocos tonos — con las texturas fotográficas de armas/objetos
+         esto no suele cumplirse, pero con los iconos SDF y los sprites de
+         la UI sí), reducir a paleta indexada (PNG de 8 bits en vez de 24/32).
+         Se verifica píxel a píxel contra el original antes de aceptar el
+         resultado — si hay la más mínima diferencia (por cómo maneja
+         Pillow la transparencia parcial en modo paleta) se descarta y se
+         deja la versión recomprimida sin cuantizar.
+    """
+    from PIL import Image
+
+    assets_dir = os.path.join(planner_dir, "public", "assets")
+    if not os.path.isdir(assets_dir):
+        print("  (public/assets/ no existe, nada que optimizar)")
+        return
+
+    total_before = 0
+    total_after = 0
+    n_files = 0
+    n_palette = 0
+    n_errors = 0
+
+    for root, _dirs, files in os.walk(assets_dir):
+        for fname in files:
+            if not fname.lower().endswith(".png"):
+                continue
+            path = os.path.join(root, fname)
+            try:
+                before_size = os.path.getsize(path)
+                img = Image.open(path)
+                img.load()
+                original = img.copy()
+
+                candidate = img
+                colors = img.getcolors(maxcolors=256)
+                if colors is not None and img.mode in ("RGBA", "RGB", "LA", "L", "P"):
+                    try:
+                        rgba_original = original.convert("RGBA")
+                        quantized = img.convert("RGBA").quantize(colors=256, method=Image.Quantize.MEDIANCUT)
+                        if quantized.convert("RGBA").tobytes() == rgba_original.tobytes():
+                            candidate = quantized
+                            n_palette += 1
+                    except Exception:
+                        pass  # nos quedamos con el recomprimido sin cuantizar
+
+                candidate.save(path, optimize=True, compress_level=9)
+                after_size = os.path.getsize(path)
+                total_before += before_size
+                total_after += after_size
+                n_files += 1
+            except Exception as e:
+                n_errors += 1
+                print(f"    ✗ Error optimizando {path}: {e}")
+
+    saved = total_before - total_after
+    pct = (saved / total_before * 100) if total_before else 0
+    print(f"  ✓ {n_files} PNG optimizados ({n_palette} a paleta indexada) — "
+          f"{total_before/1024/1024:.1f} MB → {total_after/1024/1024:.1f} MB "
+          f"(-{pct:.0f}%, {saved/1024/1024:.1f} MB ahorrados)")
+    if n_errors:
+        print(f"  ⚠ {n_errors} ficheros no se pudieron optimizar (sin cambios)")
+
+
 def _recolor_icon_to_square(img, size=SDF_OUTPUT_SIZE, color=SDF_ICON_COLOR, fill=0.90):
     """Recolorea un icono (con canal alfa) a un color sólido, centrado en un
     canvas cuadrado transparente. Preserva la forma/aspect-ratio original;
@@ -2306,6 +2387,7 @@ def main():
     parser.add_argument("--no-images",   action="store_true", help="No extraer imágenes (sólo regenerar JS)")
     parser.add_argument("--overwrite",   action="store_true", help="Sobreescribir imágenes existentes")
     parser.add_argument("--no-sdf-icons",action="store_true", help="No regenerar iconos SDF del atlas de fuentes")
+    parser.add_argument("--no-optimize-images", action="store_true", help="No recomprimir los PNG de public/assets/ al final")
     args = parser.parse_args()
 
     # Ruta del juego
@@ -2328,7 +2410,7 @@ def main():
     print(f"{'='*60}\n")
 
     # ── 1. Localización (todos los idiomas) ──────────────────────────────────
-    print("[1/5] Cargando localización...")
+    print("[1/8] Cargando localización...")
 
     locs = {}
     for lang in LANGS:
@@ -2345,24 +2427,24 @@ def main():
         sys.exit(1)
 
     # ── 2. Cargar bundles ────────────────────────────────────────────────────
-    print("\n[2/5] Cargando bundles de Unity...")
+    print("\n[2/8] Cargando bundles de Unity...")
     env = load_env(bundle_dir)
 
     # ── 3. Escanear ítems ────────────────────────────────────────────────────
-    print("\n[3/5] Escaneando datos de ítems...")
+    print("\n[3/8] Escaneando datos de ítems...")
     item_defs, recipes, base_recipes, base_item_defs, _mat_map, ability_by_key = scan_items(env)
 
     # ── 4. Extraer imágenes ──────────────────────────────────────────────────
     if not args.no_images:
-        print("\n[4/7] Extrayendo imágenes...")
+        print("\n[4/8] Extrayendo imágenes...")
         extract_images(env, planner_dir, overwrite=args.overwrite)
         extract_hero_portraits(env, planner_dir, overwrite=args.overwrite)
         extract_app_logo(env, planner_dir, overwrite=args.overwrite)
     else:
-        print("\n[4/7] Extracción de imágenes omitida (--no-images)")
+        print("\n[4/8] Extracción de imágenes omitida (--no-images)")
 
     # ── 5. Generar JS ────────────────────────────────────────────────────────
-    print("\n[5/7] Generando archivos JS...")
+    print("\n[5/8] Generando archivos JS...")
     generate_weapon_parts_js(item_defs, base_item_defs, recipes, locs, planner_dir)
     generate_weapon_ability_files(item_defs, base_item_defs, ability_by_key, locs, planner_dir)
     generate_materials_js(env, locs, planner_dir)
@@ -2375,15 +2457,22 @@ def main():
 
     # ── 6. Iconos SDF ────────────────────────────────────────────────────────
     if not args.no_sdf_icons:
-        print("\n[6/7] Extrayendo iconos SDF del atlas de fuentes...")
+        print("\n[6/8] Extrayendo iconos SDF del atlas de fuentes...")
         extract_sdf_icons(planner_dir, overwrite=args.overwrite)
     else:
-        print("\n[6/7] Extracción de iconos SDF omitida (--no-sdf-icons)")
+        print("\n[6/8] Extracción de iconos SDF omitida (--no-sdf-icons)")
 
     # ── 7. Iconos adicionales (UI + daño + label frame) ─────────────────────
-    print("\n[7/7] Extrayendo iconos adicionales...")
+    print("\n[7/8] Extrayendo iconos adicionales...")
     extract_ui_icons(env, planner_dir, overwrite=args.overwrite)
     extract_action_term_icon(planner_dir, overwrite=args.overwrite)
+
+    # ── 8. Optimizar imágenes ────────────────────────────────────────────────
+    if not args.no_optimize_images:
+        print("\n[8/8] Optimizando PNG (recompresión sin pérdida)...")
+        optimize_images(planner_dir)
+    else:
+        print("\n[8/8] Optimización de imágenes omitida (--no-optimize-images)")
 
     print(f"\n{'='*60}")
     print("  ¡Extracción completada!")

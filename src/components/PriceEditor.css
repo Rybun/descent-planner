@@ -96,6 +96,14 @@
   border-bottom: 1px solid var(--color-border);
 }
 
+.pe-col-gold-icon {
+  width: 11px;
+  height: 11px;
+  object-fit: contain;
+  vertical-align: middle;
+  margin-left: 3px;
+}
+
 .pe-table td {
   padding: 4px var(--spacing-sm);
   border-bottom: 1px solid var(--color-border);

@@ -192,7 +192,7 @@ export default function ShopPanel() {
                     </div>
                     <div className="sell-item-right">
                       <span className="shop-mat-price sell-price">
-                        <span className="coin-icon">🪙</span>
+                        <img src="/assets/icons/currency.png" className="coin-icon" alt="" onError={e => e.target.style.display='none'} />
                         <span>{gain}</span>
                       </span>
                       <div className="recover-actions">
@@ -251,7 +251,7 @@ export default function ShopPanel() {
                         )}
                       </div>
                       <div className={`shop-item-price ${!canAfford(buyPrice) ? 'cant-afford' : ''}`}>
-                        <span className="coin-icon">🪙</span>
+                        <img src="/assets/icons/currency.png" className="coin-icon" alt="" onError={e => e.target.style.display='none'} />
                         <span>{formatPrice(buyPrice)}</span>
                       </div>
                       <button
@@ -298,7 +298,7 @@ export default function ShopPanel() {
                         )}
                       </div>
                       <div className={`shop-item-price ${!canAfford(buyPrice) ? 'cant-afford' : ''}`}>
-                        <span className="coin-icon">🪙</span>
+                        <img src="/assets/icons/currency.png" className="coin-icon" alt="" onError={e => e.target.style.display='none'} />
                         <span>{formatPrice(buyPrice)}</span>
                       </div>
                       <button
@@ -339,7 +339,7 @@ export default function ShopPanel() {
                     <div className="shop-mat-name">{matName}</div>
                     <div className="shop-mat-player-qty">{t('shop.iHave')} {playerQty}</div>
                     <div className={`shop-mat-price ${!canAfford(buyPrice) ? 'cant-afford' : ''}`}>
-                      <span className="coin-icon">🪙</span>
+                      <img src="/assets/icons/currency.png" className="coin-icon" alt="" onError={e => e.target.style.display='none'} />
                       <span>{formatPrice(buyPrice)}</span>
                     </div>
                     {buyPrice !== null && (
@@ -409,7 +409,7 @@ export default function ShopPanel() {
                     {canSell ? (
                       <>
                         <div className="shop-mat-price sell-price">
-                          <span className="coin-icon">🪙</span>
+                          <img src="/assets/icons/currency.png" className="coin-icon" alt="" onError={e => e.target.style.display='none'} />
                           <span>{formatPrice(sellPrice)}</span>
                         </div>
                         <div className="shop-mat-actions">

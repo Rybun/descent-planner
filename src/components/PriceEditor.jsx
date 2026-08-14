@@ -138,8 +138,16 @@ export default function PriceEditor() {
           <thead>
             <tr>
               <th className="col-name">{t('pe.colName')}</th>
-              <th className="col-price">{t('pe.colBuy')}</th>
-              <th className="col-price">{t('pe.colSell')}</th>
+              <th className="col-price">
+                {t('pe.colBuy')}
+                <img src="/assets/icons/currency.png" className="pe-col-gold-icon" alt=""
+                  onError={e => e.target.style.display = 'none'} />
+              </th>
+              <th className="col-price">
+                {t('pe.colSell')}
+                <img src="/assets/icons/currency.png" className="pe-col-gold-icon" alt=""
+                  onError={e => e.target.style.display = 'none'} />
+              </th>
               <th className="col-reset"></th>
             </tr>
           </thead>

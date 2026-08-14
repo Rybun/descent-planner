@@ -236,7 +236,10 @@
 }
 
 .coin-icon {
-  font-size: 0.85rem;
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+  vertical-align: middle;
 }
 
 .shop-buy-btn {

@@ -206,6 +206,14 @@ export default function RecipeTooltip({ recipeId, children }) {
 
   const itemId  = recipe.itemId || recipeId.replace(/^RECIPE_/, '');
   const isPlus  = itemId?.endsWith('_PLUS');
+  // Cualquier receta cuyo id de objeto termina en _UPGRADED o _PLUS es una
+  // mejora — además de los materiales, el juego exige tener el objeto base
+  // (normal) ya crafteado/comprado. CraftPanel.jsx ya mostraba este
+  // requisito; aquí faltaba (el tooltip de la Tienda solo listaba los
+  // materiales, dando la impresión de que la mejora no necesitaba el
+  // objeto base).
+  const isUpgrade = itemId?.endsWith('_PLUS') || itemId?.endsWith('_UPGRADED');
+  const baseId    = isUpgrade ? itemId.replace(/_PLUS$/, '').replace(/_UPGRADED$/, '') : null;
   const part    = WEAPON_PARTS_BY_ID[itemId];
   // Armadura/amuleto/consumible mejorados no tienen entrada propia en
   // ALL_ITEMS_BY_ID (solo la base) — hay que caer al id sin "_PLUS".
@@ -235,6 +243,10 @@ export default function RecipeTooltip({ recipeId, children }) {
   const avatarSrc = heroSlug ? `/assets/heroes/tooltip/${heroSlug}_${actSuffix}.png` : null;
 
   const craftingMaterials = gameState?.craftingMaterials ?? {};
+
+  const baseItem = baseId ? (WEAPON_PARTS_BY_ID[baseId] || ALL_ITEMS_BY_ID[baseId]) : null;
+  const baseName = baseItem ? cleanName(getName(baseItem, lang)) : baseId;
+  const hasBase  = baseId ? (gameState?.itemInventory || []).some(i => i.id === baseId) : false;
 
   function move(e) { setCoords({ x: e.clientX, y: e.clientY }); }
 
@@ -275,6 +287,16 @@ export default function RecipeTooltip({ recipeId, children }) {
 
       {recipe.ingredients && (
         <span className="rtt-ingredients">
+          {baseId && (
+            <span className={`rtt-mat-row ${hasBase ? 'rtt-ok' : 'rtt-missing'}`}>
+              {baseItem?.image && (
+                <img src={baseItem.image} alt={baseName} className="rtt-mat-img"
+                  onError={e => e.target.style.display='none'} />
+              )}
+              <span className="rtt-mat-name">{baseName}</span>
+              <span className="rtt-mat-qty">{hasBase ? 1 : 0}/1</span>
+            </span>
+          )}
           {Object.entries(recipe.ingredients).map(([matId, qty]) => {
             const mat     = MATERIALS_BY_ID[matId];
             const have    = craftingMaterials[matId] ?? 0;
