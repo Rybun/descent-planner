@@ -1,0 +1,187 @@
+.dt-bubble {
+  width: 260px;
+}
+
+.dt-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dt-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+/* Mismas formas/colores que .hcm-die-* en HeroCardModal.css (duplicado a
+   propósito: este componente no depende de esa hoja de estilos). */
+.dt-swatch {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.dt-swatch-black {
+  background: #6b6870;
+  border-radius: 3px;
+}
+
+.dt-swatch-yellow {
+  background: #e0a94a;
+  border-radius: 2px;
+  transform: rotate(45deg);
+  width: 11px;
+  height: 11px;
+}
+
+/* Octógono con puntas arriba/abajo/izquierda/derecha (no lados planos ahí),
+   vértices a 45° empezando desde arriba. */
+.dt-swatch-blue {
+  background: #6478b4;
+  clip-path: polygon(50% 0%, 85.4% 14.6%, 100% 50%, 85.4% 85.4%, 50% 100%, 14.6% 85.4%, 0% 50%, 14.6% 14.6%);
+}
+
+.dt-note {
+  font-size: 0.72rem;
+  font-style: italic;
+  color: var(--color-text-muted);
+}
+
+/* grid-template-columns se fija por instancia en JS (faceGridColumns) para
+   que todas las filas tengan el mismo número de caras — con flex-wrap la
+   última fila quedaba suelta con menos elementos que el resto. */
+.dt-faces-grid {
+  display: grid;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* La caja de cada cara es del mismo color y forma que el dado al que
+   pertenece (mismos valores que dt-swatch y hcm-die), y siempre cuadrada
+   (ancho = alto) para que la forma salga regular (lados iguales), como
+   una cara de dado real — un rectángulo desproporcionaría el octógono/
+   rombo. El color de fondo va en un ::before para poder rotar (rombo) sin
+   girar los iconos de dentro, que se quedan siempre derechos. */
+.dt-face {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+}
+
+.dt-face::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.dt-face-black::before {
+  background: #6b6870;
+  border-radius: 5px;
+}
+
+.dt-face-yellow::before {
+  background: #e0a94a;
+  border-radius: 3px;
+  transform: rotate(45deg) scale(0.71);
+}
+
+.dt-face-blue::before {
+  background: #6478b4;
+  clip-path: polygon(50% 0%, 85.4% 14.6%, 100% 50%, 85.4% 85.4%, 50% 100%, 14.6% 85.4%, 0% 50%, 14.6% 14.6%);
+}
+
+/* Cada símbolo va en su posición fija (left/top en % puestos desde JS,
+   ver facePositions en DieTooltip.jsx) dentro del hueco útil de la forma,
+   nunca en flujo — así no se sale del rombo/octógono/cuadrado. Blancos
+   siempre (filtro, no importa el color real del PNG), con un contorno
+   oscuro para que se vean sobre cualquier color de dado. */
+.dt-icon {
+  position: absolute;
+  width: 11px;
+  height: 11px;
+  transform: translate(-50%, -50%);
+  filter: brightness(0) invert(1)
+    drop-shadow(0 0 1px rgba(0, 0, 0, 0.9))
+    drop-shadow(0 0 1px rgba(0, 0, 0, 0.9));
+}
+
+/* Éxito y rayo un 10% más grandes que ventaja (12.1px ≈ 11px × 1.1). */
+.dt-icon-success,
+.dt-icon-surge {
+  width: 12.1px;
+  height: 12.1px;
+}
+
+/* El amarillo (rombo) está bien tal cual — negro y azul necesitan los
+   símbolos más grandes para verse igual de claros en su forma. */
+.dt-face-black .dt-icon,
+.dt-face-blue .dt-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.dt-face-black .dt-icon-success,
+.dt-face-black .dt-icon-surge,
+.dt-face-blue .dt-icon-success,
+.dt-face-blue .dt-icon-surge {
+  width: 17.6px;
+  height: 17.6px;
+}
+
+.dt-symbol-blank {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-size: 0.75rem;
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.9);
+}
+
+.dt-odds {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-top: 6px;
+  border-top: 1px solid var(--color-border);
+}
+
+.dt-odds-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 0.74rem;
+}
+
+.dt-odds-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--color-text-muted);
+}
+
+.dt-odds-value {
+  flex-shrink: 0;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.dt-mini-icons {
+  display: inline-flex;
+  align-items: center;
+  gap: 1px;
+}
+
+.dt-mini-icon {
+  width: 10px;
+  height: 10px;
+}

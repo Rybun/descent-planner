@@ -6,10 +6,15 @@ import { WEAPONS_BY_ID } from '../gamedata/weapons';
 import { WEAPON_PARTS, WEAPON_PARTS_BY_ID } from '../gamedata/weaponParts';
 import { ARMORS_BY_ID, TRINKETS_BY_ID, CONSUMABLES_BY_ID } from '../gamedata/items';
 import { useBodyScrollLock } from '../hooks/useBodyScrollLock';
+import { useIsMobile } from '../hooks/useIsMobile';
 import SkillTooltip from './SkillTooltip';
+import ItemTooltip from './ItemTooltip';
+import HeroCardModal from './HeroCardModal';
 import WeaponPartTooltip, { getPartDescNodes, LONG_RANGE_LABELS } from './WeaponPartTooltip';
 import WeaponAssemblyView from './WeaponAssemblyView';
 import { DAMAGE_TYPE_BY_ID } from '../gamedata/damageTypes';
+import { ASSEMBLY_CANVAS } from '../gamedata/weaponAssembly';
+import { HEROES_BY_ID } from '../gamedata/heroes';
 import './HeroPrepareModal.css';
 
 // Mismos ajustes de rotación/recorte que InventoryPanel.jsx para que un
@@ -19,14 +24,20 @@ const OPTION_PART_OVERRIDES = {
   BOW: { c: { left: 180.6, top: 60.5, w: 58, h: 369, z: 3, rot: -95 } },
 };
 
+// Preview del editor de piezas en móvil: el arma se tumba siempre en
+// horizontal (rotación fija de -90°, igual para todos los tipos), para
+// ocupar el mínimo espacio vertical posible en la cabecera. El lienzo del
+// arma (ASSEMBLY_CANVAS) es en vertical (420×512): al girarlo 90° su ancho
+// y alto se intercambian exactamente (sin recorte ni holgura), así que
+// calculamos displayH hacia atrás a partir de la altura visual deseada.
+const MOBILE_PREVIEW_VISUAL_H = 72;
+const MOBILE_PREVIEW_ASSEMBLY_H = MOBILE_PREVIEW_VISUAL_H * (ASSEMBLY_CANVAS.h / ASSEMBLY_CANVAS.w);
+
+const UPGRADE_ICON = '/assets/icons/Icon_Upgrade.png';
+
 function cleanPartName(name) {
   return (name || '').replace(/\s*\+?\s*✦.*$/, '').trim();
 }
-
-// El slot A no tiene clave i18n "slot.<tipo>.A" (nunca hizo falta en el
-// resto de la app — WeaponPartTooltip/RecipeTooltip usan esta etiqueta fija
-// en su lugar): es la propia arma base, no un accesorio.
-const SLOT_A_LABELS = { es: 'Arma', en: 'Weapon', fr: 'Arme', it: 'Arma', pt: 'Arma' };
 
 // Menú a pantalla completa donde el grupo anota qué se lleva un héroe a la
 // siguiente partida: armas (propias o rúnicas), habilidades ya
@@ -94,14 +105,39 @@ function Section({ title, extra, children }) {
   );
 }
 
+// En móvil, tocar la "pastilla" (imagen/nombre) abre el tooltip del
+// elemento que la envuelve (WeaponPartTooltip/SkillTooltip/ItemTooltip) en
+// vez de marcar/desmarcar — solo el check, que es su propio botón real y
+// para la propagación del evento, marca. En escritorio se mantiene el
+// comportamiento de siempre (clic en cualquier parte marca; el tooltip se
+// ve al pasar el ratón, sin ambigüedad con el clic).
 function OptionRow({ selected, onClick, image, assembly, name, sub, disabled }) {
+  const isMobile = useIsMobile();
+
+  function handleRowClick() {
+    if (disabled || isMobile) return;
+    onClick();
+  }
+
+  function handleCheckClick(e) {
+    e.stopPropagation();
+    if (disabled) return;
+    onClick();
+  }
+
   return (
-    <button
-      type="button"
+    <div
       className={`hpm-option ${selected ? 'selected' : ''} ${disabled ? 'disabled' : ''}`}
-      onClick={disabled ? undefined : onClick}
+      onClick={handleRowClick}
     >
-      <span className="hpm-option-check">{selected ? '✓' : ''}</span>
+      <button
+        type="button"
+        className="hpm-option-check"
+        onClick={handleCheckClick}
+        disabled={disabled}
+        aria-pressed={selected}
+        aria-label={name}
+      >{selected ? '✓' : ''}</button>
       {assembly && (
         <span className="hpm-option-assembly">
           <WeaponAssemblyView
@@ -123,7 +159,7 @@ function OptionRow({ selected, onClick, image, assembly, name, sub, disabled }) 
         <span className="hpm-option-name">{name}</span>
         {sub && <span className="hpm-option-sub">{sub}</span>}
       </span>
-    </button>
+    </div>
   );
 }
 
@@ -194,11 +230,19 @@ export default function HeroPrepareModal({
   initialLoadout, lang, t, onSave, onClose,
 }) {
   useBodyScrollLock(true);
+  const isMobile = useIsMobile();
 
   const gameState  = useStore(s => s.gameState);
+  const saveMeta   = useStore(s => s.saveMeta);
   const equipPartA = useStore(s => s.equipPartA);
   const equipPartB = useStore(s => s.equipPartB);
   const equipPartC = useStore(s => s.equipPartC);
+  // Ficha completa del héroe (retrato + datos de HERO_CARDS) — se abre al
+  // tocar el retrato plano de la cabecera de este menú.
+  const [showHeroCard, setShowHeroCard] = useState(false);
+  const heroPortraitSrc = (saveMeta?.act ?? 0) >= 1
+    ? (HEROES_BY_ID[heroId]?.imageAct2 || HEROES_BY_ID[heroId]?.image)
+    : HEROES_BY_ID[heroId]?.image;
 
   const [weaponIds, setWeaponIds] = useState(
     () => new Set(initialLoadout?.weaponIds ?? heroDef?.weapons ?? [])
@@ -323,13 +367,36 @@ export default function HeroPrepareModal({
     });
   }
 
-  return createPortal(
+  const editingWeapon = expandedWeaponId ? weaponOptions.find(w => w.id === expandedWeaponId) : null;
+  const editingWeaponType = expandedWeaponId ? WEAPONS_BY_ID[expandedWeaponId]?.weaponType : null;
+
+  return (
+    <>
+      {createPortal(
     <div className="hpm-overlay">
       <div className="hpm-screen">
         <header className="hpm-header">
-          <span className="hpm-header-title">{t('prepare.title', { hero: displayName })}</span>
+          <span className="hpm-header-title-group">
+            {heroPortraitSrc && (
+              <button type="button" className="hpm-header-portrait-btn" onClick={() => setShowHeroCard(true)}>
+                <img src={heroPortraitSrc} alt={displayName} className="hpm-header-portrait"
+                  onError={e => e.target.style.display = 'none'} />
+              </button>
+            )}
+            <span className="hpm-header-title">{t('prepare.title', { hero: displayName })}</span>
+          </span>
           <button type="button" className="hpm-close-btn" onClick={onClose} aria-label={t('prepare.cancel')}>✕</button>
         </header>
+
+        {showHeroCard && (
+          <HeroCardModal
+            heroId={heroId}
+            saveMeta={saveMeta}
+            lang={lang}
+            t={t}
+            onClose={() => setShowHeroCard(false)}
+          />
+        )}
 
         <div className="hpm-body">
           <Section
@@ -380,54 +447,6 @@ export default function HeroPrepareModal({
             {!weaponCountValid && (
               <p className="hpm-warning">{t('prepare.weaponsRequired')}</p>
             )}
-            {expandedWeaponId && (() => {
-              const editingWeapon = weaponOptions.find(w => w.id === expandedWeaponId);
-              if (!editingWeapon) return null;
-              const weaponType = WEAPONS_BY_ID[expandedWeaponId]?.weaponType;
-              return (
-                <div className="hpm-part-editor">
-                  <div className="hpm-part-editor-title">
-                    {t('prepare.editParts', { weapon: editingWeapon.name })}
-                  </div>
-                  {['A', 'B', 'C'].map(slot => {
-                    const options = getSlotOptions(expandedWeaponId, slot);
-                    const currentId = getEffectivePartId(expandedWeaponId, slot);
-                    const part = WEAPON_PARTS_BY_ID[currentId];
-                    const idx = options.findIndex(p => p.id === currentId);
-                    return (
-                      <Fragment key={slot}>
-                        <div className="hpm-part-slot-row">
-                          <span className="hpm-part-slot-label">
-                            {slot === 'A' ? (SLOT_A_LABELS[lang] || 'Arma') : t(`slot.${weaponType}.${slot}`)}
-                          </span>
-                          <button
-                            type="button"
-                            className="hpm-part-nav-btn"
-                            disabled={options.length <= 1}
-                            onClick={() => navigatePart(expandedWeaponId, slot, -1)}
-                          >◄</button>
-                          <WeaponPartTooltip partId={currentId}>
-                            <span className="hpm-part-slot-name">
-                              {part ? cleanPartName(getName(part, lang)) : '—'}
-                            </span>
-                          </WeaponPartTooltip>
-                          <button
-                            type="button"
-                            className="hpm-part-nav-btn"
-                            disabled={options.length <= 1}
-                            onClick={() => navigatePart(expandedWeaponId, slot, 1)}
-                          >►</button>
-                          <span className="hpm-part-slot-counter">
-                            {options.length > 0 ? `${Math.max(idx, 0) + 1}/${options.length}` : '—'}
-                          </span>
-                        </div>
-                        <PartInlineDetails part={part} weapon={WEAPONS_BY_ID[expandedWeaponId]} lang={lang} />
-                      </Fragment>
-                    );
-                  })}
-                </div>
-              );
-            })()}
           </Section>
 
           <Section
@@ -464,22 +483,18 @@ export default function HeroPrepareModal({
 
           <Section title={t('prepare.armor')}>
             {armorOptions.length === 0 ? (
-              <p className="hpm-empty">{t('prepare.noneInInventory')}</p>
+              <p className="hpm-empty">{t('prepare.noArmor')}</p>
             ) : (
               <div className="hpm-options-grid">
-                <OptionRow
-                  selected={armorId === null}
-                  onClick={() => setArmorId(null)}
-                  name={t('prepare.none')}
-                />
                 {armorOptions.map(a => (
-                  <OptionRow
-                    key={a.id}
-                    selected={armorId === a.id}
-                    onClick={() => setArmorId(a.id)}
-                    image={a.image}
-                    name={getName(a, lang)}
-                  />
+                  <ItemTooltip key={a.id} id={a.id} item={a} lang={lang}>
+                    <OptionRow
+                      selected={armorId === a.id}
+                      onClick={() => setArmorId(id => id === a.id ? null : a.id)}
+                      image={a.image}
+                      name={getName(a, lang)}
+                    />
+                  </ItemTooltip>
                 ))}
               </div>
             )}
@@ -487,22 +502,18 @@ export default function HeroPrepareModal({
 
           <Section title={t('prepare.trinket')}>
             {trinketOptions.length === 0 ? (
-              <p className="hpm-empty">{t('prepare.noneInInventory')}</p>
+              <p className="hpm-empty">{t('prepare.noTrinket')}</p>
             ) : (
               <div className="hpm-options-grid">
-                <OptionRow
-                  selected={trinketId === null}
-                  onClick={() => setTrinketId(null)}
-                  name={t('prepare.none')}
-                />
                 {trinketOptions.map(it => (
-                  <OptionRow
-                    key={it.id}
-                    selected={trinketId === it.id}
-                    onClick={() => setTrinketId(it.id)}
-                    image={it.image}
-                    name={getName(it, lang)}
-                  />
+                  <ItemTooltip key={it.id} id={it.id} item={it} lang={lang}>
+                    <OptionRow
+                      selected={trinketId === it.id}
+                      onClick={() => setTrinketId(id => id === it.id ? null : it.id)}
+                      image={it.image}
+                      name={getName(it, lang)}
+                    />
+                  </ItemTooltip>
                 ))}
               </div>
             )}
@@ -517,22 +528,23 @@ export default function HeroPrepareModal({
             }
           >
             {consumableOptions.length === 0 ? (
-              <p className="hpm-empty">{t('prepare.noneInInventory')}</p>
+              <p className="hpm-empty">{t('prepare.noConsumables')}</p>
             ) : (
               <div className="hpm-options-grid">
                 {consumableOptions.map(it => {
                   const selected = consumableIds.has(it.id);
                   const atCap = !selected && consumableIds.size >= MAX_CONSUMABLES;
                   return (
-                    <OptionRow
-                      key={it.id}
-                      selected={selected}
-                      disabled={atCap}
-                      onClick={() => toggleConsumable(it.id)}
-                      image={it.image}
-                      name={getName(it, lang)}
-                      sub={counts[it.id] > 1 ? `×${counts[it.id]}` : null}
-                    />
+                    <ItemTooltip key={it.id} id={it.id} item={it} lang={lang}>
+                      <OptionRow
+                        selected={selected}
+                        disabled={atCap}
+                        onClick={() => toggleConsumable(it.id)}
+                        image={it.image}
+                        name={getName(it, lang)}
+                        sub={counts[it.id] > 1 ? `×${counts[it.id]}` : null}
+                      />
+                    </ItemTooltip>
                   );
                 })}
               </div>
@@ -551,5 +563,84 @@ export default function HeroPrepareModal({
         </footer>
       </div>
     </div>
-  , document.body);
+      , document.body)}
+
+      {expandedWeaponId && editingWeapon && createPortal(
+        <div className="hpm-overlay hpm-part-editor-overlay">
+          <div className="hpm-screen">
+            <header className="hpm-header">
+              <span className="hpm-header-title">{t('prepare.editParts', { weapon: editingWeapon.name })}</span>
+              <button type="button" className="hpm-close-btn" onClick={() => setExpandedWeaponId(null)} aria-label={t('prepare.cancel')}>✕</button>
+            </header>
+
+            <div className="hpm-body">
+              <div className="hpm-part-editor">
+                <div
+                  className={`hpm-part-editor-preview${isMobile ? ' hpm-part-editor-preview--mobile' : ''}`}
+                  style={isMobile ? { width: MOBILE_PREVIEW_ASSEMBLY_H, height: MOBILE_PREVIEW_VISUAL_H } : undefined}
+                >
+                  <WeaponAssemblyView
+                    weaponType={editingWeaponType}
+                    partA={WEAPON_PARTS_BY_ID[getEffectivePartId(expandedWeaponId, 'A')]}
+                    partB={WEAPON_PARTS_BY_ID[getEffectivePartId(expandedWeaponId, 'B')]}
+                    partC={WEAPON_PARTS_BY_ID[getEffectivePartId(expandedWeaponId, 'C')]}
+                    displayH={isMobile ? MOBILE_PREVIEW_ASSEMBLY_H : 320}
+                    rotation={isMobile ? 90 : (OPTION_TILE_ROTATION[editingWeaponType] || 0)}
+                    partOverrides={isMobile ? {} : (OPTION_PART_OVERRIDES[editingWeaponType] || {})}
+                  />
+                </div>
+                <div className="hpm-part-editor-slots">
+                  {['A', 'B', 'C'].map(slot => {
+                    const options = getSlotOptions(expandedWeaponId, slot);
+                    const currentId = getEffectivePartId(expandedWeaponId, slot);
+                    const part = WEAPON_PARTS_BY_ID[currentId];
+                    const idx = options.findIndex(p => p.id === currentId);
+                    return (
+                      <Fragment key={slot}>
+                        <div className="hpm-part-slot-row">
+                          <button
+                            type="button"
+                            className="hpm-part-nav-btn"
+                            disabled={options.length <= 1}
+                            onClick={() => navigatePart(expandedWeaponId, slot, -1)}
+                          >◄</button>
+                          <span className="hpm-part-slot-info">
+                            <span className="hpm-part-slot-name-wrap">
+                              <span className="hpm-part-slot-name">
+                                {part ? cleanPartName(getName(part, lang)) : '—'}
+                              </span>
+                              {currentId?.endsWith('_UPGRADED') && (
+                                <img src={UPGRADE_ICON} alt="+" className="hpm-part-slot-upgrade-icon"
+                                  onError={e => e.target.style.display = 'none'} />
+                              )}
+                            </span>
+                            <span className="hpm-part-slot-counter">
+                              {options.length > 0 ? `${Math.max(idx, 0) + 1}/${options.length}` : '—'}
+                            </span>
+                          </span>
+                          <button
+                            type="button"
+                            className="hpm-part-nav-btn"
+                            disabled={options.length <= 1}
+                            onClick={() => navigatePart(expandedWeaponId, slot, 1)}
+                          >►</button>
+                        </div>
+                        <PartInlineDetails part={part} weapon={WEAPONS_BY_ID[expandedWeaponId]} lang={lang} />
+                      </Fragment>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+
+            <footer className="hpm-footer">
+              <button type="button" className="btn btn-sm btn-primary" onClick={() => setExpandedWeaponId(null)}>
+                {t('prepare.save')}
+              </button>
+            </footer>
+          </div>
+        </div>
+      , document.body)}
+    </>
+  );
 }

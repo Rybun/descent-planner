@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useT } from '../i18n';
-import { parseGameText, TERM_ICONS } from '../gamedata/gameText';
+import { parseGameText, TERM_ICONS, termIconStyle } from '../gamedata/gameText';
 import { useTooltipPosition } from '../hooks/useTooltipPosition';
 import { useIsMobile } from '../hooks/useIsMobile';
 import { useBodyScrollLock } from '../hooks/useBodyScrollLock';
@@ -17,7 +17,7 @@ function renderSkillEffect(raw) {
     const iconSrc = TERM_ICONS[node.key];
     if (iconSrc) return (
       <img key={i} src={iconSrc} alt={node.key}
-        style={{ width: '1em', height: '1em', verticalAlign: 'middle', display: 'inline' }}
+        style={termIconStyle(node.key)}
         onError={e => e.target.style.display = 'none'} />
     );
     return null;
@@ -68,8 +68,9 @@ export default function SkillTooltip({ skill, lang, children }) {
 
   function move(e) { setCoords({ x: e.clientX, y: e.clientY }); }
 
-  function handleClick() {
+  function handleClick(e) {
     if (!isMobile) return;
+    if (e.target.closest('button, input, label, a, select')) return;
     setModalOpen(true);
   }
 

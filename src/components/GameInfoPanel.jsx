@@ -13,6 +13,7 @@ import { useTooltipPosition } from '../hooks/useTooltipPosition';
 import { useIsMobile } from '../hooks/useIsMobile';
 import { useBodyScrollLock } from '../hooks/useBodyScrollLock';
 import HeroPrepareModal from './HeroPrepareModal';
+import HeroCardModal from './HeroCardModal';
 import SkillTooltip from './SkillTooltip';
 import './RecipeTooltip.css';
 import './GameInfoPanel.css';
@@ -249,8 +250,20 @@ export default function GameInfoPanel() {
   const gameState = useStore(s => s.gameState);
   const heroLoadouts  = useStore(s => s.heroLoadouts);
   const setHeroLoadout = useStore(s => s.setHeroLoadout);
+  const isMobile = useIsMobile();
   const [showLocked, setShowLocked] = useState(false);
   const [revealRemaining, setRevealRemaining] = useState(false);
+  // Atajo móvil: botón grande "Aprestar" arriba de la pestaña Partida, que
+  // primero abre un selector de héroe (con su descripción/facultades) y
+  // luego el mismo HeroPrepareModal que abre cada tarjeta de héroe — evita
+  // tener que bajar hasta "Estado de los héroes" para encontrar el botón
+  // de un héroe concreto.
+  const [pickerOpen, setPickerOpen] = useState(false);
+  const [pickedHeroId, setPickedHeroId] = useState(null);
+  // Héroe elegido en el selector cuya ficha completa (retrato + datos de
+  // HERO_CARDS) se enseña antes de entrar en Aprestar — Cancelar vuelve al
+  // selector, Aceptar continúa a HeroPrepareModal.
+  const [pickerDetailHeroId, setPickerDetailHeroId] = useState(null);
 
   if (!saveMeta || !gameState) return null;
 
@@ -309,8 +322,71 @@ export default function GameInfoPanel() {
 
   const conflicts = computeConflicts(heroLoadouts);
 
+  const availableHeroes = (gameState.heroes || []).filter(hero => !unavailableHeroIds.has(hero.heroId));
+
+  const pickedHeroDef = pickedHeroId ? HEROES_BY_ID[pickedHeroId] : null;
+  const pickedHeroNameKey = pickedHeroId ? t(`hero.${pickedHeroId}`) : '';
+  const pickedDisplayName = pickedHeroId
+    ? (pickedHeroNameKey.startsWith('hero.') ? (getHeroData(pickedHeroId)?.name || pickedHeroId) : pickedHeroNameKey)
+    : '';
+  const pickedHeroSkills = pickedHeroId
+    ? (SKILLS_BY_HERO[pickedHeroId] || []).filter(s => unlockedSkillIdSet.has(s.id))
+    : [];
+  const pickedLoadout = pickedHeroId ? (heroLoadouts?.[pickedHeroId] || null) : null;
+
   return (
     <div className="gameinfo-panel">
+
+      {isMobile && (
+        <button
+          type="button"
+          className="gi-mobile-prepare-btn"
+          onClick={() => setPickerOpen(true)}
+        >
+          {t('prepare.prepareBtn')}
+        </button>
+      )}
+
+      {pickerOpen && (
+        <HeroPickerModal
+          heroes={availableHeroes}
+          saveMeta={saveMeta}
+          lang={lang}
+          t={t}
+          onPick={heroId => { setPickerDetailHeroId(heroId); setPickerOpen(false); }}
+          onClose={() => setPickerOpen(false)}
+        />
+      )}
+
+      {pickerDetailHeroId && (
+        <HeroCardModal
+          heroId={pickerDetailHeroId}
+          saveMeta={saveMeta}
+          lang={lang}
+          t={t}
+          onClose={() => { setPickerDetailHeroId(null); setPickerOpen(true); }}
+          onAccept={() => { setPickedHeroId(pickerDetailHeroId); setPickerDetailHeroId(null); }}
+        />
+      )}
+
+      {pickedHeroId && (
+        <HeroPrepareModal
+          heroId={pickedHeroId}
+          heroDef={pickedHeroDef}
+          displayName={pickedDisplayName}
+          unlockedSkills={pickedHeroSkills}
+          itemInventory={gameState.itemInventory}
+          partyXP={totalPartyXP}
+          initialLoadout={pickedLoadout}
+          lang={lang}
+          t={t}
+          onClose={() => setPickedHeroId(null)}
+          onSave={next => {
+            setHeroLoadout(pickedHeroId, next);
+            setPickedHeroId(null);
+          }}
+        />
+      )}
 
       {/* Bloque principal */}
       <div className="gi-cards-row">
@@ -449,13 +525,12 @@ export default function GameInfoPanel() {
       <div className="gi-heroes-section">
         <div className="gi-section-title">{t('gameinfo.heroesTitle')}</div>
         <div className="gi-heroes-grid">
-          {(gameState.heroes || [])
-            .filter(hero => !unavailableHeroIds.has(hero.heroId))
-            .map(hero => (
+          {availableHeroes.map(hero => (
             <HeroStatusCard
               key={hero.heroId}
               hero={hero}
               t={t} lang={lang}
+              saveMeta={saveMeta}
               unlockedSkillIdSet={unlockedSkillIdSet}
               loadout={heroLoadouts?.[hero.heroId] || null}
               itemInventory={gameState.itemInventory}
@@ -549,10 +624,75 @@ function LoadoutSummary({ loadout, heroId, lang, t, partyXP, conflictedTrinketId
   );
 }
 
-function HeroStatusCard({ hero, t, lang, unlockedSkillIdSet, loadout, itemInventory, partyXP, conflict, onSaveLoadout }) {
+// Selector de héroe a pantalla completa (atajo móvil): mismo héroe/retrato
+// por acto que usa Armería (HEROES_BY_ID + imageAct2/image), más su
+// descripción y facultades (HERO_VIRTUES_BY_ID + valor real del save), para
+// poder decidir a quién aprestar sin tener que reconocerlo solo por nombre.
+function HeroPickerModal({ heroes, saveMeta, lang, t, onPick, onClose }) {
+  useBodyScrollLock(true);
+  const isAct2 = (saveMeta?.act ?? 0) >= 1;
+
+  return createPortal(
+    <div className="hpm-overlay">
+      <div className="hpm-screen">
+        <header className="hpm-header">
+          <span className="hpm-header-title">{t('prepare.pickHeroTitle')}</span>
+          <button type="button" className="hpm-close-btn" onClick={onClose} aria-label={t('prepare.cancel')}>✕</button>
+        </header>
+
+        <div className="hpm-body">
+          <div className="gi-hero-picker-list">
+            {heroes.map(hero => {
+              const heroDef = HEROES_BY_ID[hero.heroId];
+              const heroNameKey = t(`hero.${hero.heroId}`);
+              const displayName = heroNameKey.startsWith('hero.') ? (heroDef?.name || hero.heroId) : heroNameKey;
+              const portraitSrc = isAct2 ? (heroDef?.imageAct2 || heroDef?.image) : heroDef?.image;
+              const virtues = HERO_VIRTUES_BY_ID[hero.heroId];
+              const virtueOneName = virtues?.virtueOne?.[lang] || virtues?.virtueOne?.es;
+              const virtueTwoName = virtues?.virtueTwo?.[lang] || virtues?.virtueTwo?.es;
+              return (
+                <button
+                  type="button"
+                  key={hero.heroId}
+                  className="gi-hero-picker-row"
+                  onClick={() => onPick(hero.heroId)}
+                >
+                  {portraitSrc && (
+                    <img src={portraitSrc} alt={displayName} className="gi-hero-picker-portrait"
+                      onError={e => e.target.style.display = 'none'} />
+                  )}
+                  <div className="gi-hero-picker-info">
+                    <div className="gi-hero-picker-name">{displayName}</div>
+                    {heroDef?.archetype && (
+                      <div className="gi-hero-picker-archetype">{heroDef.archetype}</div>
+                    )}
+                    {heroDef?.description && (
+                      <p className="gi-hero-picker-desc">{heroDef.description}</p>
+                    )}
+                    {(virtueOneName || virtueTwoName) && (
+                      <div className="gi-hero-picker-virtues">
+                        {virtueOneName && <span className="gi-virtue">{virtueOneName} {hero.virtueOne ?? 0}</span>}
+                        {virtueTwoName && <span className="gi-virtue">{virtueTwoName} {hero.virtueTwo ?? 0}</span>}
+                      </div>
+                    )}
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </div>
+  , document.body);
+}
+
+function HeroStatusCard({ hero, t, lang, saveMeta, unlockedSkillIdSet, loadout, itemInventory, partyXP, conflict, onSaveLoadout }) {
   const heroData = getHeroData(hero.heroId);
   const heroDef  = HEROES_BY_ID[hero.heroId];
   const [modalOpen, setModalOpen] = useState(false);
+  // Ficha completa del héroe (retrato + datos de HERO_CARDS) — se abre al
+  // tocar la cabecera (retrato/nombre) de la tarjeta.
+  const [showCard, setShowCard] = useState(false);
   // null = sin preferencia manual todavía → se decide según haya o no
   // aprestado (en cuanto se apresta por primera vez, salta automáticamente
   // a esa vista). Un toggle manual fija la preferencia el resto de la sesión.
@@ -577,7 +717,7 @@ function HeroStatusCard({ hero, t, lang, unlockedSkillIdSet, loadout, itemInvent
 
   return (
     <div className="gi-hero-card">
-      <div className="gi-hero-card-top">
+      <button type="button" className="gi-hero-card-top" onClick={() => setShowCard(true)}>
         {heroData?.image && (
           <img src={heroData.image} alt={displayName} className="gi-hero-portrait"
             onError={e => e.target.style.display = 'none'} />
@@ -598,7 +738,17 @@ function HeroStatusCard({ hero, t, lang, unlockedSkillIdSet, loadout, itemInvent
             )}
           </div>
         </div>
-      </div>
+      </button>
+
+      {showCard && (
+        <HeroCardModal
+          heroId={hero.heroId}
+          saveMeta={saveMeta}
+          lang={lang}
+          t={t}
+          onClose={() => setShowCard(false)}
+        />
+      )}
 
       <div className="gi-prepare-actions">
         {loadout ? (

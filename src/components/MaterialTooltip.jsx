@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { getName } from '../i18n';
 import { DESCRIPTIONS } from '../gamedata/descriptions';
-import { parseGameText, TERM_ICONS } from '../gamedata/gameText';
+import { parseGameText, TERM_ICONS, termIconStyle } from '../gamedata/gameText';
 import { useIsMobile } from '../hooks/useIsMobile';
 import { useTooltipPosition } from '../hooks/useTooltipPosition';
 import { useBodyScrollLock } from '../hooks/useBodyScrollLock';
@@ -20,7 +20,7 @@ function renderDescNodes(raw) {
     const iconSrc = TERM_ICONS[node.key];
     if (iconSrc) return (
       <img key={i} src={iconSrc} alt={node.key}
-        style={{ width: '1em', height: '1em', verticalAlign: 'middle', display: 'inline' }}
+        style={termIconStyle(node.key)}
         onError={e => e.target.style.display = 'none'} />
     );
     if (node.content && !/^[-\s]+$/.test(node.content))

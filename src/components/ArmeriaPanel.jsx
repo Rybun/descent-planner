@@ -10,6 +10,7 @@ import { ASSEMBLY_DISPLAY_H } from '../gamedata/weaponAssembly';
 import WeaponAssemblyView from './WeaponAssemblyView';
 import { DAMAGE_TYPE_BY_ID } from '../gamedata/damageTypes';
 import { PART_ABILITY_KEY, WEAPON_ABILITIES, ABILITY_CHANCE } from '../gamedata/weaponAbilities';
+import { termIconStyle } from '../gamedata/gameText';
 import Tooltip from './Tooltip';
 import './ArmeriaPanel.css';
 
@@ -21,14 +22,17 @@ function cleanName(name) {
 
 // Nombre de una parte de arma con el icono de mejora si es la versión "+"
 // (mismo patrón que CraftPanel/ShopPanel/ItemTooltip en el resto de la app).
+// El texto va en su propio span recortable (min-width:0 + ellipsis) y el
+// icono fuera de él con flex-shrink:0, para que el símbolo de mejorado
+// nunca desaparezca aunque el nombre no quepa entero.
 function renderPartName(part, lang) {
   if (!part) return '—';
   const name = cleanName(getName(part, lang));
-  if (!part.id?.endsWith('_UPGRADED')) return name;
+  if (!part.id?.endsWith('_UPGRADED')) return <span className="part-name-text">{name}</span>;
   return (
     <>
-      <span>{name}</span>
-      <img src={UPGRADE_ICON} alt="+" style={{ width: '1em', height: '1em', verticalAlign: 'middle', marginLeft: '3px' }}
+      <span className="part-name-text">{name}</span>
+      <img src={UPGRADE_ICON} alt="+" className="part-name-upgrade-icon"
         onError={e => e.target.style.display = 'none'} />
     </>
   );
@@ -375,9 +379,6 @@ export default function ArmeriaPanel() {
                     )}
 
                     <div className="weapon-img-badges">
-                      {selectedPartA?.isPromo === 1 && (
-                        <span className="badge-promo">✦ Promo</span>
-                      )}
                       {isEquipped && (
                         <span className="badge-equipped">{t('armeria.equipped')}</span>
                       )}
@@ -527,7 +528,7 @@ function AbilityDesc({ partId, lang }) {
           const iconSrc = TERM_ICONS[node.key];
           if (iconSrc) return (
             <img key={i} src={iconSrc} alt={node.key}
-              className="ability-term-icon"
+              style={termIconStyle(node.key)}
               onError={e => e.target.style.display = 'none'} />
           );
           if (node.content && !/^[\ue000-\uf8ff\s]+$/.test(node.content))
@@ -563,7 +564,7 @@ function WeaponAbilities({ partId, lang }) {
           const iconSrc = TERM_ICONS[node.key];
           if (iconSrc) return (
             <img key={i} src={iconSrc} alt={node.key}
-              className="ability-term-icon"
+              style={termIconStyle(node.key)}
               onError={e => e.target.style.display = 'none'} />
           );
           if (node.content && node.content.trim())

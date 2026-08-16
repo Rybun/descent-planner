@@ -1,0 +1,227 @@
+/* Puede abrirse ENCIMA de otra pantalla completa (p.ej. desde la cabecera
+   de HeroPrepareModal, z-index 10000, mismo nivel que .hpm-overlay) —
+   siempre por encima, se abra desde donde se abra. */
+.hcm-overlay {
+  z-index: 10001;
+}
+
+.hcm-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  max-width: 480px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.hcm-portrait {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center top;
+  border: 2px solid var(--color-gold);
+}
+
+.hcm-nickname {
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+.hcm-topstats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  font-size: 0.95rem;
+  color: var(--color-text);
+}
+
+/* Movimiento, Vida, Ataque y Defensa van cada uno en su propia píldora
+   negra, igual que la fatiga máxima de cada cara (.hcm-fatigue-pill). */
+.hcm-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.85);
+  border-radius: 99px;
+  padding: 4px 12px;
+}
+
+/* Iconos de las píldoras (Movimiento/Vida/Ataque/Defensa) — van dentro de
+   contenedores flex (.hcm-pill) que ya los centran por align-items, así que
+   no necesitan la alineación fina de termIconStyle (esa es solo para
+   iconos sueltos en medio de una línea de texto, ver CostPrefix). */
+.hcm-inline-icon {
+  width: 1.1em;
+  height: 1.1em;
+  flex-shrink: 0;
+}
+
+/* Color+forma del dado de ataque/defensa (no hay icono real de esto en el
+   juego, es una marca de la propia carta) — negro=cuadrado,
+   amarillo=rombo, azul=octógono, mismos colores muestreados de la foto. */
+.hcm-die {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+}
+
+.hcm-die-black {
+  background: #6b6870;
+  border-radius: 3px;
+}
+
+.hcm-die-yellow {
+  background: #e0a94a;
+  border-radius: 2px;
+  transform: rotate(45deg);
+  width: 12px;
+  height: 12px;
+}
+
+.hcm-die-blue {
+  background: #6478b4;
+  clip-path: polygon(50% 0%, 85.4% 14.6%, 100% 50%, 85.4% 85.4%, 50% 100%, 14.6% 85.4%, 0% 50%, 14.6% 14.6%);
+}
+
+.hcm-attrs {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+  max-width: 260px;
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-sm) var(--spacing-md);
+}
+
+.hcm-attr-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 3px 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.hcm-attr-label {
+  color: var(--color-text-muted);
+}
+
+.hcm-attr-value {
+  flex: 1;
+  text-align: right;
+  color: var(--color-text);
+}
+
+.hcm-attr-pos { color: var(--color-success); }
+.hcm-attr-neg { color: var(--color-danger-light); }
+
+.hcm-attr-star {
+  width: 0.9em;
+  height: 0.9em;
+  flex-shrink: 0;
+}
+
+.hcm-heroic {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 10px;
+  background: rgba(var(--color-gold-rgb), 0.08);
+  border: 1px solid rgba(var(--color-gold-rgb), 0.35);
+  border-radius: var(--radius-sm);
+}
+
+.hcm-heroic-effect {
+  font-size: 0.82rem;
+  line-height: 1.4;
+  color: var(--color-text);
+}
+
+/* Debajo de los atributos (Fuerza/Agilidad/Sabiduría/Voluntad), no dentro
+   de la caja de la habilidad del rayo. */
+.hcm-armor-hint {
+  font-size: 0.75rem;
+  color: var(--color-text-disabled);
+  font-style: italic;
+  text-align: center;
+}
+
+.hcm-face {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 12px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.hcm-face-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.hcm-face-name {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--color-gold-light);
+}
+
+.hcm-fatigue-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.85);
+  border-radius: 99px;
+  padding: 2px 8px;
+  flex-shrink: 0;
+}
+
+.hcm-fatigue-pill-icon {
+  width: 0.9em;
+  height: 0.9em;
+}
+
+.hcm-face-type {
+  font-size: 0.72rem;
+  font-style: italic;
+  color: var(--color-text-muted);
+}
+
+.hcm-face-effect {
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: var(--color-text);
+}
+
+.hcm-cost-prefix {
+  font-weight: 700;
+}
+
+.hcm-cost-prefix img {
+  margin: 0 2px;
+}
+
+.hcm-face-quote {
+  font-size: 0.75rem;
+  font-style: italic;
+  color: var(--color-text-muted);
+}

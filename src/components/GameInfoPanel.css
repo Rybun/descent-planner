@@ -421,6 +421,19 @@
   display: flex;
   align-items: center;
   gap: var(--spacing-sm);
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 0;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+}
+
+.gi-hero-card-top:hover {
+  background: rgba(var(--color-gold-rgb), 0.06);
 }
 
 .gi-hero-portrait {
@@ -555,6 +568,104 @@
   color: var(--color-gold);
   font-weight: 700;
   font-size: 0.72rem;
+}
+
+/* ─── Atajo móvil: botón grande + selector de héroe ─────── */
+
+.gi-mobile-prepare-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  padding: 14px;
+  margin-bottom: var(--spacing-md);
+  background: rgba(var(--color-gold-rgb), 0.32);
+  border: 1px solid var(--color-gold);
+  border-radius: var(--radius-md);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  box-shadow: 0 0 6px rgba(var(--color-gold-rgb), 0.25);
+  cursor: pointer;
+}
+
+.gi-mobile-prepare-btn:hover {
+  background: rgba(var(--color-gold-rgb), 0.52);
+}
+
+.gi-hero-picker-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.gi-hero-picker-row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-md);
+  width: 100%;
+  box-sizing: border-box;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  text-align: left;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: border-color 0.12s, background 0.12s;
+}
+
+.gi-hero-picker-row:hover {
+  border-color: var(--color-gold);
+  background: var(--color-surface-raised);
+}
+
+.gi-hero-picker-portrait {
+  flex-shrink: 0;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center top;
+  border: 2px solid var(--color-border);
+}
+
+.gi-hero-picker-info {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.gi-hero-picker-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-gold);
+}
+
+.gi-hero-picker-archetype {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+}
+
+.gi-hero-picker-desc {
+  margin: 2px 0 0;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: var(--color-text);
+}
+
+.gi-hero-picker-virtues {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
 }
 
 /* ─── Aprestar héroe ─────────────────────────────────── */

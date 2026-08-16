@@ -6,6 +6,42 @@
   animation: hpm-fade-in 0.15s ease;
 }
 
+/* Editor de piezas de un arma: en móvil es otra pantalla completa por
+   encima de la de Aprestar (no un panel dentro del scroll) — los tooltips
+   (z-index 10002 en RecipeTooltip.css) siguen viéndose por encima de esta
+   también. En escritorio hay tan poco contenido que a pantalla completa
+   sobra mucho hueco vacío, así que ahí es una ventana flotante centrada
+   con el resto oscurecido (ver media query más abajo). */
+.hpm-part-editor-overlay {
+  z-index: 10001;
+}
+
+@media (min-width: 769px) {
+  .hpm-part-editor-overlay {
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+  }
+
+  .hpm-part-editor-overlay .hpm-screen {
+    width: auto;
+    height: auto;
+    max-width: 900px;
+    max-height: 85vh;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+    overflow: hidden;
+  }
+
+  .hpm-part-editor-overlay .hpm-body {
+    min-height: 0;
+  }
+}
+
 @keyframes hpm-fade-in {
   from { opacity: 0; }
   to   { opacity: 1; }
@@ -27,10 +63,39 @@
   background: var(--color-surface);
 }
 
+.hpm-header-title-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
 .hpm-header-title {
   font-size: 1.05rem;
   font-weight: 700;
   color: var(--color-gold);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hpm-header-portrait-btn {
+  flex-shrink: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  line-height: 0;
+}
+
+.hpm-header-portrait {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center top;
+  border: 2px solid var(--color-gold);
+  display: block;
 }
 
 .hpm-close-btn {
@@ -152,17 +217,35 @@
   height: 18px;
   border-radius: 4px;
   border: 1px solid var(--color-border-hover);
+  background: none;
+  padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 0.75rem;
   font-weight: 700;
   color: var(--color-gold);
+  cursor: pointer;
+}
+
+.hpm-option-check:disabled {
+  cursor: not-allowed;
 }
 
 .hpm-option.selected .hpm-option-check {
   border-color: var(--color-gold);
   background: rgba(var(--color-gold-rgb), 0.15);
+}
+
+/* Área de marcado más grande en móvil, donde el dedo necesita más espacio
+   que el cursor del ratón — el check es ahora su propio botón, separado
+   del resto de la pastilla (ver OptionRow en HeroPrepareModal.jsx). */
+@media (max-width: 768px) {
+  .hpm-option-check {
+    width: 30px;
+    height: 30px;
+    font-size: 0.95rem;
+  }
 }
 
 .hpm-option-img {
@@ -249,23 +332,50 @@
 /* Editor de piezas — mismo mecanismo de ◄ nombre ► que Armería (piezas
    ordenadas por nivel, solo las que el grupo posee más la ya equipada),
    aplicado en el sitio con las mismas acciones del store (equipPartA/B/C) —
-   no es un dato aparte del "aprestado", es el mismo estado de equipo real. */
+   no es un dato aparte del "aprestado", es el mismo estado de equipo real.
+   Ahora es el contenido de su propia pantalla completa (.hpm-part-editor-
+   overlay), no un panel desplegable dentro del scroll de Aprestar.
+   Columna única centrada (arma arriba, piezas debajo) en vez de dos
+   columnas lado a lado: así el arma y el título de cada pieza comparten un
+   mismo eje central respecto a la pantalla, en vez de quedar pegados al
+   borde izquierdo. */
 .hpm-part-editor {
-  margin-top: var(--spacing-sm);
-  background: var(--color-surface-raised);
-  border: 1px solid var(--color-gold);
-  border-radius: var(--radius-md);
-  padding: var(--spacing-sm) var(--spacing-md);
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  align-items: center;
+  gap: 16px;
+  max-width: 480px;
+  margin: 0 auto;
+  width: 100%;
 }
 
-.hpm-part-editor-title {
-  font-size: 0.76rem;
-  font-weight: 700;
-  color: var(--color-gold-light);
-  margin-bottom: 4px;
+.hpm-part-editor-preview {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-surface-raised);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+}
+
+.hpm-part-editor-slots {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* En móvil el arma se tumba en horizontal (rotación fija, ver
+   MOBILE_PREVIEW_* en HeroPrepareModal.jsx) para ocupar el mínimo alto
+   posible en la cabecera — el tamaño exacto (ancho/alto intercambiados
+   respecto al lienzo vertical del arma) llega por estilo inline, ya que
+   depende del tipo de arma solo en proporción, no en valor fijo. */
+.hpm-part-editor-preview--mobile {
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+  overflow: hidden;
 }
 
 .hpm-part-slot-row {
@@ -274,11 +384,17 @@
   gap: 8px;
 }
 
-.hpm-part-slot-label {
-  flex-shrink: 0;
-  width: 90px;
-  font-size: 0.72rem;
-  color: var(--color-text-muted);
+/* El título de la pieza va SIEMPRE centrado respecto al ancho disponible
+   entre las dos flechas, sin que el contador (1/2, 3/5...) lo desplace: el
+   contador se posiciona flotando encima, fuera del flujo, así su ancho
+   variable no entra en el cálculo del centrado. */
+.hpm-part-slot-info {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .hpm-part-nav-btn {
@@ -302,8 +418,17 @@
   color: var(--color-gold-light);
 }
 
+/* El texto se recorta con ellipsis si hace falta, pero el icono de
+   mejorado (flex-shrink:0) nunca se recorta ni desaparece. */
+.hpm-part-slot-name-wrap {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+  max-width: 100%;
+}
+
 .hpm-part-slot-name {
-  flex: 1;
   min-width: 0;
   font-size: 0.8rem;
   font-weight: 600;
@@ -311,16 +436,26 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  text-align: center;
 }
 
-.hpm-part-slot-counter {
+.hpm-part-slot-upgrade-icon {
+  width: 1em;
+  height: 1em;
   flex-shrink: 0;
-  width: 32px;
-  text-align: right;
+}
+
+/* Flota fuera del flujo sobre el borde derecho de .hpm-part-slot-info —
+   así su ancho variable (1/2 vs 12/16) nunca desplaza el título, que se
+   centra sobre el ancho completo de .hpm-part-slot-info. */
+.hpm-part-slot-counter {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
   font-size: 0.68rem;
   color: var(--color-text-disabled);
   font-variant-numeric: tabular-nums;
+  pointer-events: none;
 }
 
 /* Efecto/daño/alcance de la pieza seleccionada, siempre visible debajo de
@@ -329,7 +464,16 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
-  margin: -2px 0 6px 132px; /* alineado bajo el nombre: label(90) + gap(8) + nav-btn(26) + gap(8) */
+  margin: -2px 0 6px 34px; /* alineado bajo el nombre: nav-btn(26) + gap(8) */
+}
+
+/* En móvil la pantalla es estrecha y el nombre va centrado (no alineado
+   bajo ese hueco de 34px), así que ese sangrado ya no tiene con qué
+   alinearse — se quita para aprovechar todo el ancho disponible. */
+@media (max-width: 768px) {
+  .hpm-part-inline-details {
+    margin-left: 0;
+  }
 }
 
 .hpm-part-inline-effect {

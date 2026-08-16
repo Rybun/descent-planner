@@ -118,7 +118,7 @@ export const useStore = create((set, get) => ({
   actionHistory: [],
 
   // === UI ===
-  activeTab: 'armeria',
+  activeTab: 'partida',
   selectedArmeriaHeroId: 'HERO_BRYNN',
   showSettings: false,
   priceEditorOpen: false,

@@ -2465,6 +2465,66 @@ def extract_action_term_icon(planner_dir, overwrite=False):
     print("  ✓ Icon_Action.png ← Icon_Action_Generic.png recoloreado a dorado")
 
 
+# Rosa/salmón real del icono de ataque (espadas cruzadas) en las cartas de
+# referencia físicas de héroe — muestreado a mano de una foto real de la
+# carta (captura recortada dejada por el usuario en la raíz del proyecto),
+# no inventado.
+HERO_CARD_COMBAT_ICON_COLOR = (208, 173, 163)
+
+
+def extract_hero_card_combat_icon(planner_dir, overwrite=False):
+    """Genera Icon_Action_Combat_Card.png (icono de ataque de la ficha de
+    héroe, ver HeroCardModal.jsx) recoloreando Icon_Action_Combat.png
+    (extraído en negro) al rosa/salmón real con el que aparece en las
+    cartas físicas — mismo mecanismo que extract_action_term_icon()."""
+    from PIL import Image
+
+    icons_dir = os.path.join(planner_dir, "public", "assets", "icons")
+    src_path  = os.path.join(icons_dir, "Icon_Action_Combat.png")
+    out_path  = os.path.join(icons_dir, "Icon_Action_Combat_Card.png")
+
+    if not overwrite and os.path.isfile(out_path):
+        print("  ⏭ Icon_Action_Combat_Card.png ya existe (usa --overwrite para regenerar)")
+        return
+    if not os.path.isfile(src_path):
+        print("  ✗ Icon_Action_Combat.png no encontrado — no se puede generar Icon_Action_Combat_Card.png")
+        return
+
+    icon = _recolor_icon_to_square(Image.open(src_path), color=HERO_CARD_COMBAT_ICON_COLOR)
+    icon.save(out_path)
+    print("  ✓ Icon_Action_Combat_Card.png ← Icon_Action_Combat.png recoloreado a rosa (ficha de héroe)")
+
+
+# Icono de Movimiento (tres flechas verdes) de glossaryterms — sin
+# m_Name en Unity (PathID usado como nombre de fichero al volcarlo), así
+# que no hay forma de mapearlo por nombre como el resto de iconos; se copia
+# directamente del volcado bruto, mismo criterio que SDF_ATLAS_RELPATH.
+MOVEMENT_ICON_RELPATH = os.path.join(
+    "..", "game-resources", "raw", "textures", "d3", "glossaryterms",
+    "tex_2707665040700752642.png"
+)
+
+
+def extract_movement_icon(planner_dir, overwrite=False):
+    """Genera Icon_Movement.png (ficha de héroe, ver HeroCardModal.jsx)
+    copiando el sprite real de glossaryterms — sin recolorear, ya sale
+    verde en el juego."""
+    from PIL import Image
+
+    out_path = os.path.join(planner_dir, "public", "assets", "icons", "Icon_Movement.png")
+    if not overwrite and os.path.isfile(out_path):
+        print("  ⏭ Icon_Movement.png ya existe (usa --overwrite para regenerar)")
+        return
+
+    src_path = os.path.join(planner_dir, MOVEMENT_ICON_RELPATH)
+    if not os.path.isfile(src_path):
+        print(f"  ✗ {MOVEMENT_ICON_RELPATH} no encontrado — no se puede generar Icon_Movement.png")
+        return
+
+    Image.open(src_path).save(out_path)
+    print("  ✓ Icon_Movement.png ← glossaryterms/tex_2707665040700752642.png")
+
+
 # ──────────────────────────────────────────────────────────────────────────────
 # Main
 # ──────────────────────────────────────────────────────────────────────────────
@@ -2554,6 +2614,8 @@ def main():
     print("\n[7/8] Extrayendo iconos adicionales...")
     extract_ui_icons(env, planner_dir, overwrite=args.overwrite)
     extract_action_term_icon(planner_dir, overwrite=args.overwrite)
+    extract_hero_card_combat_icon(planner_dir, overwrite=args.overwrite)
+    extract_movement_icon(planner_dir, overwrite=args.overwrite)
 
     # ── 8. Optimizar imágenes ────────────────────────────────────────────────
     if not args.no_optimize_images:
