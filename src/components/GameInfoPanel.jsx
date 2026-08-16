@@ -250,14 +250,13 @@ export default function GameInfoPanel() {
   const gameState = useStore(s => s.gameState);
   const heroLoadouts  = useStore(s => s.heroLoadouts);
   const setHeroLoadout = useStore(s => s.setHeroLoadout);
-  const isMobile = useIsMobile();
   const [showLocked, setShowLocked] = useState(false);
   const [revealRemaining, setRevealRemaining] = useState(false);
-  // Atajo móvil: botón grande "Aprestar" arriba de la pestaña Partida, que
-  // primero abre un selector de héroe (con su descripción/facultades) y
-  // luego el mismo HeroPrepareModal que abre cada tarjeta de héroe — evita
-  // tener que bajar hasta "Estado de los héroes" para encontrar el botón
-  // de un héroe concreto.
+  // Atajo (móvil y escritorio) — botón grande "Aprestar" arriba de la
+  // pestaña Partida, que primero abre un selector de héroe (con su
+  // descripción/facultades) y luego el mismo HeroPrepareModal que abre cada
+  // tarjeta de héroe — evita tener que bajar hasta "Estado de los héroes"
+  // para encontrar el botón de un héroe concreto.
   const [pickerOpen, setPickerOpen] = useState(false);
   const [pickedHeroId, setPickedHeroId] = useState(null);
   // Héroe elegido en el selector cuya ficha completa (retrato + datos de
@@ -337,19 +336,18 @@ export default function GameInfoPanel() {
   return (
     <div className="gameinfo-panel">
 
-      {isMobile && (
-        <button
-          type="button"
-          className="gi-mobile-prepare-btn"
-          onClick={() => setPickerOpen(true)}
-        >
-          {t('prepare.prepareBtn')}
-        </button>
-      )}
+      <button
+        type="button"
+        className="gi-prepare-shortcut-btn"
+        onClick={() => setPickerOpen(true)}
+      >
+        {t('prepare.prepareBtn')}
+      </button>
 
       {pickerOpen && (
         <HeroPickerModal
           heroes={availableHeroes}
+          heroLoadouts={heroLoadouts}
           saveMeta={saveMeta}
           lang={lang}
           t={t}
@@ -378,6 +376,7 @@ export default function GameInfoPanel() {
           itemInventory={gameState.itemInventory}
           partyXP={totalPartyXP}
           initialLoadout={pickedLoadout}
+          heroLoadouts={heroLoadouts}
           lang={lang}
           t={t}
           onClose={() => setPickedHeroId(null)}
@@ -533,6 +532,7 @@ export default function GameInfoPanel() {
               saveMeta={saveMeta}
               unlockedSkillIdSet={unlockedSkillIdSet}
               loadout={heroLoadouts?.[hero.heroId] || null}
+              heroLoadouts={heroLoadouts}
               itemInventory={gameState.itemInventory}
               partyXP={totalPartyXP}
               conflict={conflicts[hero.heroId] || null}
@@ -628,12 +628,12 @@ function LoadoutSummary({ loadout, heroId, lang, t, partyXP, conflictedTrinketId
 // por acto que usa Armería (HEROES_BY_ID + imageAct2/image), más su
 // descripción y facultades (HERO_VIRTUES_BY_ID + valor real del save), para
 // poder decidir a quién aprestar sin tener que reconocerlo solo por nombre.
-function HeroPickerModal({ heroes, saveMeta, lang, t, onPick, onClose }) {
+function HeroPickerModal({ heroes, heroLoadouts, saveMeta, lang, t, onPick, onClose }) {
   useBodyScrollLock(true);
   const isAct2 = (saveMeta?.act ?? 0) >= 1;
 
   return createPortal(
-    <div className="hpm-overlay">
+    <div className="hpm-overlay gi-hero-picker-overlay">
       <div className="hpm-screen">
         <header className="hpm-header">
           <span className="hpm-header-title">{t('prepare.pickHeroTitle')}</span>
@@ -650,6 +650,7 @@ function HeroPickerModal({ heroes, saveMeta, lang, t, onPick, onClose }) {
               const virtues = HERO_VIRTUES_BY_ID[hero.heroId];
               const virtueOneName = virtues?.virtueOne?.[lang] || virtues?.virtueOne?.es;
               const virtueTwoName = virtues?.virtueTwo?.[lang] || virtues?.virtueTwo?.es;
+              const isPrepared = !!heroLoadouts?.[hero.heroId];
               return (
                 <button
                   type="button"
@@ -662,7 +663,14 @@ function HeroPickerModal({ heroes, saveMeta, lang, t, onPick, onClose }) {
                       onError={e => e.target.style.display = 'none'} />
                   )}
                   <div className="gi-hero-picker-info">
-                    <div className="gi-hero-picker-name">{displayName}</div>
+                    <div className="gi-hero-picker-name-row">
+                      <div className="gi-hero-picker-name">{displayName}</div>
+                      {isPrepared && (
+                        <span className="gi-prepared-badge gi-hero-picker-prepared-badge">
+                          {t('prepare.preparedLabel')}
+                        </span>
+                      )}
+                    </div>
                     {heroDef?.archetype && (
                       <div className="gi-hero-picker-archetype">{heroDef.archetype}</div>
                     )}
@@ -686,7 +694,7 @@ function HeroPickerModal({ heroes, saveMeta, lang, t, onPick, onClose }) {
   , document.body);
 }
 
-function HeroStatusCard({ hero, t, lang, saveMeta, unlockedSkillIdSet, loadout, itemInventory, partyXP, conflict, onSaveLoadout }) {
+function HeroStatusCard({ hero, t, lang, saveMeta, unlockedSkillIdSet, loadout, heroLoadouts, itemInventory, partyXP, conflict, onSaveLoadout }) {
   const heroData = getHeroData(hero.heroId);
   const heroDef  = HEROES_BY_ID[hero.heroId];
   const [modalOpen, setModalOpen] = useState(false);
@@ -802,6 +810,7 @@ function HeroStatusCard({ hero, t, lang, saveMeta, unlockedSkillIdSet, loadout, 
           itemInventory={itemInventory}
           partyXP={partyXP}
           initialLoadout={loadout}
+          heroLoadouts={heroLoadouts}
           lang={lang}
           t={t}
           onClose={() => setModalOpen(false)}

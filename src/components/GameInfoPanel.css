@@ -570,9 +570,9 @@
   font-size: 0.72rem;
 }
 
-/* ─── Atajo móvil: botón grande + selector de héroe ─────── */
+/* ─── Atajo "Aprestar": botón grande + selector de héroe ─────── */
 
-.gi-mobile-prepare-btn {
+.gi-prepare-shortcut-btn {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -590,8 +590,20 @@
   cursor: pointer;
 }
 
-.gi-mobile-prepare-btn:hover {
+.gi-prepare-shortcut-btn:hover {
   background: rgba(var(--color-gold-rgb), 0.52);
+}
+
+/* En escritorio hay mucho más ancho de panel disponible — un botón a 100%
+   se vería como una barra desproporcionada, así que aquí es un botón
+   grande pero de ancho propio (no estirado), como el resto de acciones
+   destacadas del panel. */
+@media (min-width: 769px) {
+  .gi-prepare-shortcut-btn {
+    width: auto;
+    padding: 14px 36px;
+    font-size: 1.05rem;
+  }
 }
 
 .gi-hero-picker-list {
@@ -600,6 +612,15 @@
   gap: var(--spacing-sm);
   max-width: 640px;
   margin: 0 auto;
+}
+
+/* En escritorio, la ventana flotante de .hpm-overlay (ver HeroPrepareModal.css)
+   se ajusta al ancho de la propia lista de héroes en vez del tamaño
+   genérico (960px) pensado para el flujo completo de Aprestar. */
+@media (min-width: 769px) {
+  .gi-hero-picker-overlay .hpm-screen {
+    max-width: 720px;
+  }
 }
 
 .gi-hero-picker-row {
@@ -640,10 +661,20 @@
   gap: 3px;
 }
 
+.gi-hero-picker-name-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .gi-hero-picker-name {
   font-size: 1rem;
   font-weight: 700;
   color: var(--color-gold);
+}
+
+.gi-hero-picker-prepared-badge {
+  flex-shrink: 0;
 }
 
 .gi-hero-picker-archetype {

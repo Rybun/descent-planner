@@ -9,15 +9,21 @@
 /* Editor de piezas de un arma: en móvil es otra pantalla completa por
    encima de la de Aprestar (no un panel dentro del scroll) — los tooltips
    (z-index 10002 en RecipeTooltip.css) siguen viéndose por encima de esta
-   también. En escritorio hay tan poco contenido que a pantalla completa
-   sobra mucho hueco vacío, así que ahí es una ventana flotante centrada
-   con el resto oscurecido (ver media query más abajo). */
+   también. */
 .hpm-part-editor-overlay {
   z-index: 10001;
 }
 
+/* En escritorio, CUALQUIER pantalla de este flujo (selector de héroe, ficha
+   de héroe, Aprestar y su editor de piezas — las 4 usan .hpm-overlay) es
+   una ventana flotante centrada con el resto oscurecido en vez de ocupar
+   todo el viewport: a pantalla completa sobraba mucho hueco vacío alrededor
+   del contenido, que nunca necesita tanto ancho. El tamaño por defecto
+   (960px/88vh) es el del flujo de Aprestar en sí, el más ancho de los 4;
+   cada pantalla más pequeña (selector, ficha, editor de piezas) lo estrecha
+   con su propia clase, para no dejar una caja de sobra vacía a los lados. */
 @media (min-width: 769px) {
-  .hpm-part-editor-overlay {
+  .hpm-overlay {
     background: rgba(0, 0, 0, 0.7);
     display: flex;
     align-items: center;
@@ -25,11 +31,11 @@
     padding: 40px;
   }
 
-  .hpm-part-editor-overlay .hpm-screen {
+  .hpm-overlay .hpm-screen {
     width: auto;
     height: auto;
-    max-width: 900px;
-    max-height: 85vh;
+    max-width: 960px;
+    max-height: 88vh;
     background: var(--color-bg);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
@@ -37,8 +43,25 @@
     overflow: hidden;
   }
 
-  .hpm-part-editor-overlay .hpm-body {
+  .hpm-overlay .hpm-body {
     min-height: 0;
+  }
+
+  /* El flujo principal de Aprestar necesita un ANCHO explícito, no solo
+     max-width: su contenido (.hpm-options-grid, auto-fill) se ajusta al
+     hueco disponible en vez de al revés, así que con width:auto el propio
+     grid colapsa a una sola columna (mínimo posible) en lugar de ensanchar
+     la ventana — el resto de pantallas (selector, ficha, editor de piezas)
+     no usan ese tipo de grid y sí quedan bien con el shrink-to-fit por
+     defecto. */
+  .hpm-main-overlay .hpm-screen {
+    width: 960px;
+    max-width: calc(100vw - 80px);
+  }
+
+  .hpm-part-editor-overlay .hpm-screen {
+    max-width: 900px;
+    max-height: 85vh;
   }
 }
 
@@ -248,6 +271,14 @@
   }
 }
 
+/* Envuelve la imagen/ensamblado para poder anclar el aviso de conflicto en
+   su esquina sin afectar al tamaño del icono en sí. */
+.hpm-option-icon-wrap {
+  position: relative;
+  flex-shrink: 0;
+  display: inline-flex;
+}
+
 .hpm-option-img {
   flex-shrink: 0;
   width: 36px;
@@ -268,6 +299,29 @@
   overflow: hidden;
   border-radius: var(--radius-sm);
   background: var(--color-surface-raised);
+}
+
+/* Otro héroe ya aprestado se ha llevado este mismo objeto (accesorio/arma
+   rúnica, únicos en el inventario del grupo) — elegirlo aquí también
+   generará el mismo conflicto que ya marca LoadoutSummary/HeroStatusCard,
+   pero avisando ANTES de guardar, no solo después. Mismo amarillo que
+   .gi-prepared-badge-conflict. */
+.hpm-option-conflict-badge {
+  position: absolute;
+  right: -4px;
+  bottom: -4px;
+  width: 14px;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #e8a020;
+  color: #1a1a10;
+  font-size: 0.62rem;
+  font-weight: 900;
+  line-height: 1;
+  border: 1.5px solid var(--color-bg);
 }
 
 .hpm-option-text {

@@ -111,7 +111,7 @@ function Section({ title, extra, children }) {
 // para la propagación del evento, marca. En escritorio se mantiene el
 // comportamiento de siempre (clic en cualquier parte marca; el tooltip se
 // ve al pasar el ratón, sin ambigüedad con el clic).
-function OptionRow({ selected, onClick, image, assembly, name, sub, disabled }) {
+function OptionRow({ selected, onClick, image, assembly, name, sub, disabled, conflict, conflictTitle }) {
   const isMobile = useIsMobile();
 
   function handleRowClick() {
@@ -139,21 +139,27 @@ function OptionRow({ selected, onClick, image, assembly, name, sub, disabled }) 
         aria-label={name}
       >{selected ? '✓' : ''}</button>
       {assembly && (
-        <span className="hpm-option-assembly">
-          <WeaponAssemblyView
-            weaponType={assembly.weaponType}
-            partA={assembly.partA}
-            partB={assembly.partB}
-            partC={assembly.partC}
-            displayH={36}
-            rotation={OPTION_TILE_ROTATION[assembly.weaponType] || 0}
-            partOverrides={OPTION_PART_OVERRIDES[assembly.weaponType] || {}}
-          />
+        <span className="hpm-option-icon-wrap">
+          <span className="hpm-option-assembly">
+            <WeaponAssemblyView
+              weaponType={assembly.weaponType}
+              partA={assembly.partA}
+              partB={assembly.partB}
+              partC={assembly.partC}
+              displayH={36}
+              rotation={OPTION_TILE_ROTATION[assembly.weaponType] || 0}
+              partOverrides={OPTION_PART_OVERRIDES[assembly.weaponType] || {}}
+            />
+          </span>
+          {conflict && <span className="hpm-option-conflict-badge" title={conflictTitle}>!</span>}
         </span>
       )}
       {!assembly && image && (
-        <img src={image} alt="" className="hpm-option-img"
-          onError={e => e.target.style.display = 'none'} />
+        <span className="hpm-option-icon-wrap">
+          <img src={image} alt="" className="hpm-option-img"
+            onError={e => e.target.style.display = 'none'} />
+          {conflict && <span className="hpm-option-conflict-badge" title={conflictTitle}>!</span>}
+        </span>
       )}
       <span className="hpm-option-text">
         <span className="hpm-option-name">{name}</span>
@@ -227,7 +233,7 @@ function PartInlineDetails({ part, weapon, lang }) {
 
 export default function HeroPrepareModal({
   heroId, heroDef, displayName, unlockedSkills, itemInventory, partyXP,
-  initialLoadout, lang, t, onSave, onClose,
+  initialLoadout, heroLoadouts, lang, t, onSave, onClose,
 }) {
   useBodyScrollLock(true);
   const isMobile = useIsMobile();
@@ -327,6 +333,21 @@ export default function HeroPrepareModal({
     else equipPartC(weaponId, newId);
   }
 
+  // Accesorio o arma rúnica que ya lleva OTRO héroe ya aprestado (solo hay
+  // un ejemplar de cada uno en el inventario del grupo, mismo criterio que
+  // computeConflicts en GameInfoPanel.jsx) — se avisa aquí, ANTES de
+  // guardar, con el mismo aviso amarillo que luego marca ya guardado el
+  // conflicto en LoadoutSummary/HeroStatusCard.
+  const takenTrinketIds = new Set();
+  const takenRunicWeaponIds = new Set();
+  for (const [otherId, loadout] of Object.entries(heroLoadouts || {})) {
+    if (otherId === heroId || !loadout) continue;
+    if (loadout.trinketId) takenTrinketIds.add(loadout.trinketId);
+    for (const wid of (loadout.weaponIds || [])) {
+      if (WEAPON_PARTS_BY_ID[wid]?.weaponType === 'RUNE') takenRunicWeaponIds.add(wid);
+    }
+  }
+
   const armorOptions = Object.values(ARMORS_BY_ID).filter(
     a => heroDef?.armorTypes?.includes(a.armorType) && counts[a.id] > 0
   );
@@ -373,7 +394,7 @@ export default function HeroPrepareModal({
   return (
     <>
       {createPortal(
-    <div className="hpm-overlay">
+    <div className="hpm-overlay hpm-main-overlay">
       <div className="hpm-screen">
         <header className="hpm-header">
           <span className="hpm-header-title-group">
@@ -428,6 +449,8 @@ export default function HeroPrepareModal({
                         assembly={w.assembly}
                         name={w.name}
                         sub={w.xpCost > 0 ? `${w.xpCost} XP` : null}
+                        conflict={w.isRunic && takenRunicWeaponIds.has(w.id)}
+                        conflictTitle={t('prepare.itemTakenWarning')}
                       />
                     </WeaponPartTooltip>
                     {!w.isRunic && (
@@ -512,6 +535,8 @@ export default function HeroPrepareModal({
                       onClick={() => setTrinketId(id => id === it.id ? null : it.id)}
                       image={it.image}
                       name={getName(it, lang)}
+                      conflict={takenTrinketIds.has(it.id)}
+                      conflictTitle={t('prepare.itemTakenWarning')}
                     />
                   </ItemTooltip>
                 ))}

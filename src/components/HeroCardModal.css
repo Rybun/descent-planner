@@ -5,6 +5,14 @@
   z-index: 10001;
 }
 
+/* Ventana flotante (ver .hpm-overlay en HeroPrepareModal.css) ajustada al
+   ancho de .hcm-content en vez del tamaño genérico de 960px. */
+@media (min-width: 769px) {
+  .hcm-overlay .hpm-screen {
+    max-width: 560px;
+  }
+}
+
 .hcm-content {
   display: flex;
   flex-direction: column;
